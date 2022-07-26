@@ -1,0 +1,959 @@
+<?xml version="1.0"?>
+<presentation title="baigiangdientu_ngoinhasontra" width="720.0000000" height="540.0000000" thmbWidth="78.0000000" thmbHeight="59.0000000" frameRate="24.0000000" looping="0" startingSlideShow="" pptVersion="2010" type="compound" hasExternalAudio="0" uid="{047A752C-23BC-485F-8A08-82FFCD4571B1}">
+	<presenters>
+		<presenter name="Nhóm nghiên cứu trường THCS Tây Sơn" title="" email="" web="tayson.edu.vn" phone="" photoAssetId="imgAsset0">
+			<bio>Tập hợp các học sinh yêu thích tự nhiên và nghiên cứu của trường THCS Tây Sơn. Tụi em mong muốn học hỏi và đóng góp sức mình cho công tác bảo tồn Sơn Trà cùa thành phố.</bio>
+		</presenter>
+	</presenters>
+	<references/>
+	<soundAssets>
+		<soundAsset id="sndAsset0" src="sound1.mp3" embedded="0" size="128149" duration="16013"/>
+		<soundAsset id="sndAsset1" src="sound2.mp3" embedded="0" size="175378" duration="21917"/>
+		<soundAsset id="sndAsset2" src="sound3.mp3" embedded="0" size="109550" duration="13688"/>
+		<soundAsset id="sndAsset3" src="sound4.mp3" embedded="0" size="222399" duration="27794"/>
+		<soundAsset id="sndAsset4" src="sound5.mp3" embedded="0" size="210278" duration="26279"/>
+		<soundAsset id="sndAsset5" src="sound6.mp3" embedded="0" size="43721" duration="5460"/>
+		<soundAsset id="sndAsset6" src="sound7.mp3" embedded="0" size="209233" duration="26149"/>
+		<soundAsset id="sndAsset7" src="sound8.mp3" embedded="0" size="156570" duration="19566"/>
+		<soundAsset id="sndAsset8" src="sound9.mp3" embedded="0" size="66709" duration="8333"/>
+		<soundAsset id="sndAsset9" src="sound10.mp3" embedded="0" size="201710" duration="25208"/>
+		<soundAsset id="sndAsset10" src="sound11.mp3" embedded="0" size="328142" duration="41012"/>
+		<soundAsset id="sndAsset11" src="sound12.mp3" embedded="0" size="187708" duration="23458"/>
+		<soundAsset id="sndAsset12" src="sound13.mp3" embedded="0" size="152182" duration="19017"/>
+		<soundAsset id="sndAsset13" src="sound14.mp3" embedded="0" size="268583" duration="33567"/>
+		<soundAsset id="sndAsset14" src="sound15.mp3" embedded="0" size="64201" duration="8020"/>
+		<soundAsset id="sndAsset15" src="sound16.mp3" embedded="0" size="181648" duration="22700"/>
+		<soundAsset id="sndAsset16" src="sound17.mp3" embedded="0" size="153227" duration="19148"/>
+		<soundAsset id="sndAsset17" src="sound18.mp3" embedded="0" size="43930" duration="5486"/>
+		<soundAsset id="sndAsset18" src="sound19.mp3" embedded="0" size="135045" duration="16875"/>
+		<soundAsset id="sndAsset19" src="sound20.mp3" embedded="0" size="204845" duration="25600"/>
+		<soundAsset id="sndAsset20" src="sound21.mp3" embedded="0" size="201710" duration="25208"/>
+		<soundAsset id="sndAsset21" src="sound22.mp3" embedded="0" size="128776" duration="16091"/>
+		<soundAsset id="sndAsset22" src="sound23.mp3" embedded="0" size="80920" duration="10109"/>
+		<soundAsset id="sndAsset23" src="sound24.mp3" embedded="0" size="94503" duration="11807"/>
+		<soundAsset id="sndAsset24" src="sound25.mp3" embedded="0" size="176423" duration="22047"/>
+		<soundAsset id="sndAsset25" src="sound26.mp3" embedded="0" size="81129" duration="10136"/>
+		<soundAsset id="sndAsset26" src="sound27.mp3" embedded="0" size="107460" duration="13427"/>
+		<soundAsset id="sndAsset27" src="sound28.mp3" embedded="0" size="106206" duration="13270"/>
+		<soundAsset id="sndAsset28" src="sound29.mp3" embedded="0" size="106833" duration="13349"/>
+		<soundAsset id="sndAsset29" src="sound30.mp3" embedded="0" size="120835" duration="15099"/>
+		<soundAsset id="sndAsset30" src="sound31.mp3" embedded="0" size="2773622" duration="231131"/>
+		<soundAsset id="sndAsset31" src="sound32.mp3" embedded="0" size="1836349" duration="153025"/>
+		<soundAsset id="sndAsset32" src="sound33.mp3" embedded="0" size="1628205" duration="135680"/>
+	</soundAssets>
+	<sharedAssetsLibrary src="assets.swf"/>
+	<graphicAssets>
+		<graphicAsset id="imgAsset0" src="photo1.swf" embedded="0"/>
+		<graphicAsset id="imgAsset1" src="thmb1.swf" embedded="0"/>
+		<graphicAsset id="imgAsset2" src="thmb2.swf" embedded="0"/>
+		<graphicAsset id="imgAsset3" src="thmb3.swf" embedded="0"/>
+		<graphicAsset id="imgAsset4" src="thmb4.swf" embedded="0"/>
+		<graphicAsset id="imgAsset5" src="thmb5.swf" embedded="0"/>
+		<graphicAsset id="imgAsset6" src="thmb6.swf" embedded="0"/>
+		<graphicAsset id="imgAsset7" src="thmb7.swf" embedded="0"/>
+		<graphicAsset id="imgAsset8" src="thmb8.swf" embedded="0"/>
+		<graphicAsset id="imgAsset9" src="thmb9.swf" embedded="0"/>
+		<graphicAsset id="imgAsset10" src="thmb10.swf" embedded="0"/>
+		<graphicAsset id="imgAsset11" src="thmb11.swf" embedded="0"/>
+		<graphicAsset id="imgAsset12" src="thmb12.swf" embedded="0"/>
+		<graphicAsset id="imgAsset13" src="thmb13.swf" embedded="0"/>
+		<graphicAsset id="imgAsset14" src="thmb14.swf" embedded="0"/>
+		<graphicAsset id="imgAsset15" src="thmb15.swf" embedded="0"/>
+		<graphicAsset id="imgAsset16" src="thmb16.swf" embedded="0"/>
+		<graphicAsset id="imgAsset17" src="thmb17.swf" embedded="0"/>
+		<graphicAsset id="imgAsset18" src="thmb18.swf" embedded="0"/>
+		<graphicAsset id="imgAsset19" src="thmb19.swf" embedded="0"/>
+		<graphicAsset id="imgAsset20" src="thmb20.swf" embedded="0"/>
+		<graphicAsset id="imgAsset21" src="thmb21.swf" embedded="0"/>
+		<graphicAsset id="imgAsset22" src="thmb22.swf" embedded="0"/>
+		<graphicAsset id="imgAsset23" src="thmb23.swf" embedded="0"/>
+		<graphicAsset id="imgAsset24" src="thmb24.swf" embedded="0"/>
+		<graphicAsset id="imgAsset25" src="thmb25.swf" embedded="0"/>
+		<graphicAsset id="imgAsset26" src="thmb26.swf" embedded="0"/>
+		<graphicAsset id="imgAsset27" src="thmb27.swf" embedded="0"/>
+		<graphicAsset id="imgAsset28" src="thmb28.swf" embedded="0"/>
+		<graphicAsset id="imgAsset29" src="thmb29.swf" embedded="0"/>
+		<graphicAsset id="imgAsset30" src="thmb30.swf" embedded="0"/>
+		<graphicAsset id="imgAsset31" src="thmb31.swf" embedded="0"/>
+		<graphicAsset id="imgAsset32" src="thmb32.swf" embedded="0"/>
+		<graphicAsset id="imgAsset33" src="thmb33.swf" embedded="0"/>
+	</graphicAssets>
+	<playlists>
+		<playlist looping="1">
+			<sound soundAssetId="sndAsset30"/>
+			<sound soundAssetId="sndAsset31"/>
+			<sound soundAssetId="sndAsset32"/>
+		</playlist>
+	</playlists>
+	<narration>
+		<audioTracks>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset0">
+				<startTimestamp slideIndex="0" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="0" stepIndex="0" timeOffset="15.9729996"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset1">
+				<startTimestamp slideIndex="1" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="1" stepIndex="0" timeOffset="21.8700000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset2">
+				<startTimestamp slideIndex="2" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="2" stepIndex="0" timeOffset="13.6390000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset3">
+				<startTimestamp slideIndex="3" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="3" stepIndex="0" timeOffset="27.7649994"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset4">
+				<startTimestamp slideIndex="4" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="4" stepIndex="0" timeOffset="26.2399998"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset5">
+				<startTimestamp slideIndex="5" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="5" stepIndex="0" timeOffset="5.4120000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset6">
+				<startTimestamp slideIndex="6" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="6" stepIndex="0" timeOffset="26.1180000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset7">
+				<startTimestamp slideIndex="7" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="7" stepIndex="0" timeOffset="19.5200000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset8">
+				<startTimestamp slideIndex="8" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="8" stepIndex="0" timeOffset="8.2950000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset9">
+				<startTimestamp slideIndex="9" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="9" stepIndex="0" timeOffset="25.1680000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset10">
+				<startTimestamp slideIndex="10" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="10" stepIndex="0" timeOffset="40.9749985"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset11">
+				<startTimestamp slideIndex="11" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="11" stepIndex="0" timeOffset="23.4290000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset12">
+				<startTimestamp slideIndex="12" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="13" stepIndex="0" timeOffset="10.2799997"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset13">
+				<startTimestamp slideIndex="14" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="14" stepIndex="0" timeOffset="33.5370000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset14">
+				<startTimestamp slideIndex="15" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="15" stepIndex="0" timeOffset="7.9760000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset15">
+				<startTimestamp slideIndex="16" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="17" stepIndex="0" timeOffset="8.4499998"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset16">
+				<startTimestamp slideIndex="18" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="19" stepIndex="0" timeOffset="6.8890000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset17">
+				<startTimestamp slideIndex="20" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="20" stepIndex="0" timeOffset="5.4360000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset18">
+				<startTimestamp slideIndex="21" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="21" stepIndex="0" timeOffset="16.8230000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset19">
+				<startTimestamp slideIndex="22" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="22" stepIndex="0" timeOffset="25.5550000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset20">
+				<startTimestamp slideIndex="23" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="23" stepIndex="0" timeOffset="25.1819992"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset21">
+				<startTimestamp slideIndex="24" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="24" stepIndex="0" timeOffset="16.0580000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset22">
+				<startTimestamp slideIndex="25" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="25" stepIndex="0" timeOffset="10.0620000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset23">
+				<startTimestamp slideIndex="26" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="26" stepIndex="0" timeOffset="11.7600000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset24">
+				<startTimestamp slideIndex="27" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="27" stepIndex="0" timeOffset="21.9990000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset25">
+				<startTimestamp slideIndex="28" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="28" stepIndex="0" timeOffset="10.1020000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset26">
+				<startTimestamp slideIndex="29" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="29" stepIndex="0" timeOffset="13.3760000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset27">
+				<startTimestamp slideIndex="30" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="30" stepIndex="0" timeOffset="13.2340000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset28">
+				<startTimestamp slideIndex="31" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="31" stepIndex="0" timeOffset="13.2990000"/>
+			</audioTrack>
+			<audioTrack volume="1.0000000" soundAssetId="sndAsset29">
+				<startTimestamp slideIndex="32" stepIndex="0" timeOffset="0.0000000"/>
+				<endTimestamp slideIndex="32" stepIndex="0" timeOffset="15.0600000"/>
+			</audioTrack>
+		</audioTracks>
+	</narration>
+	<settings>
+		<navigation>
+			<keyboard enabled="1">
+				<actions>
+					<action name="playPause">
+						<shortcut code="32" control="0" shift="0"/>
+					</action>
+					<action name="nextSlide">
+						<shortcut code="34" control="0" shift="0"/>
+					</action>
+					<action name="previousSlide">
+						<shortcut code="33" control="0" shift="0"/>
+					</action>
+					<action name="nextStep">
+						<shortcut code="13" control="0" shift="0"/>
+					</action>
+					<action name="previousStep">
+						<shortcut code="13" control="0" shift="1"/>
+					</action>
+					<action name="firstSlide">
+						<shortcut code="36" control="1" shift="0"/>
+					</action>
+					<action name="lastSlide">
+						<shortcut code="35" control="1" shift="0"/>
+					</action>
+					<action name="lastViewedSlide">
+						<shortcut code="8" control="0" shift="0"/>
+					</action>
+					<action name="slideStart">
+						<shortcut code="36" control="0" shift="0"/>
+					</action>
+					<action name="slideEnd">
+						<shortcut code="35" control="0" shift="0"/>
+					</action>
+					<action name="seekForward">
+						<shortcut code="39" control="0" shift="0"/>
+					</action>
+					<action name="seekBackward">
+						<shortcut code="37" control="0" shift="0"/>
+					</action>
+					<action name="volumeUp">
+						<shortcut code="38" control="0" shift="0"/>
+					</action>
+					<action name="volumeDown">
+						<shortcut code="40" control="0" shift="0"/>
+					</action>
+					<action name="toggleFullscreen">
+						<shortcut code="70" control="1" shift="0"/>
+					</action>
+				</actions>
+			</keyboard>
+			<mouse enabled="1" target="step"/>
+			<gesture zoom="1"/>
+		</navigation>
+		<skin>
+			<colorSettings>
+				<color id="button.content.normal">#000000</color>
+				<color id="button.content.over">#000000</color>
+				<color id="button.face.normal">#8AD875</color>
+				<color id="button.face.over">#C2F3B5</color>
+				<color id="companyLogo.background">#FFFFFF</color>
+				<color id="hyperlink">#00773C</color>
+				<color id="listItem.face.over">#C2F3B5</color>
+				<color id="listItem.face.pressed">#008D42</color>
+				<color id="listItem.label.over">#414859</color>
+				<color id="listItem.label.pressed">#FFFFFF</color>
+				<color id="listItem.label.visited">#414859</color>
+				<color id="page.background">#576264</color>
+				<color id="panel.background">#192527</color>
+				<color id="panel.text">#FFFFFF</color>
+				<color id="player.background">#2D393E</color>
+				<color id="popup.background">#FFFFFF</color>
+				<color id="progress.background">#333333</color>
+				<color id="progress.loading">#FFFFFF</color>
+				<color id="progress.playback">#8AD875</color>
+				<color id="text">#414859</color>
+			</colorSettings>
+			<controlPanelSettings>
+				<visible>true</visible>
+				<showOutline>false</showOutline>
+				<showPlayPause>true</showPlayPause>
+				<showRewind>true</showRewind>
+				<showVolumeControl>true</showVolumeControl>
+				<showCCButton>false</showCCButton>
+				<showPrevButton>true</showPrevButton>
+				<showNextButton>true</showNextButton>
+				<showSlideOnlyButton>true</showSlideOnlyButton>
+				<progressBar>
+					<visible>true</visible>
+					<enabled>true</enabled>
+					<showLabels>true</showLabels>
+					<mode>slideTimeline</mode>
+				</progressBar>
+				<navigationMode>bySlides</navigationMode>
+			</controlPanelSettings>
+			<titlePanelSettings>
+				<showLogo>false</showLogo>
+				<visible>true</visible>
+				<buttons>
+					<button type="attachments" visible="false"/>
+					<button type="presenterInfo" visible="true"/>
+					<button type="markerTools" visible="true"/>
+					<button type="notes" visible="false"/>
+					<button type="outline" visible="false"/>
+				</buttons>
+			</titlePanelSettings>
+			<outlinePanelSettings>
+				<numberEntries>true</numberEntries>
+				<highlightViewedEntries>true</highlightViewedEntries>
+				<thumbnails>true</thumbnails>
+				<search>true</search>
+				<multilevel>true</multilevel>
+			</outlinePanelSettings>
+			<sidePanelSettings>
+				<showAtLeft>false</showAtLeft>
+				<showLogo>false</showLogo>
+				<showPresenterInfo>false</showPresenterInfo>
+				<showPresenterVideo>true</showPresenterVideo>
+				<visible>true</visible>
+				<tabsPanel>
+					<showOutline>true</showOutline>
+					<showNotes>true</showNotes>
+				</tabsPanel>
+			</sidePanelSettings>
+		</skin>
+		<appearance fullScreen="1" showSlidePreloader="1"/>
+		<playback autoStart="1" syncWithVideoNarration="1" enableVideoControl="1" resumePresentationPlayback="never"/>
+	</settings>
+	<slides embedded="0">
+		<slide index="0" title="GIỚI THIỆU" titleNormalized="giới thiệu" src="slide1.swf" size="100374" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset1" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="15.9719996"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>BÀI GIẢNG ĐIỆN TỬ
+ĐA DẠNG SINH HỌC SƠN TRÀ
+NGÔI NHÀ SƠN TRÀ
+SỞ GIÁO DỤC THÀNH PHỐ ĐÀ NẴNG
+TRƯỜNG THCS TÂY SƠN</text>
+		</slide>
+		<slide index="1" title="NỘI DUNG" titleNormalized="nội dung" src="slide2.swf" size="2519573" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset2" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="21.8690008"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Chặng 1:Điều kiện tự nhiên bán đảo Sơn Trà
+Chặng 3: Hiện trạng về ĐDSH và tài nguyên thiên nhiên tại Sơn Trà
+Chặng 2: Đa dạng sinh học tại Sơn Trà
+Chặng 5: Lời kết
+Description of the contents
+Chặng 4: Chúng ta nên làm gì?</text>
+		</slide>
+		<slide index="2" title="ĐIỀU KIỆN TỰ NHIÊN" titleNormalized="điều kiện tự nhiên" src="slide3.swf" size="63522" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset3" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="13.6390003"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Vị trí địa lí và địa hình: 
+	Bán đảo Sơn Trà có tọa độ địa lí: Kinh độ Đông từ 1080 12’45” đến 108 độ 20’40”; vĩ Bắc 16005’50” đến 16009’06” và nằm theo hướng Đông- Tây.
+	Có chiều dài khối núi 13 km, chiều rộng từ 1,5- 5km; chu vi bán đảo khoảng 60 km. trong đó ¾ là giáp biển, độ cao trung bình của bán đảo là 350m, điểm cao nhất là (đỉnh Ốc) cao 996m, tiếp đến là điểm truyển hình cao 647m, đỉnh quả cầu cao 621m.
+CHẶNG 1: ĐIỀU KIỆN TỰ NHIÊN</text>
+		</slide>
+		<slide index="3" title="ĐIỀU KIỆN TỰ NHIÊN" titleNormalized="điều kiện tự nhiên" src="slide4.swf" size="53554" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset4" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="27.7639994"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Đặc điểm khí hậu: Sơn Trà có khí hậu nhiệt đới biển và chịu ảnh hưởng của hoàng liên cực đới lạnh. Tổng nhiệt lượng trung bình hàng năm 8700-9362˚C, nhiệt độ trung bình năm là 24-35˚C, biên độ nhiệt độ năm 7-9˚C, biên độ nhiệt ngày 1,5-2˚C biên độ nhiệt độ đêm 7,1˚ C. Tổng số giờ nắng trong năm 1.800-2.000 giờ.
+
+ Đặc điểm thủy văn: Bán đảo Sơn Trà có khoảng 20 con suối chảy quanh năm hoặc theo mùa. Có 2 con suối lớn nhất là suối Đá và suối Heo, là nguồn cung cấp nước sinh hoạt chủ yếu cho nhân dân sống trong vùng.
+CHẶNG 1: ĐIỀU KIỆN TỰ NHIÊN</text>
+		</slide>
+		<slide index="4" title="ĐA DẠNG SINH HỌC TẠI SƠN TRÀ" titleNormalized="đa dạng sinh học tại sơn trà" src="slide5.swf" size="125104" advanceOnTime="1" framesCount="25" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset5" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="24" playTime="1.0000000" pauseTime="25.2399998"/>
+			</animationSteps>
+			<notes>Hỏi học sinh: trong ddsh theo em nhóm sinh vật là là quan trọng nhất? Vì sao?</notes>
+			<notesNormalized>hỏi học sinh: trong ddsh theo em nhóm sinh vật là là quan trọng nhất? vì sao?</notesNormalized>
+			<notesHtml>&lt;p&gt;&lt;font size="12"&gt;Hỏi học sinh: trong ddsh theo em nhóm sinh vật là là quan trọng nhất? Vì sao?&lt;/font&gt;&lt;/p&gt;</notesHtml>
+			<text>Hiện nay có nhiều định nghĩa về đa dạng sinh học. Theo Quỹ Bảo tồn Thiên nhiên Thế giới WWF (1989) đề xuất: “Đa dạng sinh học là sự phồn thịnh của sự sống trên Trái Đất, là hàng triệu loài thực vật, động vật và vi sinh vật, là những gen chứa đựng trong các loài là những hệ sinh thái vô cùng phong phú và phức tạp cùng tồn tại trong môi trường” 
+CHẶNG 2: ĐA DẠNG SINH HỌC TẠI SƠN TRÀ</text>
+		</slide>
+		<slide index="5" title="ĐA DẠNG SINH HỌC TẠI SƠN TRÀ" titleNormalized="đa dạng sinh học tại sơn trà" src="slide6.swf" size="145828" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset6" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="5.4110002"/>
+			</animationSteps>
+			<notes>Hỏi học sinh: trong ddsh theo em nhóm sinh vật là là quan trọng nhất? Vì sao?</notes>
+			<notesNormalized>hỏi học sinh: trong ddsh theo em nhóm sinh vật là là quan trọng nhất? vì sao?</notesNormalized>
+			<notesHtml>&lt;p&gt;&lt;font size="12"&gt;Hỏi học sinh: trong ddsh theo em nhóm sinh vật là là quan trọng nhất? Vì sao?&lt;/font&gt;&lt;/p&gt;</notesHtml>
+			<text>VẬY HỆ SINH THÁI Ở SƠN TRÀ CÓ GÌ? 
+CHẶNG 2: ĐA DẠNG SINH HỌC TẠI SƠN TRÀ</text>
+		</slide>
+		<slide index="6" title="ĐA DẠNG THỰC VẬT" titleNormalized="đa dạng thực vật" src="slide7.swf" size="85158" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset7" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="26.1190008"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Hệ thực vật ở Sơn Trà có tính đa dạng về họ, chi, loài. Đã thống kê được 985 loài thực vật bậc cao, có mạch thuộc 143 họ (trong đó 143 loài này có giá trị dược liệu, 140 loài có giá trị cây cảnh, 31 loài có giá trị đan lát, 134 loài có giá trị cung cấp gỗ gia dụng và 57 loài cho củ, quả làm thức ăn cho người và động vật và 22 loài thực vật quý hiếm). 
+Hoa chùm bìa
+Cây đa nghìn năm
+ ĐA DẠNG THỰC VẬT</text>
+		</slide>
+		<slide index="7" title="ĐA DẠNG THỰC VẬT" titleNormalized="đa dạng thực vật" src="slide8.swf" size="94515" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset8" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="19.5190005"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>	Nhóm cây thuốc: có 143 loài, trong đó có một số loài có thể khai thác được là Bách bộ, Thiên môn, Mãn kinh tử, Sầu đâu rừng. Ngoài ra còn một số loài có giá trị khác như: Ngũ gia bì, Lá khôi, kim ngân nhưng với số lượng cá thể không nhiều.
+
+Cây bách bộ (Stemona tuberosa lour.)
+Ngũ gia bì (Acanthopanax aculeatus) 
+ ĐA DẠNG THỰC VẬT</text>
+		</slide>
+		<slide index="8" title="ĐA DẠNG THỰC VẬT" titleNormalized="đa dạng thực vật" src="slide9.swf" size="40671" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset9" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="8.2990002"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Nhóm cây dầu nhựa: thống kê được 11 loài, trong đó sản phẩm của cây Chò chai bị khai thác rất nhiều, ngoài ra còn có Dẻ cau, Dầu lá bóng…
+Chò chai (Hopea recopei)
+Nhóm cây cảnh thống kê được 104 loài; nhóm cây đan lát có 31 loài, trong đó có 5 loài mây, song có thể sử dụng được. Lá nón là loài cây phổ biến dưới tán rừng và mọc rất nhiều ở ven rừng Sơn Trà
+Nhóm cây cho củ, lá, ăn quả có 57 loài. Nhóm cây gỗ (trên 30 cm) có 143 loài.
+ ĐA DẠNG THỰC VẬT</text>
+		</slide>
+		<slide index="9" title="ĐA DẠNG THỰC VẬT" titleNormalized="đa dạng thực vật" src="slide10.swf" size="1214412" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset10" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="25.1690001"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Với một diện tích nhỏ chỉ chiếm 0,014% diện tích của cả nước nhưng số họ thực vật chiếm 37,83% tổng số họ thực vật của Việt Nam, số chi chiếm 19,13% tổng số chi của Việt Nam, số loài chiếm 9,37%  số loài của của Việt Nam.
+Sơn Trà có sự đa dạng thực vật ở mức cao.
+ ĐA DẠNG THỰC VẬT</text>
+		</slide>
+		<slide index="10" title="ĐA DẠNG MÔI TRƯỜNG SỐNG" titleNormalized="đa dạng môi trường sống" src="slide11.swf" size="73056" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset11" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="40.9739985"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Thảm thực vật tự nhiên của Sơn Trà có 3 kiểu: quần hệ rừng kín thường xanh mùa mưa nhiệt đới; quần hệ rừng phục hồi sau khai thác; quần hệ cây bụi và trảng cỏ.
+
+Hệ thực vật Sơn Trà thể hiện tính giao lưu của hai luồng thực vật phái Bắc xuống và phía Nam lên. Hiện trạng hệ thực vật Sơn Trà xuất hiện phổ biến nhiều loài thực vật ưa sáng thuộc các họ: cà phê, cam, trôm, mua, đay... Là những loài thực vật chỉ thị theo diễn thế đi xuống. Điều đó chứng tỏ hệ thực vật Sơn Trà đang bị tác động mạnh theo chiều hướng xấu, cần được giữ gìn và bảo tồn kịp thời.
+ ĐA DẠNG MÔI TRƯỜNG SỐNG
+Rừng kín thường xanh
+Rừng phục hồi
+Cây bụi – Trảng cỏ</text>
+		</slide>
+		<slide index="11" title="ĐA DẠNG CÔN TRÙNG" titleNormalized="đa dạng côn trùng" src="slide12.swf" size="49544" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset12" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="23.4290003"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Cấu trúc thành phần loài côn trùng phổ biến ở Sơn Trà gồm có 12 bộ, thuộc 26 họ của 113 loài. Trong đó có 5 loài thuộc nguồn gen quý hiếm là: Bọ ngựa, bướm cánh sau vàng, bướm phượng đuôi kiếm, bướm phượng đốm vàng, bướm phượng đen đuôi vàng. 
+Bướm phượng đuôi kiếm
+ KHU HỆ ĐỘNG VẬT
+ ĐA DẠNG CÔN TRÙNG</text>
+		</slide>
+		<slide index="12" title="LỚP LƯỠNG CƯ" titleNormalized="lớp lưỡng cư" src="slide13.swf" size="123612" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset13" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="8.7100004"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>LỚP LƯỠNG CƯ (AMPHIBIA)
+Kết quả mới nhất vào năm 2014 của tác giả Phan Thị Hoa đã công bố ở Sơn Trà có 18 loài lưỡng cư thuộc 6 họ, 1 bộ trong đó có 1 loài có tên trong Sách đỏ Việt Nam (2007) và 2 loài có tên trong Danh lục đỏ quốc tế IUCN (2013).</text>
+		</slide>
+		<slide index="13" title="LỚP BÒ SÁT" titleNormalized="lớp bò sát" src="slide14.swf" size="96378" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset14" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="10.2789997"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Cóc rừng 
+(Ingerophrynus galeatus)  
+Loài có tên trong 
+Sách đỏ VN 2007
+Ếch poilani  
+(Limnonectes poilani) 
+ Loài nằm trong Danh lục IUCN 2013
+LỚP LƯỠNG CƯ (AMPHIBIA)</text>
+		</slide>
+		<slide index="14" title="LỚP BÒ SÁT" titleNormalized="lớp bò sát" src="slide15.swf" size="72180" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset15" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="33.5390009"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>LỚP BÒ SÁT (REPTILIA)
+- Da khô, có vảy sừng
+- Chi yếu có vuốt sắc
+- Cổ dài, màng nhĩ nằm trong hốc tai
+- Phổi có nhiều vách ngăn
+- Tim có vách hụt ngăn tâm thất, máu pha đi nuôi cơ thể
+- Thụ tinh trong, trứng có vỏ bao bọc, giàu noãn hoàn
+- Là động vật biến nhiệt.</text>
+		</slide>
+		<slide index="15" title="LỚP BÒ SÁT" titleNormalized="lớp bò sát" src="slide16.swf" size="415544" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset16" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="7.9790000"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>STT
+TÊN KHOA HỌC 
+TÊN TIẾNG VIỆT
+SỐ LOÀI
+A
+Squamata
+Bộ có vẩy
+I
+Sauria
+Phân bộ thằn lằn
+1
+Agamidae
+Họ Nhông
+4
+2
+Gekkomidae
+Họ Tắc kè
+6
+3
+Dibamidae
+Họ Thằn lằn giun
+1
+4
+Scincidae
+Họ Thằn lằn bóng
+10
+5
+Varanidae
+Họ Ky đà
+1
+6
+Pythonidae
+Họ Trăn
+2
+7
+Colubridae
+Họ Rắn nước
+16
+8
+Elapidae
+Họ Rắn hổ
+2
+9
+Viperidae
+Họ Rắn lục
+3
+B
+Testudines
+Bộ Rùa
+10
+Geoemididae
+Họ Rùa đầm
+4
+11
+Testudinidae
+Họ Rùa núi
+1
+12
+Trionychidae
+Họ Ba ba
+1
+13
+Choloniidae
+Họ Vích
+1
+Rắn lục ở Sơn Trà 
+(Ảnh: GreenViet)
+LỚP BÒ SÁT (REPTILIA)</text>
+		</slide>
+		<slide index="16" title="LỚP CHIM" titleNormalized="lớp chim" src="slide17.swf" size="96903" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset17" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="14.2210001"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Diều hoa miến điện 
+(Spilornis cheela)
+Cú vọ lưng nâu 
+(Ninox scutulata)
+LỚP CHIM (AVES)</text>
+		</slide>
+		<slide index="17" title="LỚP BÒ SÁT" titleNormalized="lớp bò sát" src="slide18.swf" size="82567" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset18" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="8.4489998"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Hút mật bụng hung
+ (Hill Blue Flycatcher)
+Chim khách đuôi cờ 
+(Racquet-tailed Treepie Crypsirina temia)
+Bông lau họng vạch (Pycnonotus aurigaster)
+LỚP CHIM (AVES)</text>
+		</slide>
+		<slide index="18" title="LỚP THÚ" titleNormalized="lớp thú" src="slide19.swf" size="96517" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset19" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="12.2090000"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Khỉ đuôi lợn (Macaca leonia)
+Khỉ vàng (Macaca mulatta)
+LỚP THÚ (MAMMALIA )</text>
+		</slide>
+		<slide index="19" title="LỚP THÚ" titleNormalized="lớp thú" src="slide20.swf" size="92182" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset20" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="6.8889999"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>LỚP THÚ (MAMMALIA )</text>
+		</slide>
+		<quiz index="20" title="CÂU HỎI TÌM HIỂU VỀ VOỌC CHÀ VÁ CHÂN NÂU" titleNormalized="câu hỏi tìm hiểu về voọc chà vá chân nâu" src="quiz1.swf" size="8004949" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" bgPlaylistIndex="0" thumbnailAssetId="imgAsset21" presenterIndex="0" embedded="0">
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="5.4390001"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<quizBranching allowQuizInterruption="1" allowViewNextSlides="atAnyTime">
+				<finishAction>
+					<passed>
+						<gotoNextSlide/>
+					</passed>
+					<failed>
+						<gotoNextSlide/>
+					</failed>
+				</finishAction>
+			</quizBranching>
+		</quiz>
+		<slide index="21" title="LỚP THÚ" titleNormalized="lớp thú" src="slide22.swf" size="52880" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset22" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="16.8220000"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>LỚP THÚ (MAMMALIA )
+Voọc chà vá chân nâu thuộc nhóm khỉ cựu lục địa, Bộ Linh Trưởng.
+Trên thế giới, Voọc chà vá chân nâu chỉ phân bố dọc dãy trường
+Sơn, trong các vùng rừng giáp ranh giữa phía Nam của Lào với
+miền Trung Việt Nam, và một vùng nhỏ đông bắc Campuchia.</text>
+		</slide>
+		<slide index="22" title="LỚP THÚ" titleNormalized="lớp thú" src="slide23.swf" size="809941" advanceOnTime="1" framesCount="3042" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset23" presenterIndex="0">
+			<sounds/>
+			<videos>
+				<video id="video0" videoClipId="ispring.resources_28f69a98.spr0_134554562" slides="1" repeat="1" volume="0.8000000" posterFrameId="ispring.resources_28f69a98.spr2_134554562" playFullScreen="0" hideWhenNotPlaying="0" rewindAfterPlaying="0"/>
+			</videos>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands>
+				<playVideo frameIndex="0" videoId="video0" startPos="0.0000000"/>
+			</videoCommands>
+			<animationSteps>
+				<step start="0" end="3041" playTime="26.6200008" pauseTime="0.0000000"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>LỚP THÚ (MAMMALIA )</text>
+		</slide>
+		<slide index="23" title="HIỆN TRẠNG SƠN TRÀ" titleNormalized="hiện trạng sơn trà" src="slide24.swf" size="44207" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset24" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="25.1809992"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>CHẶNG 3: HIỆN TRẠNG SƠN TRÀ
+Vào năm 2016, hàng nghìn m2 đất rừng bị tàn phá để xây dựng 40 trụ móng khách sạn mà chưa được sự cho phép của cơ quan chức năng.</text>
+		</slide>
+		<slide index="24" title="HIỆN TRẠNG SƠN TRÀ" titleNormalized="hiện trạng sơn trà" src="slide25.swf" size="75241" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset25" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="16.0589995"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Sự xâm lấn của cây Bìm Bìm và tràn ngập rác thải khắp các tuyến đường mòn quanh Sơn Trà. Từ vài chục hecta ban đầu, nay đã phủ rộng khoảng 1.000 hecta khu vực bán đảo Sơn Trà, che phủ toàn bộ tán rừng, không cho các loài thực vật khác tồn tại, sinh trưởng. 
+CHẶNG 3: HIỆN TRẠNG SƠN TRÀ</text>
+		</slide>
+		<slide index="25" title="HIỆN TRẠNG SƠN TRÀ" titleNormalized="hiện trạng sơn trà" src="slide26.swf" size="77695" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset26" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="10.0610003"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>CHẶNG 3: HIỆN TRẠNG SƠN TRÀ
+Nhiều đối tượng xấu đã xâm nhập Khu bảo tồn thiên nhiên Sơn Trà nhằm săn bắt động vật, trong đó có voọc chà vá chân nâu quý hiếm. Họ đem xẻ thịt, nấu cao.</text>
+		</slide>
+		<slide index="26" title="GIẢI PHÁP BẢO VỆ SƠN TRÀ" titleNormalized="giải pháp bảo vệ sơn trà" src="slide27.swf" size="407988" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset27" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="93.9710001"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>CHẶNG 4: GIẢI PHÁP BẢO VỆ SƠN TRÀ
+Trong vòng thời gian 3 phút, các bạn hãy viết nhiều nhất có thể các giải pháp để bảo vệ thiên nhiên ở Bán đảo Sơn Trà.</text>
+		</slide>
+		<slide index="27" title="GIẢI PHÁP BẢO VỆ SƠN TRÀ" titleNormalized="giải pháp bảo vệ sơn trà" src="slide28.swf" size="122312" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset28" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="21.9990000"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>Các giải pháp nhằm bảo tồn đa dạng sinh học trên Bán đảo Sơn Trà
+Tăng cường tuyên truyền đến mọi người về bảo tồn ĐDSH ở Sơn Trà (treo băng rôn, khẩu hiệu tại các điểm thu hút sự chú ý của người dân – trạm xe buýt, tổ chức các buổi tuyên truyền, triển lãm tranh tại các trường học)
+	</text>
+		</slide>
+		<slide index="28" title="GIẢI PHÁP BẢO VỆ SƠN TRÀ" titleNormalized="giải pháp bảo vệ sơn trà" src="slide29.swf" size="140009" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset29" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="10.1010002"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>4. Các giải pháp nhằm bảo tồn đa dạng sinh học trên Bán đảo Sơn Trà
+Ra quân dọn vệ sinh cho Sơn Trà
+CHẶNG 4: GIẢI PHÁP BẢO VỆ SƠN TRÀ</text>
+		</slide>
+		<slide index="29" title="GIẢI PHÁP BẢO VỆ SƠN TRÀ" titleNormalized="giải pháp bảo vệ sơn trà" src="slide30.swf" size="118107" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset30" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="13.3790001"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>CHẶNG 4: GIẢI PHÁP BẢO VỆ SƠN TRÀ
+Tổ chức các buổi tham quan Sơn Trà</text>
+		</slide>
+		<slide index="30" title="GIẢI PHÁP BẢO VỆ SƠN TRÀ" titleNormalized="giải pháp bảo vệ sơn trà" src="slide31.swf" size="99556" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset31" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="13.2330002"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>CHẶNG 4: GIẢI PHÁP BẢO VỆ SƠN TRÀ
+Tham gia các hoạt động cứu hộ và bảo vệ động vật hoang dã. Hãy liên hệ tới hotline 1800 1522 để thông báo các trường hợp mà các bạn biết.</text>
+		</slide>
+		<slide index="31" title="LỜI KẾT" titleNormalized="lời kết" src="slide32.swf" size="1047869" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset32" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="13.2990002"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>CHẶNG 5: LỜI KẾT</text>
+		</slide>
+		<slide index="32" title="LỜI KẾT" titleNormalized="lời kết" src="slide33.swf" size="2761490" advanceOnTime="1" framesCount="1" hasEmbeddedFlashClip="0" hidden="0" level="0" advanceOnClick="1" bgPlaylistIndex="0" thumbnailAssetId="imgAsset33" presenterIndex="0">
+			<sounds/>
+			<videos/>
+			<transitionEffect name="" duration="0.0000000" soundId="" looped="0"/>
+			<soundCommands/>
+			<videoCommands/>
+			<animationSteps>
+				<step start="0" end="0" playTime="0.0010000" pauseTime="16.5390009"/>
+			</animationSteps>
+			<notes/>
+			<notesNormalized/>
+			<notesHtml/>
+			<text>CHẶNG 5: LỜI KẾT</text>
+		</slide>
+	</slides>
+</presentation>
