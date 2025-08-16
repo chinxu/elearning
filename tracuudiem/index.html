@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra Cứu Thông Tin Học Sinh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tùy chỉnh font cho toàn bộ trang */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Tra Cứu Thông Tin Học Sinh</h1>
+        <p class="text-center text-gray-600 mb-8">
+            Phụ huynh nhập số thứ tự của học sinh để tra cứu thông tin.
+        </p>
+
+        <div class="mb-6">
+            <label for="studentIdInput" class="block text-gray-700 text-sm font-semibold mb-2">
+                Nhập số thứ tự:
+            </label>
+            <input
+                type="number"
+                id="studentIdInput"
+                placeholder="Ví dụ: 1, 2, 3..."
+                class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+        </div>
+
+        <button
+            id="searchButton"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
+        >
+            Tra Cứu
+        </button>
+
+        <div id="results" class="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200 hidden">
+            <h2 class="text-xl font-semibold text-blue-800 mb-4">Thông Tin Học Sinh:</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <p><span class="font-medium text-gray-700">Họ và tên:</span> <span id="studentName" class="text-gray-900"></span></p>
+                <p><span class="font-medium text-gray-700">Điểm kiểm tra:</span> <span id="studentScore" class="text-gray-900"></span></p>
+                <p><span class="font-medium text-gray-700">Nhận xét:</span> <span id="studentComment" class="text-gray-900"></span></p>
+            </div>
+        </div>
+
+        <div id="messageBox" class="mt-8 p-4 bg-yellow-100 text-yellow-800 rounded-lg border border-yellow-300 hidden">
+            <!-- Thông báo lỗi hoặc không tìm thấy sẽ hiển thị ở đây -->
+        </div>
+
+        <!-- Loading indicator -->
+        <div id="loadingIndicator" class="mt-8 p-4 bg-blue-100 text-blue-800 rounded-lg hidden text-center">
+            Đang tải dữ liệu...
+        </div>
+    </div>
+
+    <script>
+        // URL ỨNG DỤNG WEB CỦA BẠN TỪ GOOGLE APPS SCRIPT
+        const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbxpdhu81UsJ3Yij0CvyvWNoqt94j4VcM_QWtK8ImBrTk2KvR-89Mk1F5fOD4r3l0iYI/exec'; 
+        
+
+        let studentData = []; // Khởi tạo mảng dữ liệu học sinh trống
+
+        const studentIdInput = document.getElementById('studentIdInput');
+        const searchButton = document.getElementById('searchButton');
+        const resultsDiv = document.getElementById('results');
+        const studentNameSpan = document.getElementById('studentName');
+        const studentScoreSpan = document.getElementById('studentScore');
+        const studentCommentSpan = document.getElementById('studentComment');
+        const messageBox = document.getElementById('messageBox');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+
+        // Hàm hiển thị thông báo trong hộp thông báo
+        function showMessage(message, type = 'warning') {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
+            messageBox.classList.add('block');
+
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-800', 'border-red-300');
+            } else if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-800', 'border-green-300');
+            } else { // default to warning
+                messageBox.classList.add('bg-yellow-100', 'text-yellow-800', 'border-yellow-300');
+            }
+            resultsDiv.classList.add('hidden'); // Ẩn kết quả khi có thông báo
+        }
+
+        // Hàm ẩn thông báo
+        function hideMessage() {
+            messageBox.classList.add('hidden');
+        }
+
+        // Hàm hiển thị loading
+        function showLoading() {
+            loadingIndicator.classList.remove('hidden');
+        }
+
+        // Hàm ẩn loading
+        function hideLoading() {
+            loadingIndicator.classList.add('hidden');
+        }
+
+        // Hàm tải dữ liệu học sinh từ Google Apps Script
+        async function fetchStudentData() {
+            showLoading();
+            hideMessage(); // Ẩn thông báo cũ
+            try {
+                const response = await fetch(GOOGLE_SHEET_API_URL);
+                if (!response.ok) {
+                    throw new Error(`Lỗi HTTP: ${response.status} - ${response.statusText || 'Không xác định'}`);
+                }
+                const data = await response.json();
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                studentData = data; // Cập nhật dữ liệu học sinh
+                showMessage("Dữ liệu đã được tải thành công!", 'success');
+            } catch (error) {
+                console.error("Lỗi khi tải dữ liệu:", error);
+                showMessage(`Không thể tải dữ liệu. Lỗi: ${error.message}. Vui lòng kiểm tra URL Apps Script và kết nối Internet.`, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Gọi hàm tải dữ liệu khi trang web được tải
+        window.onload = fetchStudentData;
+
+        // Xử lý sự kiện khi nhấn nút "Tra Cứu"
+        searchButton.addEventListener('click', () => {
+            const studentId = parseInt(studentIdInput.value.trim()); // Lấy giá trị và chuyển sang số nguyên
+
+            hideMessage(); // Ẩn bất kỳ thông báo nào trước đó
+
+            if (isNaN(studentId) || studentId <= 0) {
+                showMessage("Vui lòng nhập một số thứ tự hợp lệ (là số nguyên dương).", 'error');
+                resultsDiv.classList.add('hidden');
+                return;
+            }
+
+            // Tìm kiếm học sinh trong dữ liệu đã tải
+            const foundStudent = studentData.find(student => student.id === studentId);
+
+            if (foundStudent) {
+                // Hiển thị thông tin học sinh
+                studentNameSpan.textContent = foundStudent.name;
+                studentScoreSpan.textContent = foundStudent.score;
+                studentCommentSpan.textContent = foundStudent.comment;
+                resultsDiv.classList.remove('hidden'); // Hiển thị khung kết quả
+            } else {
+                // Hiển thị thông báo nếu không tìm thấy
+                showMessage(`Không tìm thấy học sinh với số thứ tự ${studentId}. Vui lòng kiểm tra lại.`, 'warning');
+                resultsDiv.classList.add('hidden'); // Ẩn khung kết quả nếu không tìm thấy
+            }
+        });
+
+        // Xử lý sự kiện khi nhấn Enter trong ô input
+        studentIdInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                searchButton.click(); // Kích hoạt sự kiện click của nút tìm kiếm
+            }
+        });
+    </script>
+</body>
+</html>
