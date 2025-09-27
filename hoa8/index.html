@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Tay Công Thức Hóa Học Lớp 8</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .formula-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .formula-header {
+            background-color: #f9fafb;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .formula-content {
+            padding: 1.5rem;
+        }
+        .formula {
+            background-color: #eef2ff;
+            color: #4338ca;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .example {
+            margin-top: 1rem;
+            border-left: 4px solid #6366f1;
+            padding-left: 1rem;
+            background-color: #f9fafb;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .explanation p {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-indigo-700">Sổ Tay Công Thức Hóa Học Lớp 8</h1>
+            <p class="text-lg text-gray-600 mt-2">Tổng hợp các công thức quan trọng phần Hóa học - KHTN 8</p>
+        </header>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <aside class="lg:w-1/4 sticky top-8 self-start">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold mb-4 text-indigo-700">Mục Lục</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#mol" class="font-medium text-gray-600 hover:text-indigo-600 transition-colors">1. Mol</a></li>
+                        <li><a href="#ti-khoi" class="font-medium text-gray-600 hover:text-indigo-600 transition-colors">2. Tỉ khối chất khí</a></li>
+                        <li><a href="#do-tan" class="font-medium text-gray-600 hover:text-indigo-600 transition-colors">3. Độ tan</a></li>
+                        <li><a href="#nong-do" class="font-medium text-gray-600 hover:text-indigo-600 transition-colors">4. Nồng độ dung dịch</a></li>
+                        <li><a href="#tinh-toan-pthh" class="font-medium text-gray-600 hover:text-indigo-600 transition-colors">5. Tính theo PTHH</a></li>
+                        <li><a href="#hieu-suat" class="font-medium text-gray-600 hover:text-indigo-600 transition-colors">6. Hiệu suất phản ứng</a></li>
+                        <li><a href="#doc-ten" class="font-medium text-gray-600 hover:text-indigo-600 transition-colors">7. Cách đọc tên các chất</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:w-3/4">
+                <!-- Section 1: Mol -->
+                <section id="mol" class="mb-12">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-600 border-b-2 border-indigo-200 pb-2">1. Mol</h2>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính số nguyên tử/phân tử từ số mol</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">Số nguyên tử (phân tử) = n . 6,022 . 10<sup>23</sup></div>
+                            <div class="explanation"><p><span class="font-semibold">n:</span> Số mol (mol).</p></div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Số phân tử trong 0,2 mol O<sub>2</sub> là: 0,2 . 6,022 . 10<sup>23</sup> = 1,2044 . 10<sup>23</sup> phân tử.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính số mol từ số nguyên tử/phân tử</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">n = Số nguyên tử (phân tử) / (6,022 . 10<sup>23</sup>)</div>
+                            <div class="explanation"><p><span class="font-semibold">n:</span> Số mol (mol).</p></div>
+                             <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Tính số mol của 1,2044.10<sup>23</sup> phân tử Fe<sub>2</sub>O<sub>3</sub>:<br>n = (1,2044 . 10<sup>23</sup>) / (6,022 . 10<sup>23</sup>) = 0,2 mol.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính khối lượng mol (M)</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">M = m / n</div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">M:</span> Khối lượng mol (g/mol).</p>
+                                <p><span class="font-semibold">m:</span> Khối lượng (g).</p>
+                                <p><span class="font-semibold">n:</span> Số mol (mol).</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Tính khối lượng mol của chất X, biết 0,1 mol X nặng 4,4g.<br>M<sub>X</sub> = 4,4 / 0,1 = 44 (g/mol).</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính số mol (n) từ khối lượng</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">n = m / M</div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">n:</span> Số mol (mol).</p>
+                                <p><span class="font-semibold">m:</span> Khối lượng (g).</p>
+                                <p><span class="font-semibold">M:</span> Khối lượng mol (g/mol).</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Số mol của 6,4 gam đồng (Cu) là: n<sub>Cu</sub> = 6,4 / 64 = 0,1 (mol).</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính khối lượng (m) từ số mol</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">m = n . M</div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">m:</span> Khối lượng (g).</p>
+                                <p><span class="font-semibold">n:</span> Số mol (mol).</p>
+                                <p><span class="font-semibold">M:</span> Khối lượng mol (g/mol).</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Khối lượng của 0,1 mol đồng (Cu) là:<br>m<sub>Cu</sub>= 0,1 . 64 = 6,4 (g).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính thể tích chất khí (V) từ số mol (đkc)</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">V = n . 24,79</div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">V:</span> Thể tích (L).</p>
+                                <p><span class="font-semibold">n:</span> Số mol (mol).</p>
+                                <p class="text-sm text-gray-600">*Áp dụng ở điều kiện chuẩn: 25°C, 1 bar.</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Thể tích của 0,2 mol khí O<sub>2</sub> (đkc) là: V = 0,2 . 24,79 = 4,958 (L).</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính số mol (n) từ thể tích chất khí (đkc)</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">n = V / 24,79</div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">n:</span> Số mol (mol).</p>
+                                <p><span class="font-semibold">V:</span> Thể tích (L).</p>
+                                <p class="text-sm text-gray-600">*Áp dụng ở điều kiện chuẩn: 25°C, 1 bar.</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Số mol của 2,479 lít khí CO<sub>2</sub> (đkc) là: n = 2,479 / 24,79 = 0,1 (mol).</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính số mol nguyên tử từ công thức hóa học</h3></div>
+                        <div class="formula-content">
+                            <p class="mb-2">Trong hợp chất A<sub>x</sub>B<sub>y</sub>:</p>
+                             <div class="formula">Số mol nguyên tử A = n<sub>A_x B_y</sub> . x</div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Tính số mol nguyên tử H có trong 0,4 mol H<sub>2</sub>O: <br>n<sub>H</sub> = n<sub>H₂O</sub> . 2 = 0,4 . 2 = 0,8 (mol).</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Tỉ khối chất khí -->
+                <section id="ti-khoi" class="mb-12">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-600 border-b-2 border-indigo-200 pb-2">2. Tỉ khối chất khí</h2>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tỉ khối của khí A đối với khí B</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">d<sub>A/B</sub> = M<sub>A</sub> / M<sub>B</sub></div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">d<sub>A/B</sub>:</span> Tỉ khối của khí A đối với khí B.</p>
+                                <p><span class="font-semibold">M<sub>A</sub>, M<sub>B</sub>:</span> Khối lượng mol của khí A và khí B (g/mol).</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>So sánh khí O<sub>2</sub> (M=32) và H<sub>2</sub> (M=2): d<sub>O2/H2</sub> = 32 / 2 = 16. Vậy khí oxygen nặng hơn khí hydrogen 16 lần.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tỉ khối của khí A đối với không khí</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">d<sub>A/kk</sub> = M<sub>A</sub> / 29</div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">d<sub>A/kk</sub>:</span> Tỉ khối của khí A đối với không khí.</p>
+                                <p><span class="font-semibold">M<sub>A</sub>:</span> Khối lượng mol của khí A (g/mol).</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Khí O<sub>2</sub> (M=32) nặng hay nhẹ hơn không khí? d<sub>O₂/kk</sub> = 32 / 29 ≈ 1,1. Vậy khí O<sub>2</sub> nặng hơn không khí.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Section 3: Độ tan -->
+                <section id="do-tan" class="mb-12">
+                     <h2 class="text-3xl font-bold mb-6 text-indigo-600 border-b-2 border-indigo-200 pb-2">3. Độ tan (S)</h2>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính độ tan</h3></div>
+                        <div class="formula-content">
+                           <div class="formula">S = (m<sub>ct</sub> / m<sub>nước</sub>) . 100</div>
+                           <div class="explanation">
+                               <p><span class="font-semibold">S:</span> Độ tan (g/100g nước).</p>
+                               <p><span class="font-semibold">m<sub>ct</sub>:</span> Khối lượng chất tan (g).</p>
+                               <p><span class="font-semibold">m<sub>nước</sub>:</span> Khối lượng nước (g).</p>
+                           </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Hòa tan hết 53g Na<sub>2</sub>CO<sub>3</sub> trong 250g nước được dung dịch bão hòa. Độ tan của Na<sub>2</sub>CO<sub>3</sub> là: S = (53 / 250) * 100 = 21,2 (g/100g nước).</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Nồng độ dung dịch -->
+                <section id="nong-do" class="mb-12">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-600 border-b-2 border-indigo-200 pb-2">4. Nồng độ dung dịch</h2>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính nồng độ phần trăm (C%)</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">C% = (m<sub>ct</sub> / m<sub>dd</sub>) . 100%</div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">C%:</span> Nồng độ phần trăm (%).</p>
+                                <p><span class="font-semibold">m<sub>ct</sub>:</span> Khối lượng chất tan (g).</p>
+                                <p><span class="font-semibold">m<sub>dd</sub>:</span> Khối lượng dung dịch (g).</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Dung dịch chứa 20g NaCl trong 80g nước. Khối lượng dung dịch là 20 + 80 = 100g. Nồng độ phần trăm là: C% = (20 / 100) * 100% = 20%.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Tính nồng độ mol (C<sub>M</sub>)</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">C<sub>M</sub> = n<sub>ct</sub> / V<sub>dd</sub></div>
+                            <div class="explanation">
+                                <p><span class="font-semibold">C<sub>M</sub>:</span> Nồng độ mol (mol/L hoặc M).</p>
+                                <p><span class="font-semibold">n<sub>ct</sub>:</span> Số mol chất tan (mol).</p>
+                                <p><span class="font-semibold">V<sub>dd</sub>:</span> Thể tích dung dịch (L).</p>
+                            </div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>200ml (0,2 L) dung dịch chứa 0,02 mol NaCl. Nồng độ mol là: C<sub>M</sub> = 0,02 / 0,2 = 0,1 M.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Pha trộn 2 dung dịch (không phản ứng)</h3></div>
+                        <div class="formula-content">
+                           <p>Khi trộn dung dịch 1 và dung dịch 2:</p>
+                           <ul class="list-disc list-inside space-y-2">
+                               <li><b>Khối lượng chất tan sau trộn:</b> m<sub>ct_sau</sub> = m<sub>ct_1</sub> + m<sub>ct_2</sub></li>
+                               <li><b>Khối lượng dung dịch sau trộn:</b> m<sub>dd_sau</sub> = m<sub>dd_1</sub> + m<sub>dd_2</sub></li>
+                               <li><b>Số mol chất tan sau trộn:</b> n<sub>sau</sub> = n<sub>1</sub> + n<sub>2</sub></li>
+                               <li><b>Thể tích dung dịch sau trộn:</b> V<sub>sau</sub> ≈ V<sub>1</sub> + V<sub>2</sub></li>
+                           </ul>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Trộn 300ml (0,3L) dd NaOH 1M với 200ml (0,2L) dd NaOH 2M. <br>
+                                n<sub>NaOH(1)</sub> = 0,3 . 1 = 0,3 mol; n<sub>NaOH(2)</sub> = 0,2 . 2 = 0,4 mol<br>
+                                n<sub>NaOH(sau)</sub> = 0,3 + 0,4 = 0,7 mol<br>
+                                V<sub>dd(sau)</sub> = 0,3 + 0,2 = 0,5 L<br>
+                                C<sub>M(sau)</sub> = 0,7 / 0,5 = 1,4 M</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                 <!-- Section 5: Tính theo PTHH -->
+                <section id="tinh-toan-pthh" class="mb-12">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-600 border-b-2 border-indigo-200 pb-2">5. Tính theo phương trình hóa học</h2>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Các bước giải chung</h3></div>
+                        <div class="formula-content">
+                            <ol class="list-decimal list-inside space-y-2">
+                                <li><b>Bước 1:</b> Quy đổi các dữ kiện đề bài về số mol (n).</li>
+                                <li><b>Bước 2:</b> Viết phương trình hóa học (PTHH) và cân bằng.</li>
+                                <li><b>Bước 3:</b> Dựa vào tỉ lệ hệ số trong PTHH để tìm số mol chất cần tính.</li>
+                                <li><b>Bước 4:</b> Quy đổi số mol vừa tìm được về đại lượng theo yêu cầu (khối lượng, thể tích,...).</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                         <div class="formula-header"><h3 class="text-xl font-semibold">Dạng bài toán cơ bản</h3></div>
+                         <div class="formula-content">
+                             <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Hòa tan hết 0,65 gam Zn trong dung dịch HCl.<br>
+                                PTHH: Zn + 2HCl → ZnCl<sub>2</sub> + H<sub>2</sub><br>
+                                n<sub>Zn</sub> = 0,65 / 65 = 0,01 mol<br>
+                                Theo PTHH, n<sub>H₂</sub> = n<sub>Zn</sub> = 0,01 mol<br>
+                                V<sub>H₂</sub> (đkc) = 0,01 . 24,79 = 0,2479 L</p>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Dạng bài toán có chất dư</h3></div>
+                        <div class="formula-content">
+                            <p>Khi bài toán cho dữ kiện của 2 chất tham gia, cần xác định chất nào phản ứng hết, chất nào dư. Mọi tính toán về sản phẩm đều dựa vào chất phản ứng hết.</p>
+                             <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Cho 8,1g Al vào dung dịch chứa 29,4g H<sub>2</sub>SO<sub>4</sub>.<br>
+                                PTHH: 2Al + 3H<sub>2</sub>SO<sub>4</sub> → Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + 3H<sub>2</sub><br>
+                                n<sub>Al</sub> = 8,1 / 27 = 0,3 mol; n<sub>H₂SO₄</sub> = 29,4 / 98 = 0,3 mol<br>
+                                Xét tỉ lệ: n<sub>Al</sub>/2 = 0,15 và n<sub>H₂SO₄</sub>/3 = 0,1.<br>
+                                Vì 0,15 > 0,1 nên Al dư, H<sub>2</sub>SO<sub>4</sub> hết.<br>
+                                Tính theo H<sub>2</sub>SO<sub>4</sub>: n<sub>H₂</sub> = n<sub>H₂SO₄</sub> = 0,3 mol.<br>
+                                V<sub>H₂</sub> (đkc) = 0,3 . 24,79 = 7,437 L.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6: Hiệu suất -->
+                <section id="hieu-suat" class="mb-12">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-600 border-b-2 border-indigo-200 pb-2">6. Hiệu suất phản ứng (H%)</h2>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Dạng 1: Tính hiệu suất phản ứng</h3></div>
+                        <div class="formula-content">
+                            <div class="formula">H% = (Lượng thực tế / Lượng lý thuyết) . 100%</div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Nhiệt phân 19,6 g KClO<sub>3</sub> thu được 0,18 mol O<sub>2</sub>.<br>
+                                PTHH: 2KClO<sub>3</sub> → 2KCl + 3O<sub>2</sub><br>
+                                n<sub>KClO₃</sub> = 19,6 / 122,5 = 0,16 mol<br>
+                                Theo PTHH, n<sub>O₂</sub>(lý thuyết) = 3/2 * n<sub>KClO₃</sub> = 0,24 mol<br>
+                                n<sub>O₂</sub>(thực tế) = 0,18 mol<br>
+                                H% = (0,18 / 0,24) * 100% = 75%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Dạng 2: Tính lượng sản phẩm thực tế</h3></div>
+                        <div class="formula-content">
+                             <div class="formula">Lượng thực tế = Lượng lý thuyết . H%</div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Nung 50g CaCO<sub>3</sub> (H=90%) thu được bao nhiêu gam CaO?<br>
+                                PTHH: CaCO<sub>3</sub> → CaO + CO<sub>2</sub><br>
+                                n<sub>CaCO₃</sub> = 50 / 100 = 0,5 mol<br>
+                                n<sub>CaO</sub>(lý thuyết) = n<sub>CaCO₃</sub> = 0,5 mol<br>
+                                n<sub>CaO</sub>(thực tế) = 0,5 . 90% = 0,45 mol<br>
+                                m<sub>CaO</sub>(thực tế) = 0,45 . 56 = 25,2 g</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Dạng 3: Tính lượng chất phản ứng cần dùng</h3></div>
+                        <div class="formula-content">
+                             <div class="formula">Lượng cần dùng = Lượng lý thuyết / H%</div>
+                            <div class="example">
+                                <p class="font-semibold">Ví dụ:</p>
+                                <p>Cần bao nhiêu gam KNO<sub>3</sub> để điều chế 0,64g O<sub>2</sub> (H=80%)?<br>
+                                PTHH: 2KNO<sub>3</sub> → 2KNO<sub>2</sub> + O<sub>2</sub><br>
+                                n<sub>O₂</sub> = 0,64 / 32 = 0,02 mol<br>
+                                n<sub>KNO₃</sub>(lý thuyết) = 2 * n<sub>O₂</sub> = 0,04 mol<br>
+                                n<sub>KNO₃</sub>(cần dùng) = 0,04 / 80% = 0,05 mol<br>
+                                m<sub>KNO₃</sub>(cần dùng) = 0,05 . 101 = 5,05 g</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                 <!-- Section 7: Cách đọc tên -->
+                <section id="doc-ten" class="mb-12">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-600 border-b-2 border-indigo-200 pb-2">7. Cách đọc tên các chất</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="formula-card"><div class="formula-header"><h3 class="text-xl font-semibold">Acid</h3></div><div class="formula-content"><p>HCl: Hydrochloric acid</p><p>H<sub>2</sub>SO<sub>4</sub>: Sulfuric acid</p><p>HNO<sub>3</sub>: Nitric acid</p></div></div>
+                        <div class="formula-card"><div class="formula-header"><h3 class="text-xl font-semibold">Base</h3></div><div class="formula-content"><p class="mb-2">Tên kim loại (+ hóa trị) + hydroxide</p><p>NaOH: Sodium hydroxide</p><p>Fe(OH)<sub>2</sub>: Iron (II) hydroxide</p></div></div>
+                        <div class="formula-card"><div class="formula-header"><h3 class="text-xl font-semibold">Oxide</h3></div><div class="formula-content"><p class="mb-2"><span class="font-bold">Oxide KL:</span> Tên KL (+ hóa trị) + oxide</p><p class="mb-2"><span class="font-bold">Oxide PK:</span> (Tiền tố) + Tên PK + (tiền tố) + oxide</p><p>Fe<sub>2</sub>O<sub>3</sub>: Iron (III) oxide</p><p>CO<sub>2</sub>: Carbon dioxide</p></div></div>
+                        <div class="formula-card"><div class="formula-header"><h3 class="text-xl font-semibold">Muối</h3></div><div class="formula-content"><p class="mb-2">Tên kim loại (+ hóa trị) + tên gốc acid</p><p>Na<sub>2</sub>CO<sub>3</sub>: Sodium carbonate</p><p>FeCl<sub>3</sub>: Iron (III) chloride</p></div></div>
+                     </div>
+                     <div class="formula-card">
+                        <div class="formula-header"><h3 class="text-xl font-semibold">Bảng một số gốc acid thường gặp</h3></div>
+                        <div class="formula-content">
+                            <table class="w-full text-left border-collapse">
+                                <thead><tr><th class="py-2 px-4 bg-gray-100 font-bold uppercase text-sm text-gray-600 border-b">Gốc acid</th><th class="py-2 px-4 bg-gray-100 font-bold uppercase text-sm text-gray-600 border-b">Tên gọi</th></tr></thead>
+                                <tbody>
+                                    <tr class="hover:bg-gray-50"><td class="py-2 px-4 border-b">-Cl</td><td class="py-2 px-4 border-b">chloride</td></tr>
+                                    <tr class="hover:bg-gray-50"><td class="py-2 px-4 border-b">-NO<sub>3</sub></td><td class="py-2 px-4 border-b">nitrate</td></tr>
+                                    <tr class="hover:bg-gray-50"><td class="py-2 px-4 border-b">=SO<sub>4</sub></td><td class="py-2 px-4 border-b">sulfate</td></tr>
+                                    <tr class="hover:bg-gray-50"><td class="py-2 px-4 border-b">=CO<sub>3</sub></td><td class="py-2 px-4 border-b">carbonate</td></tr>
+                                    <tr class="hover:bg-gray-50"><td class="py-2 px-4 border-b">≡PO<sub>4</sub></td><td class="py-2 px-4 border-b">phosphate</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <footer class="text-center py-6 bg-gray-100 mt-12">
+        
+    </footer>
+
+</body>
+</html>
