@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Tay Công Thức Vật Lý Lớp 8</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for TOC */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Header for Mobile with Toggle Button -->
+    <header class="sticky top-0 bg-white shadow-md md:hidden z-20">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-lg font-bold text-slate-900">Sổ Tay Vật Lý 8</h1>
+            <button id="menu-toggle" class="p-2 rounded-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4 md:p-8">
+        <div class="flex flex-col md:flex-row md:gap-8">
+            <!-- Table of Contents (Sidebar) -->
+            <aside id="sidebar" class="w-full md:w-1/4 lg:w-1/5 fixed top-0 left-0 h-full bg-white shadow-xl z-30 transform -translate-x-full md:relative md:translate-x-0 md:shadow-lg md:rounded-lg transition-transform duration-300 ease-in-out">
+                <div class="p-6 h-full flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-slate-900">Mục Lục</h2>
+                         <button id="menu-close" class="p-2 rounded-md hover:bg-slate-100 md:hidden">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                         </button>
+                    </div>
+                    <nav class="flex-grow overflow-y-auto custom-scrollbar">
+                        <ul class="space-y-2 toc-links">
+                            <li><a href="#cong-thuc" class="block px-3 py-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-indigo-600 font-medium">A. Một Số Công Thức</a></li>
+                            <ul class="space-y-2 pl-4 border-l ml-3">
+                                <li><a href="#khoi-luong-rieng" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">I. Khối Lượng Riêng</a></li>
+                                <li><a href="#ap-suat" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">II. Áp Suất</a></li>
+                                <li><a href="#luc-day" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">III. Lực Đẩy Archimedes</a></li>
+                            </ul>
+                            <li><a href="#moment-luc" class="block px-3 py-2 mt-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-indigo-600 font-medium">B. Moment Lực & Đòn Bẩy</a></li>
+                            <ul class="space-y-2 pl-4 border-l ml-3">
+                                <li><a href="#don-bay" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">B2. Các Loại Đòn Bẩy</a></li>
+                            </ul>
+                            <li><a href="#dien" class="block px-3 py-2 mt-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-indigo-600 font-medium">C. Điện</a></li>
+                             <ul class="space-y-2 pl-4 border-l ml-3">
+                                <li><a href="#nhiem-dien" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">C1. Sự Nhiễm Điện</a></li>
+                                <li><a href="#dong-dien" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">C2. Dòng Điện, Nguồn Điện</a></li>
+                                <li><a href="#mach-dien" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">C3. Mạch Điện Đơn Giản</a></li>
+                                <li><a href="#tac-dung-dong-dien" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">C4. Tác Dụng Của Dòng Điện</a></li>
+                                <li><a href="#cuong-do-hieu-dien-the" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">C5. Cường Độ & Hiệu Điện Thế</a></li>
+                                <li><a href="#thuc-hanh-do" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">C6. Thực Hành Đo</a></li>
+                            </ul>
+                            <li><a href="#nhiet" class="block px-3 py-2 mt-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-indigo-600 font-medium">D. Nhiệt</a></li>
+                             <ul class="space-y-2 pl-4 border-l ml-3">
+                                <li><a href="#nang-luong-nhiet" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">D1. Năng Lượng Nhiệt</a></li>
+                                <li><a href="#thuc-hanh-do-nhiet" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">D2. Thực Hành Đo Năng Lượng Nhiệt</a></li>
+                                <li><a href="#truyen-nhiet" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">D3. Sự Truyền Nhiệt</a></li>
+                                <li><a href="#no-vi-nhiet" class="block px-3 py-1 text-sm rounded-md text-slate-500 hover:bg-slate-100 hover:text-indigo-600">D4. Sự Nở Vì Nhiệt</a></li>
+                            </ul>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+
+            <!-- Main Content -->
+            <main class="w-full md:w-3/4 lg:w-4/5 bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <header class="mb-8">
+                    <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Sổ Tay Công Thức Vật Lý Lớp 8</h1>
+                    <p class="mt-2 text-slate-500">Tổng hợp các công thức quan trọng trong phần Lý học - KHTN 8</p>
+                </header>
+
+                <div class="space-y-12">
+                    <!-- Section A -->
+                    <section id="cong-thuc">
+                        <h2 class="text-2xl font-bold text-slate-900 border-b pb-2 mb-6">A. MỘT SỐ CÔNG THỨC</h2>
+                        
+                        <article id="khoi-luong-rieng" class="space-y-4">
+                            <h3 class="text-xl font-semibold text-slate-800">I. KHỐI LƯỢNG RIÊNG</h3>
+                            <p><strong>Định nghĩa:</strong> Khối lượng riêng (D) của một chất được xác định bằng khối lượng (m) của một đơn vị thể tích (V) chất đó.</p>
+                            <div class="bg-indigo-50 p-4 rounded-lg text-center">
+                                <p class="text-lg font-medium text-indigo-800">D = m / V</p>
+                            </div>
+                            <ul class="list-disc list-inside text-slate-600 space-y-1">
+                                <li><strong>m:</strong> Khối lượng (kg hoặc g)</li>
+                                <li><strong>V:</strong> Thể tích (m³ hoặc cm³)</li>
+                                <li><strong>D:</strong> Khối lượng riêng (kg/m³ hoặc g/cm³)</li>
+                            </ul>
+                            <div class="bg-slate-50 border-l-4 border-indigo-500 p-4 rounded-r-lg">
+                                <p class="font-semibold text-slate-700">Ví dụ:</p>
+                                <p class="text-slate-600 mt-2">Một khối hộp chữ nhật đặc, đồng chất có kích thước 12 cm x 16 cm x 20 cm, khối lượng 8 832 g. Khối lượng riêng của vật liệu làm khối hộp là?</p>
+                                <p class="text-slate-600 mt-2"><em><strong>Bài làm:</strong> Thể tích V = 12 * 16 * 20 = 3840 cm³. Khối lượng riêng D = 8832 / 3840 = 2.3 g/cm³.</em></p>
+                            </div>
+                        </article>
+                        
+                        <article id="ap-suat" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">II. ÁP SUẤT</h3>
+                            <p><strong>Định nghĩa:</strong> Là độ lớn của áp lực (F) trên một đơn vị diện tích bị ép (S).</p>
+                             <div class="bg-indigo-50 p-4 rounded-lg text-center">
+                                <p class="text-lg font-medium text-indigo-800">p = F / S</p>
+                            </div>
+                            <ul class="list-disc list-inside text-slate-600 space-y-1">
+                                <li><strong>F:</strong> Lực ép (N)</li>
+                                <li><strong>S:</strong> Diện tích bị ép (m²)</li>
+                                <li><strong>p:</strong> Áp suất (N/m² hoặc Pascal (Pa))</li>
+                            </ul>
+                            <div class="bg-slate-50 border-l-4 border-indigo-500 p-4 rounded-r-lg">
+                                <p class="font-semibold text-slate-700">Ví dụ:</p>
+                                <p class="text-slate-600 mt-2">Một người có khối lượng 65 kg đứng trên một cái ghế bốn chân có khối lượng 5 kg. Diện tích tiếp xúc với mặt đất của mỗi chân ghế là 10 cm². Áp suất của các chân ghế tác dụng lên mặt đất là?</p>
+                                <p class="text-slate-600 mt-2"><em><strong>Bài làm:</strong> Tổng khối lượng m = 70 kg. Áp lực F = 10*m = 700 N. Tổng diện tích S = 4 * 10 cm² = 0,004 m². Áp suất p = 700 / 0,004 = 175 000 N/m².</em></p>
+                            </div>
+                        </article>
+
+                        <article id="luc-day" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">III. LỰC ĐẨY ARCHIMEDES</h3>
+                            <p><strong>Định nghĩa:</strong> Vật đặt trong chất lỏng chịu tác dụng một lực đẩy hướng thẳng đứng từ dưới lên trên có độ lớn bằng trọng lượng của phần chất lỏng bị vật chiếm chỗ.</p>
+                             <div class="bg-indigo-50 p-4 rounded-lg text-center">
+                                <p class="text-lg font-medium text-indigo-800">F<sub>A</sub> = d . V</p>
+                            </div>
+                             <ul class="list-disc list-inside text-slate-600 space-y-1">
+                                <li><strong>d:</strong> Trọng lượng riêng của chất lỏng (N/m³)</li>
+                                <li><strong>V:</strong> Thể tích phần chất lỏng bị vật chiếm chỗ (m³)</li>
+                                <li><strong>F<sub>A</sub>:</strong> Lực đẩy Archimedes (N)</li>
+                            </ul>
+                            <div class="bg-slate-50 border-l-4 border-indigo-500 p-4 rounded-r-lg">
+                                <p class="font-semibold text-slate-700">Ví dụ:</p>
+                                <p class="text-slate-600 mt-2">Một quả cầu kim loại được nhúng hoàn toàn vào một bể nước, làm dịch chuyển một thể tích nước là 50 cm³. Tính lực đẩy Archimedes. (Biết d nước = 10 000 N/m³).</p>
+                                <p class="text-slate-600 mt-2"><em><strong>Bài làm:</strong> V = 50 cm³ = 0,00005 m³. F<sub>A</sub> = 10000 * 0,00005 = 0,5 N.</em></p>
+                            </div>
+                        </article>
+
+                    </section>
+
+                    <!-- Section B -->
+                    <section id="moment-luc">
+                         <h2 class="text-2xl font-bold text-slate-900 border-b pb-2 mb-6">B. MOMENT LỰC VÀ CÁC LOẠI ĐÒN BẨY</h2>
+                         <ul class="list-disc list-inside text-slate-600 space-y-2">
+                             <li>Tác dụng làm quay của lực lên một vật quanh một điểm hoặc một trục được đặc trưng bằng moment lực.</li>
+                             <li>Lực càng lớn, moment lực càng lớn, tác dụng làm quay càng lớn.</li>
+                             <li>Giá của lực càng cách xa trục quay, moment lực càng lớn, tác dụng làm quay càng lớn.</li>
+                         </ul>
+                         <article id="don-bay" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">B2. CÁC LOẠI ĐÒN BẨY</h3>
+                            <p class="text-slate-600">Dưới đây là một số ví dụ về các loại đòn bẩy trong đời sống:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Dụng cụ mở nắp chai</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 2</p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Đôi đũa</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 2</p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Cái kéo</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 1</p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Dụng cụ kẹp hạt</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 2</p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Cần câu cá</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 2</p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Mái chèo thuyền</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 1</p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Bập bênh</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 1</p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Xe rùa</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 2</p>
+                                </div>
+                                 <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <p class="font-semibold text-slate-700">Bơm nước tay</p>
+                                    <p class="text-sm text-indigo-600 font-medium">Đòn bẩy loại 1</p>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+                    
+                     <!-- Section C -->
+                    <section id="dien">
+                        <h2 class="text-2xl font-bold text-slate-900 border-b pb-2 mb-6">C. ĐIỆN</h2>
+                        <article id="nhiem-dien" class="space-y-4">
+                            <h3 class="text-xl font-semibold text-slate-800">C1. SỰ NHIỄM ĐIỆN DO CỌ XÁT</h3>
+                            <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                <li>Có thể làm một vật nhiễm điện bằng cách cọ xát. Vật nhiễm điện có khả năng hút các vật khác.</li>
+                                <li><b>Tương tác:</b> Hai vật nhiễm điện cùng dấu thì đẩy nhau, khác dấu thì hút nhau.</li>
+                                <li>Vật mang điện tích dương do mất electron, vật mang điện tích âm do nhận thêm electron.</li>
+                            </ul>
+                        </article>
+                         <article id="dong-dien" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">C2. DÒNG ĐIỆN, NGUỒN ĐIỆN</h3>
+                            <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                <li><b>Dòng điện</b> là dòng chuyển dời có hướng của các hạt mang điện.</li>
+                                <li><b>Nguồn điện</b> có khả năng cung cấp năng lượng điện cho các thiết bị điện hoạt động (pin, acquy,...).</li>
+                                <li><b>Vật dẫn điện</b> là vật cho dòng điện chạy qua. <b>Vật không dẫn điện</b> (vật cách điện) là vật không cho dòng điện chạy qua.</li>
+                            </ul>
+                        </article>
+                         <article id="mach-dien" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">C3. MẠCH ĐIỆN ĐƠN GIẢN</h3>
+                            <p>Mạch điện đơn giản gồm có nguồn điện, dây nối, công tắc và thiết bị điện tiêu thụ năng lượng điện. Chiều dòng điện quy ước là chiều từ cực dương qua dây dẫn và các dụng cụ điện tới cực âm của nguồn điện.</p>
+                        </article>
+                        <article id="tac-dung-dong-dien" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">C4. CÁC TÁC DỤNG CỦA DÒNG ĐIỆN</h3>
+                            <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                <li><b>Tác dụng nhiệt:</b> Vật dẫn nóng lên khi có dòng điện chạy qua.</li>
+                                <li><b>Tác dụng phát sáng:</b> Dòng điện đi qua bóng đèn làm bóng đèn phát sáng.</li>
+                                <li><b>Tác dụng hóa học:</b> Dùng để mạ điện cho các đồ vật.</li>
+                                <li><b>Tác dụng sinh lí:</b> Dòng điện qua cơ thể người gây co giật, nguy hiểm. Ứng dụng trong y học (máy sốc tim).</li>
+                                <li><b>Tác dụng từ:</b> Làm quay kim nam châm, tạo ra nam châm điện.</li>
+                            </ul>
+                        </article>
+                        <article id="cuong-do-hieu-dien-the" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">C5. CƯỜNG ĐỘ DÒNG ĐIỆN VÀ HIỆU ĐIỆN THẾ</h3>
+                             <p><b>Cường độ dòng điện (I):</b> Đặc trưng cho tác dụng mạnh, yếu của dòng điện. Đơn vị là Ampe (A). Đo bằng ampe kế mắc nối tiếp.</p>
+                             <p><b>Hiệu điện thế (U):</b> Đặc trưng cho khả năng sinh ra dòng điện của nguồn. Đơn vị là Vôn (V). Đo bằng vôn kế mắc song song.</p>
+                        </article>
+                         <article id="thuc-hanh-do" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">C6. THỰC HÀNH ĐO - ĐOẠN MẠCH NỐI TIẾP VÀ SONG SONG</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-slate-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-slate-700">Đoạn mạch nối tiếp</h4>
+                                    <div class="bg-indigo-50 p-3 rounded-md text-center my-2"><p class="font-mono">I = I₁ = I₂</p></div>
+                                    <div class="bg-indigo-50 p-3 rounded-md text-center"><p class="font-mono">U = U₁ + U₂</p></div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-slate-700">Đoạn mạch song song</h4>
+                                    <div class="bg-indigo-50 p-3 rounded-md text-center my-2"><p class="font-mono">I = I₁ + I₂</p></div>
+                                    <div class="bg-indigo-50 p-3 rounded-md text-center"><p class="font-mono">U = U₁ = U₂</p></div>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+
+                     <!-- Section D -->
+                    <section id="nhiet">
+                        <h2 class="text-2xl font-bold text-slate-900 border-b pb-2 mb-6">D. NHIỆT</h2>
+                         <article id="nang-luong-nhiet" class="space-y-4">
+                            <h3 class="text-xl font-semibold text-slate-800">D1. NĂNG LƯỢNG NHIỆT VÀ NỘI NĂNG</h3>
+                            <ul class="list-disc list-inside text-slate-600 space-y-2">
+                               <li>Các nguyên tử, phân tử cấu tạo nên vật chuyển động hỗn loạn không ngừng.</li>
+                               <li><b>Năng lượng nhiệt (Nhiệt năng):</b> Năng lượng vật có được do chuyển động nhiệt.</li>
+                               <li><b>Nội năng:</b> Tổng động năng và thế năng của các phân tử, nguyên tử cấu tạo nên vật.</li>
+                            </ul>
+                        </article>
+                         <article id="thuc-hanh-do-nhiet" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">D2. THỰC HÀNH ĐO NĂNG LƯỢG NHIỆT BẰNG JOULEMETER</h3>
+                            <p>Nhiệt lượng của một vật thu vào để nóng lên:</p>
+                             <div class="bg-indigo-50 p-4 rounded-lg text-center">
+                                <p class="text-lg font-medium text-indigo-800">Q = m . c . ∆t</p>
+                            </div>
+                            <ul class="list-disc list-inside text-slate-600 space-y-1 mt-2">
+                                <li><strong>m:</strong> khối lượng chất (kg)</li>
+                                <li><strong>c:</strong> nhiệt dung riêng (J/kg.K)</li>
+                                <li><strong>∆t:</strong> độ tăng nhiệt độ (°C hoặc K)</li>
+                            </ul>
+                        </article>
+                        <article id="truyen-nhiet" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">D3. SỰ TRUYỀN NHIỆT</h3>
+                             <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                <li><b>Dẫn nhiệt:</b> Truyền năng lượng qua va chạm trực tiếp giữa các phân tử. Xảy ra chủ yếu ở chất rắn.</li>
+                                <li><b>Đối lưu:</b> Truyền năng lượng bằng các dòng chất lỏng hoặc chất khí di chuyển.</li>
+                                <li><b>Bức xạ nhiệt:</b> Truyền năng lượng thông qua tia nhiệt, có thể truyền trong chân không.</li>
+                            </ul>
+                        </article>
+                         <article id="no-vi-nhiet" class="space-y-4 mt-8">
+                            <h3 class="text-xl font-semibold text-slate-800">D4. SỰ NỞ VÌ NHIỆT</h3>
+                             <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                <li>Các chất nở ra khi nóng lên và co lại khi lạnh đi.</li>
+                                <li>Chất khí nở vì nhiệt nhiều hơn chất lỏng, chất lỏng nở vì nhiệt nhiều hơn chất rắn.</li>
+                                <li><b>Sự nở đặc biệt của nước:</b> Ở 4°C, nước có thể tích nhỏ nhất (khối lượng riêng lớn nhất).</li>
+                            </ul>
+                        </article>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('backdrop');
+        const tocLinks = document.querySelectorAll('.toc-links a');
+
+        function openMenu() {
+            sidebar.classList.remove('-translate-x-full');
+            backdrop.classList.remove('hidden');
+        }
+
+        function closeMenu() {
+            sidebar.classList.add('-translate-x-full');
+            backdrop.classList.add('hidden');
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        backdrop.addEventListener('click', closeMenu);
+        
+        tocLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Smooth scroll is handled by CSS `scroll-smooth`
+                // We only need to close the menu on mobile after a click
+                if (window.innerWidth < 768) {
+                    closeMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
