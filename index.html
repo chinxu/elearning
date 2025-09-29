@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lớp học thầy Sơn - Khoa học Tự nhiên</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Thiết lập font Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <!-- Header chính -->
+    <header class="text-center mb-10 p-6 bg-white shadow-xl rounded-xl border-t-4 border-indigo-600">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-800 tracking-tight">
+            Lớp học thầy Sơn
+        </h1>
+        <p class="mt-2 text-lg text-indigo-600 font-medium">Khoa học Tự nhiên: Tài liệu và Bài tập</p>
+    </header>
+
+    <!-- Container chứa các danh mục lớp học -->
+    <div id="accordion-container" class="max-w-4xl mx-auto space-y-4">
+
+        <!-- Hàm JavaScript để đóng/mở menu và thay đổi biểu tượng -->
+        <script>
+            /**
+             * Toggle menu visibility and update the arrow icon.
+             * @param {string} menuId - The ID of the content div to toggle (e.g., 'menu-khtn-9').
+             * @param {string} iconId - The ID of the icon span to rotate (e.g., 'icon-khtn-9').
+             */
+            function toggleMenu(menuId, iconId) {
+                const menu = document.getElementById(menuId);
+                const icon = document.getElementById(iconId);
+
+                // Đóng tất cả các menu khác (chỉ mở một menu tại một thời điểm)
+                // Đây là tính năng tùy chọn để giữ giao diện gọn gàng
+                const allMenus = document.querySelectorAll('#accordion-container > div > div:not(.hidden)');
+                allMenus.forEach(m => {
+                    if (m.id !== menuId) {
+                        m.classList.add('hidden');
+                        m.previousElementSibling.querySelector('span:last-child').classList.remove('rotate-180');
+                    }
+                });
+
+
+                if (menu.classList.contains('hidden')) {
+                    // Mở menu
+                    menu.classList.remove('hidden');
+                    menu.classList.add('animate-slide-down');
+                    icon.classList.add('rotate-180');
+                } else {
+                    // Đóng menu
+                    menu.classList.add('hidden');
+                    menu.classList.remove('animate-slide-down');
+                    icon.classList.remove('rotate-180');
+                }
+            }
+        </script>
+        
+        <!-- Định nghĩa Animation cho trượt xuống -->
+        <style>
+            @keyframes slideDown {
+                from { max-height: 0; opacity: 0; }
+                to { max-height: 500px; opacity: 1; } /* Max-height lớn để đảm bảo nội dung hiện ra */
+            }
+            .animate-slide-down {
+                animation: slideDown 0.3s ease-out forwards;
+                overflow: hidden;
+            }
+            .transition-transform {
+                transition: transform 0.3s ease-in-out;
+            }
+        </style>
+
+        <!-- Khối KHTN 9 (Màu Indigo) -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+            <button onclick="toggleMenu('menu-khtn-9', 'icon-khtn-9')" 
+                    class="flex justify-between items-center w-full p-4 text-left font-bold text-xl text-white bg-indigo-600 hover:bg-indigo-700 transition duration-150 rounded-t-xl focus:outline-none">
+                <span>KHTN 9</span>
+                <span id="icon-khtn-9" class="transition-transform transform">
+                    <!-- Biểu tượng mũi tên (Icon SVG) -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            <div id="menu-khtn-9" class="hidden">
+                <div class="p-3 space-y-1">
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn9/hoalythuyet" target="_blank" class="child-item">Lý thuyết Hóa</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn9/lylythuyet" target="_blank" class="child-item">Lý thuyết Lý</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn9/sinhlythuyet" target="_blank" class="child-item">Lý thuyết Sinh</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn9/baitapon" target="_blank" class="child-item border-b-0">Làm bài tập ôn</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khối KHTN 8 (Màu Cyan) -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+            <button onclick="toggleMenu('menu-khtn-8', 'icon-khtn-8')" 
+                    class="flex justify-between items-center w-full p-4 text-left font-bold text-xl text-white bg-cyan-600 hover:bg-cyan-700 transition duration-150 rounded-xl focus:outline-none">
+                <span>KHTN 8</span>
+                <span id="icon-khtn-8" class="transition-transform transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            <div id="menu-khtn-8" class="hidden">
+                <div class="p-3 space-y-1">
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn8/hoalythuyet" target="_blank" class="child-item">Lý thuyết Hóa</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn8/lylythuyet" target="_blank" class="child-item">Lý thuyết Lý</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn8/sinhlythuyet" target="_blank" class="child-item">Lý thuyết Sinh</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn8/baitapon" target="_blank" class="child-item border-b-0">Làm bài tập ôn</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khối KHTN 7 (Màu Emerald) -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+            <button onclick="toggleMenu('menu-khtn-7', 'icon-khtn-7')" 
+                    class="flex justify-between items-center w-full p-4 text-left font-bold text-xl text-white bg-emerald-600 hover:bg-emerald-700 transition duration-150 rounded-xl focus:outline-none">
+                <span>KHTN 7</span>
+                <span id="icon-khtn-7" class="transition-transform transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            <div id="menu-khtn-7" class="hidden">
+                <div class="p-3 space-y-1">
+                    <!-- Giả lập các chủ đề con cho KHTN 7 -->
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn7/hoalythuyet" target="_blank" class="child-item">Lý thuyết Hóa</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn7/lylythuyet" target="_blank" class="child-item">Lý thuyết Lý</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn7/sinhlythuyet" target="_blank" class="child-item">Lý thuyết Sinh</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn7/baitapon" target="_blank" class="child-item border-b-0">Làm bài tập ôn</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Khối KHTN 6 (Màu Amber) -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+            <button onclick="toggleMenu('menu-khtn-6', 'icon-khtn-6')" 
+                    class="flex justify-between items-center w-full p-4 text-left font-bold text-xl text-white bg-amber-600 hover:bg-amber-700 transition duration-150 rounded-xl focus:outline-none">
+                <span>KHTN 6</span>
+                <span id="icon-khtn-6" class="transition-transform transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            <div id="menu-khtn-6" class="hidden">
+                <div class="p-3 space-y-1">
+                    <!-- Giả lập các chủ đề con cho KHTN 6 -->
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn6/hoalythuyet" target="_blank" class="child-item">Lý thuyết Hóa</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn6/lylythuyet" target="_blank" class="child-item">Lý thuyết Lý</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn6/sinhlythuyet" target="_blank" class="child-item">Lý thuyết Sinh</a>
+                    <!-- ĐIỀN LINK TẠI ĐÂY -->
+                    <a href="https://example.com/khtn6/baitapon" target="_blank" class="child-item border-b-0">Làm bài tập ôn</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Định nghĩa CSS cho các item con (nội dung con) -->
+    <style>
+        .child-item {
+            display: block;
+            padding: 10px 16px;
+            background-color: #f0f4f8;
+            color: #374151;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.15s, border-left-color 0.15s, color 0.15s;
+        }
+        .child-item:hover {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border-left-color: #6366f1;
+        }
+    </style>
+
+    <footer class="text-center mt-10 text-gray-500 text-sm">
+        &copy; 2025 Lớp học thầy Sơn. Tài liệu tổng hợp Khoa học Tự nhiên.
+    </footer>
+</body>
+</html>
