@@ -1,1 +1,684 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Bắn Phi Thuyền</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+            overflow: hidden; /* Ngăn cuộn trang */
+        }
+        .board-area {
+            display: grid;
+            grid-template-columns: 1.5rem 1fr; /* For side labels */
+            grid-template-rows: 1.5rem 1fr; /* For top labels */
+            gap: 4px;
+            transition: max-width 0.4s ease-in-out;
+        }
+        .labels-top {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            color: #9ca3af; /* gray-400 */
+        }
+        .labels-left {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+            display: grid;
+            grid-template-rows: repeat(10, 1fr);
+            color: #9ca3af; /* gray-400 */
+        }
+        .label-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .grid-container {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+        }
+        .grid-cell {
+            width: 100%;
+            padding-bottom: 100%; /* Tạo ô vuông */
+            position: relative;
+            background-color: #374151; /* gray-700 */
+            border: 1px solid #4b5563; /* gray-600 */
+            transition: background-color 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        /* Style for the markers (X, ✓) to position them inside the cell without changing its size */
+        .grid-cell > span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 1;
+            pointer-events: none; /* Make sure the span doesn't intercept clicks */
+        }
+        .grid-cell.light {
+            background-color: #4b5563; /* gray-600 */
+        }
+        .placement-grid .grid-cell:hover {
+            background-color: #f59e0b; /* amber-500 */
+        }
+        .attack-grid .grid-cell:hover {
+             background-color: #ca8a04; /* yellow-600 */
+        }
+        .ship-preview {
+            background-color: rgba(16, 185, 129, 0.5) !important; /* emerald-500 with opacity */
+        }
+        .ship-head-preview {
+            background-color: rgba(239, 68, 68, 0.6) !important; /* red-500 with opacity */
+        }
+        .ship-placed {
+            background-color: #10b981; /* emerald-500 */
+        }
+        .ship-head-placed {
+            background-color: #ef4444; /* red-500 */
+        }
+        .hit-body {
+            background-color: #f97316; /* orange-500 */
+            color: #86efac; /* green-300 */
+        }
+        .hit-head {
+            background-color: #dc2626; /* red-600 */
+            color: #bbf7d0; /* green-200 */
+        }
+        .miss {
+            background-color: #6b7280; /* gray-500 */
+            color: #fca5a5; /* red-300 */
+        }
+        
+        .grid-cell.disabled {
+            pointer-events: none;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(17, 24, 39, 0.9); /* gray-900 with opacity */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div id="game-container" class="w-full max-w-7xl mx-auto">
+        <h1 id="game-title" class="text-3xl md:text-4xl font-bold text-center mb-2">Bắn Phi Thuyền</h1>
+        <div id="status-panel" class="text-center mb-4 h-12 flex items-center justify-center">
+            <p id="status-text" class="text-xl font-semibold text-yellow-400"></p>
+        </div>
+
+        <div id="players-container" class="flex flex-col md:flex-row justify-around items-start space-y-8 md:space-y-0 md:space-x-8">
+            <!-- Player 1 Area -->
+            <div id="player1-area" class="w-full">
+                <div id="p1-my-board-container">
+                     <h2 class="text-2xl font-bold text-center text-blue-400 mb-2">Phi thuyền đội 1</h2>
+                     <div class="board-area w-full max-w-md mx-auto placement-grid">
+                        <div class="labels-top"></div>
+                        <div class="labels-left"></div>
+                        <div id="player1-my-grid" class="grid-container"></div>
+                    </div>
+                </div>
+                <div id="p1-attack-container" class="hidden">
+                    <h2 class="text-2xl font-bold text-center text-blue-400 mb-2">Bản đồ phi thuyền 2</h2>
+                    <div class="board-area w-full max-w-sm mx-auto attack-grid">
+                        <div class="labels-top"></div>
+                        <div class="labels-left"></div>
+                        <div id="player1-opponent-grid" class="grid-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player 2 Area -->
+            <div id="player2-area" class="w-full">
+                 <div id="p2-my-board-container">
+                    <h2 class="text-2xl font-bold text-center text-red-400 mb-2">Phi thuyền đội 2</h2>
+                    <div class="board-area w-full max-w-md mx-auto placement-grid">
+                       <div class="labels-top"></div>
+                       <div class="labels-left"></div>
+                       <div id="player2-my-grid" class="grid-container"></div>
+                    </div>
+                </div>
+                <div id="p2-attack-container" class="hidden">
+                     <h2 class="text-2xl font-bold text-center text-red-400 mb-2">Bản đồ phi thuyền 1</h2>
+                    <div class="board-area w-full max-w-sm mx-auto attack-grid">
+                        <div class="labels-top"></div>
+                        <div class="labels-left"></div>
+                        <div id="player2-opponent-grid" class="grid-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="controls" class="text-center mt-6">
+             <button id="orientation-btn" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">Vị trí đầu: Trái</button>
+             <button id="confirm-placement-btn" class="hidden bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 ml-4">Xác nhận vị trí</button>
+             <button id="toggle-view-btn" class="hidden bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">Xem Bản đồ phi thuyền 2</button>
+        </div>
+    </div>
+
+    <!-- Overlay for turn switching and game over -->
+    <div id="overlay" class="overlay hidden">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-2xl border-2 border-gray-700">
+            <h2 id="overlay-title" class="text-4xl font-bold mb-4"></h2>
+            <p id="overlay-text" class="text-lg mb-6"></p>
+            <button id="overlay-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-transform transform hover:scale-105">Bắt đầu</button>
+        </div>
+    </div>
+
+    <script>
+        // Game constants
+        const GRID_SIZE = 10;
+        const SHIP_LENGTH = 13; // 1 head + 12 body
+        const SHIP_BODY_HEALTH = 12;
+
+        // DOM Elements
+        const statusText = document.getElementById('status-text');
+        const p1MyGrid = document.getElementById('player1-my-grid');
+        const p1OpponentGrid = document.getElementById('player1-opponent-grid');
+        const p2MyGrid = document.getElementById('player2-my-grid');
+        const p2OpponentGrid = document.getElementById('player2-opponent-grid');
+        const p1MyBoardContainer = document.getElementById('p1-my-board-container');
+        const p2MyBoardContainer = document.getElementById('p2-my-board-container');
+        const p1AttackContainer = document.getElementById('p1-attack-container');
+        const p2AttackContainer = document.getElementById('p2-attack-container');
+
+        const orientationBtn = document.getElementById('orientation-btn');
+        const confirmBtn = document.getElementById('confirm-placement-btn');
+        const toggleViewBtn = document.getElementById('toggle-view-btn');
+
+        const overlay = document.getElementById('overlay');
+        const overlayTitle = document.getElementById('overlay-title');
+        const overlayText = document.getElementById('overlay-text');
+        
+        const gameTitle = document.getElementById('game-title');
+        const statusPanel = document.getElementById('status-panel');
+        const playersContainer = document.querySelector('#players-container');
+        const allBoardAreas = document.querySelectorAll('.board-area');
+
+        // Game state variables
+        let gameState = 'init'; // init, placement, attacking, gameover
+        let placementCurrentPlayer = 1;
+        let attackViewCurrentPlayer = 1;
+        let placementOrientations = ['left', 'top', 'right', 'bottom'];
+        let currentOrientationIndex = 0;
+        let temporaryShipPlacement = [];
+        
+        let player1 = {
+            board: [],
+            ship: { cells: [], head: null, bodyHits: 0 },
+            isReady: false
+        };
+        let player2 = {
+            board: [],
+            ship: { cells: [], head: null, bodyHits: 0 },
+            isReady: false
+        };
+        
+        function init() {
+            createGridDOM(p1MyGrid, 1, true);
+            createGridDOM(p1OpponentGrid, 2, false);
+            createGridDOM(p2MyGrid, 2, true);
+            createGridDOM(p2OpponentGrid, 1, false);
+            createLabels();
+            resetGame();
+        }
+
+        function resetGame() {
+            gameState = 'init';
+            placementCurrentPlayer = 1;
+            currentOrientationIndex = 0;
+            player1 = { board: createBoardData(), ship: { cells: [], head: null, bodyHits: 0 }, isReady: false };
+            player2 = { board: createBoardData(), ship: { cells: [], head: null, bodyHits: 0 }, isReady: false };
+            
+            document.getElementById('player1-area').style.display = 'block';
+            document.getElementById('player2-area').style.display = 'block';
+            
+            revertToPlacementLayout();
+            clearAllGrids();
+            setupPlacementPhase();
+        }
+
+        function createBoardData() {
+            return Array.from({ length: GRID_SIZE * GRID_SIZE }, () => ({ type: 'empty', hit: false }));
+        }
+
+        function createGridDOM(gridContainer, player, isMyGrid) {
+            gridContainer.innerHTML = '';
+            for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+                const cell = document.createElement('div');
+                cell.dataset.index = i;
+                cell.dataset.player = player;
+                cell.classList.add('grid-cell');
+                 if (((Math.floor(i / GRID_SIZE) + (i % GRID_SIZE)) % 2) === 0) {
+                    cell.classList.add('light');
+                }
+                
+                if (isMyGrid) {
+                    cell.addEventListener('mouseover', handlePlacementMouseover);
+                    cell.addEventListener('mouseout', handlePlacementMouseout);
+                    cell.addEventListener('click', handlePlacementClick);
+                } else {
+                    cell.addEventListener('click', handleAttackClick);
+                }
+                gridContainer.appendChild(cell);
+            }
+        }
+        
+        function createLabels() {
+            const topLabelContainers = document.querySelectorAll('.labels-top');
+            const leftLabelContainers = document.querySelectorAll('.labels-left');
+            const letters = 'ABCDEFGHIJ'.split('');
+
+            topLabelContainers.forEach(container => {
+                container.innerHTML = '';
+                letters.forEach(letter => {
+                    const label = document.createElement('div');
+                    label.classList.add('label-cell');
+                    label.textContent = letter;
+                    container.appendChild(label);
+                });
+            });
+
+            leftLabelContainers.forEach(container => {
+                container.innerHTML = '';
+                for (let i = 1; i <= 10; i++) {
+                    const label = document.createElement('div');
+                    label.classList.add('label-cell');
+                    label.textContent = i;
+                    container.appendChild(label);
+                }
+            });
+        }
+
+        function clearAllGrids() {
+            document.querySelectorAll('.grid-cell').forEach(cell => {
+                cell.className = 'grid-cell';
+                cell.innerHTML = '';
+                 if (((Math.floor(parseInt(cell.dataset.index) / GRID_SIZE) + (parseInt(cell.dataset.index) % GRID_SIZE)) % 2) === 0) {
+                    cell.classList.add('light');
+                }
+            });
+        }
+
+        function setupPlacementPhase() {
+            showOverlay(`Lượt của Đội ${placementCurrentPlayer}`, `Hãy bí mật đặt phi thuyền của bạn. <br>Đội còn lại không được nhìn!`, `Sẵn sàng`, () => {
+                gameState = 'placement';
+                updateUIForPlacement();
+            });
+        }
+        
+        function updateUIForPlacement() {
+            document.getElementById(`player${placementCurrentPlayer === 1 ? 2 : 1}-area`).style.display = 'none';
+            document.getElementById(`player${placementCurrentPlayer}-area`).style.display = 'block';
+            statusText.textContent = `Đội ${placementCurrentPlayer}, hãy đặt phi thuyền của bạn.`;
+            orientationBtn.classList.remove('hidden');
+            confirmBtn.classList.remove('hidden');
+            confirmBtn.disabled = true;
+
+            const orientation = placementOrientations[currentOrientationIndex];
+            let orientationText = '';
+            switch(orientation) {
+                case 'top': orientationText = 'Trên'; break;
+                case 'right': orientationText = 'Phải'; break;
+                case 'bottom': orientationText = 'Dưới'; break;
+                case 'left': orientationText = 'Trái'; break;
+            }
+            orientationBtn.textContent = `Vị trí đầu: ${orientationText}`;
+        }
+
+        function handlePlacementMouseover(e) {
+            if (gameState !== 'placement') return;
+            const index = parseInt(e.target.dataset.index);
+            const orientation = placementOrientations[currentOrientationIndex];
+            const cells = calculateShipCells(index, orientation);
+
+            if (isValidPlacement(cells)) {
+                cells.forEach((cellIndex, i) => {
+                    const cellEl = getCellElement(placementCurrentPlayer, true, cellIndex);
+                    if (cellEl) {
+                        cellEl.classList.add('ship-preview');
+                        if (i === 0) cellEl.classList.add('ship-head-preview');
+                    }
+                });
+            }
+        }
+
+        function handlePlacementMouseout(e) {
+             if (gameState !== 'placement') return;
+             document.querySelectorAll('.ship-preview').forEach(c => c.classList.remove('ship-preview', 'ship-head-preview'));
+        }
+
+        function handlePlacementClick(e) {
+            if (gameState !== 'placement') return;
+            const index = parseInt(e.target.dataset.index);
+            const orientation = placementOrientations[currentOrientationIndex];
+            const cells = calculateShipCells(index, orientation);
+
+            if (isValidPlacement(cells)) {
+                // Clear previous temporary placement visuals
+                const currentGrid = placementCurrentPlayer === 1 ? p1MyGrid : p2MyGrid;
+                currentGrid.querySelectorAll('.ship-placed').forEach(c => c.classList.remove('ship-placed', 'ship-head-placed'));
+
+                temporaryShipPlacement = cells;
+
+                // Add new visual markers for the selected ship to provide feedback
+                cells.forEach((cellIndex, i) => {
+                    const cellEl = getCellElement(placementCurrentPlayer, true, cellIndex);
+                    if (cellEl) {
+                        cellEl.classList.add('ship-placed');
+                        if (i === 0) cellEl.classList.add('ship-head-placed');
+                    }
+                });
+
+                confirmBtn.disabled = false;
+                statusText.textContent = "Đã chọn vị trí. Nhấn 'Xác nhận' để khóa.";
+            }
+        }
+
+        function confirmPlacement() {
+            if (temporaryShipPlacement.length === 0) return;
+            
+            const currentPlayerNum = placementCurrentPlayer;
+            const player = currentPlayerNum === 1 ? player1 : player2;
+
+            player.ship.cells = [...temporaryShipPlacement];
+            player.ship.head = temporaryShipPlacement[0];
+
+            player.ship.cells.forEach((cellIndex, i) => {
+                player.board[cellIndex] = { type: i === 0 ? 'head' : 'body', hit: false };
+            });
+
+            player.isReady = true;
+
+            // Clear the visual from the board after confirming to enforce memory aspect
+            const currentGrid = (currentPlayerNum === 1) ? p1MyGrid : p2MyGrid;
+            currentGrid.querySelectorAll('.ship-placed').forEach(c => c.classList.remove('ship-placed', 'ship-head-placed'));
+            
+            temporaryShipPlacement = [];
+            confirmBtn.disabled = true;
+
+            // Simplified and more robust transition logic
+            if (currentPlayerNum === 1) {
+                statusText.textContent = `Đội 1 đã sẵn sàng!`;
+                placementCurrentPlayer = 2;
+                setTimeout(() => setupPlacementPhase(), 1000); // Delay for user to see status
+            } else {
+                statusText.textContent = `Đội 2 đã sẵn sàng! Chuẩn bị chiến đấu!`;
+                setTimeout(() => startAttackPhase(), 1200); // Delay for user to see status
+            }
+        }
+        
+        function calculateShipCells(startIndex, orientation) {
+            const row = Math.floor(startIndex / GRID_SIZE);
+            const col = startIndex % GRID_SIZE;
+            const head = startIndex;
+            let body = [];
+
+            switch(orientation) {
+                case 'top': // Body is below the head (4 rows x 3 cols)
+                    if (row + 4 >= GRID_SIZE || col - 1 < 0 || col + 1 >= GRID_SIZE) return [];
+                    for (let r_offset = 1; r_offset <= 4; r_offset++) {
+                        for (let c_offset = -1; c_offset <= 1; c_offset++) {
+                            body.push(startIndex + (r_offset * GRID_SIZE) + c_offset);
+                        }
+                    }
+                    break;
+                case 'right': // Body is to the left of the head (3 rows x 4 cols)
+                    if (row - 1 < 0 || row + 1 >= GRID_SIZE || col - 4 < 0) return [];
+                    for (let r_offset = -1; r_offset <= 1; r_offset++) {
+                        for (let c_offset = -4; c_offset <= -1; c_offset++) {
+                            body.push(startIndex + (r_offset * GRID_SIZE) + c_offset);
+                        }
+                    }
+                    break;
+                case 'bottom': // Body is above the head (4 rows x 3 cols)
+                    if (row - 4 < 0 || col - 1 < 0 || col + 1 >= GRID_SIZE) return [];
+                    for (let r_offset = -4; r_offset <= -1; r_offset++) {
+                        for (let c_offset = -1; c_offset <= 1; c_offset++) {
+                            body.push(startIndex + (r_offset * GRID_SIZE) + c_offset);
+                        }
+                    }
+                    break;
+                case 'left': // Body is to the right of the head (3 rows x 4 cols)
+                default:
+                    if (row - 1 < 0 || row + 1 >= GRID_SIZE || col + 4 >= GRID_SIZE) return [];
+                     for (let r_offset = -1; r_offset <= 1; r_offset++) {
+                        for (let c_offset = 1; c_offset <= 4; c_offset++) {
+                            body.push(startIndex + (r_offset * GRID_SIZE) + c_offset);
+                        }
+                    }
+                    break;
+            }
+            
+            if (body.length !== 12) return []; // Sanity check
+
+            return [head, ...body];
+        }
+
+        function isValidPlacement(cells) {
+            return cells.length === SHIP_LENGTH;
+        }
+
+        function startAttackPhase() {
+            gameState = 'attacking';
+            orientationBtn.classList.add('hidden');
+            confirmBtn.classList.add('hidden');
+            
+            document.getElementById('player1-area').style.display = 'block';
+            document.getElementById('player2-area').style.display = 'block';
+            
+            applyAttackLayout();
+
+            showOverlay(`Trận chiến bắt đầu!`, `Trả lời đúng câu hỏi để được bắn.`, `OK`, () => {
+                statusPanel.style.display = 'none';
+            });
+        }
+        
+        function handleAttackClick(e) {
+            if (gameState !== 'attacking') return;
+            
+            const cellEl = e.target;
+            const targetPlayerNum = parseInt(cellEl.dataset.player);
+            const index = parseInt(cellEl.dataset.index);
+
+            const attacker = (targetPlayerNum === 2) ? 1 : 2;
+            const defendingPlayer = (targetPlayerNum === 2) ? player2 : player1;
+            
+            const cellState = defendingPlayer.board[index];
+            
+            if (cellState.hit) return; 
+
+            cellState.hit = true;
+
+            if (cellState.type === 'head') {
+                cellEl.classList.add('hit-head');
+                cellEl.innerHTML = '<span>✓</span>';
+                getCellElement(targetPlayerNum, true, index).classList.add('hit-head');
+                endGame(attacker);
+
+            } else if (cellState.type === 'body') {
+                cellEl.classList.add('hit-body');
+                cellEl.innerHTML = '<span>✓</span>';
+                getCellElement(targetPlayerNum, true, index).classList.add('hit-body');
+                defendingPlayer.ship.bodyHits++;
+                if (defendingPlayer.ship.bodyHits >= SHIP_BODY_HEALTH) {
+                    endGame(attacker);
+                }
+
+            } else { // miss
+                cellEl.classList.add('miss');
+                cellEl.innerHTML = '<span>X</span>';
+                getCellElement(targetPlayerNum, true, index).classList.add('miss');
+            }
+        }
+        
+        function endGame(winner) {
+            gameState = 'gameover';
+            statusText.textContent = `Trò chơi kết thúc!`;
+            
+            revertToPlacementLayout();
+            redrawPlacedShips();
+            
+            showOverlay(`Đội ${winner} chiến thắng!`, `Phi thuyền của đối phương đã bị phá hủy.`, `Chơi lại`, resetGame);
+        }
+
+        function redrawPlacedShips() {
+            document.querySelectorAll('.ship-placed').forEach(c => c.classList.remove('ship-placed', 'ship-head-placed'));
+
+            player1.ship.cells.forEach(cellIndex => {
+                const cellEl = getCellElement(1, true, cellIndex);
+                if (cellEl) {
+                    cellEl.classList.add('ship-placed');
+                    if (cellIndex === player1.ship.head) {
+                        cellEl.classList.add('ship-head-placed');
+                    }
+                }
+            });
+
+            player2.ship.cells.forEach(cellIndex => {
+                const cellEl = getCellElement(2, true, cellIndex);
+                if (cellEl) {
+                    cellEl.classList.add('ship-placed');
+                    if (cellIndex === player2.ship.head) {
+                        cellEl.classList.add('ship-head-placed');
+                    }
+                }
+            });
+        }
+
+        function applyAttackLayout() {
+            gameTitle.style.display = 'none';
+            statusPanel.style.display = 'none';
+
+            // Hide placement boards
+            p1MyBoardContainer.classList.add('hidden');
+            p2MyBoardContainer.classList.add('hidden');
+            
+            // Set initial view for attack phase
+            attackViewCurrentPlayer = 1;
+            p1AttackContainer.classList.remove('hidden');
+            p2AttackContainer.classList.add('hidden');
+            toggleViewBtn.textContent = 'Xem Bản đồ phi thuyền 1';
+            toggleViewBtn.classList.remove('hidden');
+
+            // Adjust layout for single, large board view
+            playersContainer.classList.remove('md:flex-row', 'justify-around', 'items-start');
+            playersContainer.classList.add('flex-col', 'items-center', 'justify-start');
+
+            allBoardAreas.forEach(area => {
+                area.classList.remove('max-w-md', 'max-w-sm', 'max-w-lg');
+                area.classList.add('max-w-2xl'); // Make board even larger for focused view
+            });
+        }
+
+        function revertToPlacementLayout() {
+            gameTitle.style.display = 'block';
+            statusPanel.style.display = 'flex';
+            toggleViewBtn.classList.add('hidden'); // Hide the toggle button
+
+            p1MyBoardContainer.classList.remove('hidden');
+            p2MyBoardContainer.classList.remove('hidden');
+            p1AttackContainer.classList.add('hidden');
+            p2AttackContainer.classList.add('hidden');
+
+            // Restore original layout classes
+            playersContainer.classList.remove('flex-col', 'items-center', 'justify-start');
+            playersContainer.classList.add('md:flex-row', 'justify-around', 'items-start');
+
+            allBoardAreas.forEach(area => {
+                 area.classList.remove('max-w-lg', 'max-w-2xl');
+                 area.classList.add('max-w-md');
+            });
+        }
+        
+        function showOverlay(title, text, btnText, callback) {
+            overlayTitle.textContent = title;
+            overlayText.innerHTML = text;
+            overlay.classList.remove('hidden');
+
+            let currentOverlayBtn = document.getElementById('overlay-btn');
+            const newBtn = currentOverlayBtn.cloneNode(true);
+            newBtn.textContent = btnText;
+            currentOverlayBtn.parentNode.replaceChild(newBtn, currentOverlayBtn);
+            
+            newBtn.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                if (callback) callback();
+            }, { once: true });
+        }
+        
+        function toggleAttackView() {
+            attackViewCurrentPlayer = (attackViewCurrentPlayer === 1) ? 2 : 1;
+            if (attackViewCurrentPlayer === 1) {
+                // Show Player 1's attack board (which targets Player 2)
+                p1AttackContainer.classList.remove('hidden');
+                p2AttackContainer.classList.add('hidden');
+                toggleViewBtn.textContent = 'Xem Bản đồ phi thuyền 1';
+            } else {
+                // Show Player 2's attack board (which targets Player 1)
+                p1AttackContainer.classList.add('hidden');
+                p2AttackContainer.classList.remove('hidden');
+                toggleViewBtn.textContent = 'Xem Bản đồ phi thuyền 2';
+            }
+        }
+
+        orientationBtn.addEventListener('click', () => {
+            currentOrientationIndex = (currentOrientationIndex + 1) % placementOrientations.length;
+            const orientation = placementOrientations[currentOrientationIndex];
+            let orientationText = '';
+            switch(orientation) {
+                case 'top': orientationText = 'Trên'; break;
+                case 'right': orientationText = 'Phải'; break;
+                case 'bottom': orientationText = 'Dưới'; break;
+                case 'left': orientationText = 'Trái'; break;
+            }
+            orientationBtn.textContent = `Vị trí đầu: ${orientationText}`;
+        });
+        
+        confirmBtn.addEventListener('click', confirmPlacement);
+        toggleViewBtn.addEventListener('click', toggleAttackView);
+
+
+        function getCellElement(playerNum, isMyGrid, index) {
+            let gridId;
+            if (isMyGrid) {
+                gridId = `player${playerNum}-my-grid`;
+            } else {
+                 gridId = (playerNum === 1) ? `player2-opponent-grid` : `player1-opponent-grid`;
+            }
+            const grid = document.getElementById(gridId);
+            if (grid) {
+                return grid.querySelector(`[data-index='${index}']`);
+            }
+            return null;
+        }
+        
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+
+
 
