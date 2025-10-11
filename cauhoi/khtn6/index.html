@@ -1,1 +1,771 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc nghiệm Khoa học Tự nhiên 6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .option-btn.correct {
+            background-color: #22c55e !important; /* green-500 */
+            color: white !important;
+            border-color: #16a34a !important; /* green-600 */
+        }
+        .option-btn.incorrect {
+            background-color: #ef4444 !important; /* red-500 */
+            color: white !important;
+            border-color: #dc2626 !important; /* red-600 */
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .selection-btn, .list-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .selection-btn:hover, .list-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div id="main-container" class="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-6 md:p-10 transition-all duration-300">
+
+        <!-- Màn hình chính -->
+        <div id="home-screen">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-blue-600 mb-2">Trắc nghiệm Khoa học Tự nhiên 6</h1>
+            <p class="text-center text-gray-500 mb-8">Vui lòng chọn hình thức ôn tập.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+                 <button onclick="showSelectionScreen('chapter')" class="selection-btn w-full bg-blue-500 text-white p-8 rounded-xl font-semibold text-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Làm bài theo Chương
+                </button>
+                <button onclick="showSelectionScreen('lesson')" class="selection-btn w-full bg-green-500 text-white p-8 rounded-xl font-semibold text-xl hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Làm bài theo Bài
+                </button>
+            </div>
+        </div>
+        
+        <!-- Màn hình chọn Chương -->
+        <div id="chapter-selection-screen" class="hidden">
+             <div class="flex items-center mb-6">
+                <button onclick="showScreen('home')" class="mr-4 p-2 rounded-full hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <h2 class="text-2xl font-bold text-blue-600">Chọn Chương</h2>
+            </div>
+            <div id="chapter-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- Màn hình chọn Bài -->
+        <div id="lesson-selection-screen" class="hidden">
+             <div class="flex items-center mb-6">
+                <button onclick="showScreen('home')" class="mr-4 p-2 rounded-full hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <h2 class="text-2xl font-bold text-green-600">Chọn Bài</h2>
+            </div>
+            <div id="lesson-list" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
+        </div>
+
+        <!-- Màn hình làm bài trắc nghiệm -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="quiz-title" class="text-2xl font-bold text-blue-600 truncate"></h2>
+                <div id="question-counter" class="text-lg font-semibold bg-blue-100 text-blue-700 px-4 py-2 rounded-lg flex-shrink-0 ml-4"></div>
+            </div>
+            <div id="question-container" class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6 min-h-[120px]">
+                <p id="question-text" class="text-2xl md:text-3xl font-medium leading-relaxed"></p>
+            </div>
+            <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+             <div class="flex justify-end mt-8">
+                <button id="next-btn" class="hidden bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:bg-gray-400">Câu tiếp theo</button>
+            </div>
+        </div>
+
+        <!-- Màn hình kết quả -->
+        <div id="result-screen" class="hidden text-center">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Kết quả bài làm</h2>
+            <div id="score-container" class="bg-blue-50 text-blue-800 p-8 rounded-xl mb-6">
+                 <p class="text-xl mb-2">Điểm số của bạn</p>
+                <p id="score-text" class="text-6xl font-bold"></p>
+            </div>
+            <p id="result-message" class="text-2xl font-semibold mb-8"></p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <button id="back-home-btn" class="bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors">Làm bài khác</button>
+                 <button id="restart-quiz-btn" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Làm lại</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- KHO CÂU HỎI ---
+        const quizData = [
+            {
+                chapterTitle: "Chương 1: Mở đầu về KHTN",
+                lessons: [
+                    {
+                        lessonTitle: "Bài 1: Giới thiệu về KHTN",
+                        questions: [
+                            { question: "Vật sống là", options: ["hòn đá.", "lọ hoa.", "con gà.", "trái đất."], answer: 2 },
+                            { question: "Vật không sống là", options: ["hòn đá.", "cây táo.", "con mèo.", "con gà."], answer: 0 },
+                            { question: "Lĩnh vực chuyên nghiên cứu về năng lượng thuộc lĩnh vực nào của khoa học tự nhiên?", options: ["Hoá học.", "Vật lí.", "Sinh học.", "Thiên văn học."], answer: 1 },
+                            { question: "Khoa học tự nhiên không bao gồm lĩnh vực nào sau đây?", options: ["Tâm lí học.", "Vật lí học.", "Hoá học.", "Khoa học trái đất."], answer: 0 },
+                            { question: "Em đang đun nước, sau một thời gian thấy tiếng nước reo và mặt nước sủi lăn tăn, nước bắt đầu sôi. Hiện tượng nước sôi liên quan tới lĩnh vực khoa học nào?", options: ["Vật lí học.", "Hóa học.", "Sinh học.", "Hóa học và sinh học."], answer: 0 },
+                            { question: "Lĩnh vực chuyên nghiên cứu về năng lượng thuộc lĩnh vực nào của khoa học tự nhiên?", options: ["Hóa học.", "Sinh học.", "Vật lí.", "Thiên văn học"], answer: 2 },
+                            { question: "Lĩnh vực nào không thuộc về khoa học tự nhiên?", options: ["Vật lí học.", "Lịch sử loài người.", "Hoá học và sinh học.", "Khoa học trái đất và thiên văn học."], answer: 1 },
+                            { question: "Người ta đã nghiên cứu và vận dụng sự hiểu biết nào trong tự nhiên để tạo ra con diều?", options: ["Ánh nắng.", "Nhiệt độ.", "Sức đẩy của gió.", "Sức đẩy của nước."], answer: 2 },
+                            { question: "“Khoa học tự nhiên là ngành khoa học nghiên cứu về …, quy luật tự nhiên, những ảnh hưởng của chúng đến cuộc sống con người và môi trường”.", options: ["động vật, thực vật.", "con người, thế giới tự nhiên.", "các sự vật, hiện tượng.", "thế giới tự nhiên và thế giới loài người"], answer: 2 },
+                            { question: "Vật sống là vật có khả năng trao đổi chất với môi trường", options: ["lớn lên và sinh sản.", "không lớn lên, không sinh sản.", "và không có dấu hiệu của sự sống.", "nước và không phải là thực vật."], answer: 0 },
+                            { question: "Khoa học tự nhiên là", options: ["một nhánh của khoa học, nghiên cứu các hiện tượng tự nhiên, tìm ra các tính chất, các quy luật của chúng.", "sản xuất những công cụ giúp nâng cao đời sống con người.", "sản xuất những công cụ phục vụ học tập và sản xuất.", "sản xuất những thiết bị ứng dụng trong các lĩnh vực đời sống."], answer: 0 },
+                            { question: "Vật không sống là những vật", options: ["mang những đặc điểm tương tự vật sống nhưng không di chuyển được.", "không mang những đặc điểm của sự sống.", "không sinh sản nhưng vẫn có khả năng lớn lên.", "không bao giờ chết."], answer: 1 },
+                            { question: "Các lĩnh vực chính của khoa học tự nhiên là", options: ["sinh học, hóa học, lịch sử học, văn hóa học.", "hóa học, sinh học, vật lí, khoa học trái đất, thiên văn học.", "vật lí, hóa học, thời trang học, thiên văn học.", "hóa học, khoa học trái đất, ngôn ngữ học, lịch sử học, triết học."], answer: 1 },
+                            { question: "Hoạt động nào dưới đây không được xem là nghiên cứu khoa học tự nhiên?", options: ["Nghiên cứu hệ thống quạt nước cho đầm nuôi tôm.", "Nghiên cứu trang phục của các nước.", "Nghiên cứu xử lí rác thải bảo vệ môi trường.", "Nghiên cứu cách khắc chữ lên thủy tinh."], answer: 1 },
+                            { question: "Việc trồng cây trong nhà kính với quy mô lớn thể hiện vai trò nào của khoa học tự nhiên?", options: ["Hoạt động nghiên cứu khoa học.", "Nâng cao nhận thức của con người về thế giới tự nhiên.", "Ứng dụng công nghệ vào cuộc sống, sản xuất, kinh doanh.", "Chăm sóc sức khoẻ con người."], answer: 2 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 2: An toàn trong phòng thực hành",
+                        questions: [
+                            { question: "Biển báo trong hình dưới đây có ý nghĩa gì? (Hình biển cấm uống nước)", options: ["Cấm uống nước.", "Cấm lửa.", "Chất độc sinh học.", "Chất ăn mòn."], answer: 0 },
+                            { question: "Phương án nào thể hiện đúng nội dung của biển cảnh báo? (Hình lối thoát hiểm)", options: ["Chất phóng xạ.", "Cấm nước uống.", "Lối thoát hiểm.", "Hóa chất độc hại."], answer: 2 },
+                            { question: "Biển báo dưới đây có ý nghĩa gì? (Hình đầu lâu xương chéo)", options: ["Cấm thực hiện.", "Cảnh báo các khu vực nguy hiểm.", "Cảnh báo chỉ dẫn thực hiện.", "Cảnh bảo bắt buộc thực hiện."], answer: 1 },
+                            { question: "Biển báo dưới đây cho ta biết điều gì? (Hình đôi găng tay)", options: ["Phải đeo gang tay thường xuyên.", "Chất ăn mòn.", "Chất độc.", "Nhiệt độ cao."], answer: 0 },
+                            { question: "Kí hiệu trong phòng thực hành sau đây có ý nghĩa gì? (Hình ngọn lửa)", options: ["Cảnh báo có lửa.", "Cảnh báo hỏa hoạn", "Chất dễ cháy.", "Chất khó cháy."], answer: 2 },
+                            { question: "Các biển báo trong Hình 2.1 có ý nghĩa gì? (Hình cấm uống, cấm lửa, cấm ăn uống)", options: ["Cấm thực hiện.", "Bắt buộc thực hiện.", "Cảnh báo nguy hiểm.", "Không bắt buộc thực hiện."], answer: 0 },
+                            { question: "Kí hiệu dưới đây có ý nghĩa gì? (Hình cây chết, cá chết)", options: ["Chất dễ cháy.", "Chất ăn mòn.", "Chất gây độc cho môi trường.", "Cấm uống nước."], answer: 2 },
+                            { question: "Biển báo trong hình dưới đây có ý nghĩa gì? (Hình lối thoát hiểm)", options: ["Cấm lửa.", "Hoá chất độc hại.", "Chất phóng xạ.", "Lối thoát hiểm."], answer: 3 },
+                            { question: "Nội dung cảnh báo ứng với kí hiệu trong hình là gì? (Hình chất ăn mòn)", options: ["Cảnh báo về chất độc.", "Cảnh báo về chất ăn mòn.", "Cảnh báo về điện cao thế.", "Cảnh báo về chất độc sinh học."], answer: 1 },
+                            { question: "Biển báo nào dưới đây thể hiện đúng nội dung “không được ăn uống trong phòng thực hành”?", options: ["Hình 1 (Cấm lửa)", "Hình 2 (Cấm uống)", "Hình 3 (Chất ăn mòn)", "Hình 4 (Cấm ăn uống)"], answer: 3 },
+                            { question: "Ý nghĩa của biển báo trong hình dưới đây là (Hình cấm lửa)", options: ["cấm hút thuốc.", "không ăn uống trong phòng thực hành.", "cấm lửa.", "bóng đèn bị hỏng."], answer: 2 },
+                            { question: "Quy định của phòng thực hành là", options: ["được ăn, uống trong phòng thực hành.", "cặp, túi, ba lô phải để đúng nơi qui định.", "có thể tự ý làm các bài thực hành cơ bản.", "có thể tự ý xử lý khi gặp sự cố xảy ra."], answer: 1 },
+                            { question: "Hành động nào sau đây không thực hiện đúng quy tắc an toàn trong phòng thực hành?", options: ["Làm thí nghiệm theo hướng dẫn của giáo viên.", "Làm theo các thí nghiệm xem trên internet.", "Đeo găng tay khi làm thí nghiệm với hóa chất.", "Rửa sạch tay sau khi làm thí nghiệm."], answer: 1 },
+                            { question: "Để đảm bảo an toàn trong phòng thực hành cần thực hiện nguyên tắc nào dưới đây?", options: ["Làm thí nghiệm theo sự hướng dẫn của bạn bè trong lớp.", "Có thể nhận biết hóa chất bằng cách ngửi hóa chất.", "Mang đồ ăn vào phòng thực hành.", "Đọc kĩ nội quy và thực hiện theo nội quy phòng thực hành."], answer: 3 },
+                            { question: "Hoạt động nào sau đây không thực hiện đúng quy tắc an toàn trong phòng thực hành?", options: ["Đeo găng tay khi làm thí nghiệm.", "Không ăn uống, đùa nghịch trong phòng thí nghiệm.", "Để hóa chất không đúng nơi quy định sau khi làm xong thí nghiệm.", "Làm thí nghiệm theo sự hướng dẫn của giáo viên."], answer: 2 },
+                            { question: "Khi làm thí nghiệm, không may làm vỡ ống hóa chất xuống sàn nhà, ta cần phải làm gì đầu tiên?", options: ["Lấy tay hốt hóa chất.", "Dùng tay nhặt ống vỡ.", "Trải giấy thấm lên dung dịch.", "Gọi cấp cứu y tế."], answer: 2 },
+                            { question: "Việc không được thực hiện trong phòng thực hành là", options: ["ăn, uống trong phòng thực hành.", "làm theo hướng dẫn của thầy, cô giáo.", "đeo găng tay và kính bảo hộ khi làm thí nghiệm.", "thu dọn hóa chất sau khi sử dụng."], answer: 0 },
+                            { question: "Trước khi vào phòng thực hành chúng ta", options: ["không cần phải đọc kĩ các biển cảnh báo.", "phải nhận thức đầy đủ ý nghĩa các biển cảnh báo an toàn.", "không cần quan tâm đến các biển cảnh báo.", "phải thu dọn các biển cảnh báo."], answer: 1 },
+                            { question: "Khi đang làm thực hành thí nghiệm, vô tình làm đổ hóa chất ra sàn nhà thì", options: ["âm thầm lấy khăn lau khô.", "thông báo kịp thời với người hướng dẫn.", "tự động lấy các dụng cụ để thu gom.", "vẫn tiếp tục làm thí nghiệm."], answer: 1 },
+                            { question: "Việc không nên làm trong phòng thực hành là", options: ["làm thí nghiệm dưới sự hướng dẫn của giáo viên.", "đọc hiểu các biển cảnh báo trong phòng thực hành.", "chạy nhảy trong phòng thực hành.", "cẩn thận khi dùng lửa bằng đèn cồn."], answer: 2 },
+                            { question: "Quy định những việc cần làm trong phòng thực hành là", options: ["đeo găng tay và kính bảo hộ khi làm thí nghiệm.", "được ăn, uống trong phòng thực hành.", "làm vỡ ống nghiệm không báo với giáo viên.", "ngửi nếm các hóa chất."], answer: 0 },
+                            { question: "Việc nên làm trong phòng thực hành là", options: ["mang đồ ăn vào phòng thực hành.", "đổ hóa chất vào cống thoát nước.", "mang hết các đồ thí nghiệm ra bàn thực hành.", "buộc tóc gọn gàng khi làm thí nghiệm."], answer: 3 },
+                            { question: "Việc làm không an toàn trong phòng thực hành là", options: ["tự ý làm thí nghiệm.", "quan sát lối thoát hiểm của phòng thực hành.", "đeo găng tay khi lấy hóa chất.", "rửa tay trước khi ra khỏi phòng thực hành."], answer: 0 },
+                            { question: "Hoạt động nào được phép làm trong phòng thực hành?", options: ["Xả rác bừa bãi trong khi thực hành.", "Dùng tay kiểm tra mức độ nóng của vật khi đang đun.", "Ngửi hoặc nếm hóa chất có mùi.", "Cẩn thận khi cầm dụng cụ thủy tinh, dao và các dụng cụ sắc nhọn khác."], answer: 3 },
+                            { question: "Hành động nào sau đây không thực hiện đúng quy tắc an toàn trong phòng thực hành?", options: ["Làm thí nghiệm theo hướng dẫn của giáo viên.", "Nếm thử để phân biệt hóa chất.", "Đeo găng tay khi làm thí nghiệm với hoá chất.", "Rửa sạch tay sau khi làm thí nghiệm."], answer: 1 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 3: Sử dụng kính lúp",
+                        questions: [
+                            { question: "Bộ phận nào của kính lúp được sử dụng để bảo vệ kính?", options: ["Khung kính.", "Mặt kính.", "Tay cầm.", "Kim kính."], answer: 0 },
+                            { question: "Muốn nhìn rõ dấu vân tay nên sử dụng", options: ["Kính cận.", "Kính hiển vi.", "Kính lúp.", "Kính thiên văn."], answer: 2 },
+                            { question: "Khi quan sát một kính lúp cầm tay ta thường thấy phần trong suốt hình tròn, làm bằng thủy tinh có", options: ["phần rìa dày hơn phần giữa.", "hai mặt hai bên đều phẳng.", "hai mặt hai bên đều lõm vào.", "phần rìa mỏng hơn phần giữa."], answer: 3 },
+                            { question: "Cấu tạo của kính lúp gồm", options: ["ống kính, khung kính, vật kính.", "ống kính, khung kính, tay cầm.", "khung kính, tay cầm.", "mặt kính, khung kính, tay cầm."], answer: 3 },
+                            { question: "Sử dụng kính lúp có thể phóng to ảnh ở mức", options: ["khoảng từ 3 đến 20 lần.", "khoảng từ 5 đến 100 lần.", "khoảng từ 1 đến 1000 lần.", "khoảng từ 3 đến 300 lần."], answer: 0 },
+                            { question: "Kính lúp không quan sát được vật nào dưới đây?", options: ["Con bọ cánh cứng.", "Virus corona.", "Chim ruồi.", "Chiếc lá."], answer: 1 },
+                            { question: "Ta dùng kính lúp để quan sát", options: ["trận bóng đá trên sân vận động.", "một con ruồi.", "các chi tiết máy của đồng hồ đeo tay.", "kích thước của tế bào virus."], answer: 2 },
+                            { question: "Công việc nào dưới đây không phù hợp với việc sử dụng kính lúp?", options: ["Người già đọc sách.", "Ngắm các hành tinh.", "Sửa chữa đồng hồ.", "Quan sát gân lá cây."], answer: 1 },
+                            { question: "Công việc nào dưới đây không phù hợp với việc sử dụng kính lúp?", options: ["Người già đọc sách.", "Sửa chữa đồng hồ.", "Khâu vá.", "Quan sát một vật ở rất xa."], answer: 3 },
+                            { question: "Cách bảo quản kính lúp không đúng là", options: ["vệ sinh bằng vải mềm.", "dùng nước sạch để rửa mặt kính.", "đặt nằm kính vào trong hộc bàn.", "dùng nước rửa kính để lau sạch mặt kính."], answer: 2 },
+                            { question: "Cách sử dụng kính lúp đúng là", options: ["đặt kính ở khoảng sao cho nhìn thấy vật rõ nét, mắt nhìn vào mặt kính.", "đặt kính cách xa mắt, mắt nhìn vào mặt kính.", "đặt kính ở khoảng 20 cm, mắt nhìn vào mặt kính.", "đặt kính trong khoảng mắt không phải điều tiết, mắt nhìn vào mặt kính."], answer: 0 },
+                            { question: "Cách bảo quản kính lúp đúng là", options: ["không nên lau chùi, vệ sinh kính thường xuyên.", "sử dụng nước sạch hoặc nước rửa kính chuyên dụng, lau kính bằng khăn mềm.", "có thể để mặt kính lúp tiếp xúc với các vật nhám.", "đặt kính trên bề mặt gồ ghề có nước."], answer: 1 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 4: Sử dụng kính hiển vi quang học",
+                        questions: [
+                            { question: "Vật nào dưới đây chỉ có thể quan sát bằng kính hiển vi?", options: ["Nấm tai mèo.", "Virus.", "Rêu.", "Con muỗi."], answer: 1 },
+                            { question: "Kính hiển vi không dùng để quan sát vật nào dưới đây?", options: ["Tế bào của lá.", "Virus corona.", "Vi sinh vật.", "Con kiến."], answer: 3 },
+                            { question: "Khi quan sát vật mẫu bằng kính hiển vi, chúng ta đặt mắt nhìn vật mẫu qua", options: ["chân kính.", "vật kính.", "thị kính.", "giá đỡ."], answer: 2 },
+                            { question: "Kí hiệu 10X, 40X, 100X là của bộ phận nào?", options: ["Vật kính.", "Thị kính.", "Bàn kính.", "Giá đỡ."], answer: 0 },
+                            { question: "Để điều chỉnh độ phóng đại, người ta thay đổi bộ phận nào?", options: ["Thị kính.", "Bàn kính.", "Giá đỡ.", "Vật kính."], answer: 3 },
+                            { question: "Khi quan sát vật mẫu bằng kính hiển vi, vật mẫu được đặt lên", options: ["bàn kính.", "vật kính.", "thị kính.", "giá đỡ."], answer: 0 },
+                            { question: "Kính hiển vi quang học có thể phóng to ảnh của vật được quan sát", options: ["khoảng từ 3 đến 20 lần.", "khoảng từ 40 đến 3000 lần.", "khoảng từ 10 đến 1000 lần.", "khoảng từ 5 đến 2000 lần."], answer: 1 },
+                            { question: "Hệ thống giá đỡ của kính hiển vi gồm", options: ["chân kính, thân kính, bàn kính, kẹp giữ mẫu.", "vật kính, thị kính.", "đèn, gương, màn chắn sáng.", "ốc to, ốc nhỏ."], answer: 0 },
+                            { question: "Hệ thống chiếu sáng của kính hiển vi gồm", options: ["chân kính, thân kính, bàn kính, kẹp giữ mẫu.", "vật kính, thị kính.", "đèn, gương, màn chắn sáng.", "ốc to, ốc nhỏ."], answer: 2 },
+                            { question: "Hệ thống điều chỉnh độ dịch chuyển của ống kính gồm", options: ["chân kính, thân kính, bàn kính, kẹp giữ mẫu.", "vật kính, thị kính.", "đèn, gương, màn chắn sáng.", "ốc to, ốc nhỏ."], answer: 3 },
+                            { question: "Hệ thống phóng đại của kính hiển vi gồm", options: ["vật kính.", "thị kính.", "vật kính và thị kính.", "vật kính, thị kính và nguồn sáng."], answer: 2 },
+                            { question: "Quan sát vật nào dưới đây cần phải sử dụng kính hiển vi?", options: ["Con kiến.", "Tế bào biểu bì vảy hành.", "Con ong.", "Tép bưởi."], answer: 1 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 5: Đo chiều dài",
+                        questions: [
+                            { question: "Đơn vị cơ bản đo độ dài trong hệ đơn vị đo lường hợp pháp của nước Việt Nam là", options: ["mét (m).", "inch (in).", "dặm.", "kilômét (km)."], answer: 0 },
+                            { question: "Một inch bằng:", options: ["2,54m.", "1dm.", "2,54cm.", "1cm."], answer: 2 },
+                            { question: "Một mét bằng bao nhiêu milimét?", options: ["1000mm.", "10cm.", "100dm.", "100mm."], answer: 0 },
+                            { question: "Màn hình máy tính nhà Tùng là loại 19 inch. Đường chéo của màn hình đó có kích thước:", options: ["48,26 mm.", "4,826 mm.", "48,26 cm.", "48,26 dm."], answer: 2 },
+                            { question: "Để đo chu vi ngoài của miệng cốc, em chọn dụng cụ nào thích hợp nhất?", options: ["Thước thẳng.", "Thước dây.", "Thước kẹp.", "Thước cuộn."], answer: 1 },
+                            { question: "Dụng cụ nào thích hợp để đo vòng eo cơ thể người?", options: ["Thước thẳng.", "Thước dây.", "Thước kẹp.", "Thước cuộn."], answer: 1 },
+                            { question: "Một bạn dùng thước có ĐCNN là 0,5cm để đo độ dài của một vật. Trong các cách ghi kết quả đo dưới đây, cách ghi nào là đúng?", options: ["30 cm.", "30,5 cm.", "30,2 cm.", "30,0 cm."], answer: 1 },
+                            { question: "Trong thực tế, để đo khoảng cách giữa Hà Nội và Đà Nẵng người ta thường sử dụng đơn vị", options: ["ki lô mét (km).", "đề xi mét (dm).", "mét (m).", "Xen ti mét (cm)."], answer: 0 },
+                            { question: "Để đo chiều dài sân trường, dùng dụng cụ nào sau đây là thích hợp nhất?", options: ["Thước cuộn.", "Thước kẹp.", "Compa.", "Thước thẳng."], answer: 0 },
+                            { question: "Người ta không sử dụng đơn vị nào để đo độ dài?", options: ["mét (m).", "kilômét (km).", "mét khối (m3).", "đềximét (dm)."], answer: 2 },
+                            { question: "Dụng cụ nào dưới đây không được sử dụng để đo chiều dài?", options: ["Thước dây.", "Thước mét.", "Thước kẹp.", "Compa."], answer: 3 },
+                            { question: "Để đo khoảng cách từ Trái Đất lên Mặt Trời người ta dùng đơn vị:", options: ["Kilômét.", "Dặm.", "Hải lí.", "Năm ánh sáng."], answer: 3 },
+                            { question: "Thước thích hợp để đo bề dày quyển sách Khoa học tự nhiên 6 là:", options: ["thước kẻ có giới hạn đo 10 cm và độ chia nhỏ nhất 1 mm.", "thước dây có giới hạn đo 1 m và độ chia nhỏ nhất 1 cm.", "thước cuộn có giới hạn đo 3 m và độ chia nhỏ nhất 5 cm.", "thước thẳng có giới hạn đo 1,5 m và độ chia nhỏ nhất 1 cm."], answer: 0 },
+                            { question: "Giới hạn đo của thước là", options: ["độ dài lớn nhất ghi trên thước.", "độ dài giữa hai vạch chia liên tiếp trên thước.", "độ dài nhỏ nhất ghi trên thước.", "độ dài giữa hai vạch bất kỳ ghi trên thước."], answer: 0 },
+                            { question: "Độ chia nhỏ nhất của một thước là", options: ["số nhỏ nhất ghi trên thước.", "độ dài giữa hai vạch chia liên tiếp ghi trên thước.", "độ dài giữa hai vạch dài, giữa chúng còn có các vạch ngắn hơn.", "độ lớn nhất ghi trên thước."], answer: 1 },
+                            { question: "Khi đo độ dài một vật, người ta chọn thước đo", options: ["Có GHĐ lớn hơn chiều dài cần đo và có ĐCNN thích hợp.", "Có GHĐ lớn hơn chiều dài cần đo và không cần để ý đến ĐCNN của thước.", "Thước đo nào cũng được.", "Có GHĐ nhỏ hơn chiều dài cần đo vì có thể đo nhiều lần."], answer: 0 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 6: Đo khối lượng",
+                        questions: [
+                            { question: "Mọi vật đều có", options: ["khối lượng.", "cân.", "kilôgam (kg).", "độ chia."], answer: 0 },
+                            { question: "Đơn vị đo khối lượng trong hệ thống đo lường chính thức ở nước ta là", options: ["tấn.", "miligam.", "kilôgam.", "gam."], answer: 2 },
+                            { question: "Trong các đơn vị khối lượng sau đây: tấn, tạ, lạng, gam đơn vị nào là đơn vị đo lớn nhất?", options: ["Tấn.", "Tạ.", "Lạng.", "Gam."], answer: 0 },
+                            { question: "Dụng cụ nào dưới đây không dùng để đo khối lượng ?", options: ["Nhiệt kế.", "Cân y tế.", "Cân điện tử.", "Cân đòn."], answer: 0 },
+                            { question: "Điền từ thích hợp vào chỗ trống trong câu sau: “Người ta dùng... để đo khối lượng”.", options: ["khối lượng.", "cân.", "kilôgam (kg).", "bút điện."], answer: 1 },
+                            { question: "Khối lượng là số đo", options: ["thời gian chuyển động của vât.", "nhiệt độ nóng chảy của vật.", "lượng chất của vật.", "sự bay hơi của vật."], answer: 2 },
+                            { question: "Trên vỏ một hộp bánh có ghi 500g, con số này chỉ", options: ["khối lượng bánh trong hộp.", "khối lượng cả bánh trong hộp và vỏ hộp.", "sức nặng của hộp bánh.", "thể tích của hộp bánh."], answer: 0 },
+                            { question: "Vì sao ta cần phải ước lượng khối lượng trước khi cân?", options: ["Để rèn luyện khả năng ước lượng.", "Để chọn cân phù hợp.", "Để tăng độ chính xác cho kết quả đo.", "Chọn nhiệt kế phù hợp."], answer: 1 },
+                            { question: "Muốn cân một vật cho kết quả đo chính xác ta cần làm gì?", options: ["Đặt cân ở vị trí không bằng phẳng.", "Để vật lệch một bên trên đĩa cân.", "Đọc kết quả đo khi kim chỉ của đồng hồ đã ổn định.", "Đặt cân ở mọi vị trí đều cho kết quả chính xác."], answer: 2 },
+                            { question: "Tại sao ở các cửa hàng vàng bạc người ta thường dùng cân tiểu li (cân điện tử)?", options: ["Vì cân tiểu li nhỏ gọn.", "Vì cân tiểu li có ĐCNN nhỏ nên có tính chính xác cao.", "Vì cân tiểu li có GHĐ nhỏ nên có tính chính xác cao.", "Vì cân tiểu li có khối lượng lớn."], answer: 1 },
+                            { question: "Giới hạn đo của cân Rô – béc – van là", options: ["khối lượng của một quả cân nhỏ nhất có trong hộp.", "khối lượng của một quả cân lớn nhất có trong hộp.", "tổng khối lượng các quả cân có trong hộp.", "tổng khối lượng các quả cân lớn nhất có trong hộp."], answer: 2 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 7: Đo thời gian",
+                        questions: [
+                            { question: "Đơn vị cơ bản đo thời gian trong hệ thống đo lường hợp pháp ở nước ta là", options: ["giờ.", "ngày.", "phút.", "giây."], answer: 3 },
+                            { question: "Cách đổi thời gian nào sau đây là đúng?", options: ["1 ngày = 24 giờ.", "1 giờ = 600 giây.", "1 phút = 24 giây.", "1 giây = 0,1 phút."], answer: 0 },
+                            { question: "Cách đổi thời gian nào dưới đây là sai?", options: ["1 giờ = 3600 giây.", "1 giây = 0,1 phút.", "1 phút = 60 giây.", "1 giờ = 60 phút."], answer: 1 },
+                            { question: "Điền số thích hợp vào chỗ trống: 2,5 phút = … giây", options: ["15 giây.", "250 giây.", "50 giây.", "150 giây."], answer: 3 },
+                            { question: "30 phút = ... giờ. Chọn đáp án đúng?", options: ["1,5 giờ.", "2 giờ.", "0,5 giờ.", "2,5 giờ."], answer: 2 },
+                            { question: "Một bạn học sinh đi học, bắt đầu đạp xe từ nhà đi lúc 6 giờ 45 phút và tới trường lúc 7 giờ 15 phút. Thời gian từ nhà đến trường là:", options: ["0,5 giờ.", "0,3 giờ.", "0,25 giờ.", "0,15 giờ."], answer: 0 },
+                            { question: "Người ta sử dụng dụng cụ nào để đo thời gian?", options: ["Cân đồng hồ.", "Điện thoại.", "Đồng hồ.", "Máy tính."], answer: 2 },
+                            { question: "Để xác định thành tích của một vận động viên chạy 200m người ta phải sử dụng loại đồng hồ nào sau đây?", options: ["Đồng hồ quả lắc.", "Đồng hồ bấm giây.", "Đồng hồ treo tường.", "Đồng hồ để bàn."], answer: 1 },
+                            { question: "Trước khi đo thời gian của một hoạt động, ta thường ước lượng khoảng thời gian của hoạt động đó để", options: ["lựa chọn đồng hồ đo phù hợp.", "đặt mắt đúng cách.", "đọc kết quả đo chính xác.", "hiệu chỉnh đồng hồ đúng cách."], answer: 0 },
+                            { question: "Khi đo thời gian chạy 100 m của bạn Nguyên trong giờ thể dục, em sẽ đo khoảng thời gian:", options: ["từ lúc bạn Nguyên lấy đà chạy tới lúc về đích.", "từ lúc có lệnh xuất phát tới lúc về đích.", "bạn Nguyên chạy 50 m rồi nhân đôi.", "bạn Nguyên chạy 200 m rồi chia đôi."], answer: 1 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 8: Đo nhiệt độ",
+                        questions: [
+                            { question: "Nhiệt độ là", options: ["là số đo độ nóng của một vật.", "là số đo độ lạnh của một vật.", "là số đo độ nóng, lạnh của nhiệt kế.", "là số đo mức độ nóng, lạnh của vật."], answer: 3 },
+                            { question: "Vật càng nóng thì nhiệt độ của vật", options: ["cao.", "thấp.", "trung bình.", "cao sau đó thấp."], answer: 0 },
+                            { question: "Đơn vị đo nhiệt độ thường dùng hằng ngày của nước ta là", options: ["độ K.", "độ C.", "độ G.", "độ F."], answer: 1 },
+                            { question: "Cách đổi nhiệt độ từ nhiệt giai Xen-xi-út sang nhiệt giai Fahrenheit nào sau đây là đúng?", options: ["°C = (t + 273)°K.", "°F = (°C) x 1,8 + 32.", "°K = (T - 273)°C.", "°F = (t - 32) : 18 °C."], answer: 1 },
+                            { question: "32°C có giá trị bằng bao nhiêu °F?", options: ["92,6°F.", "1°F.", "25,6°F.", "89,6°F."], answer: 3 },
+                            { question: "Trong thang đo nhiệt độ Celsius, nhiệt độ của nước đang sôi là", options: ["100°C.", "0°C.", "327°C.", "-30°C."], answer: 0 },
+                            { question: "Trong thang đo nhiệt độ Celsius, nhiệt độ của nước đá đang tan là", options: ["100°C.", "0°C.", "327°C.", "-30°C."], answer: 1 },
+                            { question: "Người ta sử dụng dụng cụ nào để đo nhiệt độ?", options: ["Nhiệt kế.", "Tốc kế.", "Cân.", "Đồng hồ."], answer: 0 },
+                            { question: "Hiện tượng nở vì nhiệt của chất lỏng được dùng làm cơ sở để chế tạo", options: ["các dụng cụ đo thời gian.", "các dụng cụ đo khối lượng.", "các dụng cụ đo nhiệt độ.", "các dụng cụ đo độ dài."], answer: 2 },
+                            { question: "Để xác định chính xác và đảm bảo an toàn trong khi đo nhiệt độ các vật, ta cần thực hiện điều gì?", options: ["Hiệu chỉnh nhiệt kế đúng cách.", "Ước lượng nhiệt độ của vật trước khi đo.", "Thực hiện phép đo nhiệt độ đúng cách.", "Đọc và ghi kết quả đo theo đúng cách."], answer: 1 },
+                            { question: "Không thể dùng nhiệt kế rượu để đo nhiệt độ của hơi nước đang sôi vì:", options: ["rượu sôi ở nhiệt độ cao hơn 100°C.", "rượu sôi ở nhiệt độ thấp hơn 100°C.", "rượu đông đặc ở nhiệt độ thấp hơn 100°C.", "rượu đông đặc ở nhiệt độ cao hơn 100°C."], answer: 1 },
+                        ]
+                    }
+                ]
+            },
+            {
+                chapterTitle: "Chương 2: Chất quanh ta",
+                lessons: [
+                    {
+                        lessonTitle: "Bài 9: Sự đa dạng của chất",
+                        questions: [
+                            { question: "Vật sống có khả năng như trao đổi chất với môi trường", options: ["lớn lên và sinh sản.", "không lớn lên và không sinh sản.", "là vật thể nhân tạo.", "là vật thể tự nhiên."], answer: 0 },
+                            { question: "Vật sống là vật có các dấu hiệu của", options: ["sự sống.", "sự chuyển động.", "sự biến đổi.", "sự thay đổi về kích thước."], answer: 0 },
+                            { question: "Các vật sống là", options: ["cây nho, cây cầu, đường mía.", "muối ăn, đường thốt nốt, cây cam.", "con chó, cây bàng, con cá.", "cây cối, đồi núi, con chim."], answer: 2 },
+                            { question: "Cho các vật thể: cây táo, đôi giày, con cá, con mèo, máy bay. Những vật sống trong các vật thể đã cho là", options: ["vi khuẩn, đôi giày, con cá.", "cây táo, con cá, con mèo.", "con cá, con mèo, máy bay.", "vi khuẩn, con cá, máy bay."], answer: 1 },
+                            { question: "Vật không sống thì không có khả năng", options: ["lớn lên nhưng vẫn có thể sinh sản và trao đổi chất.", "trao đổi chất với môi trường, không lớn lên, không sinh sản.", "trao đổi nước và có thể lớn lên, sinh sản.", "đó là vật thể sống trong tự nhiên."], answer: 1 },
+                            { question: "Các vật không sống là", options: ["cây nho, con cá, cây cam.", "cây cầu, cái bàn, hòn đá.", "con chó, cây bàng, con cá.", "cây cối, con mèo, con chim."], answer: 1 },
+                            { question: "Vật thể tự nhiên là", options: ["đám mây.", "ngôi nhà.", "cây cầu.", "quyển sách."], answer: 0 },
+                            { question: "Vật thể nhân tạo là", options: ["núi đá vôi.", "đám mây.", "cây cầu.", "con sóc."], answer: 2 },
+                            { question: "Phát biểu nào dưới đây đều là chất?", options: ["Muối ăn, nhôm, cái ấm nước.", "Đồng, nhôm, sắt, chì.", "Đường mía, xe máy, nhôm.", "Cốc thủy tinh, cát, con mèo."], answer: 1 },
+                            { question: "Dãy nào dưới đây đều là vật thể?", options: ["Cái bàn nhựa, cái ấm sắt, đồng.", "xe đạp, con dao, đồi núi.", "Sắt, nhôm, mâm đồng.", "Bóng đèn, điện thoại, thủy ngân."], answer: 1 },
+                            { question: "Quá trình hòa tan muối ăn vào nước thể hiện tính chất gì của muối?", options: ["Tính chất vật lí.", "Cả tính chất vật lí và hoá học.", "Tính chất hoá học.", "Không thể hiện tính chất gì."], answer: 0 },
+                            { question: "Quá trình nào sau đây thể hiện tính chất vật lí?", options: ["Đun nóng đường đến khi xuất hiện chất màu đen.", "Cô cạn nước đường thành đường.", "Để lâu ngoài không khí, lớp ngoài của đinh sắt biến thành gỉ sắt.", "Hơi nến cháy trong không khí chứa oxygen tạo thành carbon dioxide và hơi nước."], answer: 1 },
+                            { question: "Hiện tượng nào dưới đây thể hiện tính chất vật lí?", options: ["Đun nóng đường cháy thành than.", "Cồn để trong lọ không đậy kín bị bay hơi.", "Khung cửa sắt lâu ngày bị gỉ.", "Khí gas cháy với ngọn lửa màu xanh nhạt tạo ra khí carbon dioxide và hơi nước."], answer: 1 },
+                            { question: "Trong các tính chất sau, đâu là tính chất hoá học của sắt?", options: ["Là chất rắn, màu xám, có ánh kim.", "Dẫn điện, dẫn nhiệt tốt.", "Bị nam châm hút.", "Các đồ vật có chứa sắt để lâu ngoài không khí sẽ xuất hiện lớp gỉ sắt màu nâu, giòn và xốp."], answer: 3 },
+                            { question: "Tính chất nào sau đây là tính chất hóa học của khí carbon dioxide?", options: ["Làm đục dung dịch nước vôi trong.", "Tan rất ít trong nước.", "Chất khí, không màu.", "Không mùi, không vị."], answer: 0 },
+                            { question: "Trường hợp nào sau đây thể hiện tính chất hóa học?", options: ["Cơm để lâu ngày bị ôi thiu.", "Rửa rau bằng nước lạnh.", "Nước ở thể lỏng, không mùi, không vị.", "Nước đá chảy thành nước lỏng."], answer: 0 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 10: Các thể của chất và sự chuyển thể",
+                        questions: [
+                            { question: "Mọi chất được tìm thấy trên Trái Đất ở thể", options: ["lỏng.", "khí, rắn.", "rắn, lỏng.", "rắn, lỏng, khí."], answer: 3 },
+                            { question: "Chất nào dưới đây ở thể rắn?", options: ["Sắt.", "Khí oxygen.", "Nước.", "Thuỷ ngân."], answer: 0 },
+                            { question: "Chất nào dưới đây ở thể lỏng?", options: ["Đá vôi.", "Nước.", "Khí oxygen.", "Lưu huỳnh."], answer: 1 },
+                            { question: "Chất nào sau đây ở thể khí?", options: ["Dầu ăn.", "Muối ăn.", "Giấm.", "Carbon dioxide."], answer: 3 },
+                            { question: "Chất ở thể rắn có hình dạng cố định, không chảy được và", options: ["rất khó nén.", "rất dễ nén.", "bay hơi.", "chảy tràn trên bề mặt."], answer: 0 },
+                            { question: "Chất ở thể nào thì có hình dạng cố định?", options: ["Thể dẻo.", "Thể rắn.", "Thể lỏng.", "Thể khí."], answer: 1 },
+                            { question: "Quá trình chất ở thể rắn chuyển sang thể lỏng gọi là", options: ["sự nóng chảy.", "sự bay hơi.", "sự đông đặc.", "sự sôi."], answer: 0 },
+                            { question: "Khi quan sát sự nóng chảy của nước đá, trong suốt thời gian nóng chảy thì", options: ["nhiệt độ của nước đá tăng.", "nhiệt độ của nước đá giảm.", "nhiệt độ của nước không thay đổi.", "nhiệt độ của nước đá ban đầu tăng sau đó giảm."], answer: 2 },
+                            { question: "Trong các hiện tượng sau đây, hiện tượng nào liên quan đến sự nóng chảy?", options: ["Sương đọng trên lá cây.", "Khăn ướt sẽ khô khi được phơi ra nắng.", "Đun nước đổ đầy ấm, nước có thể tràn ra ngoài.", "Cục nước đá bỏ từ tủ đá ra ngoài, sau một thời gian, tan thành nước."], answer: 3 },
+                            { question: "quá trình chất chuyển từ thể lỏng sang thể rắn gọi là", options: ["sự nóng chảy.", "sự bay hơi.", "sự đông đặc.", "sự sôi."], answer: 2 },
+                            { question: "Trong các hiện tượng sau đây, hiện tượng nào liên quan đến sự đông đặc?", options: ["Cốc nước để ngoài nắng.", "Đun sôi nước ở 100°C.", "Cho nước vào tủ lạnh để làm đá.", "Mở nắp lọ nước hoa."], answer: 2 },
+                            { question: "Quá trình chất chuyển từ thể lỏng sang thể hơi gọi là", options: ["sự nóng chảy.", "sự hóa hơi.", "sự đông đặc.", "sự tan."], answer: 1 },
+                            { question: "Trong thời gian sôi của một chất lỏng thì", options: ["nhiệt độ của chất lỏng tăng.", "nhiệt độ của chất lỏng không đổi.", "nhiệt độ của chất lỏng giảm.", "nhiệt độ của chất lỏng tăng sau đó giảm."], answer: 1 },
+                            { question: "Quá trình chất chuyển từ thể hơi sang thể lỏng gọi là", options: ["sự ngưng tụ.", "sự nóng chảy.", "sự đông đặc.", "sự sôi."], answer: 0 },
+                            { question: "Những quá trình chuyển thể nào của đồng được vận dụng trong việc đúc tượng đồng?", options: ["Nóng chảy và bay hơi.", "Nóng chảy và đông đặc.", "Bay hơi và đông đặc.", "Bay hơi và ngưng tụ."], answer: 1 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 11: Oxygen - Không khí",
+                        questions: [
+                            { question: "Oxygen có ở đâu?", options: ["Khắp mọi nơi trên Trái Đất.", "dưới lòng đất.", "trong nước.", "trong không khí."], answer: 0 },
+                            { question: "Ở điều kiện thường, khí oxygen có màu gì?", options: ["Xanh nhạt.", "Vàng nhạt.", "Hồng nhạt.", "Không màu."], answer: 3 },
+                            { question: "Ở thể lỏng và thể rắn, oxygen có màu gì?", options: ["Xanh nhạt.", "Vàng.", "Hồng nhạt.", "Không màu."], answer: 0 },
+                            { question: "Tính chất nào sau đây sai khi nói về oxygen?", options: ["Oxygen là chất khí.", "Không màu, không mùi, không vị", "Nặng hơn không khí.", "Tan nhiều trong nước."], answer: 3 },
+                            { question: "Quá trình nào sau đây cần oxygen?", options: ["Quang hợp.", "Hô hấp.", "Hòa tan.", "Nóng chảy."], answer: 1 },
+                            { question: "Đưa tàn đóm vào bình đựng khí oxygen ta thấy hiện tượng như thế nào?", options: ["Tàn đóm tắt.", "Tàn đóm bùng cháy.", "Tàn đóm bốc khói.", "Không có hiện tượng."], answer: 1 },
+                            { question: "Đâu là khí giúp duy trì sự cháy?", options: ["Nitrogen.", "Oxygen.", "Hydrogen.", "Carbon dioxide."], answer: 1 },
+                            { question: "Thành phần của không khí gồm những khí gì?", options: ["21% Nitrogen, 78% Oxygen, 1% khí khác.", "100% Nitrogen.", "78% Nitrogen, 21% Oxygen, 1% khí khác.", "100% Oxygen."], answer: 2 },
+                            { question: "Khí nào có phần trăm thể tích lớn nhất trong không khí?", options: ["Nitrogen.", "Helium.", "Oxygen.", "Carbon dioxide."], answer: 0 },
+                            { question: "Khí nào sau đây tham gia vào quá trình quang hợp của cây xanh?", options: ["Oxygen.", "Khí hiếm.", "Nitrogen.", "Carbon dioxide."], answer: 3 },
+                            { question: "Sự ô nhiễm không khí do nguyên nhân nào?", options: ["Rác thải.", "Cháy rừng.", "Hoạt động sản xuất từ các nhà máy.", "Tất cả các đáp án trên."], answer: 3 },
+                            { question: "Để bảo vệ không khí trong lành chúng ta nên làm gì?", options: ["Xây thêm nhiều khu công nghiệp.", "Đổ chất thải chưa qua xử lí ra môi trường.", "Trồng cây xanh.", "Chặt cây xây cầu cao tốc."], answer: 2 },
+                            { question: "Để phân biệt 2 chất khí là oxygen và carbon dioxide, em nên lựa chọn cách nào dưới đây?", options: ["Quan sát màu sắc.", "Ngửi mùi.", "Oxygen duy trì sự sống.", "Dẫn từng khí vào cây nến đang cháy."], answer: 3 },
+                            { question: "Câu nào đúng khi nói về không khí trong các câu sau?", options: ["Không khí là một đơn chất.", "Không khí là một nguyên tố hóa học.", "Không khí là một hỗn hợp của nhiều nguyên tố.", "Không khí là hỗn hợp của nhiều khí trong đó chủ yếu là khí oxygen và nitrogen."], answer: 3 },
+                        ]
+                    }
+                ]
+            },
+            {
+                chapterTitle: "Chương 3: Vật liệu, Nguyên liệu, Nhiên liệu...",
+                lessons: [
+                    {
+                        lessonTitle: "Bài 12: Một số vật liệu",
+                        questions: [
+                            { question: "Dãy nào dưới đây gồm các vật liệu?", options: ["Gốm, nhựa, cao su, thuỷ tinh.", "Gốm, nhựa, xăng, gỗ.", "Nhựa, xăng, dầu mỏ, cao su.", "Quặng, dầu mỏ, cao su, thuỷ tinh."], answer: 0 },
+                            { question: "Vật liệu nào sau đây không dẫn điện?", options: ["Gốm.", "Nhôm.", "Đồng.", "Sắt."], answer: 0 },
+                            { question: "Trong các vật liệu sau, vật liệu nào dẫn điện tốt?", options: ["Thủy tinh.", "Kim loại.", "Cao su.", "Gốm."], answer: 1 },
+                            { question: "Dãy nào sau đây gồm các vật liệu làm từ kim loại?", options: ["Nồi, rổ, chai.", "Chìa khoá, ốp điện thoại, bàn học.", "Chiếc thìa, nồi, chìa khoá.", "Muôi nhôm, chìa khoá, gấu bông."], answer: 2 },
+                            { question: "Thủy tinh có tính chất gì?", options: ["Tính dẫn điện, dẫn nhiệt, dễ bị ăn mòn.", "Có tính dẻo và đàn hồi.", "Không dẫn điện, không dẫn nhiệt, ít bị ăn mòn.", "Có ánh kim, dẫn điện tốt, dẫn nhiệt tốt."], answer: 2 },
+                            { question: "Vật liệu gỗ có những tính chất nào sau đây?", options: ["Mềm dẻo, dẫn điện, trong suốt.", "Bền, dễ tạo hình, dễ cháy.", "Cứng, dễ uốn, dẫn nhiệt.", "Đàn hồi, dễ uốn, dễ cháy."], answer: 1 },
+                            { question: "Vật liệu gốm có tính chất nào sau đây?", options: ["Dẫn điện tốt.", "Dễ cháy.", "Mềm dẻo.", "Cứng."], answer: 3 },
+                            { question: "Dựa vào tính chất nào mà kim loại đồng, kim loại nhôm lại được sử dụng làm dây điện?", options: ["Dẫn nhiệt tốt.", "Bền.", "Rẻ.", "Dẫn điện tốt."], answer: 3 },
+                            { question: "Vật liệu nào sau đây không thể tái chế?", options: ["Xi măng.", "Thuỷ tinh.", "Nhựa.", "Thép xây dựng."], answer: 0 },
+                            { question: "Vật liệu nào sau đây được dùng để sản xuất xoong, nồi nấu thức ăn?", options: ["Nhựa.", "Gỗ.", "Kim loại.", "Thủy tinh."], answer: 2 },
+                            { question: "Vật liệu nào sau đây được làm lốp xe, đệm?", options: ["Cao su.", "Thủy tinh.", "Nhựa.", "Kim loại."], answer: 0 },
+                            { question: "Phát biểu nào sau đây đúng khi nói về vật liệu nhựa?", options: ["Có tính dẫn điện, dẫn nhiệt tốt.", "Dễ bị biến dạng, rất khó bị phân hủy.", "Có tính dẻo, không cháy.", "Tiện lợi, dễ sử dụng, không gây ô nhiễm môi trường."], answer: 1 },
+                            { question: "Gang và thép đều là hợp kim tạo bởi 2 thành phần chính là sắt và carbon, gang cứng hơn sắt, Vì sao gang ít sử dụng trong các công trình xây dựng?", options: ["Vì gang được sản xuất ít hơn thép.", "Vì gang khó sản xuất hơn thép.", "Vì gang dẫn nhiệt kém hơn thép.", "Vì gang giòn hơn thép."], answer: 3 },
+                            { question: "Vật liệu nào sau đây là chất cách điện?", options: ["Gỗ.", "Đồng.", "Sắt.", "Nhôm."], answer: 0 },
+                            { question: "Vật liệu nào sau đây không dẫn điện, không dẫn nhiệt, có tính đàn hồi, không tan trong nước, ít biến đổi khi gặp nóng hay lạnh?", options: ["Thủy tinh.", "Xi măng.", "Kim loại.", "Cao su."], answer: 3 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 13: Một số nguyên liệu",
+                        questions: [
+                            { question: "Vật thể nào sau đây được xem là nguyên liệu?", options: ["Đất sét.", "Xi măng.", "Ngói.", "Gạch xây dựng."], answer: 0 },
+                            { question: "Khi dùng gỗ để sản xuất giấy thì người ta sẽ gọi gỗ là", options: ["vật liệu.", "phế liệu.", "nhiên liệu.", "nguyên liệu."], answer: 3 },
+                            { question: "Cây mía là nguyên liệu chính để sản xuất", options: ["muối ăn.", "nước mắm.", "dầu ăn.", "đường ăn."], answer: 3 },
+                            { question: "Dãy nào dưới đây gồm các nguyên liệu có sẵn trong tự nhiên?", options: ["Đất, đá, nhựa.", "Đất, thuỷ tinh, dầu mỏ.", "Đất, quặng, dầu mỏ.", "Thuỷ tinh, gốm, gỗ."], answer: 2 },
+                            { question: "Đá vôi không được dùng để", options: ["đập nhỏ để làm đường, bê tông.", "làm thực phẩm.", "sản xuất vôi sống.", "chế biến thành chất độn."], answer: 1 },
+                            { question: "Sản phẩm được sản xuất từ dầu thô là", options: ["xi măng.", "bàn ghế.", "đá ốp lát.", "dầu hoả."], answer: 3 },
+                            { question: "Nguyên liệu chính để sản xuất ra xăng là", options: ["quặng.", "dầu hoả.", "dầu mỏ.", "đá vôi."], answer: 2 },
+                            { question: "Nguyên liệu nào sau đây được sử dụng trong lò nung vôi?", options: ["Đá vôi.", "Đất sét.", "Cát.", "Gạch."], answer: 0 },
+                            { question: "Để sản xuất gang và thép, người ta chế biến từ quặng gì?", options: ["Quặng sắt.", "Quặng Bauxite.", "Quặng đồng.", "Quặng titanium."], answer: 0 },
+                            { question: "Quặng Bauxite dùng làm nguyên liệu để sản xuất", options: ["sắt.", "nhôm.", "gang.", "thép."], answer: 1 },
+                            { question: "Loại nguyên liệu nào sau đây hầu như không thể tái sinh?", options: ["Nông sản.", "Bông.", "Dầu thô.", "Gỗ."], answer: 2 },
+                            { question: "Thành phần chính của đá vôi là:", options: ["Sắt.", "Calcium carbonate.", "Đồng.", "Sodium carbonate."], answer: 1 },
+                            { question: "Vì sao mưa acid có thể làm hư hại các tượng đá vôi để ngoài trời?", options: ["Vì đá vôi dễ ngấm nước.", "Vì đá vôi tan trong acid, tạo bọt khí.", "Vì đá vôi dễ bị cháy.", "Vì đá vôi có tính chất xốp."], answer: 1 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 14: Một số nhiên liệu",
+                        questions: [
+                            { question: "Những chất cháy được, khi cháy toả nhiệt và phát sáng được gọi là", options: ["vật liệu.", "nhiên liệu.", "nguyên liệu.", "điện năng."], answer: 1 },
+                            { question: "Nhiên liệu tồn tại ở các trạng thái", options: ["rắn, lỏng.", "lỏng, khí.", "khí, rắn.", "rắn, lỏng, khí."], answer: 3 },
+                            { question: "Nhiên liệu hóa thạch là", options: ["nhiên liệu hình thành từ xác sinh vật bị chôn vùi và biến đổi hàng triệu năm.", "nguồn nhiên liệu tái tạo.", "Chỉ bao gồm dầu mỏ, than đá.", "đá chứa ít nhất 50% xác động và thực vật."], answer: 0 },
+                            { question: "Nhiên liệu nào sau đây không phải nhiên liệu hóa thạch?", options: ["Than đá.", "Ethanol.", "Khí tự nhiên.", "Dầu mỏ."], answer: 1 },
+                            { question: "Để sử dụng nhiên liệu có hiệu quả cần phải cung cấp không khí hoặc oxygen", options: ["dư.", "thiếu.", "vừa đủ.", "không cần cung cấp."], answer: 2 },
+                            { question: "Nhiên liệu tái tạo là", options: ["nhiên liệu mất hàng trăm triệu năm mới tạo ra được.", "nhiên liệu được hình thành từ các lớp có nguồn gốc thực vật.", "nhiên liệu tự nhiên, chỉ mất thời gian ngắn là có thể bổ sung được.", "nhiên liệu chứa hàm lượng lớn carbon và hydrocarbon."], answer: 2 },
+                            { question: "Đâu là nguồn nhiên liệu không thể tái tạo được?", options: ["Năng lượng gió.", "Năng lượng mặt trời.", "Thủy điện.", "Than đá."], answer: 3 },
+                            { question: "Loại nhiên liệu nào sau đây có năng suất tỏa nhiệt cao, dễ cháy hoàn toàn?", options: ["Nhiên liệu lỏng.", "Nhiên liệu khí.", "Nhiên liệu rắn.", "Nhiên liệu hóa thạch."], answer: 1 },
+                            { question: "Nhiên liệu lỏng chủ yếu được dùng cho", options: ["xây dựng và sản xuất giấy.", "nấu nướng và sưởi ấm.", "nghiên cứu khoa học.", "động cơ đốt trong, một phần nhỏ để đun nấu."], answer: 3 },
+                            { question: "An ninh năng lượng là", options: ["sự đảm bảo đầy đủ năng lượng dưới nhiều dạng khác nhau, ưu tiên nguồn năng lượng sạch và giá rẻ.", "sự đảm bảo đầy đủ năng lượng dưới nhiều dạng khác nhau, ưu tiên nguồn năng lượng sạch và giá cao.", "sự đảm bảo đầy đủ năng lượng dưới một dạng duy nhất, giá thành rẻ.", "sự đảm bảo đầy đủ năng lượng dưới một dạng duy nhất, giá thành cao."], answer: 0 },
+                            { question: "Dãy nào sau đây gồm các nguồn năng lượng tái tạo?", options: ["Nhiên liệu hoá thạch, năng lượng mặt trời, thuỷ điện.", "Thuỷ điện, địa nhiệt, năng lượng gió.", "Nhiên liệu hạt nhân, thuỷ điện, địa nhiệt.", "Thuỷ điện, năng lượng sinh học, nhiên liệu hạt nhân."], answer: 1 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 15: Một số lương thực, thực phẩm",
+                        questions: [
+                            { question: "Thức ăn của con người có 2 dạng đó là", options: ["Gạo, ngô và khoai.", "lương thực và thực phẩm.", "nước và muối khoáng.", "đường và muối."], answer: 1 },
+                            { question: "Cây trồng nào sau đây được coi là cây lương thực?", options: ["Dừa.", "Mía.", "Lúa.", "Thốt nốt."], answer: 2 },
+                            { question: "Lương thực và thực phẩm dễ bị hỏng nên", options: ["cần được bảo quản thích hợp.", "để ngoài môi trường bình thường.", "đun chín để nguội.", "sấy khô tất cả."], answer: 0 },
+                            { question: "Gạo sẽ cung cấp chất dinh dưỡng nào nhiều nhất cho cơ thể?", options: ["Vitamin.", "Carbohydrate (chất đường, bột).", "Lipit (chất béo).", "Protein (chất đạm)."], answer: 1 },
+                            { question: "Trong các thực phẩm dưới đây, loại nào chứa nhiều protein (chất đạm) nhất?", options: ["Thịt.", "Gạo.", "Rau xanh.", "Gạo và rau xanh."], answer: 0 },
+                            { question: "Đâu là tên gọi chung của nhóm chất chứa tinh bột, đường và chất xơ?", options: ["Vitamin.", "Lipid.", "Protein.", "Carbohydrate."], answer: 3 },
+                            { question: "Chất có vai trò dự trữ, cung cấp năng lượng cho cơ thể và các hoạt động sống là", options: ["Chất béo.", "Vitamin.", "Chất đạm.", "Carbohydrate."], answer: 0 },
+                            { question: "Bốn nhóm dinh dưỡng chính mà con người cần là", options: ["carbonhydrate, protein, lipid và oxygen.", "carbonhydrate, protein, lipid và vitamin.", "carbonhydrate, oxygen, lipid và oxygen.", "carbonhydrate, protein, vitamin và oxygen."], answer: 1 },
+                            { question: "Vitamin nào không tan được trong chất béo?", options: ["Vitamin E.", "Vitamin D.", "Vitamin B.", "Vitamin A."], answer: 2 },
+                            { question: "Vitamin tốt cho mắt là", options: ["Vitamin A.", "Vitamin D.", "Vitamin K.", "Vitamin B."], answer: 0 },
+                            { question: "Nhóm vitamin nào tốt nhất cho xương?", options: ["Vitamin A.", "Vitamin C.", "Vitamin D.", "Vitamin E."], answer: 2 },
+                            { question: "Bệnh bướu cổ là do thiếu chất khoáng gì?", options: ["kẽm.", "canxi.", "iot.", "photpho."], answer: 2 },
+                            { question: "Chất khoáng và vitamin thường có nhiều trong các loại", options: ["hải sản, rau xanh, củ, quả tươi.", "gạo, đậu xanh, thịt bò.", "trứng, sữa, mía.", "gạo và rau xanh."], answer: 0 },
+                            { question: "Để duy trì một sức khỏe tốt với chế độ ăn hợp lí ta nên làm gì?", options: ["Kiên trì chạy bộ.", "Liên tục ăn các chất dinh dưỡng.", "Ăn đủ, đa dạng.", "Tập trung vào việc học nhiều hơn."], answer: 2 },
+                        ]
+                    }
+                ]
+            },
+            {
+                chapterTitle: "Chương 4: Hỗn hợp. Tách chất",
+                lessons: [
+                    {
+                        lessonTitle: "Bài 16: Hỗn hợp các chất",
+                        questions: [
+                            { question: "Chất tinh khiết là", options: ["có tính chất thay đổi tùy thuộc vào thành phần.", "có tính chất khó xác định.", "chỉ có một chất duy nhất.", "chứa từ hai chất trở lên."], answer: 2 },
+                            { question: "Trường hợp nào sau đây là chất tinh khiết?", options: ["Nước cam.", "Nước biển.", "Muối.", "Bột canh."], answer: 2 },
+                            { question: "Hỗn hợp chứa", options: ["từ 2 chất trở lên.", "một chất duy nhất.", "một hoặc hai chất.", "không có chất nào."], answer: 0 },
+                            { question: "Hỗn hợp nào dưới đây là dung dịch?", options: ["Hỗn hợp nước và dầu ăn.", "Hỗn hợp nước và đường.", "Hỗn hợp nước và cát.", "Hỗn hợp nước và bột mì."], answer: 1 },
+                            { question: "Dung dịch là hỗn hợp đồng nhất của", options: ["dung môi và chất tan.", "chất rắn phân tán lơ lửng trong chất lỏng.", "đá vôi và nước.", "các giọt chất lỏng lơ lửng trong một chất lỏng khác."], answer: 0 },
+                            { question: "Khi hòa tan đường vào nước ta thu được", options: ["dung dịch nước đường.", "Nhũ tương.", "giấm.", "huyền phù."], answer: 0 },
+                            { question: "Huyền phù gồm các hạt chất rắn phân tán lơ lửng trong", options: ["chất rắn.", "chất lỏng.", "chất khí.", "gỗ."], answer: 1 },
+                            { question: "Hỗn hợp gồm các giọt chất lỏng lơ lửng trong một chất lỏng khác gọi là", options: ["Dung dịch.", "Dung môi.", "Huyền phù.", "Nhũ tương."], answer: 3 },
+                            { question: "Chất rắn nào sau đây không tan trong nước?", options: ["Muối ăn.", "Calcium carbonate (đá vôi).", "Đường.", "Viên C sủi."], answer: 1 },
+                            { question: "Chất nào tan tốt nhất trong nước nóng?", options: ["Chất lỏng và chất khí.", "Chất khí.", "Chất rắn và chất khí.", "Chất rắn."], answer: 3 },
+                            { question: "Muốn hoà tan được nhiều muối ăn vào nước, ta không nên sử dụng phương pháp nào dưới đây?", options: ["Nghiền nhỏ muối ăn.", "Đun nóng nước.", "Bỏ thêm đá lạnh vào.", "Vừa cho muối ăn vào nước vừa khuấy đều."], answer: 2 },
+                            { question: "Khi tăng nhiệt độ thì độ tan của các chất rắn trong nước thay đổi như thế nào?", options: ["Đều giảm.", "Đều tăng.", "Không thay đổi.", "Phần lớn là tăng."], answer: 3 },
+                            { question: "Khi hoà tan 100 ml rượu êtylic vào 50 ml nước thì nhận định nào đây đúng?", options: ["Rượu là chất tan và nước là dung môi.", "Nước là chất tan và rượu là dung môi.", "Nước và rượu đều là chất tan.", "Nước và rượu đều là dung môi."], answer: 1 },
+                            { question: "Nước khoáng trong suốt, không màu nhưng có lẫn một số chất tan. Vậy nước khoáng", options: ["Là hỗn hợp đồng nhất.", "Là chất tinh khiết.", "Không phải hỗn hợp.", "Là hỗn hợp không đồng nhất."], answer: 0 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 17: Tách chất ra khỏi hỗn hợp",
+                        questions: [
+                            { question: "Điền từ còn thiếu vào câu sau: Hỗn hợp trong tự nhiên đều là hỗn hợp của hai hay nhiều chất khác nhau. Do nhu cầu sử dụng nên quá trình………trong đời sống và công nghệ hoá học là rất cần thiết.", options: ["phân chia.", "tách chất.", "lọc hoá.", "loại bỏ tạp chất."], answer: 1 },
+                            { question: "Có thể tách các chất trong hỗn hợp dựa trên", options: ["nồng độ các chất.", "hòa tan về tính chất.", "sự khác nhau về tính chất của chúng.", "khối lượng và thể tích."], answer: 2 },
+                            { question: "Tác dụng chủ yếu của việc đeo khẩu trang là gì?", options: ["Tách oxygen ra khỏi không khí hít vào.", "Tách khí carbon dioxide ra khỏi không khí hít vào.", "Tách hơi nước ra khỏi không khí hít vào.", "Tách khói bụi ra khỏi không khí hít vào."], answer: 3 },
+                            { question: "Phương pháp lọc là", options: ["sự tách chất dựa vào sự khác nhau về kích thước hạt.", "sự tách chất dựa vào sự khác nhau ở mức độ nặng nhẹ.", "sự tách chất dựa vào sự khác nhau về tính bay hơi.", "sự tách chất dựa vào sự khác nhau về khả năng tan."], answer: 0 },
+                            { question: "Phương pháp nào dưới đây là đơn giản nhất để tách cát lẫn trong nước?", options: ["Chiết.", "Lọc.", "Cô cạn.", "Dùng máy li tâm."], answer: 1 },
+                            { question: "Hỗn hợp nào dưới đây có thể tách riêng các chất khi cho hỗn hợp vào nước, sau đó khuấy kĩ và lọc?", options: ["Bột đá vôi và muối ăn.", "Bột sắt và muối ăn.", "Đường và muối.", "Giấm và rượu."], answer: 0 },
+                            { question: "Trong máy lọc nước có lõi làm bằng bông được ép rất chặt. Lõi bông đó có tác dụng gì?", options: ["không có tác dụng gì.", "Lọc hoá chất độc hại.", "Lọc chất tan trong nước.", "Lọc chất không tan trong nước."], answer: 3 },
+                            { question: "Phương pháp cô cạn là", options: ["sự tách chất dựa vào sự khác nhau về kích thước hạt.", "sự tách chất dựa vào sự khác nhau ở mức độ nặng nhẹ.", "sự tách chất dựa vào sự khác nhau về tính bay hơi.", "sự tách chất dựa vào sự khác nhau về khả năng tan."], answer: 2 },
+                            { question: "Để tách muối ra khỏi dung dịch nước muối ta thường dùng phương pháp?", options: ["Cô cạn.", "Tách.", "Lọc.", "Chưng cất."], answer: 0 },
+                            { question: "Nếu không may làm đổ dầu ăn vào nước, ta dùng phương pháp nào để tách riêng dầu ăn ra khỏi nước?", options: ["Dùng máy li tâm.", "Cô cạn.", "Chiết.", "Lọc."], answer: 2 },
+                            { question: "Phương pháp chiết được dùng để tách chất trong hỗn hợp nào sau đây?", options: ["Nước và dầu ăn.", "Bột mì và nước.", "Cát và nước.", "Nước và rượu."], answer: 0 },
+                            { question: "Cách hợp lí nhất để tách muối từ nước biển là:", options: ["Lọc.", "Chưng cất.", "Làm bay hơi nước.", "Để muối lắng xuống rồi gạn đi."], answer: 2 },
+                            { question: "Rượu etylic (cồn) sôi ở 78,3°C, nước sôi ở 100°C. Muốn tách rượu ra khỏi hỗn hợp rượu và nước có thể dùng cách nào?", options: ["Lọc.", "Bay hơi.", "Chưng cất ở nhiệt độ khoảng 80°C.", "Không tách được."], answer: 2 },
+                            { question: "Khai thác dầu mỏ dưới đáy biển thường thu được hỗn hợp dầu mỏ và nước biển. Người ta dùng phương pháp nào để tách dầu mỏ ra khỏi hỗn hợp?", options: ["Phương pháp lắng, gạn.", "Phương pháp cô cạn.", "Phương pháp lọc.", "Phương pháp chiết."], answer: 3 },
+                        ]
+                    }
+                ]
+            },
+            {
+                chapterTitle: "Chương 5: Tế bào",
+                lessons: [
+                    {
+                        lessonTitle: "Bài 18: Tế bào - Đơn vị cơ bản của sự sống",
+                        questions: [
+                            { question: "Đơn vị cấu tạo nên cơ thể sống gọi là gì?", options: ["Tế bào.", "Mô.", "Bào quan.", "Biểu bì."], answer: 0 },
+                            { question: "Nhận định nào sau đây đúng về tế bào?", options: ["Mọi chất đều được cấu tạo từ tế bào.", "Mọi cơ thể sinh vật đều được cấu tạo từ tế bào.", "Mọi đồ vật đều được cấu tạo từ tế bào.", "Mọi vật chất trên trái đất đều được cấu tạo từ tế bào."], answer: 1 },
+                            { question: "Vì sao tế bào được xem là đơn vị cơ bản của sự sống?", options: ["Vì tế bào có thể thực hiện đầy đủ các quá trình sống cơ bản.", "Vì tế bào có đầy đủ hết các loại bào quan cần thiết.", "Vì tế bào có nhiều hình dạng khác nhau.", "Vì tế bào có nhiều kích thước khác nhau."], answer: 0 },
+                            { question: "Tế bào có mặt trong đối tượng nào dưới đây?", options: ["Bức tường gạch.", "Thùng sữa.", "Con gà.", "Cái bàn."], answer: 2 },
+                            { question: "Vật nào sau đây có cấu tạo từ tế bào?", options: ["Xe ô tô.", "Cây cầu.", "Cây bạch đàn.", "Ngôi nhà."], answer: 2 },
+                            { question: "Nhận định nào đúng khi nói về hình dạng và kích thước tế bào?", options: ["Các loại tế bào đều có chung hình dạng và kích thước.", "Các loại tế bào thường có hình dạng khác nhau nhưng kích thước giống nhau.", "Các loại tế bào khác nhau thường có hình dạng và kích thước khác nhau.", "Các loại tế bào chỉ khác nhau về kích thước, chúng giống nhau về hình dạng."], answer: 2 },
+                            { question: "Mỗi loại tế bào đều có hình dạng và kích thước khác nhau để", options: ["chúng không bị chết.", "các tế bào có thể bám vào nhau dễ dàng.", "phù hợp với chức năng của chúng.", "tạo sự đa dạng cho các loài sinh vật."], answer: 2 },
+                            { question: "Quan sát tế bào người ta thường sử dụng", options: ["kính hiển vi.", "kính lúp.", "mắt thường.", "kính cận."], answer: 0 },
+                            { question: "Trong các tế bào sau, kích thước tế bào lớn nhất là", options: ["tế bào da của voi.", "tế bào trứng cá hồi.", "tế bào xương cá voi.", "tế bào lá cây."], answer: 1 },
+                            { question: "Sinh vật nào dưới đây không có cấu tạo tế bào?", options: ["Vi khuẩn.", "Cây me.", "Virus.", "Con mèo."], answer: 2 },
+                            { question: "Nếu chỉ quan sát bằng kính lúp sẽ không quan sát được?", options: ["Trứng ếch.", "Tép bưởi.", "Tế bào vảy hành.", "Trứng cá hồi."], answer: 2 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 19: Cấu tạo và chức năng của tế bào",
+                        questions: [
+                            { question: "Tế bào được cấu tạo từ các thành phần cơ bản nào?", options: ["Màng tế bào, tế bào chất.", "Màng tế bào, tế bào chất, nhân hoặc vùng nhân.", "Nhân và vật chất di truyền.", "Màng tế bào và vật chất di truyền."], answer: 1 },
+                            { question: "Vật chất di truyền nằm ở đâu trong tế bào?", options: ["Nằm lơ lửng ngoài tế bào chất.", "Nằm trong lục lạp.", "Nằm trong nhân hoặc vùng nhân.", "Đính trên màng tế bào."], answer: 2 },
+                            { question: "Màng tế bào có vai trò gì?", options: ["Bao bọc tế bào chất và tham gia vào quá trình trao đổi chất giữa tế bào và môi trường.", "Là nơi xảy ra phần lớn các hoạt động trao đổi chất của tế bào.", "Là nơi chứa vật chất di truyền.", "Là nơi di chuyển các chất dinh dưỡng."], answer: 0 },
+                            { question: "Nhân/vùng nhân của tế bào có chức năng gì?", options: ["Tham gia trao đối chất với môi trường.", "Là trung tâm điều khiển mọi hoạt động của tế bào.", "Là nơi diễn ra các hoạt động sống của tế bào.", "Là nơi tạo ra năng lượng."], answer: 1 },
+                            { question: "Dựa vào đặc điểm cấu tạo tế bào có thể chia tế bào thành hai loại là", options: ["tế bào người và tế bào động vật.", "tế bào mới hình thành và tế bào trưởng thành.", "tế bào nhân sơ và tế bào nhân thực.", "tế bào trung ương và tế bào ngoại biên."], answer: 2 },
+                            { question: "Sinh vật nào dưới đây trong cấu tạo tế bào chưa có nhân hoàn chỉnh, chỉ có vùng nhân?", options: ["Cây cam.", "Con gà.", "Cây ổi.", "Vi khuẩn E.coli."], answer: 3 },
+                            { question: "Cấu trúc nào của tế bào thực vật chứa sắc tố quang hợp?", options: ["Thành tế bào.", "Không bào.", "Lục lạp.", "Nhân."], answer: 2 },
+                            { question: "Tế bào động vật không có bào quan nào dưới đây?", options: ["Ti thể.", "Không bào.", "Ribosome.", "Lục lạp."], answer: 3 },
+                            { question: "Thành tế bào có ở loại tế bào nào dưới đây?", options: ["Tế bào nhân sơ.", "Tế bào động vật.", "tế bào thực vật.", "tế bào vi khuẩn."], answer: 2 },
+                            { question: "Tế bào động vật khác tế bào thực vật ở điểm nào?", options: ["Đa số không có ti thể.", "Nhân tế bào chưa hoàn chỉnh.", "Có chứa lục lạp.", "Đa số tế bào động vật không có thành tế bào."], answer: 3 },
+                            { question: "Cấu trúc nào của tế bào thực vật giúp cây cứng cáp dù không có hệ xương nâng đỡ như ở động vật?", options: ["Không bào trung tâm.", "Thành tế bào.", "Màng tế bào.", "Nhân tế bào."], answer: 1 },
+                            { question: "Đâu không phải thành phần cơ bản cấu tạo nên một tế bào?", options: ["Màng tế bào.", "Tế bào chất.", "Nhân hoặc vùng nhân.", "Thành tế bào."], answer: 3 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 20: Sự lớn lên và sinh sản của tế bào",
+                        questions: [
+                            { question: "Quá trình nào giúp tế bào lớn lên?", options: ["Hô hấp.", "Nhân đôi.", "Trao đổi chất.", "Tất cả các phương án trên."], answer: 2 },
+                            { question: "Khi tế bào lớn lên đến một kích thước nhất định sẽ tiến hành quá trình nào?", options: ["Sinh trưởng.", "Sinh sản.", "Thay thế.", "Chết."], answer: 1 },
+                            { question: "Việc phân chia trong tế bào giúp cơ thể.", options: ["Cơ thể lớn lên và sinh sản.", "Cung cấp năng lượng cho cơ thể hoạt động.", "Cơ thể phản ứng với kích thích.", "Cơ thể bài tiết CO2."], answer: 0 },
+                            { question: "Quá trình phân chia của tế bào gồm 2 giai đoạn là", options: ["phân chia nhân và phân chia tế bào chất.", "phân chia nhân và phân chia ribosome.", "phân chia nhân và phân chia lục lạp.", "phân chia tế bào chất và phân chia màng tế bào."], answer: 0 },
+                            { question: "Một tế bào sau khi trải qua 4 lần sinh sản liên tiếp sẽ tạo ra tất cả bao nhiêu tế bào con?", options: ["4 tế bào.", "8 tế bào.", "12 tế bào.", "16 tế bào."], answer: 3 },
+                            { question: "Cây lớn lên nhờ", options: ["sự lớn lên và phân chia của tế bào.", "sự tăng kích thước của nhân tế bào.", "nhiều tế bào được sinh ra từ một tế bào ban đầu.", "các chất dinh dưỡng bao bọc xung quanh tế bào ban đầu."], answer: 0 },
+                            { question: "Sự lớn lên và sinh sản của tế bào có ý nghĩa gì?", options: ["Tăng kích thước của sinh vật, thay thế các tế bào già, chết và các tế bào bị tổn thương.", "Tăng kích thước của cơ thể sinh vật.", "Khiến cho sinh vật già đi.", "Ngăn chặn sự xâm nhập của các yếu tố từ bên ngoài."], answer: 0 },
+                            { question: "Vì sao khi thằn lằn bị đứt đuôi, đuôi của nó có thể tái sinh?", options: ["Bởi vì tế bào ở đuôi thằn lằn lớn lên và sinh sản.", "Bởi thằn lằn ăn đuôi của con khác cùng loài.", "Bởi vì thằn lằn có 1 cái đuôi dự phòng.", "Cả ba đáp án trên đều sai."], answer: 0 },
+                            { question: "Cơ thể sinh vật lớn lên chủ yếu dựa vào những hoạt động nào dưới đây? 1. Sự hấp thụ nước 2. Sự gia tăng số lượng tế bào qua phân chia 3. Sự tăng kích thước của từng tế bào do trao đổi chất.", options: ["1, 2, 3.", "2, 3.", "1, 3.", "1, 2."], answer: 1 },
+                            { question: "Một tế bào mô phân sinh ở thực vật tiến hành phân chia liên tiếp 4 lần. Hỏi sau quá trình này, số tế bào con được tạo thành là bao nhiêu ?", options: ["32 tế bào.", "4 tế bào.", "8 tế bào.", "16 tế bào."], answer: 3 },
+                        ]
+                    }
+                ]
+            },
+            {
+                chapterTitle: "Chương 6: Từ tế bào tới cơ thể",
+                lessons: [
+                    {
+                        lessonTitle: "Bài 22: Cơ thể sinh vật",
+                        questions: [
+                            { question: "Cơ thể sinh vật có khả năng thực hiện các quá trình sống cơ bản nào? (1) Cảm ứng và vận động. (2) Sinh trưởng. (3) Dinh dưỡng. (4) Hô hấp. (5) Bài tiết. (6) Sinh sản.", options: ["(2), (3), (4), (6).", "(1), (3), (5), (6).", "(2), (3), (4), (5), (6).", "(1), (2), (3), (4), (5), (6)."], answer: 3 },
+                            { question: "Cơ thể đơn bào là cơ thể có cấu tạo", options: ["một tế bào.", "hai tế bào.", "hàng trăm tế bào.", "hàng nghìn tế bào."], answer: 0 },
+                            { question: "Cơ thể nào dưới đây là cơ thể đơn bào?", options: ["Con chó.", "Trùng biến hình.", "Con ốc sên.", "Con cua."], answer: 1 },
+                            { question: "Trong những cơ thể sinh vật dưới đây, đâu là cơ thể đơn bào?", options: ["Vi khuẩn E.coli.", "Con voi.", "Giun đất.", "Cây hoa hồng."], answer: 0 },
+                            { question: "Cơ thể đa bào", options: ["cấu tạo từ 1 tế bào.", "cấu tạo từ 1 tế bào nhân thực.", "cấu tạo từ nhiều tế bào.", "chủ yếu cấu tạo từ các tế bào nhân sơ."], answer: 2 },
+                            { question: "Các cơ thể sinh vật dưới đây, nhóm nào là cơ thể đa bào?", options: ["Tảo silic, rêu, ếch, vi khuẩn.", "Vi khuẩn, giun đất, ếch.", "Rêu, ếch, chim sâu.", "Trùng roi, cây ổi, bắp cải."], answer: 2 },
+                            { question: "Đâu là sinh vật đơn bào?", options: ["Cây chuối.", "Trùng kiết lị.", "Cây hoa mai.", "Con mèo."], answer: 1 },
+                            { question: "Sinh vật nào sau đây không phải sinh vật đơn bào?", options: ["Tảo silic.", "Trùng roi.", "Nấm kim châm.", "Vi khuẩn."], answer: 2 },
+                            { question: "Các quá trình sống cơ bản của cơ thể là", options: ["hô hấp, dinh dưỡng, cảm ứng và vận động, sinh trưởng, sinh sản và bài tiết.", "hô hấp, tuần hoàn, bài tiết, cảm ứng và vận động, sinh sản.", "hô hấp, trao đổi chất, sinh sản và sinh trưởng.", "sinh trưởng, sinh sản, cảm ứng và vận động."], answer: 0 },
+                            { question: "Trong các quá trình sống cơ bản, quá trình loại bỏ các chất thải được gọi là", options: ["Bài tiết.", "Hô hấp.", "Tiêu hóa.", "Sinh sản."], answer: 0 },
+                            { question: "Quá trình cơ thể sinh vật lớn lên về kích thước và khối lượng được gọi là", options: ["tiêu hóa.", "bài tiết.", "sinh trưởng.", "hô hấp."], answer: 2 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 23: Tổ chức cơ thể đa bào",
+                        questions: [
+                            { question: "Cấp độ thấp nhất hoạt động độc lập trong cơ thể đa bào là", options: ["hệ cơ quan.", "cơ quan.", "mô.", "tế bào."], answer: 3 },
+                            { question: "Nhóm các tế bào cùng thực hiện một chức năng liên kết với nhau tạo thành", options: ["mô.", "cơ quan.", "hệ cơ quan.", "cơ thể"], answer: 0 },
+                            { question: "Loại mô nào có cả ở thực vật và động vật?", options: ["Mô biểu bì.", "Mô liên kết.", "Mô thần kinh.", "Mô dẫn."], answer: 0 },
+                            { question: "Tập hợp các mô thực hiện cùng một chức năng nhất định tạo thành", options: ["Hệ cơ quan.", "mô.", "cơ quan.", "tế bào."], answer: 2 },
+                            { question: "Các cơ quan ở thực vật là", options: ["rễ, thân, lá, hoa, quả, hạt.", "dạ dày, ruột gan, tim, phổi, mắt, mũi.", "hệ tuần hoàn, hệ hô hấp.", "Hệ rễ và hệ bài tiết."], answer: 0 },
+                            { question: "Cơ quan nào sau đây thuộc hệ thần kinh ở người?", options: ["Não.", "Phổi.", "Tim.", "Dạ dày."], answer: 0 },
+                            { question: "Nhiều cơ quan cùng phối hợp hoạt động để thực hiện một quá trình sống nào đó của cơ thể gọi là", options: ["hệ cơ quan.", "mô.", "cơ quan.", "tế bào."], answer: 0 },
+                            { question: "Hệ cơ quan ở thực vật bao gồm", options: ["hệ rễ và hệ thân.", "hệ thân và hệ lá.", "hệ chồi và hệ rễ.", "hệ cơ và hệ thân."], answer: 2 },
+                            { question: "Đâu là trình từ sắp xếp các cấp tổ chức của cơ thể đa bào theo thứ tự từ nhỏ đến lớn?", options: ["Tế bào - cơ quan - hệ cơ quan - cơ thể - mô.", "Mô - tế bào - hệ cơ quan - cơ quan - cơ thể.", "Tế bào - mô - cơ quan - hệ cơ quan - cơ thể.", "Cơ thể - hệ cơ quan - cơ quan - tế bào – mô."], answer: 2 },
+                            { question: "Đâu không phải tên một cấp độ tổ chức của cơ thể?", options: ["Thành tế bào.", "Mô.", "Tế bào.", "Hệ cơ quan."], answer: 0 },
+                            { question: "Mức độ tổ chức cơ thể liền kề sau tế bào là", options: ["cơ quan.", "mô.", "hệ cơ quan.", "cơ thể."], answer: 1 },
+                            { question: "Hệ rễ của thực vật đóng vai trò gì?", options: ["Tạo quả.", "Hút nước và chất khoáng cho cây.", "Hô hấp và quang hợp.", "Tạo cơ quan sinh sản."], answer: 1 },
+                            { question: "Đâu không phải tên một cơ quan của người?", options: ["Tụy.", "Thận.", "Nơron.", "Gan."], answer: 2 },
+                            { question: "Mô nào dưới đây có ở thực vật?", options: ["Mô phân sinh.", "Mô biểu bì.", "Mô cơ.", "Mô thần kinh."], answer: 0 },
+                            { question: "Thực vật được chia làm mấy hệ cơ quan?", options: ["2.", "3.", "4.", "5."], answer: 0 },
+                        ]
+                    }
+                ]
+            },
+            {
+                chapterTitle: "Chương 7: Đa dạng thế giới sống",
+                lessons: [
+                    {
+                        lessonTitle: "Bài 25: Hệ thống phân loại sinh vật",
+                        questions: [
+                            { question: "Phân loại sinh học là sự sắp xếp các đối tượng sinh vật có những đặc điểm chung vào từng nhóm", options: ["theo một thứ tự nhất định.", "theo tên khả năng thay đổi màu sắc.", "theo độ khó của di chuyển.", "theo sự phân chia lãnh thổ."], answer: 0 },
+                            { question: "Vì sao cần phải phân loại thế giới sống?", options: ["Để đặt và gọi tên các loài sinh vật khi cần thiết.", "Để xác định số lượng các loài sinh vật trên Trái Đất.", "Để xác định vị trí của các loài sinh vật giúp cho việc tìm ra chúng giữa các sinh vật trở nên dễ dàng hơn.", "Để thấy được sự khác nhau giữa các loài sinh vật."], answer: 2 },
+                            { question: "Các bậc phân loại sinh vật từ thấp đến cao theo trình tự nào sau đây?", options: ["Loài → Chi (giống) → Họ → Bộ → Lớp → Ngành → Giới.", "Chi (giống) → Loài → Họ → Bộ → Lớp → Ngành → Giới.", "Giới → Ngành → Lớp → Bộ → Họ → Chi (giống) → Loài.", "Loài → Chi (giống) → Bộ → Họ → Lớp → Ngành → Giới."], answer: 0 },
+                            { question: "Đâu là bậc phân loại thấp nhất?", options: ["Giống.", "Loài.", "Bộ.", "Họ."], answer: 1 },
+                            { question: "Đâu là bậc phân loại lớn nhất?", options: ["Giới.", "Giống.", "Ngành.", "Họ."], answer: 0 },
+                            { question: "Mỗi loài sinh vật thường có hai cách gọi tên là", options: ["tên góc và tên phụ.", "tên giống và tên loài.", "tên địa phương và tên khoa học.", "tên vùng miền và tên địa phương."], answer: 2 },
+                            { question: "Tên khoa học của các loài được hiểu là", options: ["cách gọi truyền thống của người dân bản địa.", "tên giống + tên loài + (Tên tác giả, năm công bố).", "cách gọi phổ biến của loài.", "tên loài + tên giống + (tên tác giả, năm công bố)."], answer: 1 },
+                            { question: "Hệ thống phân loại sinh vật bao gồm các giới nào?", options: ["Động vật, Thực vật, Nấm.", "Nấm, Nguyên sinh, Thực vật, Virus.", "Khởi sinh, Động vật, Thực vật, Nấm, Virus.", "Khởi sinh, Nguyên sinh, Nấm, Thực vật, Động vật."], answer: 3 },
+                            { question: "Cấu tạo tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp là đặc điểm của sinh vật thuộc giới nào sau đây?", options: ["Khởi sinh.", "Nguyên sinh.", "Nấm.", "Thực vật."], answer: 3 },
+                            { question: "Vi khuẩn lam có cơ thể đơn bào, nhân sơ, có diệp lục và khả năng tự tổng hợp chất hữu cơ. Vi khuẩn lam thuộc giới nào?", options: ["Khởi sinh.", "Nguyên sinh.", "Nấm.", "Thực vật."], answer: 0 },
+                            { question: "Trùng roi thuộc giới nào?", options: ["Nguyên sinh.", "Khởi sinh.", "Nấm.", "Thực vật."], answer: 0 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 26: Khóa lưỡng phân",
+                        questions: [
+                            { question: "Để phân loại các sinh vật thành từng nhóm dựa trên những đặc điểm giống và khác nhau của sinh vật người ta sử dụng", options: ["kính lúp.", "khóa lưỡng phân.", "trực quan.", "kính hiển vi."], answer: 1 },
+                            { question: "Khi tiến hành xây dựng khóa lưỡng phân để phân loại một nhóm sinh vật cần tuân thủ theo nguyên tắc nào?", options: ["Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có những đặc điểm đối lập nhau.", "Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có cơ quan di chuyển khác nhau.", "Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có môi trường sống khác nhau.", "Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có kiểu dinh dưỡng khác nhau."], answer: 0 },
+                            { question: "Có bao nhiêu bước để xây dựng khoá lưỡng phân?", options: ["4 bước.", "3 bước.", "2 bước.", "5 bước."], answer: 2 },
+                            { question: "Khóa lưỡng phân sẽ được dừng phân loại khi nào?", options: ["Khi các loài sinh vật cần phân loại quá nhiều.", "Khi các loài sinh vật cần phân loại quá ít.", "Khi đã phân loại triệt để được các loài sinh vật.", "Khi các loài sinh vật cần phân loại có điểm khác nhau."], answer: 2 },
+                            { question: "Ý nghĩa của việc xây dựng khoá lưỡng phân:", options: ["Để tập hợp các cá thể thành các nhóm, từ thấp đến cao.", "Giúp phân biệt các đặc tính khái quát của sinh vật.", "Giúp cho việc nghiên cứu trật tự có hiệu quả hơn.", "Giúp xác định vị trí phân loại của loài một cách thuận lợi."], answer: 3 },
+                            { question: "Đặc điểm đối lập của con chim gõ kiến và con chim đà điểu là?", options: ["Biết bay và không biết bay.", "Có lông vũ và không có lông vũ.", "Có mỏ và không có mỏ.", "Có cánh và không có cánh."], answer: 0 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 27: Vi khuẩn",
+                        questions: [
+                            { question: "Vi khuẩn là", options: ["nhóm sinh vật có cấu tạo nhân sơ, kích thước hiển vi.", "nhóm sinh vật có cấu tạo nhân thực, kích thước hiển vi.", "nhóm sinh vật chưa có cấu tạo tế bào, kích thước hiển vi.", "nhóm sinh vật chưa có cấu tạo tế bào, kích thước siêu hiển vi."], answer: 0 },
+                            { question: "Dụng cụ nào được sử dụng để quan sát vi khuẩn?", options: ["Kính lúp.", "Kính hiển vi.", "Kính soi nổi.", "Kính viễn vọng."], answer: 1 },
+                            { question: "Vi khuẩn sống ở đâu?", options: ["Chỉ ở dưới nước.", "Chỉ ở trên cạn.", "Chỉ sống trong cơ thể sinh vật khác.", "Ở khắp mọi nơi."], answer: 3 },
+                            { question: "Ba loại hình dạng điển hình của vi khuẩn là?", options: ["Hình cầu, hình khối, hình que.", "Hình lăng trụ, hình khối, hình xoắn.", "Hình que, hình xoắn, hình cầu.", "Hình khối, hình que, hình cầu."], answer: 2 },
+                            { question: "Đặc điểm nào dưới đây nói về vi khuẩn là đúng?", options: ["Có cấu tạo tế bào nhân sơ.", "Có cấu tạo tế bào nhân thực.", "Có cấu tạo nhiều nhân.", "Có hệ gen đầy đủ."], answer: 0 },
+                            { question: "Vì sao lại nói vi khuẩn là sinh vật có cấu tạo cơ thể đơn giản nhất trong thế giới sống?", options: ["Vì cấu tạo vi khuẩn chỉ gồm 1 tế bào nhân sơ.", "Vì vi khuẩn có kích thước nhỏ nhất.", "Vì vi khuẩn có khối lượng nhỏ nhất.", "Vì vi khuẩn chưa có nhân hoàn chỉnh."], answer: 0 },
+                            { question: "Vai trò quan trọng nhất của vi khuẩn trong tự nhiên là gì?", options: ["Phân giải xác sinh vật và chất thải động vật.", "Giúp ức chế vi khuẩn có hại, bảo vệ hệ tiêu hóa.", "Sử dụng trong chế biến thực phẩm như sữa chua, dưa muối.", "Sản xuất thuốc kháng sinh."], answer: 0 },
+                            { question: "Phát biểu nào dưới đây không đúng khi nói về vai trò của vi khuẩn.", options: ["Nhiều vi khuẩn có ích được sử dụng trong nông nghiệp và công nghiệp.", "Vi khuẩn được sử dụng trong sản xuất vaccine và thuốc kháng sinh.", "Mọi vi khuẩn đều có lợi cho tự nhiên và đời sống con người.", "Vi khuẩn giúp phân hủy các chất hữu cơ thành các chất vô cơ."], answer: 2 },
+                            { question: "Bệnh nào sau đây không phải bệnh do vi khuẩn gây nên?", options: ["Bệnh kiết lị.", "Bệnh tiêu chảy.", "Bệnh vàng da.", "Bệnh thủy đậu."], answer: 3 },
+                        ]
+                    },
+                    {
+                        lessonTitle: "Bài 29: Virus",
+                        questions: [
+                            { question: "Virus là gì?", options: ["Là dạng sống có kích thước vô cùng nhỏ bé, không có cấu tạo tế bào, chỉ nhân lên được trong tế bào của sinh vật sống.", "Là một loại vi khuẩn lam, sống kí sinh bắt buộc.", "Là một tế bào nhân thực, sống cộng sinh.", "Là những thực vật có khả năng di chuyển."], answer: 0 },
+                            { question: "Virus nào dưới đây kí sinh trên vi khuẩn?", options: ["Virus cúm.", "Thực khuẩn thể.", "Virus viêm gan.", "Virus dại."], answer: 1 },
+                            { question: "Tại sao virus phải kí sinh bắt buộc?", options: ["Vì virus có kích thước hiển vi.", "Vì khi ra ngoài tế bào, virus sẽ trở thành vật không sống.", "Vì virus có cấu tạo tế bào nhân sơ.", "Vì khi ra ngoài tế bào, chất dinh dưỡng ít hơn."], answer: 1 },
+                            { question: "Đặc điểm nào dưới đây nói về virus là sai?", options: ["Không có cấu tạo tế bào.", "Chỉ nhân lên khi sống ngoài môi trường.", "Cấu tạo đơn giản.", "Hầu hết quan sát dưới kính hiển vi điện tử."], answer: 1 },
+                            { question: "Virus sống kí sinh nội bào bắt buộc vì chúng:", options: ["Có kích thước hiển vi.", "Có cấu tạo tế bào nhân sơ.", "Chưa có cấu tạo tế bào.", "Có hình dạng không cố định."], answer: 2 },
+                            { question: "Virus có các hình dạng chính nào sau đây?", options: ["Dạng xoắn, dạng cầu, dạng que.", "Dạng xoắn, dạng khối, dạng hỗn hợp.", "Dạng khối, dạng que, dạng hỗn hợp.", "Dạng cầu, dạng xoắn, dạng que."], answer: 1 },
+                            { question: "Vật chất di truyền của một virus là?", options: ["ARN và AND.", "ARN và gai glycoprotein.", "ADN hoặc gai glycoprotein.", "ADN hoặc ARN."], answer: 3 },
+                            { question: "Virus gây ra nhiều bệnh nguy hiểm cho con người, nhóm các bệnh nào dưới đây do virus gây ra?", options: ["Viêm gan B, AIDS, sởi.", "Tả, sởi, viêm gan A.", "Quai bị, lao phổi, viêm gan B.", "Viêm não Nhật Bản, thủy đậu, viêm da."], answer: 0 },
+                            { question: "Biện pháp nào hữu hiệu nhất để phòng bệnh do virus là?", options: ["Có chế độ dinh dưỡng tốt, bảo vệ môi trường.", "Chăm sóc sức khỏe, nâng cao thể trạng, tập thể dục.", "Đeo khẩu trang khi đi ra ngoài.", "Sử dụng vaccine vào thời điểm phù hợp."], answer: 3 },
+                            { question: "Vaccine được tạo ra từ chính những mầm bệnh đã chết hoặc làm suy yếu. Để đạt hiệu quả phòng bệnh cao, thời điểm tiêm vaccine thích hợp nhất là khi nào?", options: ["Khi cơ thể có dấu hiệu bị bệnh.", "Khi cơ thể khỏe mạnh.", "Trước khi bị bệnh và cơ thể đang khỏe mạnh.", "Sau khi khỏi bệnh."], answer: 2 },
+                        ]
+                    }
+                ]
+            }
+        ];
+
+
+        // --- LOGIC TRANG WEB ---
+        const homeScreen = document.getElementById('home-screen');
+        const chapterSelectionScreen = document.getElementById('chapter-selection-screen');
+        const lessonSelectionScreen = document.getElementById('lesson-selection-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        
+        const chapterList = document.getElementById('chapter-list');
+        const lessonList = document.getElementById('lesson-list');
+
+        const quizTitle = document.getElementById('quiz-title');
+        const questionCounter = document.getElementById('question-counter');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreText = document.getElementById('score-text');
+        const resultMessage = document.getElementById('result-message');
+        const backHomeBtn = document.getElementById('back-home-btn');
+        const restartQuizBtn = document.getElementById('restart-quiz-btn');
+
+        let currentQuizType = null; // 'chapter' or 'lesson'
+        let currentQuizParams = {}; // { chapterIndex, lessonIndex }
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizQuestions = [];
+        const QUIZ_LENGTH_BY_CHAPTER = 20;
+
+        function initialize() {
+            chapterList.innerHTML = '';
+            quizData.forEach((chapter, index) => {
+                const chapterButton = document.createElement('button');
+                chapterButton.className = 'selection-btn w-full bg-white p-6 rounded-xl border-2 border-blue-500 text-blue-600 font-semibold text-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
+                chapterButton.textContent = chapter.chapterTitle;
+                chapterButton.onclick = () => startQuiz('chapter', { chapterIndex: index });
+                chapterList.appendChild(chapterButton);
+            });
+
+            lessonList.innerHTML = '';
+            quizData.forEach((chapter, chapterIndex) => {
+                const chapterTitleEl = document.createElement('h3');
+                chapterTitleEl.className = 'text-xl font-bold text-gray-700 mt-6 first:mt-0';
+                chapterTitleEl.textContent = chapter.chapterTitle;
+                lessonList.appendChild(chapterTitleEl);
+
+                chapter.lessons.forEach((lesson, lessonIndex) => {
+                    const lessonButton = document.createElement('button');
+                    lessonButton.className = 'list-btn w-full bg-white p-4 rounded-lg border border-gray-300 text-gray-700 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500';
+                    lessonButton.textContent = lesson.lessonTitle;
+                    lessonButton.onclick = () => startQuiz('lesson', { chapterIndex, lessonIndex });
+                    lessonList.appendChild(lessonButton);
+                });
+            });
+
+            nextBtn.addEventListener('click', handleNext);
+            backHomeBtn.addEventListener('click', () => showScreen('home'));
+            restartQuizBtn.addEventListener('click', () => startQuiz(currentQuizType, currentQuizParams));
+        }
+        
+        function showScreen(screen) {
+            [homeScreen, chapterSelectionScreen, lessonSelectionScreen, quizScreen, resultScreen].forEach(s => s.classList.add('hidden'));
+            const screenToShow = document.getElementById(`${screen}-screen`);
+            if (screenToShow) screenToShow.classList.remove('hidden');
+        }
+
+        function showSelectionScreen(type) {
+            showScreen(`${type}-selection`);
+        }
+
+        function startQuiz(type, params) {
+            currentQuizType = type;
+            currentQuizParams = params;
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            let allQuestions = [];
+            let title = '';
+
+            if (type === 'chapter') {
+                const { chapterIndex } = params;
+                allQuestions = quizData[chapterIndex].lessons.flatMap(lesson => lesson.questions);
+                quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, Math.min(QUIZ_LENGTH_BY_CHAPTER, allQuestions.length));
+                title = quizData[chapterIndex].chapterTitle;
+            } else { // lesson
+                const { chapterIndex, lessonIndex } = params;
+                allQuestions = quizData[chapterIndex].lessons[lessonIndex].questions;
+                quizQuestions = [...allQuestions].sort(() => 0.5 - Math.random());
+                title = quizData[chapterIndex].lessons[lessonIndex].lessonTitle;
+            }
+            
+            quizTitle.textContent = title;
+            showQuestion();
+            showScreen('quiz');
+        }
+
+        function showQuestion() {
+            nextBtn.classList.add('hidden');
+            optionsContainer.innerHTML = '';
+
+            const questionData = quizQuestions[currentQuestionIndex];
+            questionCounter.textContent = `Câu ${currentQuestionIndex + 1}/${quizQuestions.length}`;
+            questionText.textContent = questionData.question;
+
+            questionData.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.innerHTML = `<span class="font-bold mr-2">${String.fromCharCode(65 + index)}.</span> ${option}`;
+                button.className = 'option-btn w-full text-left p-4 rounded-lg border-2 border-gray-300 bg-white hover:bg-gray-100 hover:border-blue-400 transition-all text-xl';
+                button.onclick = () => selectAnswer(index, questionData.answer);
+                optionsContainer.appendChild(button);
+            });
+        }
+        
+        function selectAnswer(selectedIndex, correctIndex) {
+            const buttons = optionsContainer.querySelectorAll('.option-btn');
+            
+            buttons.forEach(button => button.disabled = true);
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                buttons[selectedIndex].classList.add('correct');
+            } else {
+                buttons[selectedIndex].classList.add('incorrect');
+                if (buttons[correctIndex]) {
+                    buttons[correctIndex].classList.add('correct');
+                }
+            }
+
+            nextBtn.classList.remove('hidden');
+        }
+        
+        function handleNext() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+        
+        function showResult() {
+            const totalQuestions = quizQuestions.length > 0 ? quizQuestions.length : 1;
+            const finalScore = (score / totalQuestions) * 10;
+            const passMark = 8;
+            
+            scoreText.textContent = `${finalScore.toFixed(1)}/10`;
+
+            if (finalScore >= passMark) {
+                resultMessage.textContent = '🎉 Chúc mừng! Bạn đã Đạt. 🎉';
+                resultMessage.className = 'text-2xl font-semibold mb-8 text-green-600';
+            } else {
+                resultMessage.textContent = '🤔 Cố gắng hơn ở lần sau nhé! Bạn chưa Đạt.';
+                 resultMessage.className = 'text-2xl font-semibold mb-8 text-red-600';
+            }
+            showScreen('result');
+        }
+
+        initialize();
+    </script>
+</body>
+</html>
+
 
