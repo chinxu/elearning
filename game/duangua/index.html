@@ -1,1 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuộc Đua Ngựa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            touch-action: manipulation;
+        }
+        .player-token {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            border: 3px solid rgba(255,255,255,0.5);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .player-token.selected {
+            transform: scale(1.2);
+            border-color: #facc15; /* yellow-400 */
+            box-shadow: 0 0 15px #facc15;
+            z-index: 20;
+        }
+        .player-token.finished {
+            cursor: not-allowed;
+            opacity: 0.7;
+            filter: grayscale(50%);
+        }
+        .board-square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: white;
+            position: relative;
+            min-height: 50px;
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+        .start-label {
+             display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            background-color: #e5e7eb; /* gray-200 */
+            border: 1px solid #d1d5db; /* gray-300 */
+        }
+        .square-bonus { background-color: #86efac; } /* green-300 */
+        .square-penalty-back { background-color: #fdba74; } /* orange-300 */
+        .square-penalty-reset { background-color: #fca5a5; } /* red-300 */
+        #dice.rolling {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            50% { transform: translateX(5px) rotate(5deg); }
+            75% { transform: translateX(-5px) rotate(-5deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-2">Cuộc Đua Ngựa</h1>
+        <div id="message-box" class="text-center text-lg font-medium text-blue-600 h-8 mb-4">Chọn một chú ngựa và tung xúc xắc!</div>
+        
+        <div class="flex items-start">
+            <div id="board-wrapper" class="flex-grow p-2 rounded-lg shadow-inner relative bg-gray-300 border border-gray-400">
+                <div id="board">
+                    <!-- Các ô cờ sẽ được thêm vào đây bằng JavaScript -->
+                </div>
+                <div id="player-tokens-container" class="absolute inset-0 pointer-events-none">
+                    <!-- Các biểu tượng ngựa sẽ được thêm vào đây -->
+                </div>
+                <div id="finish-area" class="absolute top-0 h-full bg-yellow-300 rounded-r-lg flex items-center justify-center z-10" style="width: 60px; right: -60px;">
+                    <span class="font-bold text-yellow-800 -rotate-90 tracking-widest text-xl">ĐÍCH</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex flex-col md:flex-row items-center justify-between mt-6 w-full gap-4">
+            <div class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-md">
+                <button id="dice" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-2xl transition-transform transform hover:scale-105">
+                    🎲
+                </button>
+                <div id="dice-result" class="bg-gray-200 w-20 h-20 rounded-lg flex items-center justify-center text-5xl font-bold text-gray-800">
+                    ?
+                </div>
+                 <button id="reset-button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">Chơi lại</button>
+            </div>
+            
+            <div class="bg-white p-4 rounded-lg shadow-md flex items-center gap-4 text-sm">
+                <h3 class="font-bold mr-2">Chú thích:</h3>
+                <div class="flex items-center gap-2"><div class="w-5 h-5 square-bonus rounded"></div><span>+1 ô</span></div>
+                <div class="flex items-center gap-2"><div class="w-5 h-5 square-penalty-back rounded"></div><span>-1 ô</span></div>
+                <div class="flex items-center gap-2"><div class="w-5 h-5 square-penalty-reset rounded"></div><span>Về vạch xuất phát</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const NUM_PLAYERS = 8;
+            const BOARD_LENGTH = 18;
+            const BONUS_SQUARES_PER_LANE = 5;
+            const PENALTY_BACK_SQUARES_PER_LANE = 3;
+            const PENALTY_RESET_SQUARES_PER_LANE = 2;
+
+            const playerContainer = document.getElementById('player-tokens-container');
+            const board = document.getElementById('board');
+            const diceBtn = document.getElementById('dice');
+            const diceResultEl = document.getElementById('dice-result');
+            const messageBox = document.getElementById('message-box');
+            const resetButton = document.getElementById('reset-button');
+
+            let players = [];
+            let selectedPlayerId = null;
+            let isMoving = false;
+            let finishedPlayers = [];
+            const playerColors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#3b82f6', '#8b5cf6'];
+
+            function initGame() {
+                players = [];
+                selectedPlayerId = null;
+                isMoving = false;
+                finishedPlayers = [];
+
+                playerContainer.innerHTML = '';
+                board.innerHTML = '';
+                messageBox.textContent = 'Chọn một chú ngựa và tung xúc xắc!';
+                diceResultEl.textContent = '?';
+                diceBtn.disabled = false;
+
+                drawBoard();
+                createPlayers();
+                players.forEach(p => updatePlayerPosition(p.id));
+            }
+
+            function drawBoard() {
+                board.className = `grid gap-px bg-gray-400`;
+                board.style.gridTemplateColumns = `80px repeat(${BOARD_LENGTH}, 1fr)`;
+                board.style.gridTemplateRows = `repeat(${NUM_PLAYERS}, 1fr)`;
+                
+                for (let row = 0; row < NUM_PLAYERS; row++) {
+                    const startLabel = document.createElement('div');
+                    startLabel.className = 'start-label';
+                    startLabel.textContent = `Ngựa ${row + 1}`;
+                    board.appendChild(startLabel);
+
+                    let currentLaneSquares = [];
+                    for (let col = 0; col < BOARD_LENGTH; col++) {
+                        const squareEl = document.createElement('div');
+                        squareEl.className = 'board-square';
+                        squareEl.dataset.pos = col + 1;
+                        board.appendChild(squareEl);
+                        currentLaneSquares.push(squareEl);
+                    }
+                    assignSpecialSquaresToLane(currentLaneSquares);
+                }
+            }
+
+            function assignSpecialSquaresToLane(laneSquares) {
+                // 1. Khởi tạo mảng cấu hình (ô 1-18)
+                let laneConfig = new Array(BOARD_LENGTH).fill('normal');
+
+                // 2. Đặt 2 ô phạt về vạch xuất phát (hồng)
+                const midResetZone = [7, 8, 9, 10, 11];
+                const midResetIndex = midResetZone[Math.floor(Math.random() * midResetZone.length)];
+                laneConfig[midResetIndex] = 'penalty-reset';
+
+                const lateResetZone = [13, 14, 15, 16];
+                let lateResetIndex;
+                do {
+                    lateResetIndex = lateResetZone[Math.floor(Math.random() * lateResetZone.length)];
+                } while (lateResetIndex === midResetIndex);
+                laneConfig[lateResetIndex] = 'penalty-reset';
+
+                // 3. Đặt 5 ô thưởng (+1, xanh), không có 3 ô liên tiếp
+                let bonusPlaced = 0;
+                const earlyZone = Array.from({length: 11}, (_, i) => i + 1); // ô 2-12
+                const lateZone = Array.from({length: 5}, (_, i) => i + 12);  // ô 13-17
+                earlyZone.sort(() => 0.5 - Math.random());
+                lateZone.sort(() => 0.5 - Math.random());
+                const combinedPool = [...earlyZone, ...lateZone];
+
+                for (const spot of combinedPool) {
+                    if (bonusPlaced >= BONUS_SQUARES_PER_LANE) break;
+                    
+                    if (laneConfig[spot] === 'normal') {
+                        const leftCheck = laneConfig[spot - 1] === 'bonus' && laneConfig[spot - 2] === 'bonus';
+                        const rightCheck = laneConfig[spot + 1] === 'bonus' && laneConfig[spot + 2] === 'bonus';
+                        const middleCheck = laneConfig[spot - 1] === 'bonus' && laneConfig[spot + 1] === 'bonus';
+
+                        if (!leftCheck && !rightCheck && !middleCheck) {
+                            laneConfig[spot] = 'bonus';
+                            bonusPlaced++;
+                        }
+                    }
+                }
+
+                // 4. Đặt 3 ô phạt (-1, cam) theo khu vực: 1 ở giữa, 2 ở cuối
+                let penaltyPlaced = 0;
+                let allValidPenaltySpots = [];
+                for (let i = 1; i < BOARD_LENGTH - 1; i++) {
+                    if (laneConfig[i] === 'normal') {
+                        const isNeighborBonus = laneConfig[i - 1] === 'bonus' || laneConfig[i + 1] === 'bonus';
+                        if (!isNeighborBonus) {
+                            allValidPenaltySpots.push(i);
+                        }
+                    }
+                }
+
+                let midPenaltyPool = allValidPenaltySpots.filter(i => i >= 7 && i <= 11);
+                let latePenaltyPool = allValidPenaltySpots.filter(i => i >= 12 && i <= 16);
+                midPenaltyPool.sort(() => 0.5 - Math.random());
+                latePenaltyPool.sort(() => 0.5 - Math.random());
+
+                if (midPenaltyPool.length > 0) {
+                    laneConfig[midPenaltyPool.pop()] = 'penalty-back';
+                    penaltyPlaced++;
+                }
+                for(let i = 0; i < 2 && latePenaltyPool.length > 0; i++) {
+                    laneConfig[latePenaltyPool.pop()] = 'penalty-back';
+                    penaltyPlaced++;
+                }
+
+                let fallbackPool = allValidPenaltySpots.filter(i => laneConfig[i] === 'normal');
+                fallbackPool.sort(() => 0.5 - Math.random());
+                while(penaltyPlaced < PENALTY_BACK_SQUARES_PER_LANE && fallbackPool.length > 0) {
+                    laneConfig[fallbackPool.pop()] = 'penalty-back';
+                    penaltyPlaced++;
+                }
+
+                // 5. Áp dụng cấu hình lên giao diện
+                laneSquares.forEach((square, index) => {
+                    square.classList.remove('square-bonus', 'square-penalty-back', 'square-penalty-reset');
+                    const type = laneConfig[index];
+                    if (type === 'bonus') square.classList.add('square-bonus');
+                    else if (type === 'penalty-back') square.classList.add('square-penalty-back');
+                    else if (type === 'penalty-reset') square.classList.add('square-penalty-reset');
+                });
+            }
+
+            function createPlayers() {
+                 for (let i = 1; i <= NUM_PLAYERS; i++) {
+                    const playerEl = document.createElement('div');
+                    playerEl.id = `player-${i}`;
+                    playerEl.className = 'player-token';
+                    playerEl.textContent = `🐴${i}`;
+                    playerEl.style.backgroundColor = playerColors[i-1];
+
+                    playerEl.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (!isMoving) selectPlayer(i);
+                    });
+                    playerEl.style.pointerEvents = 'auto';
+
+                    playerContainer.appendChild(playerEl);
+                    players.push({ id: i, position: 0, element: playerEl });
+                }
+            }
+
+            function selectPlayer(id) {
+                if (finishedPlayers.includes(id)) {
+                    messageBox.textContent = `Ngựa ${id} đã về đích rồi!`;
+                    return;
+                }
+
+                if (selectedPlayerId) {
+                    document.getElementById(`player-${selectedPlayerId}`).classList.remove('selected');
+                }
+                selectedPlayerId = id;
+                document.getElementById(`player-${id}`).classList.add('selected');
+                messageBox.textContent = `Ngựa ${id} đã được chọn. Hãy tung xúc xắc!`;
+            }
+
+            async function rollDice() {
+                if (isMoving) return;
+                if (!selectedPlayerId) {
+                    messageBox.textContent = "Vui lòng chọn một chú ngựa trước!";
+                    return;
+                }
+                 if (finishedPlayers.includes(selectedPlayerId)) {
+                    messageBox.textContent = `Ngựa ${selectedPlayerId} đã về đích, hãy chọn ngựa khác!`;
+                    return;
+                }
+                
+                isMoving = true;
+                diceBtn.disabled = true;
+                diceBtn.classList.add('rolling');
+
+                let rollInterval = setInterval(() => diceResultEl.textContent = Math.ceil(Math.random() * 6), 50);
+
+                setTimeout(() => {
+                    clearInterval(rollInterval);
+                    diceBtn.classList.remove('rolling');
+                    const roll = Math.ceil(Math.random() * 6);
+                    diceResultEl.textContent = roll;
+                    movePlayer(selectedPlayerId, roll);
+                }, 500);
+            }
+
+            async function movePlayer(id, steps) {
+                const player = players.find(p => p.id === id);
+                if (!player) return;
+
+                messageBox.textContent = `Ngựa ${id} di chuyển ${steps} ô...`;
+                player.position = Math.min(player.position + steps, BOARD_LENGTH);
+                await updatePlayerPosition(id, true);
+
+                if (player.position >= BOARD_LENGTH) {
+                    handleWin(player);
+                } else {
+                    await handleSpecialSquare(player);
+                }
+                
+                if (finishedPlayers.length < NUM_PLAYERS) {
+                     isMoving = false;
+                     diceBtn.disabled = false;
+                     if(finishedPlayers.length < NUM_PLAYERS - 1) {
+                        messageBox.textContent += ` Lượt của người chơi tiếp theo.`;
+                     }
+                }
+            }
+            
+            function updatePlayerPosition(id, animate = false) {
+                 return new Promise(resolve => {
+                    const player = players.find(p => p.id === id);
+                    if (!player) return resolve();
+                    const playerEl = player.element;
+
+                    playerEl.style.transition = animate ? 'all 0.5s ease-in-out' : 'none';
+
+                    const boardRect = board.getBoundingClientRect();
+                    const totalCols = BOARD_LENGTH + 1;
+                    const squareWidth = boardRect.width / totalCols;
+                    const rowHeight = boardRect.height / NUM_PLAYERS;
+                    
+                    const targetY = (id - 0.5) * rowHeight - (playerEl.offsetHeight / 2);
+                    const targetX = (player.position + 0.5) * squareWidth - (playerEl.offsetWidth / 2);
+                    
+                    playerEl.style.top = `${targetY}px`;
+                    playerEl.style.left = `${targetX}px`;
+
+                    if (animate) setTimeout(resolve, 500);
+                    else resolve();
+                });
+            }
+
+            async function handleSpecialSquare(player) {
+                if(player.position === 0) return;
+
+                const squareIndex = (player.id - 1) * (BOARD_LENGTH + 1) + player.position;
+                const squareEl = board.children[squareIndex];
+                if (!squareEl) return;
+
+                let squareType = 'normal';
+                if (squareEl.classList.contains('square-bonus')) squareType = 'bonus';
+                else if (squareEl.classList.contains('square-penalty-back')) squareType = 'penalty-back';
+                else if (squareEl.classList.contains('square-penalty-reset')) squareType = 'penalty-reset';
+
+                if (squareType === 'normal') return;
+
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                switch (squareType) {
+                    case 'bonus':
+                        messageBox.textContent = `Ngựa ${player.id} được thưởng 1 ô!`;
+                        player.position = Math.min(player.position + 1, BOARD_LENGTH);
+                        await updatePlayerPosition(player.id, true);
+                        if (player.position >= BOARD_LENGTH) handleWin(player);
+                        break;
+                    case 'penalty-back':
+                        messageBox.textContent = `Ngựa ${player.id} bị lùi 1 ô!`;
+                        player.position = Math.max(player.position - 1, 0);
+                        await updatePlayerPosition(player.id, true);
+                        break;
+                    case 'penalty-reset':
+                        messageBox.textContent = `Ôi không! Ngựa ${player.id} phải về vạch xuất phát!`;
+                        player.position = 0;
+                        await updatePlayerPosition(player.id, true);
+                        break;
+                }
+            }
+            
+            function handleWin(player) {
+                if (finishedPlayers.includes(player.id)) return;
+                
+                finishedPlayers.push(player.id);
+                player.element.classList.add('finished');
+                 if (selectedPlayerId === player.id) {
+                    selectedPlayerId = null;
+                    player.element.classList.remove('selected');
+                }
+
+                messageBox.innerHTML = `<span class="font-bold text-yellow-500">🎉 Ngựa ${player.id} đã về đích ở vị trí thứ ${finishedPlayers.length}!</span>`;
+                
+                if (finishedPlayers.length >= NUM_PLAYERS - 1) {
+                     if (finishedPlayers.length === NUM_PLAYERS - 1) {
+                        const lastPlayer = players.find(p => !finishedPlayers.includes(p.id));
+                        if(lastPlayer) finishedPlayers.push(lastPlayer.id);
+                     }
+                    messageBox.innerHTML += `<br><span class="text-lg font-bold text-red-500">Cuộc đua đã kết thúc!</span>`;
+                    isMoving = true; 
+                    diceBtn.disabled = true;
+                }
+            }
+
+            diceBtn.addEventListener('click', rollDice);
+            resetButton.addEventListener('click', initGame);
+
+            initGame();
+            window.addEventListener('resize', () => {
+                if (players.length > 0) {
+                    players.forEach(p => updatePlayerPosition(p.id));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
 
