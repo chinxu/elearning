@@ -1,1 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cờ Tỷ Phú - Phiên Bản Trình Chiếu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tùy chỉnh font chữ cho toàn bộ trang */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Thiết lập layout cho bàn cờ */
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(11, minmax(0, 1fr));
+            grid-template-rows: repeat(11, minmax(0, 1fr));
+            /* Giữ tỷ lệ vuông cho bàn cờ */
+            width: clamp(320px, 80vh, 700px); /* Điều chỉnh kích thước để phù hợp với layout ngang */
+            aspect-ratio: 1 / 1;
+        }
+
+        /* Định dạng chung cho các ô trên bàn cờ */
+        .square {
+            border: 1px solid #4b5563; /* gray-600 */
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 2px;
+            font-weight: bold;
+        }
+
+        /* Định dạng cho quân cờ của người chơi */
+        .player-token {
+            position: absolute;
+            width: 25%;
+            height: 25%;
+            border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
+            font-size: clamp(10px, 2vw, 18px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Vị trí các quân cờ trong cùng một ô để không bị đè lên nhau */
+        .player-token[data-player-index="0"] { top: 10%; left: 10%; }
+        .player-token[data-player-index="1"] { top: 10%; right: 10%; }
+        .player-token[data-player-index="2"] { bottom: 10%; left: 10%; }
+        .player-token[data-player-index="3"] { bottom: 10%; right: 10%; }
+        .player-token[data-player-index="4"] { top: 40%; left: 10%; }
+        .player-token[data-player-index="5"] { top: 40%; right: 10%; }
+        .player-token[data-player-index="6"] { bottom: 40%; left: 10%; }
+        .player-token[data-player-index="7"] { bottom: 40%; right: 10%; }
+
+        /* Hiệu ứng khi chọn người chơi */
+        .player-info-card.selected {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7); /* blue-500 */
+        }
+    </style>
+    <!-- Thêm font Inter từ Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col md:flex-row items-center justify-center min-h-screen p-4 gap-8">
+
+    <!-- Bàn cờ -->
+    <div id="game-board-container" class="flex items-center justify-center">
+        <div id="game-board" class="bg-gray-200 shadow-xl rounded-lg border-4 border-gray-700">
+            <!-- Các ô cờ sẽ được tạo bởi JavaScript -->
+        </div>
+    </div>
+
+    <!-- Bảng điều khiển bên cạnh -->
+    <div id="side-panel" class="w-full max-w-sm bg-white p-6 rounded-lg shadow-xl space-y-4">
+        <h1 class="text-3xl font-bold mb-4 text-center text-gray-800">Cờ Tỷ Phú Vui Vẻ</h1>
+
+        <!-- Danh sách người chơi và điểm số -->
+        <div id="player-scores" class="grid grid-cols-2 gap-3">
+            <!-- Thông tin người chơi sẽ được tạo bởi JavaScript -->
+        </div>
+
+        <!-- Khu vực điều khiển -->
+        <div id="controls" class="space-y-3 pt-4 border-t">
+             <p class="text-lg text-center">
+                Lượt của: <span id="selected-player-name" class="font-bold text-blue-600">Hãy chọn người chơi</span>
+            </p>
+            <input type="number" id="move-input" min="1" placeholder="Nhập số bước..." class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500">
+            <button id="move-button" class="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 font-bold transition-colors disabled:bg-gray-400" disabled>Di Chuyển</button>
+        </div>
+    </div>
+
+    <!-- Modal cho thông báo -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div id="modal-content" class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md text-center transform transition-all scale-95 opacity-0">
+            <h2 id="modal-title" class="text-2xl font-bold mb-4">Thông báo</h2>
+            <div id="modal-body">
+                <p id="modal-message" class="text-lg mb-4"></p>
+                <!-- Các nút hành động cho giáo viên -->
+                <div id="task-buttons" class="hidden mt-6 flex justify-center gap-4">
+                    <!-- Các nút Hoàn thành / Chưa hoàn thành sẽ được tạo bởi JS -->
+                </div>
+            </div>
+            <button id="close-modal-button" class="hidden mt-6 bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600">Đóng</button>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- CẤU HÌNH GAME ---
+        const NUM_PLAYERS = 8;
+        const BOARD_SIZE = 40;
+
+        const playerIcons = ['🚀', '🦄', '⚽️', '🏀', '🎱', '🎯', '🎲', '👾'];
+        const playerColors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#0ea5e9', '#8b5cf6'];
+        
+        // --- TRẠNG THÁI GAME ---
+        let players = [];
+        let board = [];
+        let selectedPlayerId = null;
+        let currentPlayerAction = { player: null, squareType: null };
+
+        // --- DOM ELEMENTS ---
+        const gameBoard = document.getElementById('game-board');
+        const playerScoresContainer = document.getElementById('player-scores');
+        const selectedPlayerName = document.getElementById('selected-player-name');
+        const moveInput = document.getElementById('move-input');
+        const moveButton = document.getElementById('move-button');
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const taskButtonsContainer = document.getElementById('task-buttons');
+        const closeModalButton = document.getElementById('close-modal-button');
+
+        // --- HÀM KHỞI TẠO ---
+
+        function initGame() {
+            createPlayers();
+            createBoard();
+            renderBoard();
+            renderPlayerInfo();
+            renderPlayerTokens();
+            setupEventListeners();
+        }
+
+        function createPlayers() {
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                players.push({
+                    id: i,
+                    name: `Người chơi ${i + 1}`,
+                    icon: playerIcons[i],
+                    color: playerColors[i],
+                    position: 0,
+                    score: 0
+                });
+            }
+        }
+
+        function createBoard() {
+            const types = ['start', 'normal', 'bonus', 'normal', 'penalty', 'normal', 'chance', 'normal', 'bonus', 'normal', 'penalty',
+                           'normal', 'chance', 'normal', 'penalty', 'normal', 'bonus', 'normal', 'chance', 'normal', 'penalty',
+                           'normal', 'bonus', 'normal', 'penalty', 'normal', 'chance', 'normal', 'bonus', 'normal', 'penalty',
+                           'normal', 'penalty', 'normal', 'chance', 'normal', 'bonus', 'normal', 'penalty', 'normal'];
+            for (let i = 0; i < BOARD_SIZE; i++) {
+                board.push({ id: i, type: types[i] });
+            }
+        }
+
+        function setupEventListeners() {
+            playerScoresContainer.addEventListener('click', handlePlayerSelect);
+            moveButton.addEventListener('click', handleMove);
+            closeModalButton.addEventListener('click', hideModal);
+        }
+
+        // --- HÀM RENDER ---
+
+        function renderBoard() {
+            const squarePositions = [];
+            // Bottom row (0-10)
+            for (let i = 0; i <= 10; i++) squarePositions.push({ row: 11, col: 11 - i });
+            // Left row (11-20)
+            for (let i = 1; i <= 9; i++) squarePositions.push({ row: 11 - i, col: 1 });
+            // Top row (21-30)
+            for (let i = 0; i <= 10; i++) squarePositions.push({ row: 1, col: 1 + i });
+            // Right row (31-39)
+            for (let i = 1; i <= 9; i++) squarePositions.push({ row: 1 + i, col: 11 });
+
+            board.forEach((squareData, i) => {
+                const squareEl = document.createElement('div');
+                squareEl.className = 'square';
+                squareEl.dataset.squareId = i;
+                
+                const pos = squarePositions[i];
+                squareEl.style.gridRow = pos.row;
+                squareEl.style.gridColumn = pos.col;
+
+                let bgColor, text, textColor;
+                switch (squareData.type) {
+                    case 'start': bgColor = 'bg-green-600'; text = 'Bắt Đầu'; textColor = 'text-white'; break;
+                    case 'bonus': bgColor = 'bg-yellow-400'; text = 'Thưởng'; textColor = 'text-gray-800'; break;
+                    case 'penalty': bgColor = 'bg-red-600'; text = 'Phạt'; textColor = 'text-white'; break;
+                    case 'chance': bgColor = 'bg-blue-500'; text = 'Cơ Hội'; textColor = 'text-white'; break;
+                    case 'corner': bgColor = 'bg-gray-400'; text = 'Góc'; textColor = 'text-gray-800'; break;
+                    default: bgColor = 'bg-green-200'; text = `Ô ${i}`; textColor = 'text-gray-700';
+                }
+
+                squareEl.innerHTML = `<span>${text}</span>`;
+                squareEl.classList.add(bgColor, textColor);
+                gameBoard.appendChild(squareEl);
+            });
+        }
+        
+        function renderPlayerInfo() {
+            playerScoresContainer.innerHTML = '';
+            players.forEach(player => {
+                const playerCard = document.createElement('div');
+                playerCard.dataset.playerId = player.id;
+                playerCard.className = `player-info-card p-3 rounded-lg border-2 transition-all cursor-pointer`;
+                playerCard.style.borderColor = player.color;
+                
+                if (player.id === selectedPlayerId) {
+                    playerCard.classList.add('selected', 'bg-blue-100');
+                } else {
+                    playerCard.classList.add('bg-gray-50');
+                }
+
+                playerCard.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <span class="text-3xl">${player.icon}</span>
+                        <div>
+                            <div class="font-bold">${player.name}</div>
+                            <div class="text-gray-600">Điểm: <span class="font-bold">${player.score}</span></div>
+                        </div>
+                    </div>
+                `;
+                playerScoresContainer.appendChild(playerCard);
+            });
+        }
+        
+        function renderPlayerTokens() {
+            // Xóa token cũ
+            document.querySelectorAll('.player-token').forEach(token => token.remove());
+
+            // Vẽ token mới
+            players.forEach(player => {
+                const token = document.createElement('div');
+                token.className = 'player-token';
+                token.dataset.playerIndex = player.id;
+                token.innerHTML = player.icon;
+                token.style.backgroundColor = player.color;
+
+                const targetSquare = gameBoard.querySelector(`[data-square-id='${player.position}']`);
+                if (targetSquare) {
+                    targetSquare.appendChild(token);
+                }
+            });
+        }
+
+        // --- HÀM XỬ LÝ SỰ KIỆN ---
+
+        function handlePlayerSelect(e) {
+            const card = e.target.closest('.player-info-card');
+            if (card) {
+                selectedPlayerId = parseInt(card.dataset.playerId);
+                const player = players[selectedPlayerId];
+                selectedPlayerName.textContent = `${player.icon} ${player.name}`;
+                moveButton.disabled = false;
+                renderPlayerInfo();
+            }
+        }
+
+        function handleMove() {
+            const moves = parseInt(moveInput.value);
+            if (isNaN(moves) || moves <= 0 || selectedPlayerId === null) {
+                // Thay thế alert() bằng modal
+                showModalMessage("Lỗi", "Vui lòng chọn người chơi và nhập số bước hợp lệ.");
+                return;
+            }
+
+            const player = players[selectedPlayerId];
+            player.position = (player.position + moves) % BOARD_SIZE;
+            
+            moveInput.value = '';
+            renderPlayerTokens();
+
+            // Xử lý sự kiện tại ô mới
+            setTimeout(() => {
+                const landedSquare = board[player.position];
+                handleSquareAction(player, landedSquare.type);
+            }, 500); // Đợi 0.5s cho hiệu ứng di chuyển
+        }
+        
+        function handleSquareAction(player, squareType) {
+            currentPlayerAction = { player, squareType };
+
+            switch (squareType) {
+                case 'bonus':
+                    player.score += 10;
+                    showModalMessage(`Ô Thưởng!`, `${player.name} được cộng 10 điểm.`);
+                    renderPlayerInfo();
+                    break;
+                case 'normal':
+                case 'penalty':
+                case 'chance':
+                    showTaskModal(player, squareType);
+                    break;
+                default:
+                    // Không làm gì với ô 'start' hoặc 'corner'
+                    break;
+            }
+        }
+
+        function handleTaskResult(isCorrect) {
+            const { player, squareType } = currentPlayerAction;
+            let points = 0;
+            let message = '';
+
+            if (isCorrect) {
+                switch (squareType) {
+                    case 'normal': points = 10; break;
+                    case 'penalty': points = 5; break;
+                    case 'chance': points = 20; break;
+                }
+                message = `Chính xác! ${player.name} được cộng ${points} điểm.`;
+            } else { // Incorrect
+                switch (squareType) {
+                    case 'penalty': points = -10; break;
+                    default: points = 0; break;
+                }
+                message = `Rất tiếc! ${points === 0 ? `${player.name} không được điểm.` : `${player.name} bị trừ ${Math.abs(points)} điểm.`}`;
+            }
+
+            player.score += points;
+            
+            taskButtonsContainer.classList.add('hidden');
+            hideModal();
+            
+            setTimeout(() => {
+                renderPlayerInfo();
+                showModalMessage("Kết quả", message);
+            }, 300);
+        }
+
+        // --- HÀM ĐIỀU KHIỂN MODAL ---
+
+        function showModal() {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function hideModal() {
+             modalContent.classList.add('scale-95', 'opacity-0');
+             setTimeout(() => {
+                modal.classList.add('hidden');
+             }, 200);
+        }
+        
+        function showModalMessage(title, message) {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            modalMessage.classList.remove('hidden');
+            taskButtonsContainer.classList.add('hidden');
+            closeModalButton.classList.remove('hidden');
+            showModal();
+        }
+
+        function showTaskModal(player, squareType) {
+            let title = '';
+            let description = '';
+
+            switch (squareType) {
+                case 'normal':
+                    title = 'Ô Thường';
+                    description = 'Giáo viên sẽ đọc câu hỏi. Trả lời đúng được 10 điểm.';
+                    break;
+                case 'penalty':
+                    title = 'Ô Phạt';
+                    description = 'Giáo viên sẽ đọc câu hỏi. Trả lời đúng được 5 điểm, trả lời sai bị trừ 10 điểm.';
+                    break;
+                case 'chance':
+                    title = 'Ô Cơ Hội';
+                    description = 'Giáo viên sẽ đọc câu hỏi. Trả lời đúng được 20 điểm.';
+                    break;
+            }
+            
+            modalTitle.textContent = title;
+            modalMessage.textContent = description;
+            modalMessage.classList.remove('hidden');
+
+            taskButtonsContainer.innerHTML = `
+                <button id="complete-button" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 font-semibold">Hoàn thành</button>
+                <button id="fail-button" class="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 font-semibold">Chưa hoàn thành</button>
+            `;
+            taskButtonsContainer.classList.remove('hidden');
+            
+            document.getElementById('complete-button').onclick = () => handleTaskResult(true);
+            document.getElementById('fail-button').onclick = () => handleTaskResult(false);
+            
+            closeModalButton.classList.add('hidden');
+            showModal();
+        }
+
+        // --- BẮT ĐẦU GAME ---
+        initGame();
+    });
+    </script>
+</body>
+</html>
+
 
