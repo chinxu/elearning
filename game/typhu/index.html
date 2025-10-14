@@ -40,7 +40,8 @@
             width: 25%;
             height: 25%;
             border-radius: 9999px;
-            transition: all 0.3s ease-in-out;
+            /* Cập nhật transition để mượt mà hơn */
+            transition: all 0.2s ease-in-out;
             font-size: clamp(10px, 2vw, 18px);
             display: flex;
             align-items: center;
@@ -278,25 +279,43 @@
             }
         }
 
+        function movePlayerStepByStep(player, moves) {
+            let currentMove = 0;
+
+            const moveOneStep = () => {
+                if (currentMove >= moves) {
+                    // Kích hoạt lại nút và xử lý hành động tại ô sau khi di chuyển xong
+                    moveButton.disabled = false;
+                    const landedSquare = board[player.position];
+                    handleSquareAction(player, landedSquare.type);
+                    return;
+                }
+
+                player.position = (player.position + 1) % BOARD_SIZE;
+                renderPlayerTokens();
+                currentMove++;
+                // Gọi đệ quy để di chuyển bước tiếp theo sau một khoảng trễ
+                setTimeout(moveOneStep, 250); // Có thể điều chỉnh tốc độ di chuyển (ms) ở đây
+            };
+
+            moveOneStep();
+        }
+
         function handleMove() {
             const moves = parseInt(moveInput.value);
             if (isNaN(moves) || moves <= 0 || selectedPlayerId === null) {
-                // Thay thế alert() bằng modal
                 showModalMessage("Lỗi", "Vui lòng chọn người chơi và nhập số bước hợp lệ.");
                 return;
             }
 
             const player = players[selectedPlayerId];
-            player.position = (player.position + moves) % BOARD_SIZE;
-            
             moveInput.value = '';
-            renderPlayerTokens();
-
-            // Xử lý sự kiện tại ô mới
-            setTimeout(() => {
-                const landedSquare = board[player.position];
-                handleSquareAction(player, landedSquare.type);
-            }, 500); // Đợi 0.5s cho hiệu ứng di chuyển
+            
+            // Vô hiệu hóa nút trong khi di chuyển
+            moveButton.disabled = true;
+            
+            // Bắt đầu di chuyển tuần tự
+            movePlayerStepByStep(player, moves);
         }
         
         function handleSquareAction(player, squareType) {
@@ -314,7 +333,7 @@
                     showTaskModal(player, squareType);
                     break;
                 default:
-                    // Không làm gì với ô 'start' hoặc 'corner'
+                    // Không làm gì với ô 'start'
                     break;
             }
         }
@@ -417,5 +436,4 @@
     </script>
 </body>
 </html>
-
 
