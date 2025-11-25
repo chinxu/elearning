@@ -34,6 +34,16 @@
             color: white;
             border-color: #dc2626; /* border-red-600 */
         }
+        .timer-container {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: #4b5563; /* text-gray-600 */
+        }
+        .timer-warning {
+            color: #ef4444; /* text-red-500 */
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
@@ -72,7 +82,12 @@
         <div id="quiz-view" class="view">
             <div class="flex justify-between items-center mb-4">
                 <h2 id="quiz-title" class="text-xl font-bold text-gray-700"></h2>
-                <span id="progress-text" class="text-lg font-semibold text-gray-500"></span>
+                <div class="flex items-center gap-4">
+                     <div id="timer-display" class="timer-container">
+                        <span>⏱️</span>&nbsp;<span id="time-left">15</span>s
+                    </div>
+                    <span id="progress-text" class="text-lg font-semibold text-gray-500"></span>
+                </div>
             </div>
             <div id="question-container" class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                 <p id="question-text" class="text-2xl font-semibold text-gray-800 mb-6"></p>
@@ -104,7 +119,7 @@
         const questionBank = {
             chapters: [
                 {
-                     id: 4,
+                    id: 4,
                     title: "Chương 4. Hỗn hợp. Tách chất ra khỏi hỗn hợp",
                     lessons: [
                         {
@@ -143,33 +158,6 @@
                                 { question: "Muốn hoà tan được nhiều muối ăn vào nước, ta không nên sử dụng phương pháp nào dưới đây?", options: ["Nghiền nhỏ muối ăn.", "Đun nóng nước.", "Bỏ thêm đá lạnh vào.", "Vừa cho muối ăn vào nước vừa khuấy đều."], answer: 2 },
                                 { question: "Khi tăng nhiệt độ thì độ tan của các chất rắn trong nước thay đổi như thế nào?", options: ["Đều giảm.", "Đều tăng.", "Không thay đổi.", "Phần lớn là tăng."], answer: 3 },
                                 { question: "Muốn hòa tan nhanh đường phèn (đường kết tinh dạng viên lớn) vào nước, ta dùng biện pháp nào sau đây?", options: ["Nghiền nhỏ đường phèn.", "Cho thêm đường vào.", "Làm lạnh dung dịch.", "Dùng mảng đường to."], answer: 0 },
-                                { question: "Khi tăng nhiệt độ thì độ tan của các chất rắn trong nước thay đổi như thế nào?", options: ["Đều giảm.", "Đều tăng.", "Không thay đổi.", "Phần lớn là tăng."], answer: 3 },
-                                { question: "Muốn hòa tan nhanh đường phèn (đường kết tinh dạng viên lớn) vào nước, ta dùng biện pháp nào sau đây?", options: ["Nghiền nhỏ đường phèn.", "Cho thêm đường vào.", "Làm lạnh dung dịch.", "Dùng mảng đường to."], answer: 0 },
-                                { question: "Khi hoà tan 100 ml rượu êtylic vào 50 ml nước thì nhận định nào đây đúng?", options: ["Rượu là chất tan và nước là dung môi.", "Nước là chất tan và rượu là dung môi.", "Nước và rượu đều là chất tan.", "Nước và rượu đều là dung môi."], answer: 1 },
-                                { question: "Dung dịch là hỗn hợp đồng nhất của", options: ["2 chất lỏng.", "Chất rắn và chất lỏng.", "Chất khí và chất lỏng.", "Chất tan và dung môi."], answer: 3 },
-                                { question: "Máu người được quan sát dưới kính hiển vi được mô tả bằng ảnh sau: Các phát biểu nào sau đây là đúng?", options: ["Máu người là một dung dịch đồng nhất.", "Máu người là là chất nguyên chất.", "Máu người là nhũ tương.", "Máu người là huyền phù."], answer: 3 },
-                                { question: "Hình ảnh dưới đây minh hoạ cho trạng thái nào của hỗn hợp?", options: ["Dung dịch.", "Huyền phù.", "Nhũ tương.", "Hỗn hợp đồng nhất."], answer: 1 },
-                                { question: "Khi hoà tan bột đá vôi vào nước, chỉ một lượng chất này tan trong nước, phần còn lại làm cho nước bị đục. Hỗn hợp này được coi là", options: ["dung dịch.", "chất tan.", "nhũ tương.", "huyền phù."], answer: 3 },
-                                { question: "Trong tự nhiên, các loại đá thạch anh được cấu tạo từ SiO2 lẫn các loại chất khác tạo nên nhiều màu sắc khác nhau. Đá thạch anh được gọi là", options: ["dung dịch.", "hỗn hợp.", "chất tinh khiết.", "dung môi."], answer: 1 },
-                                { question: "Thành phần chính của sốt mayonnaise bao gồm trứng gà lấy lòng đỏ, dầu ăn nguyên chất thường dùng dầu đậu nành, dầu ôliu; chanh tươi hoặc dấm gạo; mù tạt cay tùy theo người nội trợ muốn cay nhiều hay ít; muối ăn, tỏi, hạt tiêu. Sốt mayonnaise là", options: ["huyền phù.", "nhũ tương.", "dung dịch.", "chất lỏng."], answer: 1 },
-                                { question: "Cho mô tả về dung dịch như sau: Phát biểu nào sau đây đúng?", options: ["Hỗn hợp này được gọi là huyền phù.", "Hỗn hợp này có chất tan trong nước.", "Dung dịch này được gọi là huyền phù.", "Dung dich này có các không tan trong nước."], answer: 1 },
-                                { question: "Cho mô tả về nước cam như sau: Phát biểu nào sau đây đúng?", options: ["Nước cam bao gồm nước và các chất tan trong nước.", "Nước cam là hỗn hợp huyền phù.", "Nước cam là dung dịch tan trong nước.", "Nước cam bao gồm các nước và các vụn cam lơ lửng."], answer: 3 },
-                                { question: "Hỗn hợp nào dưới dây là huyền phù khi được khuấy trộn?", options: ["Hỗn hợp nước và sữa.", "Hỗn hợp nước và dầu ăn.", "Hỗn hợp nước và cát.", "Hỗn hợp nước và đường."], answer: 2 },
-                                { question: "Hỗn hợp nào dưới đây là nhũ tương khi được khuấy trộn?", options: ["Hỗn hợp nước và dầu ăn.", "Hỗn hợp nước và đường.", "Hỗn hợp nước và cát.", "Hỗn hợp nước và bột mì."], answer: 0 },
-                                { question: "Chất nào có thể tan trong nước để tạo thành dung dịch?", options: ["Chất rắn, chất lỏng và chất khí.", "Chất rắn.", "Chất rắn và chất khí.", "Chất lỏng và chất khí."], answer: 0 },
-                                { question: "Chất nào tan tốt nhất trong nước nóng?", options: ["Chất khí.", "Chất rắn và chất khí tan tốt như nhau, chất lỏng tan kém nhất.", "Chất rắn.", "Chất lỏng."], answer: 2 },
-                                { question: "Chọn phát biểu sai. Quá trình hòa tan một chất rắn xảy ra nhanh hơn khi", options: ["chất rắn được làm lạnh trước.", "chất rắn được nghiền thành bột mịn.", "chất rắn được trộn.", "chất rắn được khuấy."], answer: 0 },
-                                { question: "Có bốn cốc nước với nhiệt độ khác nhau. Cốc 1 đựng nước có nhiệt độ 50oC, cốc 2 đựng nước có nhiệt độ 25oC, cốc 3 đựng nước có nhiệt độ 75oC, cốc 4 đựng nước có nhiệt độ 35oC. Hỏi cho 2 thìa đường vào mỗi cốc nào thì ở cốc nào đường tan nhanh nhất?", options: ["Cốc 2.", "Cốc 3.", "Cốc 4.", "Cốc 1."], answer: 1 },
-                                { question: "Cho các chất sau: muối ăn, bột mì, cát, thuốc tím, đường. Những chất nào tan trong nước?", options: ["Muối ăn, đường.", "Muối ăn, bột mì, đường.", "Muối ăn, đường, thuốc tím.", "Muối ăn, cát, đường."], answer: 2 },
-                                { question: "Những vật thể nào dưới đây là hỗn hợp?", options: ["Nước chanh, bột canh, thép.", "Thép, nước đường, muối.", "Nước cam, cồn ethanol, không khí.", "Nitrogen, oxygen, nước tinh khiết."], answer: 0 },
-                                { question: "Những chất nào trong dãy những chất dưới đây chỉ chứa những chất tinh khiết?", options: ["Nước biển, đường kính, muối ăn.", "Nước sông, nước đá, nước chanh.", "Vòng bạc, nước cất, đường kính.", "Khí tự nhiên, gang, dầu hoả."], answer: 2 },
-                                { question: "Nhận xét nào sau đây là đúng?", options: ["Đối với 1 chất, khi nhiệt độ tăng độ tan giảm.", "Muốn chất rắn tan nhanh ta có thể khuấy liên tục.", "Một chất sẽ tan nhanh hơn nếu cho vào trong nước lạnh.", "Nước có thể hoà tan mọi chất rắn trong tự nhiên."], answer: 1 },
-                                { question: "Trường hợp nào dưới đây không phải là chất tinh khiết?", options: ["Vàng.", "Bạc.", "Không khí.", "Đồng."], answer: 2 },
-                                { question: "Phát biểu nào sau đây đúng?", options: ["Nước biển là hỗn hợp không đồng nhất của nước và muối ăn.", "Nước mía là hỗn hợp không đồng nhất của đường và nước.", "Nước biển và cát là hỗn hợp đồng nhất.", "Từ nước mía tách ra được đường tinh khiết."], answer: 3 },
-                                { question: "Nước khoáng trong suốt, không màu nhưng có lẫn một số chất tan. Vậy nước khoáng", options: ["Là hỗn hợp đồng nhất.", "Là chất tinh khiết.", "Không phải hỗn hợp.", "Là hỗn hợp không đồng nhất."], answer: 0 },
-                                { question: "Nước trà thuộc loại nào sau đây?", options: ["Hỗn hợp đồng nhất.", "Hỗn hợp không đồng nhất.", "Huyền phù.", "Nhũ tương."], answer: 0 },
-                                { question: "Khi pha trà với nước sôi, ta thu được nước trà. Nước trà thuộc loại nào dưới đây", options: ["Dung dịch.", "Dung môi.", "Chất tan.", "Huyền phù."], answer: 0 },
-                                { question: "Hỗn hợp nước tiếp giáp giữa Thái Bình Dương và Đại Tây Dương là", options: ["Hỗn hợp đồng nhất.", "Hỗn hợp không đồng nhất.", "Huyền phù.", "Nhũ tương."], answer: 1 },
                             ]
                         },
                         {
@@ -181,29 +169,20 @@
                                 { question: "Đâu là quá trình tách chất trong tự nhiên và trong đời sống?", options: ["Làm bay hơi muối biển, thu được muối ăn.", "Phù sa trong nước sông lắng xuống, tách khỏi nước", "Đãi vàng từ đất cát trong quặng vàng.", "Cả 3 đáp án trên."], answer: 3 },
                                 { question: "Tác dụng chủ yếu của việc đeo khẩu trang là gì?", options: ["Tách oxygen ra khỏi không khí hít vào.", "Tách khí carbon dioxide ra khỏi không khí hít vào.", "Tách hơi nước ra khỏi không khí hít vào.", "Tách khói bụi ra khỏi không khí hít vào."], answer: 3 },
                                 { question: "Lắng là phương pháp dùng để tách các chất rắn lơ lửng nặng hơn ra khỏi", options: ["các chất nhẹ hơn.", "các chất nặng hơn.", "các chất tan trong nước.", "các chất dễ bay hơi."], answer: 0 },
-                                { question: "Phương pháp lắng là", options: ["Sự tách chất dựa vào sự khác nhau về kích thước hạt.", "Sự tách chất dựa vào sự khác nhau ở mức độ nặng nhẹ.", "Sự tách chất dựa vào sự khác nhau về tính bay hơi.", "Sự tách chất dựa vào sự khác nhau về khả năng tan trong các dung môi khác nhau."], answer: 1 },
                                 { question: "Gạn là đổ khẽ để lấy phần chất lỏng trong (nước trong) và", options: ["để lại hỗn hợp hòa tan.", "để lại chất khí.", "để lại chất lỏng.", "để lại chất rắn (cặn)."], answer: 3 },
-                                { question: "Phương pháp lọc là", options: ["sự tách chất dựa vào sự khác nhau về kích thước hạt.", "sự tách chất dựa vào sự khác nhau ở mức độ nặng nhẹ.", "sự tách chất dựa vào sự khác nhau về tính bay hơi.", "sự tách chất dựa vào sự khác nhau về khả năng tan trong các dung môi khác nhau."], answer: 0 },
                                 { question: "Phương pháp nào dưới đây là đơn giản nhất để tách cát lẫn trong nước?", options: ["Chiết.", "Lọc.", "Cô cạn.", "Dùng máy li tâm."], answer: 1 },
-                                { question: "Việc làm nào sau đây là quá trình tách chất dựa theo sự khác nhau về kích thước hạt?", options: ["Giặt giẻ lau bảng bằng nước từ vòi nước.", "Ngâm quả dâu với đường để lấy nước dâu.", "Lọc nước bị vẩn đục bằng giấy lọc.", "Dùng nam châm hút bột sắt từ hỗn hợp bột sắt và lưu huỳnh."], answer: 2 },
                                 { question: "Hỗn hợp nào dưới đây có thể tách riêng các chất khi cho hỗn hợp vào nước, sau đó khuấy kĩ và lọc?", options: ["Bột đá vôi và muối ăn.", "Bột sắt và muối ăn.", "Đường và muối.", "Giấm và rượu."], answer: 0 },
                                 { question: "Trong máy lọc nước có rất nhiều lõi lọc khác nhau. Trong đó có một lõi làm bằng bông được ép rất chặt. Theo em, lõi bông đó có tác dụng gì?", options: ["không có tác dụng gì.", "Lọc hoá chất độc hại.", "Lọc chất tan trong nước.", "Lọc chất không tan trong nước."], answer: 3 },
-                                { question: "Người ta dùng phương pháp lọc để", options: ["tách các chất không hòa tan trong nhau ra khỏi hỗn hợp.", "tách chất rắn không tan trong chất lỏng ra khỏi hỗn hợp của chúng.", "tách chất rắn tan khỏi chất lỏng.", "tách chất lỏng khỏi hỗn hợp các chất lỏng không đồng nhất."], answer: 1 },
-                                { question: "Phương pháp cô cạn là", options: ["sự tách chất dựa vào sự khác nhau về kích thước hạt.", "sự tách chất dựa vào sự khác nhau ở mức độ nặng nhẹ.", "sự tách chất dựa vào sự khác nhau về tính bay hơi.", "sự tách chất dựa vào sự khác nhau về khả năng tan trong các dung môi khác nhau."], answer: 2 },
                                 { question: "Để tách muối ra khỏi dung dịch nước muối ta thường dùng phương pháp?", options: ["Cô cạn.", "Tách.", "Lọc.", "Chưng cất."], answer: 0 },
                                 { question: "Những người làm muối thường phơi nước biển trên ruộng cát cho đến khi thu được nước muối đậm đặc, sau đó bơm nước muối đậm đặc này lên ruộng xi măng, phơi tiếp thì thu được muối rắn. Hỏi trong cách này đã dùng phương pháp tách chất nào?", options: ["Cô cạn.", "Lọc.", "Chiết.", "Ngưng tụ."], answer: 0 },
-                                { question: "Phương pháp chiết là", options: ["sự tách chất dựa vào sự khác nhau về kích thước hạt.", "sự tách chất dựa vào sự khác nhau ở mức độ nặng nhẹ.", "sự tách chất dựa vào sự khác nhau về tính bay hơi.", "sự tách chất dựa vào sự khác nhau về khả năng tan trong các dung môi khác nhau."], answer: 3 },
                                 { question: "Nếu không may làm đổ dầu ăn vào nước, ta dùng phương pháp nào để tách riêng dầu ăn ra khỏi nước?", options: ["Dùng máy li tâm.", "Cô cạn.", "Chiết.", "Lọc."], answer: 2 },
                                 { question: "Phương pháp chiết được dùng để tách chất trong hỗn hợp nào sau đây?", options: ["Nước và dầu ăn.", "Bột mì và nước.", "Cát và nước.", "Nước và rượu."], answer: 0 },
-                                { question: "Đây là dụng cụ thường được sử dụng trong phương pháp", options: ["cô cạn.", "chiết.", "lọc.", "tất cả đều đúng."], answer: 1 },
-                                { question: "Quá trình nào dưới đây sử dụng phương pháp cô cạn để tách chất?", options: ["Quá trình phơi thóc mới gặt.", "Quá trình làm muối từ nước biển.", "Quá trình lọc không khí.", "Quá trình tách dầu ăn khỏi nước."], answer: 1 },
+                                { question: "Trong quá trình sản xuất tinh dầu từ cây sả, người ta thu được một hỗn hợp gồm lớp tinh dầu xả và nước. Cách tách riêng được lớp tinh dầu sả ra khỏi lớp nước là:", options: ["cô cạn.", "lọc.", "bay hơi.", "chiết."], answer: 3 },
+                                { question: "Cách hợp lí nhất để tách muối từ nước biển là:", options: ["Lọc.", "Chưng cất.", "Làm bay hơi nước.", "Để muối lắng xuống rồi gạn đi."], answer: 2 },
+                                { question: "Rượu etylic (cồn) sôi ở 78,3oC, nước sôi ở 100oC. Muốn tách rượu ra khỏi hỗn hợp rượu và nước có thể dùng cách nào trong số các cách cho dưới đây?", options: ["Lọc.", "Bay hơi.", "Chưng cất ở nhiệt độ khoảng 80o.", "Không tách được."], answer: 2 },
                                 { question: "Khai thác dầu mỏ dưới đáy biển thường thu được hỗn hợp dầu mỏ và nước biển. Người ta dùng phương pháp nào để tách dầu mỏ ra khỏi hỗn hợp? Biết rằng dầu mỏ ít tan trong nước và nhẹ hơn nước.", options: ["Phương pháp lắng, gạn.", "Phương pháp cô cạn.", "Phương pháp lọc.", "Phương pháp chiết."], answer: 3 },
                                 { question: "Khi đun canh riêu cua, thấy lớp riêu cua nổi lên trên, có thể hớt lớp riêu cua ra bát bằng thìa. Quá trình này sử dụng phương pháp tách chất nào?", options: ["Lọc.", "Chiết.", "Lắng, gạn.", "Cô cạn."], answer: 2 },
                                 { question: "Để tách xăng có lẫn nước, cần sử dụng phương pháp tách chất nào?", options: ["Lắng, gạn.", "Lọc.", "Chiết.", "Cô cạn."], answer: 2 },
-                                { question: "Việc làm nào sau đây là quá trình tách chất dựa theo sự khác nhau về kích thước hạt?", options: ["Ngâm quả sấu với đường để lấy nước sấu.", "Dùng nam châm hút bột sắt từ hỗn hợp bột sắt và lưu huỳnh.", "Dùng giấy lọc để lọc cặn dầu ăn đã sử dụng.", "Vo gạo bằng nước từ vòi nước."], answer: 2 },
-                                { question: "Người ta thường phơi quần áo ướt ở nơi có nắng, gió để quần áo mau khô. Phương pháp tách chất nào đã được sử dụng để tách nước khỏi quần áo?", options: ["Lọc.", "Cô cạn.", "Lắng, gạn.", "Chiết."], answer: 1 },
-                                { question: "Cho biết lượng muối ăn tối đa hòa tan trong khoảng 5 ml nước là 2 thìa. Khi cô cạn dung dịch trên thì lượng muối ăn thu được là", options: ["1 thìa.", "2 thìa.", "không xác định.", "3 thìa."], answer: 1 },
-                                { question: "Để thu tinh dầu xả nguyên chất từ hỗn hợp dầu xả và nước, người ta dùng phương pháp nào", options: ["Chưng cất.", "Chiết.", "Cô cạn.", "Lọc."], answer: 1 },
                             ]
                         }
                     ]
@@ -219,33 +198,13 @@
                                 { question: "Đơn vị cấu tạo nên cơ thể sống gọi là gì?", options: ["Tế bào.", "Mô.", "Bào quan.", "Biểu bì."], answer: 0 },
                                 { question: "Nhận định nào sau đây đúng về tế bào?", options: ["Mọi chất đều được cấu tạo từ tế bào.", "Mọi cơ thể sinh vật đều được cấu tạo từ tế bào.", "Mọi đồ vật đều được cấu tạo từ tế bào.", "Mọi vật chất trên trái đất đều được cấu tạo từ tế bào."], answer: 1 },
                                 { question: "Vì sao tế bào được xem là đơn vị cơ bản của sự sống?", options: ["Vì tế bào có thể thực hiện đầy đủ các quá trình sống cơ bản.", "Vì tế bào có đầy đủ hết các loại bào quan cần thiết.", "Vì tế bào có nhiều hình dạng khác nhau để thích nghi với các chức năng khác nhau.", "Vì tế bào có nhiều kích thước khác nhau để đảm nhiệm các vai trò khác nhau."], answer: 0 },
-                                { question: "Tế bào có mặt trong đối tượng nào dưới đây?", options: ["Bức tường gạch.", "Thùng sữa.", "Con gà.", "Cái bàn."], answer: 2 },
-                                { question: "Tế bào không cấu tạo nên vật nào sau đây?", options: ["Con dao.", "Bông hoa.", "Chiếc lá.", "Con cá."], answer: 0 },
                                 { question: "Vật nào sau đây có cấu tạo từ tế bào?", options: ["Xe ô tô.", "Cây cầu.", "Cây bạch đàn.", "Ngôi nhà."], answer: 2 },
-                                { question: "Cho đối tượng sau: con gà, cây đàn ghi ta, cái bàn, con mèo, con sư tử, bút chì, thước kẻ. Số đối tượng được cấu tạo từ đơn vị tế bào là", options: ["1.", "2.", "3.", "4."], answer: 2 },
-                                { question: "Cho đối tượng sau: con gà, cây đàn ghi ta, cái bàn, con mèo, con sư tử, bút chì, thước kẻ. Số đối tượng không được cấu tạo từ đơn vị tế bào là", options: ["1.", "2.", "3.", "4."], answer: 3 },
                                 { question: "Các loại tế bào khác nhau thì có hình dạng", options: ["giống nhau.", "khác nhau.", "luôn thay đổi.", "giống nhau và thay đổi như nhau."], answer: 1 },
                                 { question: "Nhận định nào đúng khi nói về hình dạng và kích thước tế bào?", options: ["Các loại tế bào đều có chung hình dạng và kích thước.", "Các loại tế bào thường có hình dạng khác nhau nhưng kích thước giống nhau.", "Các loại tế bào khác nhau thường có hình dạng và kích thước khác nhau.", "Các loại tế bào chỉ khác nhau về kích thước, chúng giống nhau về hình dạng."], answer: 2 },
-                                { question: "Có thể phân biệt các loại tế bào khác nhau nhờ đặc điểm bên ngoài nào?", options: ["Hình dạng và màu sắc.", "Thành phần và cấu tạo.", "Kích thước và chức năng.", "Hình dạng và kích thước."], answer: 3 },
-                                { question: "Mỗi loại tế bào đều có hình dạng và kích thước khác nhau để", options: ["chúng không bị chết.", "các tế bào có thể bám vào nhau dễ dàng.", "phù hợp với chức năng của chúng.", "tạo sự đa dạng cho các loài sinh vật."], answer: 2 },
-                                { question: "Tế bào vảy hành (hình vẽ dưới đây) có hình dạng gì?", options: ["Hình lưỡi liềm.", "Hình lục giác.", "Hình cầu.", "Hình xoắn."], answer: 1 },
-                                { question: "Quan sát hình và cho biết đây là tế bào nào?", options: ["Tế bào hồng cầu.", "Tế bào thần kinh.", "Tế bào cơ.", "Tế bào biểu bì."], answer: 0 },
-                                { question: "Quan sát hình và cho biết đây là tế bào nào?", options: ["Tế bào hồng cầu.", "Tế bào thần kinh.", "Tế bào cơ.", "Tế bào biểu bì."], answer: 1 },
-                                { question: "Quan sát hình và cho biết đây là tế bào nào?", options: ["Tế bào lá.", "Tế bào gai.", "Tế bào vi khuẩn.", "Tế bào nấm."], answer: 2 },
                                 { question: "Quan sát tế bào người ta thường sử dụng", options: ["kính hiển vi.", "kính lúp.", "mắt thường.", "kính cận."], answer: 0 },
                                 { question: "Trong các tế bào sau, kích thước tế bào lớn nhất là", options: ["tế bào da của voi.", "tế bào trứng cá hồi.", "tế bào xương cá voi.", "tế bào lá cây."], answer: 1 },
-                                { question: "Hình ảnh dưới đây là tế bào nào?", options: ["Tế bào thần kinh.", "Tế bào lá cây.", "Tế bào vi khuẩn.", "Tế bào trứng."], answer: 3 },
-                                { question: "Các tế bào phải quan sát bằng kính hiển vi là", options: ["tế bào trứng cá, con gà, con mèo.", "tế bào vi khuẩn, con chim ruồi, con cá.", "tế bào vi khuẩn, tế bào da, tế bào tóc.", "tế bào tép bưởi, tế bào trứng cá, con voi."], answer: 2 },
                                 { question: "Tế bào nào sau đây quan sát bằng kính hiển vi quang học. Chọn câu sai.", options: ["Tế bào vi khuẩn.", "Tế bào trứng ếch.", "Tế bào động vật.", "Tế bào thực vật."], answer: 1 },
-                                { question: "Tại sao mỗi loại tế bào có hình dạng và kích thước khác nhau", options: ["để phù hợp với chức năng của chúng.", "để chúng không bị chết.", "để các tế bào có thể bám vào nhau dễ dàng.", "để tạo sự đa dạng các loài sinh vật."], answer: 0 },
                                 { question: "Sinh vật nào dưới đây không có cấu tạo tế bào?", options: ["Vi khuẩn.", "Cây me.", "Virus.", "Con mèo."], answer: 2 },
-                                { question: "Trong các phát biểu dưới đây, phát biểu nào sau đúng?", options: ["Tất cả các loại tế bào đều có cùng kích thước, nhưng hình dạng giữa chúng luôn khác nhau.", "Các loại tế bào khác nhau thường có kích thước và hình dạng khác nhau.", "Tất cả các loại tế bào có hình dạng và kích thước giống nhau.", "Tất cả các loại tế bào có cùng hình dạng, nhưng chúng luôn có kích thước khác nhau."], answer: 1 },
-                                { question: "Nếu chỉ quan sát bằng kính lúp sẽ không quan sát được?", options: ["Trứng ếch.", "Tép bưởi.", "Tế bào vảy hành.", "Trứng cá hồi."], answer: 2 },
-                                { question: "Em hãy cho biết đơn vị nhỏ nhất cấu tạo nên quả bưởi là gì?", options: ["Quả bưởi.", "Múi bưởi.", "Tép bưởi.", "Hạt bưởi."], answer: 2 },
-                                { question: "Em hãy cho biết hình nào có 1 tế bào?", options: ["Hình 1 và hình 3.", "Hình 2 và hình 4.", "Hình 1 và hình 2.", "Hình 3 và hình 4."], answer: 1 },
-                                { question: "Trong các tế bào sau, kích thước tế bào lớn nhất là", options: ["Tế bào da của voi.", "Tế bào trứng cá hồi.", "Tế bào xương cá voi.", "Tế bào lông hổ."], answer: 1 },
-                                { question: "Trong các tế bào sau, tế bào nào phải quan sát bằng kính hiển vi quang học mới quan sát được?", options: ["Trứng cá hồi, trùng giày, trùng biến hình.", "Trứng ếch, trùng giày, trùng biến hình.", "Trứng ếch, trứng cá hồi.", "Trùng giày, trùng biến hình."], answer: 3 },
-                                { question: "Có mấy vật thể cấu tạo từ tế bào?", options: ["3.", "4.", "5.", "6."], answer: 1 }
                             ]
                         },
                         {
@@ -253,45 +212,15 @@
                             title: "Bài 19. Cấu tạo và chức năng các thành phần của tế bào",
                             questions: [
                                 { question: "Tế bào được cấu tạo từ các thành phần cơ bản nào?", options: ["Màng tế bào, tế bào chất.", "Màng tế bào, tế bào chất, nhân hoặc vùng nhân.", "Nhân và vật chất di truyền.", "Màng tế bào và vật chất di truyền."], answer: 1 },
-                                { question: "Nằm ở giữa màng tế bào và nhân hoặc vùng nhân là thành phần nào?", options: ["Màng nhân.", "Tế bào chất.", "Thành tế bào.", "Roi."], answer: 1 },
                                 { question: "Vật chất di truyền nằm ở đâu trong tế bào?", options: ["Nằm lơ lửng ngoài tế bào chất.", "Nằm trong lục lạp.", "Nằm trong nhân hoặc vùng nhân.", "Đính trên màng tế bào."], answer: 2 },
                                 { question: "Màng tế bào có vai trò gì?", options: ["Bao bọc tế bào chất và tham gia vào quá trình trao đổi chất giữa tế bào và môi trường.", "Là nơi xảy ra phần lớn các hoạt động trao đổi chất của tế bào.", "Là nơi chứa vật chất di truyền, là trung tâm điều khiển các hoạt động của tế bào.", "Là nơi di chuyển các chất dinh dưỡng đến các cơ quan của cơ thể."], answer: 0 },
                                 { question: "Nhân/vùng nhân của tế bào có chức năng gì?", options: ["Tham gia trao đối chất với môi trường.", "Là trung tâm điều khiển mọi hoạt động của tế bào.", "Là nơi diễn ra các hoạt động sống của tế bào.", "Là nơi tạo ra năng lượng cung cấp cho mọi hoạt động của tế bào."], answer: 1 },
-                                { question: "Nơi xảy ra phần lớn các hoạt động trao đổi chất của tế bào là", options: ["tế bào chất.", "màng tế bào.", "vùng nhân.", "nhân tế bào."], answer: 0 },
                                 { question: "Dựa vào đặc điểm cấu tạo tế bào có thể chia tế bào thành hai loại là", options: ["tế bào người và tế bào động vật.", "tế bào mới hình thành và tế bào trưởng thành.", "tế bào nhân sơ và tế bào nhân thực.", "tế bào trung ương và tế bào ngoại biên."], answer: 2 },
-                                { question: "Loại bào quan chỉ có ở tế bào nhân sơ là", options: ["ribosome.", "ti thể.", "Lục lạp.", "Không bào."], answer: 0 },
                                 { question: "Sinh vật nào dưới đây trong cấu tạo tế bào chưa có nhân hoàn chỉnh, chỉ có vùng nhân?", options: ["Cây cam.", "Con gà.", "Cây ổi.", "Vi khuẩn E.coli."], answer: 3 },
                                 { question: "Cấu trúc nào của tế bào thực vật chứa sắc tố quang hợp?", options: ["Thành tế bào.", "Không bào.", "Lục lạp.", "Nhân."], answer: 2 },
-                                { question: "Tế bào nhân thực là tế bào đã", options: ["có nhân hoàn chỉnh.", "có tế bào chất hoàn chỉnh.", "có ribosome.", "có thể tích lớn."], answer: 0 },
-                                { question: "Đặc điểm của tế bào nhân thực là", options: ["có màng nhân bao bọc vật chất di truyền.", "tế bào chất không có hệ thống nội màng.", "chỉ có vùng nhân.", "chỉ có một bào quan duy nhất là ribosome."], answer: 0 },
-                                { question: "Thành phần nào dưới đây không có ở tế bào nhân thực?", options: ["Màng nhân.", "Vùng nhân.", "Chất tế bào.", "Hệ thống nội màng."], answer: 1 },
-                                { question: "Tế bào động vật không có bào quan nào dưới đây?", options: ["Ti thể.", "Không bào.", "Ribosome.", "Lục lạp."], answer: 3 },
-                                { question: "Ở một số loài động vật vẫn tồn tại không bào. Các không bào đó có chức năng gì?", options: ["Chứa sắc tố.", "Co bóp, tiêu hóa.", "Chứa chất thải.", "Dự trữ dinh dưỡng."], answer: 1 },
                                 { question: "Thành tế bào có ở loại tế bào nào dưới đây?", options: ["Tế bào nhân sơ.", "Tế bào động vật.", "tế bào thực vật.", "tế bào vi khuẩn."], answer: 2 },
-                                { question: "Thành tế bào ở thực vật có vai trò gì?", options: ["Quy định hình dạng và bảo vệ tế bào.", "Tham gia trao đổi chất với môi trường.", "Là nơi diễn ra các hoạt động sống của tế bào.", "Tham gia cấu tạo hệ thống nội màng."], answer: 0 },
-                                { question: "Tế bào nhân thực được chia thành hai loại là", options: ["tế bào mới hình thành và tế bào trưởng thành.", "tế bào người và tế bào động vật.", "tế bào trung ương và tế bào ngoại biên.", "tế bào động vật và tế bào thực vật."], answer: 3 },
-                                { question: "Lục lạp ở tế bào thực vật có chức năng gì?", options: ["Quang hợp.", "Bảo vệ, định hình, giúp cây cứng cáp.", "Chứa các bào quan, là nơi diễn ra các hoạt động sống của tế bào.", "Chứa vật chất di truyền, điều khiển mọi hoạt động sống của tế bào."], answer: 0 },
                                 { question: "Tế bào động vật khác tế bào thực vật ở điểm nào?", options: ["Đa số không có ti thể.", "Nhân tế bào chưa hoàn chỉnh.", "Có chứa lục lạp.", "Đa số tế bào động vật không có thành tế bào."], answer: 3 },
-                                { question: "Ở tế bào thực vật, bộ phận nào là ranh giới trung gian giữa vách tế bào và chất tế bào", options: ["Không bào.", "Nhân.", "Màng sinh chất.", "Lục lạp."], answer: 2 },
-                                { question: "Ở tế bào thực vật, bộ phận nào có chức năng điều khiển mọi hoạt động sống của tế bào?", options: ["Chất tế bào.", "Vách tế bào.", "Nhân.", "Màng sinh chất."], answer: 2 },
-                                { question: "Trong các bộ phận sau, có bao nhiêu bộ phận có ở cả tế bào thực vật và tế bào động vật?\n1. Chất tế bào\n2. Màng sinh chất\n3. Vách tế bào\n4. Nhân", options: ["3.", "2.", "1.", "4."], answer: 0 },
-                                { question: "Các tế bào vảy hành thường có hình lục giác, thành phần nào của chúng đã quyết định điều đó?", options: ["Không bào.", "Nhân.", "Vách tế bào.", "Màng sinh chất."], answer: 2 },
-                                { question: "Quan sát tế bào bên dưới và cho biết vị trí X là thành phần nào của tế bào?", options: ["Màng tế bào.", "Chất tế bào.", "Nhân tế bào.", "Vùng nhân"], answer: 2 },
-                                { question: "Đặc điểm của tế bào nhân thực là", options: ["Có thành tế bào.", "Có chất tế bào.", "Có màng nhân bao bọc vật chất di truyền.", "Có lục lạp."], answer: 2 },
-                                { question: "Những thành phần nào không phải của tế bào nhân sơ.", options: ["Màng tế bào.", "Vùng nhân.", "Chất tế bào.", "Lục lạp."], answer: 3 },
-                                { question: "Quan sát cấu tạo tế bào thực vật trong hình bên dưới. Thành phần nào là màng tế bào.", options: ["(1).", "(2).", "(3).", "(4)."], answer: 1 },
-                                { question: "Quan sát cấu tạo tế bào thực vật trong hình bên dưới. Thành phần nào có chức năng điều khiển hoạt động sống của tế bào?", options: ["(1).", "(2).", "(3).", "(4)."], answer: 3 },
                                 { question: "Màng nhân là cấu trúc không thể quan sát thấy tế bào của nhóm sinh vật nào?", options: ["Động vật.", "Thực vật.", "Người.", "Vi khuẩn."], answer: 3 },
-                                { question: "Chức năng của màng tế bào là", options: ["Nơi diễn ra hầu hết các hoạt động sống của tế bào.", "Kiểm soát sự di chuyển của các chất vào và ra khỏi tế bào.", "Trung tâm kiểm soát hầu hết hoạt động sống tế bào.", "Chứa vật chất di truyền."], answer: 1 },
-                                { question: "Tế bào chất tồn tại dạng", options: ["Chất keo lỏng.", "Dung dịch trong suốt.", "Màu xanh.", "Dung dịch không màu."], answer: 0 },
-                                { question: "Chức năng của lục lạp là", options: ["Kiểm soát sự di chuyển của các chất đi vào và ra khỏi tế bào.", "Có khả năng hấp thụ ánh sáng để tổng hợp nên chất hữu cơ.", "Điều khiển mọi hoạt động sống của tế bào.", "Là chất làm cho cây sống không cần hấp thụ ánh sáng."], answer: 1 },
-                                { question: "Vai trò của thành thế bào thực vật", options: ["Kiểm soát sự di chuyển của các chất đi vào và ra khỏi tế bào.", "Có khả năng hấp thụ ánh sáng để tổng hợp nên chất hữu cơ.", "Điều khiển mọi hoạt động sống của tế bào.", "Bảo vệ và nâng đỡ cơ thể thực vật."], answer: 3 },
-                                { question: "Nhân tế bào có chức năng nào sau đây:", options: ["Kiểm soát sự di chuyển của các chất đi vào và ra khỏi tế bào.", "Có khả năng hấp thụ ánh sáng để tổng hợp nên chất hữu cơ.", "Điều khiển mọi hoạt động sống của tế bào.", "Là chất làm cho cây sống không cần hấp thụ ánh sáng."], answer: 2 },
-                                { question: "Cấu trúc nào của tế bào thực vật giúp cây cứng cáp dù không có hệ xương nâng đỡ như ở động vật?", options: ["Không bài trung tâm.", "Thành tế bào.", "Màng tế bào.", "Nhân tế bào."], answer: 1 },
-                                { question: "Đâu không phải thành phần cơ bản cấu tạo nên một tế bào?", options: ["Màng tế bào.", "Tế bào chất.", "Nhân hoặc vùng nhân.", "Thành tế bào."], answer: 3 },
-                                { question: "Vật chất di truyền nằm ở đâu trong tế bào?", options: ["Đính trên màng tế bào.", "Nằm trong lục lạp.", "Nằm trong nhân hoặc vùng nhân.", "Nằm lơ lửng ngoài tế bào chất."], answer: 2 },
-                                { question: "Sinh vật nào dưới đây có vật chất di truyền được chứa trong vùng nhân?", options: ["Tế bào gan.", "Vi khuẩn E.coli.", "Tế bào biểu bì lá cây.", "Tế bào lông hút."], answer: 1 },
-                                { question: "Dựa vào đặc điểm cấu tạo tế bào có thể chia tế bào thành hai loại là", options: ["tế bào nhân sơ và tế bào nhân thực.", "tế bào trung ương và tế bào ngoại biên.", "tế bào người và tế bào động vật.", "tế bào mới hình thành và trưởng thành."], answer: 0 },
                             ]
                         },
                         {
@@ -301,26 +230,13 @@
                                 { question: "Quá trình nào giúp tế bào lớn lên?", options: ["Hô hấp.", "Nhân đôi.", "Trao đổi chất.", "Tất cả các phương án trên."], answer: 2 },
                                 { question: "Khi tế bào lớn lên đến một kích thước nhất định sẽ tiến hành quá trình nào?", options: ["Sinh trưởng.", "Sinh sản.", "Thay thế.", "Chết."], answer: 1 },
                                 { question: "Việc phân chia trong tế bào giúp cơ thể.", options: ["Cơ thể lớn lên và sinh sản.", "Cung cấp năng lượng cho cơ thể hoạt động.", "Cơ thể phản ứng với kích thích.", "Cơ thể bào tiết CO2."], answer: 0 },
-                                { question: "Khi nào tế bào bắt đầu quá trình phân chia?", options: ["Khi tế bào lớn lên đến một kích thước nhất định.", "Khi nhận tín hiệu từ trung ương thần kinh.", "Khi cơ thể cần sinh trưởng và lớn lên.", "Khi tế bào già."], answer: 0 },
                                 { question: "Quá trình phân chia của tế bào gồm 2 giai đoạn là", options: ["phân chia nhân và phân chia tế bào chất.", "phân chia nhân và phân chia ribosome.", "phân chia nhân và phân chia lục lạp.", "phân chia tế bào chất và phân chia màng tế bào."], answer: 0 },
-                                { question: "Cho các sự kiện diễn ra trong quá trình từ một tế bào phân chia thành hai tế bào. 1. Hai tế bào mới giống nhau được tạo thành từ một tế bào ban đầu. 2. Từ 1 nhân phân chia thành 2 nhân và chúng tách ra xa nhau. 3. Tế bào hình thành eo thắt ngăn đôi tế bào thành 2 tế bào con. 4. Tế bào con lớn lên thành tế bào trưởng thành. Sắp xếp thứ tự các sự kiện theo đúng trình tự", options: ["1-2-3-4.", "4-3-2-1.", "4-2-3-1.", "4-1-2-3."], answer: 2 },
                                 { question: "Một tế bào sau khi trải qua 4 lần sinh sản liên tiếp sẽ tạo ra tất cả bao nhiêu tế bào con?", options: ["4 tế bào.", "8 tế bào.", "12 tế bào.", "16 tế bào."], answer: 3 },
                                 { question: "Các tế bào con được sinh ra qua mỗi lần phân chia có đặc điểm gì?", options: ["Các tế bào con giống nhau và giống tế bào mẹ.", "Các tế bào con có hình dạng và kích thước lớn hơn tế bào mẹ.", "Các tế bào con có cấu tạo hoàn thiện hơn tế bào mẹ.", "Các tế bào con có kích thước và hình dạng khác nhau."], answer: 0 },
-                                { question: "Cây lớn lên nhờ", options: ["sự lớn lên và phân chia của tế bào.", "sự tăng kích thước của nhân tế bào.", "nhiều tế bào được sinh ra từ một tế bào ban đầu.", "các chất dinh dưỡng bao bọc xung quanh tế bào ban đầu."], answer: 0 },
-                                { question: "Mèo con lớn lên nhờ quá trình nào?", options: ["Sinh trưởng của tế bào.", "Sinh sản của tế bào.", "Sinh trưởng và sinh sản của tế bào.", "Sinh trưởng và thay mới của tế bào."], answer: 2 },
                                 { question: "Sự lớn lên và sinh sản của tế bào có ý nghĩa gì?", options: ["Tăng kích thước của sinh vật, thay thế các tế bào già, chết và các tế bào bị tổn thương.", "Tăng kích thước của cơ thể sinh vật.", "Khiến cho sinh vật già đi.", "Ngăn chặn sự xâm nhập của các yếu tố từ bên ngoài vào cơ thể."], answer: 0 },
-                                { question: "Quá trình nào dưới đây xảy ra nhờ sự sinh trưởng và sinh sản của tế bào?", options: ["Quả bóng to lên khi được bơm hơi.", "Quả táo trên cây to lên sau nhiều ngày đậu quả.", "Áo phao phồng lên sau khi lấy ra khỏi túi hút chân không.", "Gấu bông phồng lên sau khi được nhồi thêm bông."], answer: 1 },
                                 { question: "Đâu không phải ví dụ của sự lớn lên và sinh sản tế bào?", options: ["Sự cụp lá của cây xấu hổ.", "Sự tăng kích thước của củ khoai.", "Sự lớn lên của em bé.", "Sự tăng kích thước của bắp cải."], answer: 0 },
                                 { question: "Vì sao khi thằn lằn bị đứt đuôi, đuôi của nó có thể tái sinh?", options: ["Bởi vì tế bào ở đuôi thằn lằn lớn lên và sinh sản.", "Bởi thằn lằn ăn đuôi của con khác cùng loài.", "Bởi vì thằn lằn có 1 cái đuôi dự phòng.", "Cả ba đáp án trên đều sai."], answer: 0 },
                                 { question: "Điều gì xảy ra với các tế bào trong cơ thể khi cơ thể ngừng lớn?", options: ["Các tế bào trong cơ thể dừng sinh trưởng và sinh sản.", "Các tế bào trong cơ thể ngừng sinh trưởng nhưng vẫn sinh sản.", "Các tế bào trong cơ thể ngừng sinh sản nhưng vẫn sinh trưởng.", "Các tế bào trong cơ thể vẫn tiếp tục sinh trưởng và sinh sản."], answer: 3 },
-                                { question: "Khi một tế bào lớn lên và sinh sản sẽ có bao nhiêu tế bào mới hình thành?", options: ["8.", "6.", "4.", "2."], answer: 3 },
-                                { question: "Cơ thể sinh vật lớn lên chủ yếu dựa vào những hoạt động nào dưới đây?\n1. Sự hấp thụ và ứ đọng nước trong dịch tế bào theo thời gian.\n2. Sự gia tăng số lượng tế bào qua quá trình phân chia.\n3. Sự tăng kích thước của từng tế bào do trao đổi chất.", options: ["1, 2, 3.", "2, 3.", "1, 3.", "1, 2."], answer: 1 },
-                                { question: "Hiện tượng nào dưới đây không phản ánh sự lớn lên và phân chia của tế bào?", options: ["Sự gia tăng diện tích bề mặt của một chiếc lá.", "Sự xẹp, phồng của các tế bào khí khổng.", "Sự tăng dần kích thước của một củ khoai lang.", "Sự vươn cao của thân cây tre."], answer: 1 },
-                                { question: "Sự lớn lên của tế bào có liên quan mật thiết đến quá trình nào dưới đây?", options: ["Trao đổi chất, cảm ứng và sinh sản.", "Trao đổi chất.", "Sinh sản.", "Cảm ứng."], answer: 1 },
-                                { question: "Một tế bào mô phân sinh ở thực vật tiến hành phân chia liên tiếp 4 lần. Hỏi sau quá trình này, số tế bào con được tạo thành là bao nhiêu ?", options: ["32 tế bào.", "4 tế bào.", "8 tế bào.", "16 tế bào."], answer: 3 },
-                                { question: "Quá trình phân chia tế bào gồm hai giai đoạn là:", options: ["Phân chia tế bào chất - phân chia nhân", "Phân chia nhân - phân chia tế bào chất.", "Lớn lên - phân chia nhân.", "Trao đổi chất - phân chia tế bào chất."], answer: 1 },
-                                { question: "Phát biểu nào dưới đây về quá trình lớn lên và phân chia của tế bào là đúng ?", options: ["Mọi TB lớn lên rồi đều bước vào quá trình phân chia tế bào.", "Sau mỗi lần phân chia, từ một tế bào mẹ sẽ tạo ra 3 tế bào con giống hệt mình.", "Sự phân tách chất tế bào là giai đoạn đầu tiên trong quá trình phân chia.", "Phân chia và lớn lên và phân chia tế bào giúp sinh vật tăng kích thước, khối lượng."], answer: 3 },
-                                { question: "Em bé mới sinh ra nặng 3 kg, khi trưởng thành có thể nặng 50 kg, theo em, sự thay đổi này là do đâu?", options: ["Nhờ sự chăm sóc và nuôi dạy của cha mẹ.", "Nhờ sự lớn lên và sinh sản của tế bào.", "Nhờ sự sinh sản của tế bào.", "Nhờ sự lớn lên của tế bào."], answer: 1 },
                             ]
                         }
                     ]
@@ -336,41 +252,13 @@
                                 { question: "Cơ thể sinh vật có khả năng thực hiện các quá trình sống cơ bản nào?\n(1) Cảm ứng và vận động. (2) Sinh trưởng. (3) Dinh dưỡng. (4) Hô hấp. (5) Bài tiết. (6) Sinh sản.", options: ["(2), (3), (4), (6).", "(1), (3), (5), (6).", "(2), (3), (4), (5), (6).", "(1), (2), (3), (4), (5), (6)."], answer: 3 },
                                 { question: "Cơ thể đơn bào là cơ thể có cấu tạo", options: ["một tế bào.", "hai tế bào.", "hàng trăm tế bào.", "hàng nghìn tế bào."], answer: 0 },
                                 { question: "Cơ thể nào dưới đây là cơ thể đơn bào?", options: ["Con chó.", "Trùng biến hình.", "Con ốc sên.", "Con cua."], answer: 1 },
-                                { question: "Cho các sinh vật sau:\n(1) Trùng roi xanh. (2) Cá vàng. (3) Vi khuẩn lam. (4) Cây thông. (5) Con bướm. (6) Trùng giày.\nCác sinh vật đơn bào là?", options: ["(1), (3), (6).", "(5), (3).", "(1), (4).", "(2), (4)."], answer: 0 },
-                                { question: "Trong những cơ thể sinh vật dưới đây, đâu là cơ thể đơn bào?", options: ["Vi khuẩn E.coli.", "Con voi.", "Giun đất.", "Cây hoa hồng."], answer: 0 },
                                 { question: "Cơ thể đa bào", options: ["cấu tạo từ 1 tế bào.", "cấu tạo từ 1 tế bào nhân thực.", "cấu tạo từ nhiều tế bào.", "chủ yếu cấu tạo từ các tế bào nhân sơ."], answer: 2 },
                                 { question: "Cơ thể đơn bào và cơ thể đa bào khác nhau chủ yếu ở điểm nào?", options: ["Màu sắc.", "Kích thước.", "Số lượng tế bào tạo thành.", "Hình dạng."], answer: 2 },
-                                { question: "Các cơ thể sinh vật dưới đây, nhóm nào là cơ thể đa bào?", options: ["Tảo silic, rêu, ếch, vi khuẩn.", "Vi khuẩn, giun đất, ếch.", "Rêu, ếch, chim sâu.", "Trùng roi, cây ổi, bắp cải."], answer: 2 },
                                 { question: "Tùy thuộc vào số lượng tế bào cấu tạo nên cơ thể chia làm 2 nhóm lớn là", options: ["cơ thể đơn bào và cơ thể đa bào.", "cơ thể động vật và cơ thể thực vật.", "cơ thể lớn lên và cơ thể tí hon.", "cơ thể sinh vật nhân sơ và sinh vật nhân chuẩn."], answer: 0 },
-                                { question: "Nhận định nào dưới đây không đúng khi nói về sinh vật đơn bào?", options: ["Cả cơ thể chỉ cấu tạo gồm 1 tế bào.", "Có thể di chuyển được.", "Có thể là sinh vật nhân thực hoặc sinh vật nhân sơ.", "Luôn sống cùng với nhau để hình thành nên tập đoàn."], answer: 3 },
-                                { question: "Đâu là sinh vật đơn bào?", options: ["Cây chuối.", "Trùng kiết lị.", "Cây hoa mai.", "Con mèo."], answer: 1 },
-                                { question: "Đặc điểm nào dưới đây chỉ có ở cơ thể đa bào?", options: ["Có thể sinh sản.", "Có thể di chuyển.", "Có thể cảm ứng.", "Có nhiều tế bào trong cùng 1 cơ thể."], answer: 3 },
-                                { question: "Đâu là vật sống?", options: ["Xe hơi.", "Hòn đá.", "Vi khuẩn lam.", "Cán chổi."], answer: 2 },
-                                { question: "Quá trình sinh vật lấy, biến đổi thức ăn và hấp thụ chất dinh dưỡng gọi là:", options: ["Tiêu hóa.", "Hô hấp.", "Bài tiết.", "Sinh sản."], answer: 0 },
-                                { question: "Cơ thể con người có khoảng bao nhiều tế bào?", options: ["200 tế bào.", "3 tỉ tế bào.", "20 tỉ tế bào.", "30 – 40 nghìn tỉ tế bào."], answer: 3 },
-                                { question: "Các sinh vật có kích thước khác nhau là do", options: ["thức ăn.", "số lượng tế bào cấu tạo nên cơ thể giống nhau.", "môi trường sống.", "số lượng tế bào cấu tạo nên cơ thể khác nhau."], answer: 3 },
-                                { question: "Trong các sinh vật dưới đây, đâu không phải là cơ thể đa bào?", options: ["Con giun đất.", "Vi khuẩn lao.", "Nấm sò.", "Con ếch đồng."], answer: 1 },
-                                { question: "Sinh vật không có cấu tạo đơn bào là", options: ["trùng biến hình.", "trùng roi.", "cá chép.", "trùng giày."], answer: 2 },
                                 { question: "Tế bào cấu tạo nên cơ thể đơn bào", options: ["không có chức năng sinh sản.", "có kích thước siêu hiển vi.", "chưa có cấu tạo hoàn chỉnh.", "thực hiện được chức năng của một cơ thể sống."], answer: 3 },
                                 { question: "Cơ thể đa bào là", options: ["cơ thể có kích thước lớn.", "cơ thể được cấu tạo từ nhiều tế bào.", "cơ thể có kích thước nhỏ.", "cơ thể được cấu tạo từ một tế bào."], answer: 1 },
-                                { question: "Sinh vật nào sau đây không phải sinh vật đơn bào?", options: ["Tảo silic.", "Trùng roi.", "Nấm kim châm.", "Vi khuẩn."], answer: 2 },
-                                { question: "Hầu hết các sinh vật có kích thước khác nhau là do đâu?", options: ["Số lượng tế bào của mỗi cơ thể là khác nhau.", "Kích thước tế bào khác nhau.", "Mức độ tiến hóa của sinh vật.", "Môi trường sống của sinh vật."], answer: 0 },
                                 { question: "Các quá trình sống cơ bản của cơ thể là", options: ["hô hấp, dinh dưỡng, cảm ứng và vận động, sinh trưởng, sinh sản và bài tiết.", "hô hấp, tuần hoàn, bài tiết, cảm ứng và vận động, sinh sản.", "hô hấp, trao đổi chất, sinh sản và sinh trưởng.", "sinh trưởng, sinh sản, cảm ứng và vận động."], answer: 0 },
-                                { question: "Sinh vật nào khác nhóm các sinh vật còn lại?", options: ["Cây dâu tây.", "Con bò.", "Vi khuẩn lactic.", "Cây xương rồng."], answer: 2 },
-                                { question: "Trong các quá trình sống cơ bản, quá trình loại bỏ các chất thải được gọi là", options: ["Bài tiết.", "Hô hấp.", "Tiêu hóa.", "Sinh sản."], answer: 0 },
                                 { question: "Quá trình cơ thể sinh vật lớn lên về kích thước và khối lượng được gọi là", options: ["tiêu hóa.", "bài tiết.", "sinh trưởng.", "hô hấp."], answer: 2 },
-                                { question: "Quá trình cảm nhận và phản ứng với sự thay đổi của môi trường là", options: ["cảm nhận và vận động.", "dinh dưỡng.", "sinh trưởng.", "bài tiết."], answer: 0 },
-                                { question: "Quá trình tiếp nhận và phản ứng lại các kích thích của môi trường do tế bào nào thực hiện?", options: ["Tế bào biểu mô.", "Tế bào thần kinh.", "Tế bào chết.", "Tế bào tóc."], answer: 1 },
-                                { question: "Quá trình lấy oxygen và thải carbon dioxide thông qua hoạt động hít vào thở ra được gọi là quá trình", options: ["Hô hấp.", "Bài tiết.", "Sinh sản.", "Tiêu hóa."], answer: 0 },
-                                { question: "Quan sát hình, em hãy cho biết cơ thể nào là cơ thể đa bào?", options: ["Cây táo, con chó, san hô.", "Tảo silic, cây táo, con chó.", "Cây táo, virus Sars – CoV2, con chó.", "Tảo silic, virus Sars – CoV2, san hô."], answer: 0 },
-                                { question: "Cho các phát biểu về sinh vật đơn bào sau đây:\n(1) Cả cơ thể chỉ cấu tạo gồm 1 tế bào.\n(2) Có thể di chuyển được.\n(3) Có thể là sinh vật nhân thực hoặc sinh vật nhân sơ.\n(4) Luôn sống cùng với nhau để hình thành nên tập đoàn.\nSố phát biểu đúng là", options: ["1.", "2.", "3.", "4."], answer: 2 },
-                                { question: "Quan sát các hình ảnh sau đây. Có mấy cơ thể đa bào", options: ["1.", "2.", "3.", "4."], answer: 1 },
-                                { question: "Quan sát các hình ảnh sau đây: Có mấy cơ thể đơn bào", options: ["1.", "2.", "3.", "4."], answer: 2 },
-                                { question: "Vật nào dưới đây không phải là cơ thể sống?", options: ["Cây dừa.", "Con cá.", "Một hạt đậu đang nảy mầm.", "Một thân cây mục."], answer: 3 },
-                                { question: "Quan sát hình, em hãy cho biết cơ thể nào là cơ thể đa bào?", options: ["Tôm hùm, nấm mốc, trùng roi.", "Tôm hùm, nấm mốc, bươm bướm.", "Nấm mốc, trùng roi, bươm bướm.", "Tôm hùm, bươm bướm."], answer: 3 },
-                                { question: "Các phát biểu về cơ thể đa bào:\n1. Cơ thể đa bào là cơ thể có cấu tạo gồm nhiều tế bào.\n2. Cơ thể đa bào có cấp độ tổ chức cơ thể là mô, cơ quan, hệ cơ quan.\n3. Cơ thể đa bào thường có cấu tạo là tế bào và tế bào nhân thực.\n4. Cơ thể đa bào thường có các tế bào giống nhau về hình dạng, cấu tạo chức năng.\nPhát biểu đúng là", options: ["1 – 2 – 3.", "2 – 3 – 4.", "1 – 2.", "3 – 4."], answer: 0 },
-                                { question: "Quan sát hình sau, cơ thể nào là cơ thể đơn bào?", options: ["Tảo lục, con ốc sên.", "Tảo lục, tảo silic.", "Tảo silic, con giun đất.", "Tảo lục, giun đất."], answer: 1 },
-                                { question: "Quan sát hình, em hãy cho biết cơ thể nào là cơ thể đa bào?", options: ["Vi khuẩn lao, con nghêu, con sứa, rong nho.", "Vi khuẩn bạch hầu, vi khuẩn lao, con nghêu.", "Con nghêu, con sứa, rong nho.", "Vi khuẩn lao, con sứa, con nghêu."], answer: 2 },
                             ]
                         },
                         {
@@ -379,31 +267,42 @@
                              questions: [
                                 { question: "Cấp độ thấp nhất hoạt động độc lập trong cơ thể đa bào là", options: ["hệ cơ quan.", "cơ quan.", "mô.", "tế bào."], answer: 3 },
                                 { question: "Nhóm các tế bào cùng thực hiện một chức năng liên kết với nhau tạo thành", options: ["mô.", "cơ quan.", "hệ cơ quan.", "cơ thể"], answer: 0 },
-                                { question: "Loại mô nào có cả ở thực vật và động vật?", options: ["Mô biểu bì.", "Mô liên kết.", "Mô thần kinh.", "Mô dẫn."], answer: 0 },
                                 { question: "Tập hợp các mô thực hiện cùng một chức năng nhất định tạo thành", options: ["Hệ cơ quan.", "mô.", "cơ quan.", "tế bào."], answer: 2 },
                                 { question: "Các cơ quan ở thực vật là", options: ["rễ, thân, lá, hoa, quả, hạt.", "dạ dày, ruột gan, tim, phổi, mắt, mũi.", "hệ tuần hoàn, hệ hô hấp.", "Hệ rễ và hệ bài tiết."], answer: 0 },
                                 { question: "Hệ tuần hoàn được cấu tạo bởi các cơ quan nào sau đây?", options: ["Tim và máu.", "Tim và hệ mạch.", "Hệ mạch và máu.", "Tim, máu và hệ mạch."], answer: 1 },
-                                { question: "Cơ quan nào sau đây thuộc hệ thần kinh ở người?", options: ["Não.", "Phổi.", "Tim.", "Dạ dày."], answer: 0 },
-                                { question: "Ở người, nếu mũi và miệng bị tổn thương, không thể hít thở thì cơ quan nào sẽ bị ảnh hưởng trực tiếp?", options: ["Tim.", "Phổi.", "Gan.", "Thực quản."], answer: 1 },
                                 { question: "Nhiều cơ quan cùng phối hợp hoạt động để thực hiện một quá trình sống nào đó của cơ thể gọi là", options: ["hệ cơ quan.", "mô.", "cơ quan.", "tế bào."], answer: 0 },
                                 { question: "Hệ cơ quan ở thực vật bao gồm", options: ["hệ rễ và hệ thân.", "hệ thân và hệ lá.", "hệ chồi và hệ rễ.", "hệ cơ và hệ thân."], answer: 2 },
                                 { question: "Đâu là trình từ sắp xếp các cấp tổ chức của cơ thể đa bào theo thứ tự từ nhỏ đến lớn?", options: ["Tế bào - cơ quan - hệ cơ quan - cơ thể - mô.", "Mô - tế bào - hệ cơ quan - cơ quan - cơ thể.", "Tế bào - mô - cơ quan - hệ cơ quan - cơ thể.", "Cơ thể - hệ cơ quan - cơ quan - tế bào – mô."], answer: 2 },
                                 { question: "Con cá vàng là cấp độ tổ chức nào của cơ thể đa bào?", options: ["Tế bào.", "Cơ thể.", "Cơ quan.", "Mô."], answer: 1 },
-                                { question: "Cơ thể đơn bào là cơ thể được cấu tạo từ", options: ["hàng trăm tế bào.", "hàng nghìn tế bào.", "một tế bào.", "một số tế bào."], answer: 2 },
                                 { question: "Đâu không phải tên một cấp độ tổ chức của cơ thể?", options: ["Thành tế bào.", "Mô.", "Tế bào.", "Hệ cơ quan."], answer: 0 },
-                                { question: "Mức độ tổ chức cơ thể liền kề sau tế bào là", options: ["cơ quan.", "mô.", "hệ cơ quan.", "cơ thể."], answer: 1 },
-                                { question: "Hệ rễ của thực vật đóng vai trò gì?", options: ["Tạo quả.", "Hút nước và chất khoáng cho cây.", "Hô hấp và quang hợp.", "Tạo cơ quan sinh sản."], answer: 1 },
-                                { question: "Đâu không phải tên một cơ quan của người?", options: ["Tụy.", "Thận.", "Nơron.", "Gan."], answer: 2 },
-                                { question: "Mô nào dưới đây có ở thực vật.", options: ["Mô phân sinh.", "Mô biểu bì.", "Mô cơ.", "Mô thần kinh."], answer: 0 },
-                                { question: "Mức độ tổ chức cơ thể liền kề cao hơn mô là", options: ["cơ quan.", "cơ thể.", "hệ cơ quan.", "tế bào."], answer: 0 },
-                                { question: "Điền vào chỗ trống: “……….là tập hợp một nhóm tế bào giống nhau về hình dạng và thực hiện một chức năng nhất định”.", options: ["Mô.", "Cơ quan.", "Hệ cơ quan.", "Cơ thể."], answer: 0 },
-                                { question: "Mức độ tổ chức cơ thể thấp hơn liền kề với mức độ hệ cơ quan là", options: ["mô.", "cơ quan.", "hệ cơ quan.", "cơ thể."], answer: 1 },
-                                { question: "Thực vật được chia làm mấy hệ cơ quan?", options: ["2.", "3.", "4.", "5."], answer: 0 },
-                                { question: "Quan sát cây cà rốt, phần phình to là cơ quan nào của cây?", options: ["Rễ.", "Lá.", "Thân.", "Quả."], answer: 0 },
-                                { question: "Quan sát cây su hào, phần phình to là cơ quan gì của cây?", options: ["Rễ.", "Lá.", "Thân.", "Quả."], answer: 2 },
                             ]
                         },
                          {
+                            id: 25,
+                            title: "Bài 25. Hệ thống phân loại sinh vật",
+                            questions: [
+                                { question: "Phân loại sinh học là sự sắp xếp các đối tượng sinh vật có những đặc điểm chung vào từng nhóm", options: ["theo một thứ tự nhất định.", "theo tên khả năng thay đổi màu sắc.", "theo độ khó của di chuyển.", "theo sự phân chia lãnh thổ."], answer: 0 },
+                                { question: "Vì sao cần phải phân loại thế giới sống?", options: ["Để đặt và gọi tên các loài sinh vật khi cần thiết.", "Để xác định số lượng các loài sinh vật trên Trái Đất.", "Để xác định vị trí của các loài sinh vật giúp cho việc tìm ra chúng giữa các sinh vật trở nên dễ dàng hơn.", "Để thấy được sự khác nhau giữa các loài sinh vật."], answer: 2 },
+                                { question: "Các bậc phân loại sinh vật từ thấp đến cao theo trình tự nào sau đây?", options: ["Loài → Chi (giống) → Họ → Bộ → Lớp → Ngành → Giới.", "Chi (giống) → Loài → Họ → Bộ → Lớp → Ngành → Giới.", "Giới → Ngành → Lớp → Bộ → Họ → Chi (giống) → Loài.", "Loài → Chi (giống) → Bộ → Họ → Lớp → Ngành → Giới."], answer: 0 },
+                                { question: "Đâu là bậc phân loại thấp nhất?", options: ["Giống.", "Loài.", "Bộ.", "Họ."], answer: 1 },
+                                { question: "Đâu là bậc phân loại lớn nhất?", options: ["Giới.", "Giống.", "Ngành.", "Họ."], answer: 0 },
+                                { question: "Mỗi loài sinh vật thường có hai cách gọi tên là", options: ["tên góc và tên phụ.", "tên giống và tên loài.", "tên địa phương và tên khoa học.", "tên vùng miền và tên địa phương."], answer: 2 },
+                                { question: "Hệ thống phân loại sinh vật bao gồm các giới nào?", options: ["Động vật, Thực vật, Nấm.", "Nấm, Nguyên sinh, Thực vật, Virus.", "Khởi sinh, Động vật, Thực vật, Nấm, Virus.", "Khởi sinh, Nguyên sinh, Nấm, Thực vật, Động vật."], answer: 3 },
+                                { question: "Cấu tạo tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp là đặc điểm của sinh vật thuộc giới nào sau đây?", options: ["Khởi sinh.", "Nguyên sinh.", "Nấm.", "Thực vật."], answer: 3 },
+                                { question: "Những sinh vật có cấu tạo tế bào nhân thực, cơ thể đa bài, dị dưỡng, có khả năng di chuyển, môi trường sống rất đa dạng thuộc giới nào?", options: ["Động vật.", "Nguyên sinh.", "Nấm.", "Thực vật."], answer: 0 },
+                                { question: "Vi khuẩn lam có cơ thể đơn bào, nhân sơ, có diệp lục và khả năng tự tổng hợp chất hữu cơ. Vi khuẩn lam thuộc giới nào?", options: ["Khởi sinh.", "Nguyên sinh.", "Nấm.", "Thực vật."], answer: 0 },
+                            ]
+                        },
+                        {
+                            id: 26,
+                            title: "Bài 26. Khóa lưỡng phân",
+                            questions: [
+                                { question: "Để phân loại các sinh vật thành từng nhóm dựa trên những đặc điểm giống và khác nhau của sinh vật người ta sử dụng", options: ["kính lúp.", "khóa lưỡng phân.", "trực quan.", "kính hiển vi."], answer: 1 },
+                                { question: "Khi tiến hành xây dựng khóa lưỡng phân để phân loại một nhóm sinh vật cần tuân thủ theo nguyên tắc nào?", options: ["Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có những đặc điểm đối lập nhau.", "Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có cơ quan di chuyển khác nhau.", "Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có môi trường sống khác nhau.", "Từ một tập hợp sinh vật ban đầu tách thành hai nhóm có kiểu dinh dưỡng khác nhau."], answer: 0 },
+                                { question: "Có bao nhiêu bước để xây dựng khoá lưỡng phân?", options: ["4 bước.", "3 bước.", "2 bước.", "5 bước."], answer: 2 },
+                                { question: "Sắp xếp các bước xây dựng khoá lưỡng phân sau theo trình tự thích hợp?\n1. Dựa vào đặc điểm đặc trưng nhất để phân chia sinh vật thành hai nhóm.\n2. Xây dựng khóa lưỡng phân hoàn chỉnh.\n3. Xác định đặc điểm đặc trưng của mỗi sinh vật.\n4. Tiếp tục phân chia các nhóm thành 2 nhóm nhỏ hơn cho đến khi mỗi nhóm chỉ còn 1 sinh vật.", options: ["3 – 1 – 2 – 4.", "3 – 1 – 4 – 2.", "3 – 4 – 1 – 2.", "1 – 3 – 4 – 2."], answer: 1 },
+                                { question: "Đặc điểm đối lập của con chim gõ kiến và con chim đà điểu là?", options: ["Biết bay và không biết bay.", "Có lông vũ và không có lông vũ.", "Có mỏ và không có mỏ.", "Có cánh và không có cánh."], answer: 0 },
+                            ]
                         },
                         {
                             id: 27,
@@ -459,6 +358,8 @@
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
         const nextQuestionBtn = document.getElementById('next-question-btn');
+        const timeLeftDisplay = document.getElementById('time-left');
+        const timerDisplay = document.getElementById('timer-display');
         
         const scoreText = document.getElementById('score-text');
         const resultMessage = document.getElementById('result-message');
@@ -472,6 +373,7 @@
         let score = 0;
         let lastSelectionMode = 'chapter';
         let lastSelectionId = null;
+        let timerInterval = null;
 
         // Functions
         function showView(viewId) {
@@ -558,15 +460,37 @@
             showView('quiz-view');
         }
 
+        function startTimer() {
+            clearInterval(timerInterval);
+            let timeLeft = 15;
+            timeLeftDisplay.textContent = timeLeft;
+            timerDisplay.classList.remove('timer-warning');
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeLeftDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 5) {
+                    timerDisplay.classList.add('timer-warning');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                }
+            }, 1000);
+        }
+
         function renderQuestion() {
             if (currentQuestionIndex >= currentQuizQuestions.length) {
                 calculateAndShowResults();
                 return;
             }
 
+            startTimer(); // Start timer for new question
+
             const question = currentQuizQuestions[currentQuestionIndex];
             progressText.textContent = `Câu ${currentQuestionIndex + 1}/${currentQuizQuestions.length}`;
-            questionText.innerHTML = question.question.replace(/\n/g, '<br>'); // Replace newline with <br>
+            questionText.innerHTML = question.question.replace(/\n/g, '<br>');
             optionsContainer.innerHTML = '';
 
             question.options.forEach((option, index) => {
@@ -586,6 +510,8 @@
         }
         
         function handleAnswerSelection(selectedIndex) {
+            clearInterval(timerInterval); // Stop timer when answered
+
             userAnswers[currentQuestionIndex] = selectedIndex;
             const question = currentQuizQuestions[currentQuestionIndex];
             const correctAnswerIndex = question.answer;
@@ -605,6 +531,7 @@
         }
 
         function calculateAndShowResults() {
+            clearInterval(timerInterval);
             let correctAnswers = 0;
             for (let i = 0; i < currentQuizQuestions.length; i++) {
                 if (userAnswers[i] === currentQuizQuestions[i].answer) {
@@ -627,7 +554,10 @@
         // Event Listeners
         startByChapterBtn.addEventListener('click', () => renderSelectionView('chapter'));
         startByLessonBtn.addEventListener('click', () => renderSelectionView('lesson'));
-        backToHomeBtn.addEventListener('click', () => showView('home-view'));
+        backToHomeBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            showView('home-view');
+        });
         nextQuestionBtn.addEventListener('click', () => {
             currentQuestionIndex++;
             renderQuestion();
@@ -641,9 +571,11 @@
             }
         });
         
-        homeBtn.addEventListener('click', () => showView('home-view'));
+        homeBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            showView('home-view');
+        });
 
     </script>
 </body>
 </html>
-
