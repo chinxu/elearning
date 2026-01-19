@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm KHTN 6 - Chương VII</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f9ff;
+        }
+
+        .option-btn {
+            transition: all 0.2s;
+        }
+        
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .option-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .timer-bar {
+            transition: width 1s linear;
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div id="app" class="w-full max-w-3xl bg-white rounded-2xl shadow-xl overflow-hidden min-h-[600px] flex flex-col relative">
+        
+        <!-- Header Decor -->
+        <div class="h-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 w-full"></div>
+
+        <!-- SCREEN 1: START MENU -->
+        <div id="start-screen" class="p-8 flex flex-col items-center justify-center flex-1 space-y-8 fade-in">
+            <div class="text-center space-y-2">
+                <div class="inline-block p-4 bg-blue-100 rounded-full mb-2">
+                    <i class="fas fa-flask text-5xl text-blue-600"></i>
+                </div>
+                <h1 class="text-4xl font-extrabold text-gray-800">Khoa Học Tự Nhiên 6</h1>
+                <p class="text-gray-500 font-semibold text-xl">Chương VII: Đa dạng thế giới sống</p>
+                <div class="flex items-center justify-center space-x-2 text-sm text-gray-400 mt-2">
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded">Mới</span>
+                    <span>Hiện đáp án ngay</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-xl">
+                <button onclick="showLessonSelection()" class="group relative p-6 bg-white border-2 border-blue-100 rounded-2xl hover:border-blue-500 hover:bg-blue-50 transition-all text-left shadow-sm hover:shadow-lg">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-500 text-white p-4 rounded-xl group-hover:scale-110 transition-transform shadow-md">
+                            <i class="fas fa-list-ul text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-xl">Theo Bài Học</h3>
+                            <p class="text-sm text-gray-500 mt-1">Ôn tập chi tiết từng bài (15 câu/bài)</p>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="startChapterTest()" class="group relative p-6 bg-white border-2 border-purple-100 rounded-2xl hover:border-purple-500 hover:bg-purple-50 transition-all text-left shadow-sm hover:shadow-lg">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-purple-500 text-white p-4 rounded-xl group-hover:scale-110 transition-transform shadow-md">
+                            <i class="fas fa-random text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-xl">Tổng Hợp Chương</h3>
+                            <p class="text-sm text-gray-500 mt-1">20 câu ngẫu nhiên toàn chương</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: LESSON SELECTION -->
+        <div id="lesson-screen" class="hidden p-8 flex-col flex-1 fade-in bg-gray-50">
+            <div class="flex items-center justify-between mb-6">
+                <button onclick="goHome()" class="text-gray-500 hover:text-gray-800 flex items-center font-bold bg-white px-4 py-2 rounded-lg shadow-sm border">
+                    <i class="fas fa-arrow-left mr-2"></i> Quay lại
+                </button>
+                <h2 class="text-2xl font-bold text-gray-800">Chọn Bài Để Ôn</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-2" id="lesson-list">
+                <!-- Lessons will be injected here -->
+            </div>
+        </div>
+
+        <!-- SCREEN 3: QUIZ INTERFACE -->
+        <div id="quiz-screen" class="hidden flex-col flex-1 h-full fade-in">
+            <!-- Progress & Timer -->
+            <div class="bg-white px-6 py-4 border-b border-gray-100 flex justify-between items-center shadow-sm z-10">
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm font-bold px-3 py-1 bg-blue-100 text-blue-700 rounded-full border border-blue-200">
+                        Câu <span id="current-q-num">1</span>/<span id="total-q-num">20</span>
+                    </span>
+                    <span id="topic-badge" class="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded hidden sm:inline-block"></span>
+                </div>
+                <div class="flex items-center space-x-2 text-red-500 font-bold bg-red-50 px-3 py-1 rounded-lg border border-red-100">
+                    <i class="fas fa-stopwatch animate-pulse"></i>
+                    <span id="timer-display" class="w-8 text-center">10</span>
+                </div>
+            </div>
+            
+            <!-- Timer Bar -->
+            <div class="w-full h-1.5 bg-gray-200">
+                <div id="timer-bar" class="h-full bg-blue-500 w-full"></div>
+            </div>
+
+            <!-- Question Area -->
+            <div class="flex-1 p-6 md:p-10 flex flex-col justify-center overflow-y-auto bg-gray-50">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
+                    <h2 id="question-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed">
+                        <!-- Question goes here -->
+                    </h2>
+                </div>
+
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Options go here -->
+                </div>
+
+                <!-- NEXT BUTTON CONTAINER -->
+                <div id="next-btn-container" class="hidden mt-6 flex justify-center pb-4 fade-in">
+                    <button id="next-btn" onclick="nextQuestion()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 transition-all transform hover:scale-105 flex items-center">
+                        Câu tiếp theo <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 4: RESULTS -->
+        <div id="result-screen" class="hidden flex-col flex-1 p-8 text-center fade-in overflow-y-auto bg-gray-50">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
+                <div id="score-icon" class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-green-100 text-green-500 text-5xl mb-4 shadow-inner">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800">Kết Quả</h2>
+                <p class="text-gray-500 mt-2">Bạn trả lời đúng <span id="final-score" class="font-bold text-green-600 text-2xl"></span> câu.</p>
+                <p id="score-message" class="text-sm text-gray-400 mt-1"></p>
+            </div>
+
+            <div class="text-left mb-4">
+                <h3 class="font-bold text-gray-700 ml-1 mb-2">Chi tiết đáp án:</h3>
+            </div>
+
+            <div class="space-y-4 w-full mx-auto mb-8 text-left" id="review-list">
+                <!-- Review items injected here -->
+            </div>
+
+            <div class="mt-auto pt-4 flex justify-center space-x-4 sticky bottom-0 bg-gray-50 pb-2">
+                <button onclick="goHome()" class="px-6 py-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold rounded-xl transition-colors shadow-sm">
+                    <i class="fas fa-home mr-2"></i> Menu
+                </button>
+                <button onclick="retryQuiz()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 transition-colors">
+                    <i class="fas fa-redo mr-2"></i> Làm lại
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // --- UPDATED DATA SOURCE (>100 questions) ---
+    const questionBank = [
+        // --- 1. PHÂN LOẠI THẾ GIỚI SỐNG (15 câu) ---
+        { topic: "Phân loại thế giới sống", question: "Thế giới sống được phân loại nhằm mục đích chính là gì?", options: ["Gọi đúng tên và xác định vị trí của sinh vật", "Tìm kiếm khoáng sản", "Xác định tuổi thọ sinh vật", "Thay đổi môi trường sống"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Thứ tự các bậc phân loại từ nhỏ đến lớn là:", options: ["Loài -> Chi -> Họ -> Bộ -> Lớp -> Ngành -> Giới", "Giới -> Ngành -> Lớp -> Bộ -> Họ -> Chi -> Loài", "Loài -> Họ -> Chi -> Bộ -> Lớp -> Ngành -> Giới", "Chi -> Loài -> Họ -> Bộ -> Lớp -> Ngành -> Giới"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Trong tên khoa học của loài (ví dụ: Homo sapiens), phần đầu tiên cho biết điều gì?", options: ["Tên Chi (Giống)", "Tên Loài", "Tên Họ", "Tên người tìm ra"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Đơn vị phân loại nhỏ nhất trong thế giới sống là gì?", options: ["Loài", "Chi", "Bộ", "Giới"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Hệ thống phân loại 5 giới bao gồm:", options: ["Khởi sinh, Nguyên sinh, Nấm, Thực vật, Động vật", "Virus, Vi khuẩn, Nấm, Thực vật, Động vật", "Vi khuẩn, Nấm, Tảo, Thực vật, Động vật", "Nguyên sinh, Nấm, Thực vật, Động vật, Con người"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Người sáng lập ra cách đặt tên khoa học cho sinh vật là ai?", options: ["Carl Linnaeus", "Charles Darwin", "Louis Pasteur", "Robert Hooke"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Bậc phân loại lớn nhất trong thế giới sống là gì?", options: ["Giới", "Ngành", "Lớp", "Họ"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Tên khoa học của sinh vật thường được viết bằng tiếng gì?", options: ["Tiếng Latin", "Tiếng Anh", "Tiếng Hy Lạp", "Tiếng Việt"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Sinh vật nhân sơ, cơ thể đơn bào thuộc giới nào?", options: ["Giới Khởi sinh", "Giới Nguyên sinh", "Giới Nấm", "Giới Động vật"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Đặc điểm nào KHÔNG dùng để phân loại 5 giới?", options: ["Màu sắc cơ thể", "Loại tế bào (nhân sơ/nhân thực)", "Mức độ tổ chức cơ thể", "Kiểu dinh dưỡng"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Giới Thực vật có đặc điểm dinh dưỡng chủ yếu là gì?", options: ["Tự dưỡng (Quang hợp)", "Dị dưỡng", "Hoại sinh", "Kí sinh"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Giới Nấm gồm các sinh vật có đặc điểm gì?", options: ["Nhân thực, dị dưỡng, thành tế bào kitin", "Nhân sơ, tự dưỡng", "Nhân thực, có khả năng di chuyển", "Nhân sơ, sống ở môi trường cực đoan"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Khóa lưỡng phân là công cụ dùng để làm gì?", options: ["Phân loại sinh vật dựa trên các đặc điểm đối lập", "Đo kích thước sinh vật", "Xác định tuổi của sinh vật", "Quan sát tế bào sinh vật"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Trong tên khoa học 'Felis catus' (Mèo nhà), chữ 'catus' chỉ gì?", options: ["Tên loài (tính từ mô tả)", "Tên chi", "Tên họ", "Tên tác giả"], answer: 0 },
+        { topic: "Phân loại thế giới sống", question: "Con người thuộc giới nào trong hệ thống 5 giới?", options: ["Giới Động vật", "Giới Khởi sinh", "Giới Nguyên sinh", "Giới Nấm"], answer: 0 },
+
+        // --- 2. VIRUS (15 câu) ---
+        { topic: "Virus", question: "Vật chất di truyền của Virus là gì?", options: ["DNA hoặc RNA", "Chỉ có DNA", "Chỉ có RNA", "Protein"], answer: 0 },
+        { topic: "Virus", question: "Tại sao Virus bắt buộc phải sống kí sinh nội bào?", options: ["Vì chưa có cấu tạo tế bào hoàn chỉnh", "Vì kích thước quá nhỏ", "Vì không có nhân", "Vì chúng thích thế"], answer: 0 },
+        { topic: "Virus", question: "Bệnh nào sau đây do Virus gây ra?", options: ["Sốt xuất huyết", "Lao phổi", "Kiết lị", "Hắc lào"], answer: 0 },
+        { topic: "Virus", question: "Thuốc kháng sinh (Antibiotics) có tác dụng diệt virus không?", options: ["Không, chỉ diệt vi khuẩn", "Có, diệt mọi mầm bệnh", "Có, nhưng yếu", "Tùy loại virus"], answer: 0 },
+        { topic: "Virus", question: "Hình dạng của Virus Corona là gì?", options: ["Hình cầu có gai", "Hình que", "Hình xoắn", "Hình nòng nọc"], answer: 0 },
+        { topic: "Virus", question: "Cấu tạo cơ bản của virus gồm những thành phần nào?", options: ["Vỏ protein và lõi vật chất di truyền", "Màng tế bào và nhân", "Vách tế bào và tế bào chất", "Nhân và roi"], answer: 0 },
+        { topic: "Virus", question: "Virus được coi là gì?", options: ["Dạng sống phi tế bào", "Sinh vật nhân sơ", "Sinh vật nhân thực", "Một loại vi khuẩn nhỏ"], answer: 0 },
+        { topic: "Virus", question: "Bệnh khảm thuốc lá do tác nhân nào gây ra?", options: ["Virus", "Vi khuẩn", "Nấm", "Sâu bệnh"], answer: 0 },
+        { topic: "Virus", question: "Biện pháp hiệu quả nhất để phòng ngừa các bệnh do virus (như sởi, bại liệt) là gì?", options: ["Tiêm vaccine", "Uống kháng sinh", "Ăn nhiều đường", "Tắm nước nóng"], answer: 0 },
+        { topic: "Virus", question: "Virus HIV tấn công vào hệ cơ quan nào của người?", options: ["Hệ miễn dịch", "Hệ tiêu hóa", "Hệ hô hấp", "Hệ thần kinh"], answer: 0 },
+        { topic: "Virus", question: "Virus Dại lây qua đường nào?", options: ["Qua vết cắn của động vật bị dại", "Qua đường hô hấp", "Qua đường ăn uống", "Qua muỗi đốt"], answer: 0 },
+        { topic: "Virus", question: "Kích thước của virus thường được đo bằng đơn vị nào?", options: ["Nanomet (nm)", "Milimet (mm)", "Centimet (cm)", "Met (m)"], answer: 0 },
+        { topic: "Virus", question: "Một lợi ích của virus trong thực tiễn là gì?", options: ["Sản xuất thuốc trừ sâu sinh học", "Làm sạch nước", "Làm thức ăn cho người", "Sản xuất đồ gỗ"], answer: 0 },
+        { topic: "Virus", question: "Virus nhân lên bằng cách nào?", options: ["Sử dụng bộ máy của tế bào vật chủ", "Tự phân đôi", "Nảy chồi", "Đẻ trứng"], answer: 0 },
+        { topic: "Virus", question: "Bệnh cúm mùa do tác nhân nào gây ra?", options: ["Virus cúm", "Vi khuẩn cúm", "Nấm mốc", "Khói bụi"], answer: 0 },
+
+        // --- 3. VI KHUẨN (15 câu) ---
+        { topic: "Vi khuẩn", question: "Vi khuẩn sinh sản chủ yếu bằng hình thức nào?", options: ["Phân đôi", "Nảy chồi", "Bào tử", "Hạt"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Vi khuẩn có cấu tạo tế bào thuộc nhóm nào?", options: ["Nhân sơ (Prokaryote)", "Nhân thực (Eukaryote)", "Không có tế bào", "Đa bào phức tạp"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Để quan sát vi khuẩn, ta cần sử dụng dụng cụ nào?", options: ["Kính hiển vi quang học", "Kính lúp", "Mắt thường", "Kính thiên văn"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Lợi ích nào sau đây KHÔNG phải của vi khuẩn?", options: ["Gây bệnh truyền nhiễm", "Làm sữa chua", "Phân hủy xác sinh vật", "Cố định đạm trong đất"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Bệnh nào sau đây do vi khuẩn gây ra?", options: ["Bệnh lao", "Covid-19", "Sốt rét", "Thủy đậu"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Vi khuẩn E. coli thường sống ở đâu?", options: ["Trong ruột người và động vật", "Trên lá cây", "Trong không khí", "Trong đá"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Hình dạng nào sau đây KHÔNG phải là hình dạng phổ biến của vi khuẩn?", options: ["Hình ngôi sao", "Hình cầu", "Hình que", "Hình xoắn"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Tại sao ăn sữa chua lại tốt cho tiêu hóa?", options: ["Chứa vi khuẩn lactic có lợi", "Chứa nhiều đường", "Chứa chất kháng sinh", "Chứa virus có lợi"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Thành phần nào giúp vi khuẩn di chuyển?", options: ["Lông và roi", "Chân giả", "Vây", "Cánh"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Cách bảo quản thực phẩm nào dựa trên nguyên tắc ức chế vi khuẩn?", options: ["Tất cả các phương án trên", "Phơi khô", "Ướp muối/đường", "Đông lạnh"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Vi khuẩn cố định đạm sống cộng sinh trong nốt sần rễ cây họ Đậu có vai trò gì?", options: ["Chuyển hóa nitơ không khí thành đạm cho cây", "Hút nước cho cây", "Bảo vệ rễ cây khỏi sâu", "Làm đất cứng hơn"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Bệnh kiết lị do tác nhân nào? (Lưu ý phân biệt với Trùng kiết lị)", options: ["Trực khuẩn lị (Shigella)", "Trùng roi", "Nấm men", "Virus"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Thuốc kháng sinh được dùng để điều trị bệnh do tác nhân nào?", options: ["Vi khuẩn", "Virus", "Nấm", "Giun sán"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Dấu hiệu thực phẩm bị nhiễm khuẩn hỏng là gì?", options: ["Có mùi thiu, nhớt, đổi màu", "Thực phẩm tươi hơn", "Thực phẩm khô lại", "Thực phẩm ngọt hơn"], answer: 0 },
+        { topic: "Vi khuẩn", question: "Môi trường sống của vi khuẩn là gì?", options: ["Đất, nước, không khí và cơ thể sinh vật", "Chỉ trong đất", "Chỉ trong nước bẩn", "Chỉ trong cơ thể người"], answer: 0 },
+
+        // --- 4. NGUYÊN SINH VẬT (15 câu) ---
+        { topic: "Nguyên sinh vật", question: "Trùng roi xanh di chuyển bằng bộ phận nào?", options: ["Roi bơi", "Lông bơi", "Chân giả", "Vây"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Sinh vật nào sau đây là nguyên nhân gây bệnh sốt rét?", options: ["Trùng sốt rét", "Muỗi Anopheles", "Vi khuẩn sốt rét", "Virus sốt rét"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Đặc điểm chung của đa số nguyên sinh vật là gì?", options: ["Cơ thể đơn bào, nhân thực", "Cơ thể đa bào", "Chưa có nhân", "Sống trên cạn"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Tảo lục đơn bào thuộc nhóm nào?", options: ["Nguyên sinh vật", "Thực vật", "Nấm", "Vi khuẩn"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Trùng biến hình bắt mồi bằng cách nào?", options: ["Tạo chân giả bao lấy mồi", "Dùng miệng hút", "Dùng roi quấn", "Tiết chất độc"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Trùng giày di chuyển bằng gì?", options: ["Lông bơi", "Roi", "Chân giả", "Vây"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Vật chủ trung gian truyền bệnh sốt rét là gì?", options: ["Muỗi Anopheles", "Muỗi vằn", "Ruồi", "Chuột"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Bệnh kiết lị do tác nhân nào gây ra?", options: ["Trùng kiết lị (Amip)", "Trùng roi", "Trùng giày", "Tảo"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Tảo có vai trò quan trọng gì trong môi trường nước?", options: ["Cung cấp oxy và thức ăn cho động vật nước", "Làm bẩn nước", "Gây cạn kiệt nước", "Ăn hết cá con"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Trùng roi xanh có khả năng đặc biệt nào giống thực vật?", options: ["Quang hợp (khi có ánh sáng)", "Ra hoa", "Kết quả", "Hút nước qua rễ"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Để phòng tránh bệnh sốt rét, ta nên làm gì?", options: ["Ngủ màn, diệt muỗi, phát quang bụi rậm", "Ăn chín uống sôi", "Rửa tay trước khi ăn", "Đeo khẩu trang"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Hiện tượng 'thủy triều đỏ' (tảo nở hoa) gây hại gì?", options: ["Làm chết cá và sinh vật biển do thiếu oxy/độc tố", "Làm nước biển đẹp hơn", "Làm tăng lượng cá", "Giúp tàu bè đi lại dễ hơn"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Nguyên sinh vật nào có hình dạng giống chiếc giày?", options: ["Trùng giày", "Trùng roi", "Trùng biến hình", "Tảo silic"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Thức ăn của trùng biến hình là gì?", options: ["Vi khuẩn, vụn hữu cơ, tảo nhỏ", "Cá con", "Rong biển lớn", "Muỗi"], answer: 0 },
+        { topic: "Nguyên sinh vật", question: "Tại sao nguyên sinh vật được gọi là sinh vật nhân thực?", options: ["Vì tế bào đã có nhân hoàn chỉnh", "Vì chúng rất lớn", "Vì chúng giống thực vật", "Vì chúng sống lâu"], answer: 0 },
+
+        // --- 5. NẤM (15 câu) ---
+        { topic: "Nấm", question: "Nấm men thường được ứng dụng để làm gì?", options: ["Làm bánh mì, bia rượu", "Làm thuốc trừ sâu", "Làm đồ mỹ nghệ", "Làm sạch nước"], answer: 0 },
+        { topic: "Nấm", question: "Bệnh nào sau đây ở người do nấm gây ra?", options: ["Hắc lào, lang ben", "Cúm", "Tả", "Sởi"], answer: 0 },
+        { topic: "Nấm", question: "Nấm KHÔNG có đặc điểm nào sau đây?", options: ["Có chất diệp lục để quang hợp", "Thành tế bào bằng kitin", "Sống dị dưỡng", "Nhân thực"], answer: 0 },
+        { topic: "Nấm", question: "Đâu là một loại nấm ăn được?", options: ["Nấm mộc nhĩ", "Nấm độc đỏ", "Nấm mốc đen", "Nấm men"], answer: 0 },
+        { topic: "Nấm", question: "Cơ quan sinh sản của nấm rơm là gì?", options: ["Bào tử", "Hạt", "Củ", "Hoa"], answer: 0 },
+        { topic: "Nấm", question: "Điều kiện thuận lợi nhất để nấm phát triển là gì?", options: ["Nơi ấm và ẩm ướt", "Nơi khô và lạnh", "Nơi có nhiều ánh sáng mặt trời", "Trong nước sôi"], answer: 0 },
+        { topic: "Nấm", question: "Bộ phận nào của nấm rơm mà ta thường ăn?", options: ["Thể quả", "Sợi nấm", "Bào tử", "Rễ nấm"], answer: 0 },
+        { topic: "Nấm", question: "Thuốc kháng sinh Penicillin được chiết xuất từ đâu?", options: ["Nấm mốc Penicillium", "Vi khuẩn E. coli", "Virus", "Cây thuốc phiện"], answer: 0 },
+        { topic: "Nấm", question: "Làm thế nào để nhận biết nấm độc trong tự nhiên?", options: ["Thường có màu sắc sặc sỡ, có vòng cổ, bao gốc", "Có màu nâu xám", "Mọc ở rơm rạ", "Có mùi thơm"], answer: 0 },
+        { topic: "Nấm", question: "Nấm mốc tương là loại nấm có lợi hay hại?", options: ["Có lợi (dùng làm tương)", "Có hại", "Không lợi cũng không hại", "Rất độc"], answer: 0 },
+        { topic: "Nấm", question: "Thành tế bào của nấm được cấu tạo chủ yếu từ chất gì?", options: ["Chitin (Kitin)", "Cellulose", "Peptidoglycan", "Silicon"], answer: 0 },
+        { topic: "Nấm", question: "Nấm đảm (như nấm rơm) sinh sản bằng bào tử nằm ở đâu?", options: ["Trên các phiến dưới mũ nấm", "Trong thân nấm", "Dưới đất", "Trên đỉnh mũ"], answer: 0 },
+        { topic: "Nấm", question: "Dấu hiệu nhận biết thực phẩm bị nhiễm nấm mốc là gì?", options: ["Xuất hiện các đốm trắng, đen, xanh và mùi hôi", "Thực phẩm tươi hơn", "Thực phẩm cứng lại", "Thực phẩm đổi sang màu đỏ tươi"], answer: 0 },
+        { topic: "Nấm", question: "Tại sao sau mưa nấm thường mọc nhiều?", options: ["Vì độ ẩm cao thuận lợi cho nấm phát triển", "Vì nấm thích uống nước", "Vì đất mềm ra", "Vì nấm sợ nắng"], answer: 0 },
+        { topic: "Nấm", question: "Đại diện nào sau đây là nấm đơn bào?", options: ["Nấm men", "Nấm rơm", "Nấm linh chi", "Nấm mốc"], answer: 0 },
+
+        // --- 6. THỰC VẬT (15 câu) ---
+        { topic: "Thực vật", question: "Nhóm thực vật nào chưa có mạch dẫn?", options: ["Rêu", "Dương xỉ", "Hạt trần", "Hạt kín"], answer: 0 },
+        { topic: "Thực vật", question: "Đặc điểm nổi bật của thực vật Hạt kín là gì?", options: ["Có hoa và quả chứa hạt", "Hạt nằm lộ trên lá noãn", "Chưa có rễ thật", "Sinh sản bằng bào tử"], answer: 0 },
+        { topic: "Thực vật", question: "Cây thông thuộc nhóm thực vật nào?", options: ["Hạt trần", "Hạt kín", "Dương xỉ", "Rêu"], answer: 0 },
+        { topic: "Thực vật", question: "Dương xỉ sinh sản bằng gì?", options: ["Bào tử", "Hạt", "Nảy chồi", "Phân đôi"], answer: 0 },
+        { topic: "Thực vật", question: "Vai trò quan trọng nhất của thực vật đối với khí quyển là gì?", options: ["Cung cấp Oxygen và hấp thụ CO2", "Giữ đất", "Cung cấp gỗ", "Làm cảnh"], answer: 0 },
+        { topic: "Thực vật", question: "Rêu thường sống ở môi trường nào?", options: ["Nơi ẩm ướt, ít ánh sáng", "Nơi khô hạn", "Dưới đáy biển sâu", "Trên ngọn cây cao"], answer: 0 },
+        { topic: "Thực vật", question: "Cơ quan sinh sản của cây Hạt trần là gì?", options: ["Nón (nón đực, nón cái)", "Hoa", "Quả", "Bào tử nang"], answer: 0 },
+        { topic: "Thực vật", question: "Trong các cây sau, cây nào thuộc nhóm Hạt kín?", options: ["Cây lúa", "Cây thông", "Cây rêu", "Cây dương xỉ"], answer: 0 },
+        { topic: "Thực vật", question: "Đặc điểm của rễ cây Dương xỉ là gì?", options: ["Rễ thật", "Rễ giả", "Chưa có rễ", "Rễ cọc khổng lồ"], answer: 0 },
+        { topic: "Thực vật", question: "Tại sao nói rừng là 'lá phổi xanh' của Trái Đất?", options: ["Vì quang hợp nhả khí Oxygen giúp điều hòa không khí", "Vì rừng có màu xanh", "Vì rừng có hình lá phổi", "Vì rừng chứa nhiều nước"], answer: 0 },
+        { topic: "Thực vật", question: "Cây Hai lá mầm có đặc điểm rễ và gân lá thường là gì?", options: ["Rễ cọc, gân lá hình mạng", "Rễ chùm, gân lá song song", "Rễ giả, không có gân", "Rễ cọc, gân lá song song"], answer: 0 },
+        { topic: "Thực vật", question: "Cây Một lá mầm (như lúa, ngô) thường có rễ gì?", options: ["Rễ chùm", "Rễ cọc", "Rễ giả", "Rễ khí sinh"], answer: 0 },
+        { topic: "Thực vật", question: "Ổ bào tử của Dương xỉ thường nằm ở đâu?", options: ["Mặt dưới của lá", "Ngọn cây", "Dưới rễ", "Trong thân"], answer: 0 },
+        { topic: "Thực vật", question: "Loài thực vật nào được coi là 'nhà vô địch' về khả năng giữ nước trong đất?", options: ["Rêu (do mọc dày đặc)", "Thông", "Lúa", "Bèo"], answer: 0 },
+        { topic: "Thực vật", question: "Cây hạt trần chưa có bộ phận nào sau đây?", options: ["Hoa và quả", "Hạt", "Rễ", "Thân gỗ"], answer: 0 },
+
+        // --- 7. ĐỘNG VẬT (16 câu) ---
+        { topic: "Động vật", question: "Nhóm động vật nào có số lượng loài lớn nhất?", options: ["Chân khớp", "Thân mềm", "Động vật có xương sống", "Ruột khoang"], answer: 0 },
+        { topic: "Động vật", question: "Cá heo thuộc lớp động vật nào?", options: ["Thú (Động vật có vú)", "Cá", "Lưỡng cư", "Bò sát"], answer: 0 },
+        { topic: "Động vật", question: "Đặc điểm chung của lớp Chim là gì?", options: ["Mình có lông vũ bao phủ, chi trước biến đổi thành cánh", "Đẻ con và nuôi con bằng sữa", "Hô hấp bằng mang", "Da trần ẩm ướt"], answer: 0 },
+        { topic: "Động vật", question: "Con sứa thuộc nhóm động vật nào?", options: ["Ruột khoang", "Thân mềm", "Giun", "Chân khớp"], answer: 0 },
+        { topic: "Động vật", question: "Loài nào sau đây là động vật biến nhiệt?", options: ["Ếch đồng", "Hổ", "Chim bồ câu", "Thỏ"], answer: 0 },
+        { topic: "Động vật", question: "Đặc điểm cơ bản nhất để phân biệt động vật có xương sống và không xương sống là gì?", options: ["Có hay không có xương cột sống", "Kích thước cơ thể", "Môi trường sống", "Cách di chuyển"], answer: 0 },
+        { topic: "Động vật", question: "Lớp thú (Động vật có vú) có đặc điểm sinh sản nổi bật nào?", options: ["Đẻ con và nuôi con bằng sữa mẹ", "Đẻ trứng", "Đẻ trứng thai", "Phân đôi"], answer: 0 },
+        { topic: "Động vật", question: "Cá hô hấp bằng cơ quan nào?", options: ["Mang", "Phổi", "Da", "Ống khí"], answer: 0 },
+        { topic: "Động vật", question: "Động vật nào sau đây thuộc ngành Thân mềm?", options: ["Mực, Ốc sên, Trai", "Tôm, Cua", "Sứa, San hô", "Giun đất"], answer: 0 },
+        { topic: "Động vật", question: "Lớp Lưỡng cư (như Ếch) hô hấp bằng gì?", options: ["Da và phổi", "Chỉ bằng phổi", "Chỉ bằng da", "Bằng mang"], answer: 0 },
+        { topic: "Động vật", question: "Cá sấu thuộc lớp động vật nào?", options: ["Bò sát", "Lưỡng cư", "Cá", "Thú"], answer: 0 },
+        { topic: "Động vật", question: "Chân khớp bao gồm các lớp nào?", options: ["Giáp xác (tôm, cua), Hình nhện, Sâu bọ", "Thân mềm, Giun", "Cá, Chim, Thú", "Sứa, San hô"], answer: 0 },
+        { topic: "Động vật", question: "Chim cánh cụt có thuộc lớp Chim không?", options: ["Có, nhưng không biết bay", "Không, thuộc lớp Thú", "Không, thuộc lớp Cá", "Không, thuộc lớp Lưỡng cư"], answer: 0 },
+        { topic: "Động vật", question: "Dơi thuộc lớp động vật nào?", options: ["Thú (Động vật có vú)", "Chim", "Bò sát", "Chân khớp"], answer: 0 },
+        { topic: "Động vật", question: "Đặc điểm da của bò sát là gì?", options: ["Da khô, có vảy sừng", "Da ẩm ướt, trần", "Da có lông vũ", "Da có lông mao"], answer: 0 },
+        { topic: "Động vật", question: "Giun đất có vai trò gì trong nông nghiệp?", options: ["Làm tơi xốp đất", "Ăn rễ cây", "Làm hại hoa màu", "Gây bệnh cho cây"], answer: 0 }
+    ];
+
+    // --- APP STATE ---
+    let currentQuiz = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let userAnswers = [];
+    let timerInterval;
+    let timeLeft = 10;
+    const CHAPTER_TEST_LIMIT = 20;
+
+    // --- DOM ELEMENTS ---
+    const app = document.getElementById('app');
+    const startScreen = document.getElementById('start-screen');
+    const lessonScreen = document.getElementById('lesson-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    
+    // --- FUNCTIONS ---
+
+    function goHome() {
+        stopTimer();
+        hideAllScreens();
+        startScreen.classList.remove('hidden');
+        startScreen.classList.add('flex');
+    }
+
+    function hideAllScreens() {
+        startScreen.classList.add('hidden');
+        startScreen.classList.remove('flex');
+        lessonScreen.classList.add('hidden');
+        lessonScreen.classList.remove('flex');
+        quizScreen.classList.add('hidden');
+        quizScreen.classList.remove('flex');
+        resultScreen.classList.add('hidden');
+        resultScreen.classList.remove('flex');
+    }
+
+    // MODE: Lesson Selection
+    function showLessonSelection() {
+        hideAllScreens();
+        lessonScreen.classList.remove('hidden');
+        lessonScreen.classList.add('flex');
+        
+        // Get unique topics
+        const topics = [...new Set(questionBank.map(q => q.topic))];
+        const listContainer = document.getElementById('lesson-list');
+        listContainer.innerHTML = '';
+
+        topics.forEach((topic, idx) => {
+            const btn = document.createElement('button');
+            const qCount = questionBank.filter(q => q.topic === topic).length;
+            
+            // Generate some colors for variety
+            const colors = ['blue', 'green', 'purple', 'orange', 'teal', 'pink', 'indigo'];
+            const color = colors[idx % colors.length];
+
+            btn.className = `p-5 bg-white border border-gray-100 rounded-xl hover:border-${color}-400 hover:shadow-md transition-all text-left flex justify-between items-center group relative overflow-hidden`;
+            
+            btn.innerHTML = `
+                <div class="z-10 flex items-center w-full justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-${color}-100 text-${color}-600 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm">
+                            ${idx + 1}
+                        </div>
+                        <span class="font-bold text-gray-700 text-lg group-hover:text-${color}-700">${topic}</span>
+                    </div>
+                    <span class="text-xs font-bold px-3 py-1 bg-gray-100 rounded-full text-gray-500 group-hover:bg-${color}-100 group-hover:text-${color}-700 transition-colors">${qCount} câu</span>
+                </div>
+                <div class="absolute inset-0 bg-${color}-50 opacity-0 group-hover:opacity-100 transition-opacity z-0"></div>
+            `;
+            btn.onclick = () => startLessonTest(topic);
+            listContainer.appendChild(btn);
+        });
+    }
+
+    // START QUIZ LOGIC
+    function startLessonTest(topic) {
+        // Filter questions by topic
+        let questions = questionBank.filter(q => q.topic === topic);
+        // Shuffle them
+        questions = shuffleArray(questions);
+        
+        // Setup quiz
+        initQuiz(questions);
+    }
+
+    function startChapterTest() {
+        // Get all questions, shuffle, take limit
+        let questions = [...questionBank];
+        questions = shuffleArray(questions);
+        if (questions.length > CHAPTER_TEST_LIMIT) {
+            questions = questions.slice(0, CHAPTER_TEST_LIMIT);
+        }
+        initQuiz(questions);
+    }
+
+    function initQuiz(questions) {
+        currentQuiz = questions;
+        currentQuestionIndex = 0;
+        score = 0;
+        userAnswers = [];
+        
+        hideAllScreens();
+        quizScreen.classList.remove('hidden');
+        quizScreen.classList.add('flex');
+        
+        document.getElementById('total-q-num').innerText = currentQuiz.length;
+        
+        renderQuestion();
+    }
+
+    // RENDER QUESTION
+    function renderQuestion() {
+        if (currentQuestionIndex >= currentQuiz.length) {
+            endQuiz();
+            return;
+        }
+
+        const qData = currentQuiz[currentQuestionIndex];
+        
+        // Update UI info
+        document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
+        document.getElementById('topic-badge').innerText = qData.topic;
+        document.getElementById('question-text').innerText = qData.question;
+        
+        // Reset and hide Next button
+        const nextBtnContainer = document.getElementById('next-btn-container');
+        nextBtnContainer.classList.add('hidden');
+        
+        // Options
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        
+        // Create buttons
+        qData.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = "option-btn w-full p-4 text-left bg-white border-2 border-gray-100 rounded-xl text-gray-700 font-semibold hover:border-blue-400 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 relative overflow-hidden group";
+            
+            // Add A, B, C, D labels
+            const label = String.fromCharCode(65 + index);
+            btn.innerHTML = `
+                <div class="flex items-center z-10 relative">
+                    <span class="inline-block w-8 h-8 bg-gray-100 rounded-full text-center leading-8 mr-3 text-gray-500 font-bold group-hover:bg-blue-200 group-hover:text-blue-700 transition-colors">${label}</span> 
+                    <span>${opt}</span>
+                </div>
+            `;
+            
+            btn.onclick = () => handleAnswer(index);
+            optionsContainer.appendChild(btn);
+        });
+
+        // Start Timer
+        resetTimer();
+    }
+    
+    // NEXT QUESTION
+    function nextQuestion() {
+        currentQuestionIndex++;
+        renderQuestion();
+    }
+
+    // TIMER LOGIC
+    function resetTimer() {
+        stopTimer();
+        timeLeft = 10;
+        const timerDisplay = document.getElementById('timer-display');
+        const timerBar = document.getElementById('timer-bar');
+        
+        timerDisplay.innerText = "10";
+        timerDisplay.classList.remove('text-red-600');
+        timerBar.style.width = "100%";
+        timerBar.className = "h-full bg-blue-500 w-full transition-all duration-1000 ease-linear"; 
+        
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timerDisplay.innerText = timeLeft;
+            
+            // Update bar width
+            const percentage = (timeLeft / 10) * 100;
+            timerBar.style.width = percentage + "%";
+            
+            // Change color if low
+            if (timeLeft <= 3) {
+                timerBar.className = "h-full bg-red-500 w-full transition-all duration-1000 ease-linear";
+                timerDisplay.classList.add('text-red-600', 'scale-110');
+            } else if (timeLeft <= 6) {
+                timerBar.className = "h-full bg-yellow-400 w-full transition-all duration-1000 ease-linear";
+            }
+
+            if (timeLeft < 0) { // Check < 0 to ensure 0 is shown briefly
+                stopTimer();
+                handleAnswer(-1); // -1 means Time Out
+            }
+        }, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
+
+    // HANDLE ANSWER
+    function handleAnswer(selectedIndex) {
+        stopTimer();
+        
+        const qData = currentQuiz[currentQuestionIndex];
+        const isCorrect = selectedIndex === qData.answer;
+        
+        if (selectedIndex !== -1 && isCorrect) score++;
+
+        // Save record
+        userAnswers.push({
+            question: qData.question,
+            options: qData.options,
+            correct: qData.answer,
+            selected: selectedIndex,
+            isCorrect: (selectedIndex !== -1 && isCorrect)
+        });
+
+        // --- UI FEEDBACK UPDATES ---
+        const optionsContainer = document.getElementById('options-container');
+        const buttons = optionsContainer.getElementsByTagName('button');
+
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true; // Disable all clicks
+            buttons[i].classList.remove('hover:bg-blue-50', 'hover:border-blue-400'); // Remove hover
+            buttons[i].classList.add('opacity-50'); // Dim all first
+
+            // Highlight Correct Answer (Always)
+            if (i === qData.answer) {
+                buttons[i].classList.remove('opacity-50', 'bg-white', 'border-gray-100');
+                buttons[i].classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                // Add Check Icon
+                const innerDiv = buttons[i].querySelector('div');
+                innerDiv.innerHTML += '<i class="fas fa-check-circle ml-auto text-green-600 text-xl"></i>';
+            }
+
+            // Highlight Wrong Selected (If any)
+            if (selectedIndex !== -1 && i === selectedIndex && !isCorrect) {
+                buttons[i].classList.remove('opacity-50', 'bg-white', 'border-gray-100');
+                buttons[i].classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                // Add X Icon
+                const innerDiv = buttons[i].querySelector('div');
+                innerDiv.innerHTML += '<i class="fas fa-times-circle ml-auto text-red-600 text-xl"></i>';
+            }
+            
+            // Keep selected correct answer fully opaque
+            if (i === selectedIndex && isCorrect) {
+                buttons[i].classList.remove('opacity-50');
+            }
+        }
+        
+        // --- SHOW NEXT BUTTON ---
+        const nextBtnContainer = document.getElementById('next-btn-container');
+        const nextBtn = document.getElementById('next-btn');
+        
+        nextBtnContainer.classList.remove('hidden');
+        
+        if (currentQuestionIndex === currentQuiz.length - 1) {
+            nextBtn.innerHTML = 'Xem kết quả <i class="fas fa-flag-checkered ml-2"></i>';
+        } else {
+            nextBtn.innerHTML = 'Câu tiếp theo <i class="fas fa-arrow-right ml-2"></i>';
+        }
+        
+        // Auto scroll to bottom to see button on mobile
+        nextBtnContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // END QUIZ
+    function endQuiz() {
+        hideAllScreens();
+        resultScreen.classList.remove('hidden');
+        resultScreen.classList.add('flex');
+        
+        const finalScoreEl = document.getElementById('final-score');
+        finalScoreEl.innerText = `${score} / ${currentQuiz.length}`;
+        
+        // Message
+        const percentage = (score / currentQuiz.length) * 100;
+        let message = "";
+        let iconHtml = "";
+        let iconClass = "";
+
+        if (percentage === 100) {
+            message = "Xuất sắc! Bạn là nhà khoa học tương lai!";
+            iconHtml = '<i class="fas fa-crown"></i>';
+            iconClass = "bg-yellow-100 text-yellow-500";
+        } else if (percentage >= 80) {
+            message = "Rất tốt! Kiến thức của bạn rất vững.";
+            iconHtml = '<i class="fas fa-star"></i>';
+            iconClass = "bg-blue-100 text-blue-500";
+        } else if (percentage >= 50) {
+            message = "Khá tốt! Hãy cố gắng thêm một chút nữa.";
+            iconHtml = '<i class="fas fa-thumbs-up"></i>';
+            iconClass = "bg-green-100 text-green-500";
+        } else {
+            message = "Cần ôn tập thêm nhé!";
+            iconHtml = '<i class="fas fa-book-reader"></i>';
+            iconClass = "bg-gray-100 text-gray-500";
+        }
+
+        document.getElementById('score-message').innerText = message;
+        const iconDiv = document.getElementById('score-icon');
+        iconDiv.className = `inline-flex items-center justify-center w-24 h-24 rounded-full text-5xl mb-4 shadow-inner ${iconClass}`;
+        iconDiv.innerHTML = iconHtml;
+
+        // Render Review
+        const list = document.getElementById('review-list');
+        list.innerHTML = '';
+        
+        userAnswers.forEach((item, idx) => {
+            const div = document.createElement('div');
+            div.className = `p-4 rounded-xl border ${item.isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} transition-all hover:shadow-sm`;
+            
+            const statusIcon = item.isCorrect 
+                ? '<i class="fas fa-check-circle text-green-500 text-xl"></i>' 
+                : '<i class="fas fa-times-circle text-red-500 text-xl"></i>';
+            
+            const userText = item.selected === -1 ? "Hết giờ" : item.options[item.selected];
+            const correctText = item.options[item.correct];
+            
+            // Highlight text colors
+            const userTextClass = item.isCorrect ? "text-green-700 font-bold" : "text-red-600 font-bold line-through decoration-2";
+
+            div.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex items-start space-x-3">
+                        <span class="bg-white w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-sm text-gray-500 border border-gray-200">${idx+1}</span>
+                        <h4 class="font-bold text-gray-800 text-sm md:text-base pt-1">${item.question}</h4>
+                    </div>
+                    <span class="ml-2">${statusIcon}</span>
+                </div>
+                <div class="ml-11 text-sm space-y-2">
+                    <div class="p-2 bg-white rounded-lg border border-gray-100">
+                        <span class="text-gray-500 text-xs uppercase font-bold tracking-wider">Bạn chọn:</span>
+                        <div class="${userTextClass} mt-1">${userText}</div>
+                    </div>
+                    ${!item.isCorrect ? `
+                    <div class="p-2 bg-green-100 rounded-lg border border-green-200">
+                        <span class="text-green-600 text-xs uppercase font-bold tracking-wider">Đáp án đúng:</span>
+                        <div class="text-green-800 font-bold mt-1">${correctText}</div>
+                    </div>` : ''}
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    function retryQuiz() {
+        // Just reload current mode? Or go home?
+        // Let's go home for simplicity or re-run last config.
+        // For now, go home to let user choose again.
+        goHome();
+    }
+
+    // UTILS
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+</script>
+</body>
+</html>
