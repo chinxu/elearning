@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Chủ Nhiệm Điện Tử</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Custom scrollbar for better appearance */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+        .modal-enter {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .modal-leave {
+            animation: fadeOut 0.2s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+    </style>
+</head>
+<body class="text-gray-800 h-screen flex flex-col overflow-hidden">
+
+    <header class="bg-blue-600 text-white shadow-md z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                Sổ Chủ Nhiệm Điện Tử
+            </h1>
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <input type="file" id="excel-upload" accept=".xls,.xlsx" class="hidden" />
+                    <label for="excel-upload" class="cursor-pointer bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 rounded-lg shadow transition duration-200 flex items-center gap-2 text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Tải lên danh sách (Excel)
+                    </label>
+                </div>
+                <button id="btn-save-data" class="hidden bg-green-500 hover:bg-green-400 text-white py-2 px-4 rounded-lg shadow transition duration-200 items-center gap-2 text-sm font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                    </svg>
+                    Lưu Dữ Liệu
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto container mx-auto px-4 py-6">
+        
+        <div id="welcome-message" class="flex flex-col items-center justify-center h-full text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h2 class="text-xl font-semibold mb-2">Chưa có dữ liệu học sinh</h2>
+            <p class="text-center max-w-md">Vui lòng tải lên file Excel (danh_sach_hoc_sinh (1).xls hoặc tương tự) để bắt đầu quản lý lớp chủ nhiệm của bạn.</p>
+        </div>
+
+        <div id="student-list-container" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-700" id="class-title">Danh sách học sinh</h2>
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm học sinh..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600 uppercase text-xs leading-normal">
+                                <th class="py-3 px-6 text-left w-16">STT</th>
+                                <th class="py-3 px-6 text-left">Họ và Tên</th>
+                                <th class="py-3 px-6 text-center">Ghi chú nhanh</th>
+                                <th class="py-3 px-6 text-center w-24">Chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-table-body" class="text-gray-600 text-sm">
+                            <!-- Student rows will be generated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Backdrop -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden flex items-center justify-center p-4">
+        <!-- Modal Content -->
+        <div id="student-modal" class="bg-white w-full max-w-4xl max-h-[95vh] rounded-xl shadow-2xl z-50 hidden flex-col overflow-hidden modal-enter">
+            <!-- Modal Header -->
+            <div class="bg-blue-600 text-white px-6 py-4 flex justify-between items-center shrink-0">
+                <h3 class="text-xl font-bold flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Hồ sơ học sinh: <span id="modal-student-name" class="ml-1 text-yellow-300"></span>
+                </h3>
+                <button id="close-modal-btn" class="text-white hover:text-gray-200 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-4 md:p-6 overflow-y-auto flex-1 min-h-0 bg-gray-50">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Left Column: Info from Excel -->
+                    <div class="w-full md:w-1/2 bg-white p-5 rounded-lg border border-gray-200 shadow-sm h-fit">
+                        <h4 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2 flex justify-between items-center">
+                            Thông tin cơ bản
+                            <button id="toggle-edit-btn" onclick="toggleEditMode()" class="text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded transition flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                                <span>Chỉnh sửa</span>
+                            </button>
+                        </h4>
+                        <div id="modal-student-info" class="space-y-1">
+                            <!-- Dynamic info will be injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Teacher Notes -->
+                    <div class="w-full md:w-1/2 flex flex-col bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                        <h4 class="text-lg font-semibold text-gray-700 mb-2 border-b pb-2 flex justify-between items-center">
+                            Sổ tay Giáo Viên
+                            <span class="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-1 rounded">Tự động lưu tạm</span>
+                        </h4>
+                        <p class="text-sm text-gray-500 mb-3">Ghi nhận vi phạm, thành tích, đánh giá thái độ học tập, v.v.</p>
+                        <textarea id="teacher-notes" class="flex-1 w-full min-h-[200px] p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-700 leading-relaxed shadow-inner" placeholder="Nhập nhận xét cho học sinh này tại đây..."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="bg-gray-100 px-6 py-4 border-t border-gray-200 flex justify-end gap-3 shrink-0">
+                <button id="cancel-modal-btn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium">Đóng</button>
+                <button id="save-note-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span id="toast-message">Đã lưu thành công!</span>
+    </div>
+
+    <!-- Sync Modal -->
+    <div id="sync-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-xl shadow-2xl p-6 modal-enter">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                </svg>
+                Đồng bộ Đám mây
+            </h3>
+            <p class="text-sm text-gray-600 mb-4">Vì bạn sử dụng nhiều thiết bị, hãy tạo một <strong>Mã Lớp Học</strong> (VD: 10a1-gvcn2026). <br>Bạn chỉ cần nhập mã này trên thiết bị khác, toàn bộ dữ liệu sẽ tự động tải về mà không cần up lại file Excel!</p>
+            <input type="text" id="sync-code-input" class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập mã lớp học của bạn (tối thiểu 5 ký tự)...">
+            <button id="btn-connect-sync" class="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition opacity-50 cursor-not-allowed" disabled>Đang kết nối máy chủ...</button>
+            <div id="sync-status" class="mt-3 text-sm text-center text-gray-500">Vui lòng chờ giây lát...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // State management
+        let studentsData = [];
+        let excelHeaders = [];
+        let currentStudentIndex = -1;
+        let isDataLoaded = false;
+        let isEditMode = false;
+        let syncCode = '';
+        
+        // Firebase Instances
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'quan-ly-lop-chu-nhiem';
+        let db = null;
+        let auth = null;
+        let unsubscribeSnapshot = null;
+        
+        // DOM Elements
+        const fileInput = document.getElementById('excel-upload');
+        const welcomeMessage = document.getElementById('welcome-message');
+        const studentListContainer = document.getElementById('student-list-container');
+        const tableBody = document.getElementById('student-table-body');
+        const searchInput = document.getElementById('search-input');
+        const btnSaveData = document.getElementById('btn-save-data');
+        
+        // Modal Elements
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const studentModal = document.getElementById('student-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const cancelModalBtn = document.getElementById('cancel-modal-btn');
+        const saveNoteBtn = document.getElementById('save-note-btn');
+        const modalStudentName = document.getElementById('modal-student-name');
+        const modalStudentInfo = document.getElementById('modal-student-info');
+        const teacherNotesArea = document.getElementById('teacher-notes');
+        
+        // Toast
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Sync Elements
+        const syncModal = document.getElementById('sync-modal');
+        const syncCodeInput = document.getElementById('sync-code-input');
+        const btnConnectSync = document.getElementById('btn-connect-sync');
+        const syncStatus = document.getElementById('sync-status');
+
+        try {
+            // 👇 BƯỚC CUỐI CÙNG: THẦY/CÔ DÁN CẤU HÌNH FIREBASE VÀO ĐÂY 👇
+            // Thay chữ null bằng khối thông tin bắt đầu bằng dấu ngoặc nhọn { ... } mà thầy cô lấy được ở Bước 2
+            
+            const MY_FIREBASE_CONFIG = {
+              apiKey: "AIzaSyC622mgjpfPUsJywGP5qmoiekPy49AeFjE",
+              authDomain: "sochunhiem-538d3.firebaseapp.com",
+              projectId: "sochunhiem-538d3",
+              storageBucket: "sochunhiem-538d3.firebasestorage.app",
+              messagingSenderId: "675625186333",
+              appId: "1:675625186333:web:217a3fd85c3a32fed5c2f4",
+              measurementId: "G-4FXP0JTTPZ"
+            }; 
+            
+            /* ======== VÍ DỤ NÓ SẼ TRÔNG NHƯ THẾ NÀY ========
+            const MY_FIREBASE_CONFIG = {
+                apiKey: "AIzaSyB-xxxxxxxxxxxxxxxxxxxx",
+                authDomain: "so-chu-nhiem-2026.firebaseapp.com",
+                projectId: "so-chu-nhiem-2026",
+                storageBucket: "so-chu-nhiem-2026.appspot.com",
+                messagingSenderId: "1234567890",
+                appId: "1:1234567890:web:abcdef123456"
+            };
+            ================================================ */
+
+            // Hệ thống sẽ tự động dùng cấu hình của thầy/cô nếu có, nếu không thì dùng tạm của hệ thống hiện tại
+            const firebaseConfig = MY_FIREBASE_CONFIG || (typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null);
+            
+            if (firebaseConfig) {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                btnConnectSync.disabled = false;
+                btnConnectSync.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnConnectSync.textContent = "Bắt đầu Đồng bộ";
+                syncStatus.textContent = 'Hệ thống đám mây đã sẵn sàng.';
+                
+                // Try to load code from local if user visited this specific device before
+                const savedSyncCode = localStorage.getItem('lastSyncCode');
+                if (savedSyncCode) {
+                    syncCodeInput.value = savedSyncCode;
+                }
+            } else {
+                syncStatus.textContent = 'Lỗi: Không tìm thấy cấu hình máy chủ đám mây.';
+                syncStatus.classList.add('text-red-500');
+            }
+        } catch (e) {
+            console.error("Firebase init error", e);
+            syncStatus.textContent = 'Lỗi khởi tạo hệ thống.';
+        }
+
+        btnConnectSync.addEventListener('click', async () => {
+            const code = syncCodeInput.value.trim();
+            if(!code || code.length < 5) {
+                alert('Vui lòng nhập mã có tối thiểu 5 ký tự!');
+                return;
+            }
+            
+            syncCode = code;
+            localStorage.setItem('lastSyncCode', code); // Nhớ mã trên máy này cho lần sau đỡ phải nhập
+            syncStatus.textContent = 'Đang xác thực...';
+            btnConnectSync.disabled = true;
+
+            try {
+                // Determine Auth method
+                const customToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                if (customToken) {
+                    await signInWithCustomToken(auth, customToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                if (!auth.currentUser) throw new Error("Auth failed");
+
+                syncStatus.textContent = 'Đang lấy dữ liệu...';
+                startDataSync();
+                
+                syncModal.classList.add('hidden');
+                showToast('Đã kết nối mã lớp: ' + code, 'blue');
+                
+            } catch (error) {
+                console.error("Connection error:", error);
+                syncStatus.textContent = 'Lỗi kết nối. Vui lòng thử lại.';
+                btnConnectSync.disabled = false;
+            }
+        });
+
+        function startDataSync() {
+            if (!auth.currentUser || !db || !syncCode) return;
+
+            // RULE 1: Use strict paths
+            const classDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'classrooms', syncCode);
+
+            if (unsubscribeSnapshot) unsubscribeSnapshot();
+
+            // RULE 3: Auth is guaranteed above before calling this
+            unsubscribeSnapshot = onSnapshot(classDocRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    studentsData = data.studentsData || [];
+                    excelHeaders = data.excelHeaders || [];
+                    
+                    if(studentsData.length > 0) {
+                        isDataLoaded = true;
+                        renderStudentTable(studentsData);
+                        showMainContent();
+                    }
+                } else {
+                    // Document doesn't exist yet. User just claimed this syncCode but hasn't uploaded Excel yet.
+                    if (isDataLoaded) {
+                         saveToCloud(); // If they had data in RAM, push it up
+                    } else {
+                         // First time using this code
+                         console.log("Sẵn sàng cho dữ liệu mới");
+                    }
+                }
+            }, (error) => {
+                console.error("Sync error:", error);
+                showToast('Mất kết nối đồng bộ!', 'red');
+            });
+        }
+
+        async function saveToCloud() {
+            if (!auth.currentUser || !db || !syncCode) return;
+            const classDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'classrooms', syncCode);
+            try {
+                await setDoc(classDocRef, {
+                    studentsData: studentsData,
+                    excelHeaders: excelHeaders,
+                    updatedAt: new Date().toISOString()
+                });
+            } catch (error) {
+                console.error("Error saving to cloud:", error);
+                showToast('Lỗi khi đẩy lên đám mây!', 'red');
+            }
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                try {
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+                    
+                    if (jsonData.length === 0) {
+                        alert("File Excel trống hoặc không đọc được dữ liệu.");
+                        return;
+                    }
+
+                    excelHeaders = Object.keys(jsonData[0]);
+                    
+                    studentsData = jsonData.map((row, index) => {
+                        return {
+                            _id: index,
+                            _teacherNote: "", 
+                            ...row
+                        };
+                    });
+
+                    isDataLoaded = true;
+                    renderStudentTable(studentsData);
+                    showMainContent();
+                    
+                    // Trigger Save to Cloud instead of LocalStorage
+                    saveToCloud();
+                    showToast('Đã tải danh sách và lưu lên Đám mây!');
+                    
+                    fileInput.value = '';
+                } catch (error) {
+                    console.error("Error parsing Excel file:", error);
+                    alert("Có lỗi xảy ra khi đọc file Excel.");
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
+        });
+
+        function showMainContent() {
+            welcomeMessage.classList.add('hidden');
+            studentListContainer.classList.remove('hidden');
+            btnSaveData.classList.remove('hidden');
+            btnSaveData.classList.add('flex');
+        }
+
+        function findNameKey(row) {
+            const possibleNameKeys = ['Họ và tên', 'Họ tên', 'Tên học sinh', 'Name', 'Tên', 'Ho va ten', 'Ho Ten'];
+            for (let key of excelHeaders) {
+                if (possibleNameKeys.some(k => key.toLowerCase().includes(k.toLowerCase()))) {
+                    return key;
+                }
+            }
+            return excelHeaders.length > 1 ? excelHeaders[1] : excelHeaders[0];
+        }
+
+        function renderStudentTable(data) {
+            tableBody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-gray-500">Không tìm thấy học sinh nào.</td></tr>`;
+                return;
+            }
+
+            const nameKey = data.length > 0 ? findNameKey(data[0]) : '';
+
+            data.forEach((student, index) => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-200 hover:bg-blue-50 transition duration-150';
+                
+                let notePreview = student._teacherNote || '';
+                if (notePreview.length > 30) notePreview = notePreview.substring(0, 30) + '...';
+                
+                const hasNote = student._teacherNote && student._teacherNote.trim() !== '';
+                const noteIcon = hasNote 
+                    ? `<span class="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg> Có ghi chú
+                       </span>` 
+                    : `<span class="text-gray-400 text-xs italic">Trống</span>`;
+
+                tr.innerHTML = `
+                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                        <span class="font-medium">${index + 1}</span>
+                    </td>
+                    <td class="py-3 px-6 text-left">
+                        <div class="flex items-center">
+                            <div class="mr-3 hidden sm:block">
+                                <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+                                    ${String(student[nameKey] || '?').charAt(0).toUpperCase()}
+                                </div>
+                            </div>
+                            <span class="font-medium text-gray-800 cursor-pointer hover:text-blue-600" onclick="openStudentModal(${student._id})">
+                                ${student[nameKey] || 'Chưa rõ tên'}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                        <div class="flex flex-col items-center justify-center">
+                            ${noteIcon}
+                            ${hasNote ? `<span class="text-xs text-gray-500 mt-1 truncate w-32" title="${student._teacherNote}">${notePreview}</span>` : ''}
+                        </div>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                        <button onclick="openStudentModal(${student._id})" class="text-blue-500 hover:text-blue-700 hover:bg-blue-100 p-2 rounded-full transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            if (!isDataLoaded) return;
+            const filteredData = studentsData.filter(student => {
+                return Object.values(student).some(val => 
+                    String(val).toLowerCase().includes(searchTerm)
+                );
+            });
+            renderStudentTable(filteredData);
+        });
+
+        window.toggleEditMode = function() {
+            isEditMode = !isEditMode;
+            const btn = document.getElementById('toggle-edit-btn');
+            const inputs = document.querySelectorAll('.student-info-input');
+            
+            const iconEdit = `<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>`;
+            const iconLock = `<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>`;
+            
+            if (isEditMode) {
+                btn.innerHTML = `${iconLock}<span>Khóa lại</span>`;
+                btn.classList.remove('bg-blue-50', 'text-blue-600');
+                btn.classList.add('bg-yellow-100', 'text-yellow-700');
+                
+                inputs.forEach(input => {
+                    input.removeAttribute('readonly');
+                    input.classList.remove('cursor-default', 'bg-transparent', 'border-transparent');
+                    input.classList.add('bg-white', 'border-blue-300', 'focus:ring-2', 'focus:ring-blue-100');
+                });
+            } else {
+                btn.innerHTML = `${iconEdit}<span>Chỉnh sửa</span>`;
+                btn.classList.remove('bg-yellow-100', 'text-yellow-700');
+                btn.classList.add('bg-blue-50', 'text-blue-600');
+                
+                inputs.forEach(input => {
+                    input.setAttribute('readonly', true);
+                    input.classList.add('cursor-default', 'bg-transparent', 'border-transparent');
+                    input.classList.remove('bg-white', 'border-blue-300', 'focus:ring-2', 'focus:ring-blue-100');
+                });
+            }
+        };
+
+        window.openStudentModal = function(id) {
+            const student = studentsData.find(s => s._id === id);
+            if (!student) return;
+
+            currentStudentIndex = studentsData.findIndex(s => s._id === id);
+            const nameKey = findNameKey(student);
+            modalStudentName.textContent = student[nameKey] || 'Học sinh';
+            
+            let infoHtml = '';
+            excelHeaders.forEach(key => {
+                const value = student[key];
+                const safeValue = value !== undefined && value !== null ? String(value).replace(/"/g, '&quot;') : '';
+                infoHtml += `
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-1.5 border-b border-gray-100 last:border-0 rounded px-1 transition-colors">
+                        <span class="text-sm font-medium text-gray-500 w-full sm:w-1/3 mb-1 sm:mb-0">${key}:</span>
+                        <input type="text" data-field-key="${key}" value="${safeValue}" readonly
+                            class="student-info-input text-sm text-gray-900 w-full sm:w-2/3 sm:text-right font-medium bg-transparent border border-transparent rounded px-2 py-1 focus:outline-none transition-all cursor-default"
+                            placeholder="Để trống" />
+                    </div>
+                `;
+            });
+            modalStudentInfo.innerHTML = infoHtml;
+            teacherNotesArea.value = student._teacherNote || '';
+
+            isEditMode = false;
+            const btn = document.getElementById('toggle-edit-btn');
+            btn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+                <span>Chỉnh sửa</span>
+            `;
+            btn.classList.remove('bg-yellow-100', 'text-yellow-700');
+            btn.classList.add('bg-blue-50', 'text-blue-600');
+
+            modalBackdrop.classList.remove('hidden');
+            studentModal.classList.remove('hidden');
+            
+            setTimeout(() => { teacherNotesArea.focus(); }, 300);
+        };
+
+        function closeModal() {
+            studentModal.classList.remove('modal-enter');
+            studentModal.classList.add('modal-leave');
+            setTimeout(() => {
+                modalBackdrop.classList.add('hidden');
+                studentModal.classList.add('hidden');
+                studentModal.classList.remove('modal-leave');
+                studentModal.classList.add('modal-enter');
+                currentStudentIndex = -1;
+            }, 200);
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelModalBtn.addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
+
+        saveNoteBtn.addEventListener('click', () => {
+            if (currentStudentIndex !== -1) {
+                const note = teacherNotesArea.value;
+                studentsData[currentStudentIndex]._teacherNote = note;
+                
+                const infoInputs = modalStudentInfo.querySelectorAll('.student-info-input');
+                infoInputs.forEach(input => {
+                    const key = input.getAttribute('data-field-key');
+                    studentsData[currentStudentIndex][key] = input.value;
+                });
+                
+                const searchTerm = searchInput.value.toLowerCase();
+                if(searchTerm) {
+                    const filteredData = studentsData.filter(s => Object.values(s).some(val => String(val).toLowerCase().includes(searchTerm)));
+                    renderStudentTable(filteredData);
+                } else {
+                    renderStudentTable(studentsData);
+                }
+
+                // Sync to cloud automatically
+                saveToCloud();
+                closeModal();
+                showToast('Đã lưu & đồng bộ lên đám mây!');
+            }
+        });
+
+        // Backup Export
+        btnSaveData.addEventListener('click', () => {
+            if(!isDataLoaded) return;
+            try {
+                const exportData = studentsData.map(student => {
+                    const { _id, _teacherNote, ...rest } = student;
+                    return { ...rest, "Ghi chú của GVCN": _teacherNote };
+                });
+                const ws = XLSX.utils.json_to_sheet(exportData);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "DanhSachHocSinh_CN");
+                const date = new Date();
+                const dateStr = `${date.getDate()}_${date.getMonth()+1}_${date.getFullYear()}`;
+                XLSX.writeFile(wb, `SoChuNhiem_${dateStr}.xlsx`);
+                showToast('Đã xuất file Excel dự phòng thành công!', 'blue');
+            } catch (error) {
+                console.error("Export error:", error);
+                alert("Lỗi khi xuất file.");
+            }
+        });
+
+        let toastTimeout;
+        function showToast(message, color = 'green') {
+            toastMessage.textContent = message;
+            if(color === 'blue') {
+                toast.classList.remove('bg-green-500');
+                toast.classList.add('bg-blue-500');
+            } else if (color === 'red') {
+                toast.classList.remove('bg-green-500', 'bg-blue-500');
+                toast.classList.add('bg-red-500');
+            } else {
+                toast.classList.remove('bg-blue-500', 'bg-red-500');
+                toast.classList.add('bg-green-500');
+            }
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
