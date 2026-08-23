@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ Đồ Lớp Học Online - Quản Lý Chỗ Ngồi Trực Quan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter & Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- SheetJS cho Đọc File Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Html2Canvas cho Xuất Hình Ảnh -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#035485',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Print layout optimization */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-area {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .overflow-x-auto {
+                overflow: visible !important;
+            }
+            body {
+                background: white !important;
+            }
+            .full-name-sub {
+                display: none !important;
+            }
+        }
+
+        .seat-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .seat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Chống rớt chữ tiếng Việt ngắt đôi từ */
+        .seat-card span {
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans text-slate-800 flex flex-col">
+
+    <!-- Top Header Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 flex items-center justify-center text-white shadow-md">
+                    <i class="fa-solid fa-[#fa-chalkboard-user] text-xl fa-chalkboard-user"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Sơ Đồ Lớp Học Online</h1>
+                    <p class="text-xs text-slate-500">4 Dãy × 7 Bàn (Tối đa 2 học sinh/bàn)</p>
+                </div>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <div id="readOnlyBadge" class="hidden items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-semibold border border-amber-300">
+                    <i class="fa-solid fa-lock text-amber-600"></i>
+                    <span>Chế độ chỉ xem</span>
+                </div>
+
+                <button id="btnShare" onclick="openShareModal()" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span class="hidden sm:inline">Chia Sẻ Link</span>
+                </button>
+
+                <button id="btnExportImg" onclick="exportToImage()" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-slate-800 text-white hover:bg-slate-900 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-2 shadow-xs">
+                    <i class="fa-solid fa-download"></i>
+                    <span class="hidden sm:inline">Xuất Ảnh / In</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Sidebar: Student Roster & Actions -->
+        <section class="lg:col-span-4 xl:col-span-3 flex flex-col gap-4 no-print">
+            
+            <!-- Excel Upload Card -->
+            <div id="editControlsCard" class="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs">
+                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-file-excel text-emerald-600"></i>
+                    Tải Danh Sách Học Sinh
+                </h2>
+                <div class="space-y-3">
+                    <label for="excelInput" class="border-2 border-dashed border-sky-300 hover:border-sky-500 bg-sky-50/50 hover:bg-sky-50 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition text-center group">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl text-sky-600 group-hover:scale-110 transition-transform mb-1"></i>
+                        <span class="text-xs font-semibold text-slate-700">Chọn hoặc Kéo thả File Excel</span>
+                        <span class="text-[10px] text-slate-400 mt-0.5">.xlsx, .xls, .csv</span>
+                        <input type="file" id="excelInput" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleFileUpload(event)">
+                    </label>
+
+                    <div class="flex items-center justify-between text-xs text-slate-500 pt-1 border-t border-slate-100">
+                        <button onclick="downloadSampleExcel()" class="text-sky-600 hover:underline font-medium flex items-center gap-1">
+                            <i class="fa-solid fa-circle-down"></i> Tải file mẫu
+                        </button>
+                        <button onclick="clearAllStudents()" class="text-rose-500 hover:underline font-medium flex items-center gap-1">
+                            <i class="fa-solid fa-trash-can"></i> Xóa dữ liệu
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student List Container -->
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs flex-1 flex flex-col min-h-[400px]">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-users text-sky-600"></i>
+                        Học Sinh Chưa Xếp
+                    </h2>
+                    <span id="unassignedCount" class="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full font-bold">0</span>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative mb-3">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                    <input type="text" id="searchInput" placeholder="Tìm tên học sinh..." oninput="renderStudentList()" class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-sky-500">
+                </div>
+
+                <!-- Action Controls for Unassigned -->
+                <div id="unassignedActionBtns" class="grid grid-cols-2 gap-2 mb-3">
+                    <button onclick="autoArrangeStudents('random')" class="py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5" title="Xếp ngẫu nhiên chỗ ngồi cho học sinh">
+                        <i class="fa-solid fa-shuffle"></i>
+                        Xếp Ngẫu Nhiên
+                    </button>
+                    <button onclick="resetSeatingPlan()" class="py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        Thu Chỗ Về
+                    </button>
+                </div>
+
+                <!-- Student Roster Grid -->
+                <div id="unassignedList" class="flex-1 overflow-y-auto max-h-[420px] space-y-1.5 pr-1">
+                    <!-- Dynamic rendering -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Main Content: Classroom Layout Grid -->
+        <section class="lg:col-span-8 xl:col-span-9 flex flex-col gap-4">
+            
+            <!-- Classroom Header Stage / Podium -->
+            <div id="printContainer" class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-sm flex flex-col print-area">
+                
+                <div class="text-center mb-6">
+                    <!-- Inline SVG icon & explicit text color to ensure html2canvas captures title cleanly -->
+                    <div class="inline-flex items-center justify-center gap-2 px-8 py-2.5 bg-slate-800 text-white font-extrabold text-sm sm:text-base rounded-xl shadow-inner uppercase tracking-wider border-2 border-slate-700">
+                        <svg class="w-5 h-5 text-amber-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h6v2H8v2h8v-2h-2v-2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12H4V5h16v10z"/>
+                        </svg>
+                        <span class="text-white font-black tracking-wider text-sm sm:text-base">BỤC GIẢNG / BẢNG ĐEN</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1 font-medium">(Hướng nhìn từ giáo viên xuống lớp học)</p>
+                </div>
+                <!-- 4 Aisles Grid (Luôn giữ 4 dãy xếp ngang từ Trái qua Phải) -->
+                <div class="overflow-x-auto pb-2">
+                    <div class="grid grid-cols-4 gap-3 sm:gap-4 min-w-[820px] flex-1">
+                        <!-- Dãy 1 -->
+                        <div class="bg-slate-50/80 rounded-xl p-3 border border-slate-200/80 flex flex-col">
+                            <div class="text-center pb-2 mb-3 border-b border-slate-200 flex items-center justify-between">
+                                <span class="font-black text-xs text-sky-800 uppercase tracking-wider">DÃY 1 (Trái)</span>
+                                <span class="text-[10px] bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full font-bold">7 Bàn</span>
+                            </div>
+                            <div id="aisle-1" class="space-y-3 flex-1"></div>
+                        </div>
+
+                        <!-- Dãy 2 -->
+                        <div class="bg-slate-50/80 rounded-xl p-3 border border-slate-200/80 flex flex-col">
+                            <div class="text-center pb-2 mb-3 border-b border-slate-200 flex items-center justify-between">
+                                <span class="font-black text-xs text-indigo-800 uppercase tracking-wider">DÃY 2</span>
+                                <span class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-bold">7 Bàn</span>
+                            </div>
+                            <div id="aisle-2" class="space-y-3 flex-1"></div>
+                        </div>
+
+                        <!-- Dãy 3 -->
+                        <div class="bg-slate-50/80 rounded-xl p-3 border border-slate-200/80 flex flex-col">
+                            <div class="text-center pb-2 mb-3 border-b border-slate-200 flex items-center justify-between">
+                                <span class="font-black text-xs text-teal-800 uppercase tracking-wider">DÃY 3</span>
+                                <span class="text-[10px] bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-bold">7 Bàn</span>
+                            </div>
+                            <div id="aisle-3" class="space-y-3 flex-1"></div>
+                        </div>
+
+                        <!-- Dãy 4 -->
+                        <div class="bg-slate-50/80 rounded-xl p-3 border border-slate-200/80 flex flex-col">
+                            <div class="text-center pb-2 mb-3 border-b border-slate-200 flex items-center justify-between">
+                                <span class="font-black text-xs text-emerald-800 uppercase tracking-wider">DÃY 4 (Phải)</span>
+                                <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold">7 Bàn</span>
+                            </div>
+                            <div id="aisle-4" class="space-y-3 flex-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer statistics summary -->
+                <div class="mt-6 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+                    <div class="flex items-center gap-4">
+                        <span>Tổng số chỗ: <strong class="text-slate-700">56</strong></span>
+                        <span>Đã ngồi: <strong id="statAssigned" class="text-sky-700">0</strong></span>
+                        <span>Còn trống: <strong id="statEmpty" class="text-emerald-700">56</strong></span>
+                    </div>
+                    <div class="text-[11px] text-slate-400 font-medium">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Tên học sinh hiển thị 2 từ cuối cùng (Ví dụ: Nhật Bình, Tuệ Lâm)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Share Link Modal -->
+    <div id="shareModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden no-print">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 relative">
+            <button onclick="closeShareModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                    <i class="fa-solid fa-link text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">Chia Sẻ Sơ Đồ Lớp Học</h3>
+                    <p class="text-xs text-slate-500">Giáo viên khác có thể xem sơ đồ nhưng không thể chỉnh sửa</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">
+                        <i class="fa-solid fa-eye text-sky-600 mr-1"></i> Đường dẫn chỉ xem (Read-Only Link)
+                    </label>
+                    <div class="flex gap-2">
+                        <input type="text" id="shareViewUrlInput" readonly class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none select-all">
+                        <button onclick="copyShareUrl()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition whitespace-nowrap">
+                            <i class="fa-solid fa-copy mr-1"></i> Sao chép
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-800 text-xs leading-relaxed">
+                    <i class="fa-solid fa-shield-halved text-amber-600 mr-1"></i>
+                    <strong>Bảo vệ dữ liệu:</strong> Link chia sẻ tự động tạo liên kết chứa dữ liệu sơ đồ hiện tại. Người nhận link sẽ chỉ có thể xem sơ đồ, bị vô hiệu hóa mọi nút xóa, kéo thả và tải lại file.
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeShareModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2 pointer-events-none">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMsg">Thông báo</span>
+    </div>
+
+    <script>
+        /**
+         * State Management
+         */
+        const TOTAL_AISLES = 4;
+        const DESKS_PER_AISLE = 7;
+        const SEATS_PER_DESK = 2;
+        const TOTAL_SEATS = TOTAL_AISLES * DESKS_PER_AISLE * SEATS_PER_DESK; // 56 seats
+
+        let state = {
+            students: [], // { id, fullName, shortName }
+            seating: {}, // seatId -> studentId
+            selectedStudentForPlacement: null, // For tap/click selection
+            isViewOnly: false
+        };
+
+        /**
+         * STREAMING_CHUNK:Formatting student names according to requirements...
+         * Rules: Keep ONLY the LAST 2 WORDS of the student's full name.
+         * Example: "Nguyễn Nhật Bình" -> "Nhật Bình"
+         * "Phan Nguyễn Tuệ Lâm" -> "Tuệ Lâm"
+         * "Nguyễn Thị Phương Tâm" -> "Phương Tâm"
+         * "Vũ Quốc Bảo" -> "Quốc Bảo"
+         */
+        function parseShortName(fullName) {
+            if (!fullName || typeof fullName !== 'string') return '';
+            const cleaned = fullName.trim().replace(/\s+/g, ' ');
+            const parts = cleaned.split(' ');
+            if (parts.length >= 2) {
+                return parts.slice(-2).join(' ');
+            }
+            return cleaned;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            checkUrlParameters();
+            if (state.students.length === 0) {
+                loadDefaultSampleData();
+            }
+            renderAll();
+        });
+
+        function checkUrlParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isViewParam = urlParams.get('mode') === 'view';
+            const hashData = window.location.hash ? window.location.hash.substring(1) : null;
+
+            if (isViewParam || hashData) {
+                state.isViewOnly = true;
+                document.getElementById('readOnlyBadge').classList.remove('hidden');
+                document.getElementById('readOnlyBadge').classList.add('flex');
+                document.getElementById('editControlsCard').classList.add('hidden');
+                document.getElementById('unassignedActionBtns').classList.add('hidden');
+                document.getElementById('btnShare').classList.add('hidden');
+            }
+
+            if (hashData) {
+                try {
+                    const decoded = JSON.parse(decodeURIComponent(escape(atob(hashData))));
+                    if (decoded && decoded.students && decoded.seating) {
+                        state.students = decoded.students;
+                        state.seating = decoded.seating;
+                    }
+                } catch (e) {
+                    console.error('Error decoding shared URL state:', e);
+                }
+            }
+        }
+
+        function loadDefaultSampleData() {
+            const defaultNames = [
+                "Nguyễn Nhật Bình", "Trần Thị Minh Anh", "Lê Hoàng Đức", "Phạm Ánh Tuyết",
+                "Vũ Quốc Bảo", "Đỗ Khánh Linh", "Bùi Gia Huy", "Ngô Phương Thảo",
+                "Dương Hải Đăng", "Lý Thanh Vân", "Đặng Minh Trí", "Đoàn Thu Hà",
+                "Hoàng Đức Anh", "Nguyễn Ngọc Diệp", "Phan Tuấn Kiệt", "Trịnh Bảo Ngọc"
+            ];
+
+            state.students = defaultNames.map((name, index) => ({
+                id: 'std_' + (index + 1),
+                fullName: name,
+                shortName: parseShortName(name)
+            }));
+        }
+
+        function handleFileUpload(event) {
+            if (state.isViewOnly) return;
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                    const importedStudents = [];
+                    jsonData.forEach((row, idx) => {
+                        if (!row || row.length === 0) return;
+                        
+                        // Find column that looks like a name
+                        let nameVal = '';
+                        for (let cell of row) {
+                            if (cell && typeof cell === 'string' && cell.trim().length > 1) {
+                                // Skip common header names
+                                const lower = cell.trim().toLowerCase();
+                                if (lower.includes('họ') || lower.includes('tên') || lower.includes('stt') || lower.includes('lớp')) {
+                                    continue;
+                                }
+                                nameVal = cell.trim();
+                                break;
+                            }
+                        }
+
+                        if (nameVal) {
+                            importedStudents.push({
+                                id: 'std_imp_' + Date.now() + '_' + idx,
+                                fullName: nameVal,
+                                shortName: parseShortName(nameVal)
+                            });
+                        }
+                    });
+
+                    if (importedStudents.length > 0) {
+                        state.students = importedStudents;
+                        state.seating = {};
+                        renderAll();
+                        showToast(`Đã nhập thành công ${importedStudents.length} học sinh!`, 'success');
+                    } else {
+                        showToast('Không tìm thấy danh sách tên học sinh hợp lệ!', 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showToast('Lỗi khi đọc file Excel. Vui lòng kiểm tra định dạng!', 'error');
+                }
+                event.target.value = '';
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function downloadSampleExcel() {
+            const sampleData = [
+                ["STT", "Họ và Tên Học Sinh"],
+                [1, "Nguyễn Nhật Bình"],
+                [2, "Trần Thị Ánh Tuyết"],
+                [3, "Lê Hoàng Đức"],
+                [4, "Phạm Quốc Bảo"],
+                [5, "Đỗ Khánh Linh"],
+                [6, "Bùi Gia Huy"]
+            ];
+            const ws = XLSX.utils.aoa_to_sheet(sampleData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "DanhSachHocSinh");
+            XLSX.writeFile(wb, "Danh_Sach_Hoc_Sinh_Mau.xlsx");
+        }
+
+        function clearAllStudents() {
+            if (state.isViewOnly) return;
+            if (confirm("Bạn có chắc chắn muốn xóa tất cả danh sách học sinh?")) {
+                state.students = [];
+                state.seating = {};
+                state.selectedStudentForPlacement = null;
+                renderAll();
+                showToast("Đã xóa toàn bộ dữ liệu học sinh.", "info");
+            }
+        }
+
+        function renderStudentList() {
+            const container = document.getElementById('unassignedList');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            // Get unassigned students
+            const assignedIds = new Set(Object.values(state.seating));
+            const unassigned = state.students.filter(s => !assignedIds.has(s.id));
+
+            document.getElementById('unassignedCount').innerText = unassigned.length;
+
+            const filtered = unassigned.filter(s => 
+                s.fullName.toLowerCase().includes(searchVal) || 
+                s.shortName.toLowerCase().includes(searchVal)
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-slate-400 text-xs">
+                        <i class="fa-solid fa-user-slash text-2xl mb-1 text-slate-300"></i>
+                        <p>Không có học sinh nào</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(student => {
+                const isSelected = state.selectedStudentForPlacement === student.id;
+                return `
+                    <div 
+                        draggable="${!state.isViewOnly}"
+                        ondragstart="handleDragStart(event, '${student.id}')"
+                        onclick="toggleSelectStudent('${student.id}')"
+                        class="p-2.5 rounded-lg border transition cursor-grab active:cursor-grabbing flex items-center justify-between ${
+                            isSelected 
+                                ? 'bg-sky-50 border-sky-500 ring-2 ring-sky-300 shadow-xs' 
+                                : 'bg-white border-slate-200 hover:border-sky-300 hover:bg-slate-50'
+                        }"
+                    >
+                        <div class="min-w-0 flex-1 pr-2">
+                            <!-- Prominent Short Name Display -->
+                            <div class="text-xs font-black text-slate-900 truncate" title="Họ và tên đầy đủ: ${student.fullName}">
+                                ${student.shortName}
+                            </div>
+                            <div class="text-[10px] text-slate-400 truncate">
+                                ${student.fullName}
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-grip-vertical text-slate-300 text-xs"></i>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderSeatingGrid() {
+            let assignedSeatsCount = 0;
+
+            for (let aisleIndex = 1; aisleIndex <= TOTAL_AISLES; aisleIndex++) {
+                const aisleContainer = document.getElementById(`aisle-${aisleIndex}`);
+                let aisleHtml = '';
+
+                for (let deskIndex = 1; deskIndex <= DESKS_PER_AISLE; deskIndex++) {
+                    const seatA_Id = `A${aisleIndex}_D${deskIndex}_S1`;
+                    const seatB_Id = `A${aisleIndex}_D${deskIndex}_S2`;
+
+                    const studentA = getStudentBySeatId(seatA_Id);
+                    const studentB = getStudentBySeatId(seatB_Id);
+
+                    if (studentA) assignedSeatsCount++;
+                    if (studentB) assignedSeatsCount++;
+
+                    aisleHtml += `
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs p-2 transition hover:border-slate-300">
+                            <!-- Desk Label Header -->
+                            <div class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 flex justify-between items-center px-1">
+                                <span>Bàn ${deskIndex}</span>
+                                <i class="fa-solid fa-desk text-slate-300"></i>
+                            </div>
+
+                            <!-- 2 Seats per desk -->
+                            <div class="grid grid-cols-2 gap-1.5">
+                                ${renderSeatCard(seatA_Id, studentA, 'Ghế trái')}
+                                ${renderSeatCard(seatB_Id, studentB, 'Ghế phải')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                aisleContainer.innerHTML = aisleHtml;
+            }
+
+            // Update stats
+            document.getElementById('statAssigned').innerText = assignedSeatsCount;
+            document.getElementById('statEmpty').innerText = TOTAL_SEATS - assignedSeatsCount;
+        }
+
+        function renderSeatCard(seatId, student, label) {
+            const isSelectedTarget = state.selectedStudentForPlacement !== null;
+
+            if (student) {
+                // Occupied Seat
+                return `
+                    <div 
+                        id="seat-${seatId}"
+                        draggable="${!state.isViewOnly}"
+                        ondragstart="handleDragStart(event, '${student.id}', '${seatId}')"
+                        ondragover="handleDragOver(event)"
+                        ondrop="handleDrop(event, '${seatId}')"
+                        onclick="handleSeatClick('${seatId}')"
+                        class="seat-card relative group p-1.5 rounded-lg border text-center flex flex-col items-center justify-center min-h-[62px] bg-sky-50/90 border-sky-300 hover:bg-sky-100 hover:border-sky-400 cursor-grab active:cursor-grabbing shadow-2xs"
+                    >
+                        <!-- Student Short Name (Tên rút gọn 2 từ) -->
+                        <span class="font-extrabold text-xs sm:text-sm text-slate-900 leading-tight w-full px-0.5 break-normal" style="word-break: keep-all;" title="Họ và tên đầy đủ: ${student.fullName}">
+                            ${student.shortName}
+                        </span>
+                        
+                        <!-- Full Name hint small (Bị ẩn hoàn toàn khi xuất file ảnh / in) -->
+                        <span class="full-name-sub text-[9px] text-slate-400 leading-tight w-full truncate mt-0.5" style="word-break: keep-all;" title="${student.fullName}">
+                            ${student.fullName}
+                        </span>
+
+                        <!-- Unseat/Remove Button (Hover action in edit mode) -->
+                        ${!state.isViewOnly ? `
+                            <button 
+                                onclick="event.stopPropagation(); unseatStudent('${seatId}')"
+                                title="Bỏ học sinh khỏi chỗ"
+                                class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-rose-500 hover:bg-rose-600 text-white rounded-full text-[10px] items-center justify-center hidden group-hover:flex shadow-sm transition z-10"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+            } else {
+                // Empty Seat
+                return `
+                    <div 
+                        id="seat-${seatId}"
+                        ondragover="handleDragOver(event)"
+                        ondrop="handleDrop(event, '${seatId}')"
+                        onclick="handleSeatClick('${seatId}')"
+                        class="seat-card p-1.5 rounded-lg border-2 border-dashed text-center flex flex-col items-center justify-center min-h-[62px] transition cursor-pointer ${
+                            isSelectedTarget 
+                                ? 'bg-amber-50/80 border-amber-400 hover:bg-amber-100 animate-pulse' 
+                                : 'bg-slate-50 border-slate-200 hover:border-sky-300 hover:bg-sky-50/40'
+                        }"
+                    >
+                        <i class="fa-solid fa-plus text-slate-300 text-xs mb-0.5"></i>
+                        <span class="text-[10px] text-slate-400 font-medium">${label}</span>
+                    </div>
+                `;
+            }
+        }
+
+        function getStudentBySeatId(seatId) {
+            const studentId = state.seating[seatId];
+            if (!studentId) return null;
+            return state.students.find(s => s.id === studentId);
+        }
+
+        let draggedData = null; // { studentId, sourceSeatId }
+
+        function handleDragStart(event, studentId, sourceSeatId = null) {
+            if (state.isViewOnly) return;
+            draggedData = { studentId, sourceSeatId };
+            event.dataTransfer.setData('text/plain', JSON.stringify(draggedData));
+        }
+
+        function handleDragOver(event) {
+            if (state.isViewOnly) return;
+            event.preventDefault();
+        }
+
+        function handleDrop(event, targetSeatId) {
+            if (state.isViewOnly) return;
+            event.preventDefault();
+            
+            let data = draggedData;
+            try {
+                const transferData = event.dataTransfer.getData('text/plain');
+                if (transferData) data = JSON.parse(transferData);
+            } catch(e) {}
+
+            if (!data || !data.studentId) return;
+
+            assignStudentToSeat(data.studentId, targetSeatId, data.sourceSeatId);
+            draggedData = null;
+            state.selectedStudentForPlacement = null;
+        }
+
+        function toggleSelectStudent(studentId) {
+            if (state.isViewOnly) return;
+            if (state.selectedStudentForPlacement === studentId) {
+                state.selectedStudentForPlacement = null;
+            } else {
+                state.selectedStudentForPlacement = studentId;
+            }
+            renderAll();
+        }
+
+        function handleSeatClick(seatId) {
+            if (state.isViewOnly) return;
+
+            // If a student is currently selected from list or another seat
+            if (state.selectedStudentForPlacement) {
+                const studentId = state.selectedStudentForPlacement;
+                
+                // Find if this student was already in a seat
+                let currentSeatId = null;
+                for (let sId in state.seating) {
+                    if (state.seating[sId] === studentId) {
+                        currentSeatId = sId;
+                        break;
+                    }
+                }
+
+                assignStudentToSeat(studentId, seatId, currentSeatId);
+                state.selectedStudentForPlacement = null;
+                return;
+            }
+
+            // If clicking an existing seat without selection, pick it up
+            const currentStudent = getStudentBySeatId(seatId);
+            if (currentStudent) {
+                state.selectedStudentForPlacement = currentStudent.id;
+                renderAll();
+            }
+        }
+
+        function assignStudentToSeat(studentId, targetSeatId, sourceSeatId = null) {
+            const occupantAtTarget = state.seating[targetSeatId];
+
+            if (sourceSeatId) {
+                // Swap logic
+                if (occupantAtTarget) {
+                    state.seating[sourceSeatId] = occupantAtTarget;
+                } else {
+                    delete state.seating[sourceSeatId];
+                }
+            } else {
+                // Placing unassigned student
+                // Check if student was already somewhere
+                for (let key in state.seating) {
+                    if (state.seating[key] === studentId) {
+                        delete state.seating[key];
+                    }
+                }
+            }
+
+            state.seating[targetSeatId] = studentId;
+            renderAll();
+        }
+
+        function unseatStudent(seatId) {
+            if (state.isViewOnly) return;
+            delete state.seating[seatId];
+            renderAll();
+        }
+
+        function autoArrangeStudents(mode = 'random') {
+            if (state.isViewOnly || state.students.length === 0) return;
+
+            state.seating = {};
+
+            // Copy danh sách học sinh để xáo trộn
+            let studentList = [...state.students];
+
+            if (mode === 'random') {
+                // Thuật toán xáo trộn ngẫu nhiên Fisher-Yates
+                for (let i = studentList.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [studentList[i], studentList[j]] = [studentList[j], studentList[i]];
+                }
+            }
+
+            let seatIndex = 0;
+
+            // Xếp các học sinh đã xáo trộn vào các bàn từ Trái qua Phải theo hàng
+            for (let desk = 1; desk <= DESKS_PER_AISLE; desk++) {
+                for (let aisle = 1; aisle <= TOTAL_AISLES; aisle++) {
+                    for (let seat = 1; seat <= SEATS_PER_DESK; seat++) {
+                        if (seatIndex < studentList.length) {
+                            const seatId = `A${aisle}_D${desk}_S${seat}`;
+                            state.seating[seatId] = studentList[seatIndex].id;
+                            seatIndex++;
+                        }
+                    }
+                }
+            }
+
+            renderAll();
+            showToast("Đã xếp ngẫu nhiên chỗ ngồi cho học sinh!", "success");
+        }
+
+        function resetSeatingPlan() {
+            if (state.isViewOnly) return;
+            if (Object.keys(state.seating).length === 0) return;
+            state.seating = {};
+            state.selectedStudentForPlacement = null;
+            renderAll();
+            showToast("Đã thu toàn bộ học sinh về danh sách chưa xếp.", "info");
+        }
+
+        function openShareModal() {
+            const payload = {
+                students: state.students,
+                seating: state.seating
+            };
+            const jsonStr = JSON.stringify(payload);
+            const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
+            
+            const baseUrl = window.location.origin + window.location.pathname;
+            const shareUrl = `${baseUrl}?mode=view#${encoded}`;
+
+            document.getElementById('shareViewUrlInput').value = shareUrl;
+            document.getElementById('shareModal').classList.remove('hidden');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+        }
+
+        function copyShareUrl() {
+            const copyText = document.getElementById('shareViewUrlInput');
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+                showToast("Đã sao chép link chia sẻ!", "success");
+            } catch (err) {
+                showToast("Không thể sao chép tự động!", "error");
+            }
+        }
+
+        function exportToImage() {
+            showToast("Đang tạo file ảnh sơ đồ đầy đủ...", "info");
+            
+            // Đưa vị trí cuộn trang về 0 để tránh lỗi lệch tọa độ
+            window.scrollTo(0, 0);
+
+            const element = document.getElementById('printContainer');
+            if (!element) return;
+
+            html2canvas(element, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                useCORS: true,
+                allowTaint: true,
+                scrollX: 0,
+                scrollY: 0,
+                x: 0,
+                y: 0,
+                onclone: (clonedDoc) => {
+                    // Ép kích thước khung chụp chuẩn 1200px độc lập với màn hình thực tế
+                    const clonedContainer = clonedDoc.getElementById('printContainer');
+                    if (clonedContainer) {
+                        clonedContainer.style.width = '1200px';
+                        clonedContainer.style.maxWidth = 'none';
+                        clonedContainer.style.margin = '0 auto';
+                        clonedContainer.style.padding = '24px';
+
+                        // Loại bỏ dòng họ tên đầy đủ bên dưới khi xuất file ảnh
+                        const fullNames = clonedContainer.querySelectorAll('.full-name-sub');
+                        fullNames.forEach(el => el.remove());
+
+                        // Đảm bảo Banner Bục giảng hiển thị chuẩn nền đen chữ trắng
+                        const headerBanner = clonedContainer.querySelector('.bg-slate-800');
+                        if (headerBanner) {
+                            headerBanner.style.backgroundColor = '#1e293b';
+                            headerBanner.style.color = '#ffffff';
+                        }
+                        
+                        const scrollContainer = clonedContainer.querySelector('.overflow-x-auto');
+                        if (scrollContainer) {
+                            scrollContainer.style.overflow = 'visible';
+                            scrollContainer.style.width = '100%';
+                        }
+
+                        const grid = clonedContainer.querySelector('.grid-cols-4');
+                        if (grid) {
+                            grid.style.minWidth = '1120px';
+                            grid.style.width = '100%';
+                        }
+                    }
+                }
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `So_Do_Lop_Hoc_${new Date().toISOString().slice(0,10)}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast("Đã xuất hình ảnh đầy đủ 4 dãy thành công!", "success");
+            }).catch(err => {
+                console.error(err);
+                showToast("Không thể tạo ảnh, tiến hành mở giao diện In...", "error");
+                window.print();
+            });
+        }
+
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            if (type === 'success') {
+                toastIcon.className = 'fa-solid fa-circle-check text-emerald-400';
+            } else if (type === 'error') {
+                toastIcon.className = 'fa-solid fa-circle-exclamation text-rose-400';
+            } else {
+                toastIcon.className = 'fa-solid fa-circle-info text-sky-400';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function renderAll() {
+            renderStudentList();
+            renderSeatingGrid();
+        }
+    </script>
+</body>
+</html>
