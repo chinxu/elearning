@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Thông Báo Lớp Học</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5', // Indigo 600
+                        secondary: '#10B981', // Emerald 500
+                        accent: '#F59E0B', // Amber 500
+                        danger: '#EF4444', // Red 500
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F3F4F6; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* Custom scrollbar for better UI */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        
+        /* Modal Animation */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-active { animation: fadeIn 0.2s ease-out forwards; }
+        
+        /* Markdown-like styling for content */
+        .content-block {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center text-primary text-2xl font-bold">
+                        <i class="fa-solid fa-school mr-2"></i> Thông Báo Lớp Học
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- User Status / Login Button -->
+                    <div id="auth-section" class="flex items-center">
+                        <span id="user-status" class="text-sm text-gray-500 mr-4 hidden md:block">Chế độ: Phụ huynh (Chỉ xem)</span>
+                        <button id="btn-login" class="bg-primary hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-lock mr-1"></i> Đăng nhập
+                        </button>
+                        <div id="admin-controls" class="hidden flex items-center space-x-2">
+                            <span class="text-sm font-semibold text-green-600 bg-green-100 px-3 py-1 rounded-full"><i class="fa-solid fa-user-shield"></i> Quản trị</span>
+                            <button id="btn-logout" class="text-gray-500 hover:text-red-500 p-2 transition-colors" title="Đăng xuất">
+                                <i class="fa-solid fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-white border-b border-gray-200 py-4 shadow-sm z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
+            <div class="w-full sm:w-1/2 md:w-1/3 mb-4 sm:mb-0 relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-search text-gray-400"></i>
+                </div>
+                <input type="text" id="search-input" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm transition duration-150 ease-in-out" placeholder="Tìm kiếm thông tin...">
+            </div>
+            <div class="flex space-x-2">
+                <!-- Add Button (Visible only to Admin) -->
+                <button id="btn-add-new" class="hidden bg-secondary hover:bg-emerald-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm">
+                    <i class="fa-solid fa-plus mr-1"></i> Thêm thông tin mới
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- LEFT COLUMN: TIMETABLE -->
+            <section class="glass-panel rounded-xl shadow-md overflow-hidden flex flex-col h-[70vh]">
+                <div class="bg-indigo-50 border-b border-indigo-100 px-6 py-4 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-indigo-900 flex items-center">
+                        <i class="fa-solid fa-calendar-days text-primary mr-3"></i> Thời Khóa Biểu
+                    </h3>
+                </div>
+                
+                <div class="p-6 flex-grow overflow-y-auto">
+                    <!-- Loading State -->
+                    <div id="loading-timetable" class="flex justify-center items-center py-10 hidden">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-primary"></i>
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div id="empty-timetable" class="text-center py-16 hidden">
+                        <div class="inline-block p-4 rounded-full bg-gray-50 mb-4 text-gray-400">
+                            <i class="fa-regular fa-calendar-xmark text-4xl"></i>
+                        </div>
+                        <p class="text-gray-500 font-medium">Chưa có thông tin thời khóa biểu.</p>
+                    </div>
+
+                    <!-- Timetable Content -->
+                    <div id="timetable-list" class="space-y-3">
+                        <!-- Entries will be injected here by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT COLUMN: NOTICES & ACTIVITIES -->
+            <section class="glass-panel rounded-xl shadow-md overflow-hidden flex flex-col h-[70vh]">
+                <div class="bg-amber-50 border-b border-amber-100 px-6 py-4 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-amber-900 flex items-center">
+                        <i class="fa-solid fa-bullhorn text-accent mr-3"></i> Thông Báo & Hoạt Động
+                    </h3>
+                </div>
+                
+                <div class="p-6 flex-grow overflow-y-auto bg-gray-50/50">
+                    <!-- Loading State -->
+                    <div id="loading-notices" class="flex justify-center items-center py-10 hidden">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-accent"></i>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="empty-notices" class="text-center py-16 hidden">
+                        <div class="inline-block p-4 rounded-full bg-gray-50 mb-4 text-gray-400">
+                            <i class="fa-regular fa-bell-slash text-4xl"></i>
+                        </div>
+                        <p class="text-gray-500 font-medium">Chưa có thông báo hoặc hoạt động nào.</p>
+                    </div>
+
+                    <!-- Notices Content -->
+                    <div id="notices-list" class="space-y-4">
+                        <!-- Entries will be injected here by JS -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    
+    <!-- Login Modal -->
+    <div id="modal-login" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex justify-center items-center modal-active">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
+            <div class="bg-primary px-6 py-4 flex justify-between items-center">
+                <h3 class="text-lg font-bold text-white">Đăng nhập Quản Trị</h3>
+                <button class="close-modal text-white hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-600 mb-4">Nhập mật khẩu để thêm hoặc chỉnh sửa thông báo.</p>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="admin-password">Mật khẩu</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" id="admin-password" type="password" placeholder="Nhập mật khẩu">
+                    <p id="login-error" class="text-red-500 text-xs italic mt-2 hidden">Mật khẩu không đúng!</p>
+                </div>
+                <div class="flex justify-end">
+                    <button class="close-modal bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded mr-2">Hủy</button>
+                    <button id="btn-submit-login" class="bg-primary hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Đăng nhập</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Data Modal -->
+    <div id="modal-data" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex justify-center items-center modal-active">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="bg-secondary px-6 py-4 flex justify-between items-center">
+                <h3 id="modal-data-title" class="text-lg font-bold text-white">Thêm Thông Tin Mới</h3>
+                <button class="close-modal text-white hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-grow">
+                <input type="hidden" id="entry-id">
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Loại thông tin</label>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="entry-type" value="timetable" class="form-radio text-primary h-5 w-5" checked>
+                            <span class="ml-2 text-gray-700">Thời khóa biểu</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="entry-type" value="notice" class="form-radio text-accent h-5 w-5">
+                            <span class="ml-2 text-gray-700">Thông báo / Hoạt động</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Single Content Field -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Nội dung</label>
+                    <textarea id="entry-content" rows="10" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Nhập nội dung vào đây..."></textarea>
+                    <p class="text-xs text-gray-500 mt-1">Xuống dòng sẽ được giữ nguyên khi hiển thị.</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+                <button id="btn-delete-entry" class="text-red-500 hover:text-red-700 font-semibold text-sm hidden flex items-center">
+                    <i class="fa-solid fa-trash-can mr-1"></i> Xóa mục này
+                </button>
+                <div class="flex space-x-2 ml-auto">
+                    <button class="close-modal bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition-colors">Hủy</button>
+                    <button id="btn-save-data" class="bg-secondary hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded transition-colors shadow-md flex items-center">
+                        <i class="fa-solid fa-save mr-1"></i> Lưu thông tin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Modal Replacement for alert() / confirm() -->
+    <div id="modal-alert" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-[60] hidden flex justify-center items-center">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 text-center">
+            <div id="alert-icon" class="text-5xl mb-4 text-accent">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <h3 id="alert-title" class="text-xl font-bold text-gray-800 mb-2">Thông báo</h3>
+            <p id="alert-message" class="text-gray-600 mb-6">Nội dung thông báo</p>
+            <div id="alert-actions" class="flex justify-center space-x-3">
+                <button id="btn-alert-ok" class="bg-primary hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">OK</button>
+                <button id="btn-alert-cancel" class="hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition-colors">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, doc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global App State
+        let isAdmin = false;
+        let unsubscribeTimetable = null;
+        let unsubscribeNotices = null;
+        let currentEditingId = null;
+        
+        let allTimetableData = [];
+        let allNoticesData = [];
+        let currentSearchQuery = "";
+
+        // Firebase Configuration parsing from environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'school-notice-board-app';
+        let firebaseConfig;
+        try {
+            firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+                // Dummy config for local preview without real firebase env
+                apiKey: "dummy", authDomain: "dummy", projectId: "dummy" 
+            };
+        } catch(e) {
+            console.error("Firebase config parsing error", e);
+        }
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        // Setup Authentication
+        async function setupAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Authentication failed:", error);
+                showAlert("Lỗi", "Không thể kết nối với máy chủ. Vui lòng tải lại trang.");
+            }
+        }
+
+        // DOM Elements
+        const ttList = document.getElementById('timetable-list');
+        const noticesList = document.getElementById('notices-list');
+        
+        const btnLogin = document.getElementById('btn-login');
+        const btnLogout = document.getElementById('btn-logout');
+        const authSection = document.getElementById('auth-section');
+        const userStatus = document.getElementById('user-status');
+        const adminControls = document.getElementById('admin-controls');
+        const btnAddNew = document.getElementById('btn-add-new');
+        const searchInput = document.getElementById('search-input');
+
+        searchInput.addEventListener('input', (e) => {
+            currentSearchQuery = e.target.value.toLowerCase();
+            renderTimetable(allTimetableData);
+            renderNotices(allNoticesData);
+        });
+
+        function showAlert(title, message, isConfirm = false, onConfirm = null) {
+            const modal = document.getElementById('modal-alert');
+            document.getElementById('alert-title').textContent = title;
+            document.getElementById('alert-message').textContent = message;
+            
+            const btnOk = document.getElementById('btn-alert-ok');
+            const btnCancel = document.getElementById('btn-alert-cancel');
+            const icon = document.getElementById('alert-icon');
+            
+            if (isConfirm) {
+                btnCancel.classList.remove('hidden');
+                icon.innerHTML = '<i class="fa-solid fa-circle-question text-amber-500"></i>';
+                btnOk.className = 'bg-danger hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-colors';
+                btnOk.textContent = 'Đồng ý Xóa';
+            } else {
+                btnCancel.classList.add('hidden');
+                icon.innerHTML = '<i class="fa-solid fa-circle-info text-primary"></i>';
+                btnOk.className = 'bg-primary hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors';
+                btnOk.textContent = 'OK';
+            }
+
+            modal.classList.remove('hidden');
+
+            // Cleanup previous listeners
+            const newBtnOk = btnOk.cloneNode(true);
+            btnOk.parentNode.replaceChild(newBtnOk, btnOk);
+            const newBtnCancel = btnCancel.cloneNode(true);
+            btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel);
+
+            newBtnOk.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                if (isConfirm && onConfirm) onConfirm();
+            });
+
+            newBtnCancel.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+        }
+
+        const adminPass = "vodanh876"; // Updated password
+        
+        btnLogin.addEventListener('click', () => {
+            document.getElementById('modal-login').classList.remove('hidden');
+            document.getElementById('admin-password').value = '';
+            document.getElementById('login-error').classList.add('hidden');
+        });
+
+        document.getElementById('btn-submit-login').addEventListener('click', () => {
+            const pass = document.getElementById('admin-password').value;
+            if (pass === adminPass) {
+                isAdmin = true;
+                updateAdminUI();
+                document.getElementById('modal-login').classList.add('hidden');
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        });
+
+        btnLogout.addEventListener('click', () => {
+            isAdmin = false;
+            updateAdminUI();
+        });
+
+        function updateAdminUI() {
+            if (isAdmin) {
+                btnLogin.classList.add('hidden');
+                userStatus.classList.add('hidden');
+                adminControls.classList.remove('hidden');
+                btnAddNew.classList.remove('hidden');
+            } else {
+                btnLogin.classList.remove('hidden');
+                userStatus.classList.remove('hidden');
+                adminControls.classList.add('hidden');
+                btnAddNew.classList.add('hidden');
+            }
+            // Re-render lists to show/hide edit buttons
+            renderTimetable(allTimetableData);
+            renderNotices(allNoticesData);
+        }
+
+        // Close modal logic
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.target.closest('.fixed.inset-0').classList.add('hidden');
+            });
+        });
+        
+        // UI Helpers
+        const toggleLoading = (elementId, isLoading) => {
+            document.getElementById(elementId).classList.toggle('hidden', !isLoading);
+        };
+        const toggleEmptyState = (elementId, isEmpty) => {
+            document.getElementById(elementId).classList.toggle('hidden', !isEmpty);
+        };
+
+        function fetchData() {
+            const user = auth.currentUser;
+            if (!user) return; // Wait for auth
+            
+            // Clean up previous listeners
+            if (unsubscribeTimetable) unsubscribeTimetable();
+            if (unsubscribeNotices) unsubscribeNotices();
+
+            // Setup Collections paths (Following RULE 1 strictly for public collaborative data)
+            const ttRef = collection(db, 'artifacts', appId, 'public', 'data', 'timetable_v2');
+            const ntRef = collection(db, 'artifacts', appId, 'public', 'data', 'notices_v2');
+
+            toggleLoading('loading-timetable', true);
+            toggleLoading('loading-notices', true);
+            ttList.innerHTML = '';
+            noticesList.innerHTML = '';
+            toggleEmptyState('empty-timetable', false);
+            toggleEmptyState('empty-notices', false);
+
+            // Fetch Timetable (No complex queries as per RULE 2)
+            unsubscribeTimetable = onSnapshot(ttRef, (snapshot) => {
+                toggleLoading('loading-timetable', false);
+                const items = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    items.push({ id: doc.id, ...data });
+                });
+                
+                // Sort in memory by timestamp created (newest first)
+                items.sort((a, b) => b.createdAt - a.createdAt);
+                allTimetableData = items;
+                renderTimetable(allTimetableData);
+            }, (error) => {
+                console.error("Error fetching timetable:", error);
+                toggleLoading('loading-timetable', false);
+            });
+
+            // Fetch Notices
+            unsubscribeNotices = onSnapshot(ntRef, (snapshot) => {
+                toggleLoading('loading-notices', false);
+                const items = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    items.push({ id: doc.id, ...data });
+                });
+                
+                // Sort in memory by timestamp created (newest first)
+                items.sort((a, b) => b.createdAt - a.createdAt);
+                allNoticesData = items;
+                renderNotices(allNoticesData);
+            }, (error) => {
+                console.error("Error fetching notices:", error);
+                toggleLoading('loading-notices', false);
+            });
+        }
+
+        function renderTimetable(items) {
+            ttList.innerHTML = '';
+            
+            // Apply search filter
+            const filteredItems = items.filter(item => {
+                if(!currentSearchQuery) return true;
+                return (item.content || '').toLowerCase().includes(currentSearchQuery);
+            });
+
+            if (filteredItems.length === 0) {
+                toggleEmptyState('empty-timetable', true);
+                return;
+            }
+            toggleEmptyState('empty-timetable', false);
+
+            filteredItems.forEach((item, index) => {
+                // Alternate background colors for rows
+                const bgClass = index % 2 === 0 ? 'bg-white' : 'bg-indigo-50/50';
+                
+                let adminButtons = '';
+                if (isAdmin) {
+                    adminButtons = `
+                        <button class="text-gray-400 hover:text-primary transition-colors p-2 edit-btn" 
+                            data-id="${item.id}" data-type="timetable" data-payload='${JSON.stringify({content: item.content}).replace(/'/g, "&apos;")}'>
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    `;
+                }
+
+                // Format content to maintain line breaks
+                const formattedContent = (item.content || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                
+                // Format Date
+                let dateStr = "";
+                if(item.createdAt) {
+                    const date = new Date(item.createdAt);
+                    dateStr = date.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit'});
+                }
+
+                const html = `
+                    <div class="${bgClass} border border-indigo-100 rounded-lg p-4 hover:shadow-md transition-shadow relative group">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${dateStr}</span>
+                            <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 rounded">
+                                ${adminButtons}
+                            </div>
+                        </div>
+                        <div class="content-block text-gray-800">${formattedContent}</div>
+                    </div>
+                `;
+                ttList.insertAdjacentHTML('beforeend', html);
+            });
+
+            attachEditListeners();
+        }
+
+        function renderNotices(items) {
+            noticesList.innerHTML = '';
+            
+            // Apply search filter
+            const filteredItems = items.filter(item => {
+                if(!currentSearchQuery) return true;
+                return (item.content || '').toLowerCase().includes(currentSearchQuery);
+            });
+
+            if (filteredItems.length === 0) {
+                toggleEmptyState('empty-notices', true);
+                return;
+            }
+            toggleEmptyState('empty-notices', false);
+
+            filteredItems.forEach(item => {
+                let adminButtons = '';
+                if (isAdmin) {
+                    adminButtons = `
+                        <button class="text-gray-400 hover:text-accent transition-colors p-2 edit-btn"
+                            data-id="${item.id}" data-type="notice" data-payload='${JSON.stringify({content: item.content}).replace(/'/g, "&apos;")}'>
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    `;
+                }
+
+                // Format content to maintain line breaks and escape HTML
+                const formattedContent = (item.content || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                
+                // Format Date
+                let dateStr = "";
+                if(item.createdAt) {
+                    const date = new Date(item.createdAt);
+                    dateStr = date.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit'});
+                }
+
+                const html = `
+                    <div class="bg-white border-l-4 border-l-amber-500 border border-gray-100 rounded-r-lg p-5 hover:shadow-md transition-shadow relative group mb-3">
+                         <div class="flex justify-between items-start mb-3 border-b border-gray-50 pb-2">
+                             <div class="flex items-center text-amber-600">
+                                 <i class="fa-solid fa-bullhorn mr-2"></i>
+                                 <span class="font-semibold text-sm">Thông báo / Hoạt động</span>
+                             </div>
+                            <span class="text-xs text-gray-400 ml-auto mr-8">${dateStr}</span>
+                            <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 rounded">
+                                ${adminButtons}
+                            </div>
+                        </div>
+                        <div class="content-block text-gray-700">${formattedContent}</div>
+                    </div>
+                `;
+                noticesList.insertAdjacentHTML('beforeend', html);
+            });
+
+            attachEditListeners();
+        }
+
+        function attachEditListeners() {
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const btnEl = e.currentTarget;
+                    const id = btnEl.dataset.id;
+                    const type = btnEl.dataset.type;
+                    const data = JSON.parse(btnEl.dataset.payload);
+                    openDataModal(type, data, id);
+                });
+            });
+        }
+
+        btnAddNew.addEventListener('click', () => {
+            openDataModal('timetable', null, null);
+        });
+
+        function openDataModal(type, data, id) {
+            currentEditingId = id;
+            const modal = document.getElementById('modal-data');
+            const title = document.getElementById('modal-data-title');
+            const deleteBtn = document.getElementById('btn-delete-entry');
+
+            // Reset form
+            document.getElementById('entry-content').value = '';
+
+            // Set Type
+            document.querySelector(`input[name="entry-type"][value="${type}"]`).checked = true;
+
+            if (id && data) {
+                title.textContent = "Chỉnh sửa thông tin";
+                deleteBtn.classList.remove('hidden');
+                
+                // Disable type switching when editing
+                document.querySelectorAll('input[name="entry-type"]').forEach(r => r.disabled = true);
+
+                // Populate content field
+                document.getElementById('entry-content').value = data.content || '';
+            } else {
+                title.textContent = "Thêm thông tin mới";
+                deleteBtn.classList.add('hidden');
+                document.querySelectorAll('input[name="entry-type"]').forEach(r => r.disabled = false);
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        document.getElementById('btn-save-data').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (!user || !isAdmin) return;
+
+            const type = document.querySelector('input[name="entry-type"]:checked').value;
+            const btnSave = document.getElementById('btn-save-data');
+            
+            // Collect Data
+            const content = document.getElementById('entry-content').value.trim();
+            if (!content) {
+                showAlert("Thiếu thông tin", "Vui lòng nhập nội dung.");
+                return;
+            }
+
+            let payload = {
+                type: type,
+                content: content,
+                createdAt: Date.now()
+            };
+
+            try {
+                btnSave.disabled = true;
+                btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang lưu...';
+                
+                const collectionName = type === 'timetable' ? 'timetable_v2' : 'notices_v2';
+                const colRef = collection(db, 'artifacts', appId, 'public', 'data', collectionName);
+
+                if (currentEditingId) {
+                    // Update - don't overwrite createdAt
+                    delete payload.createdAt;
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', collectionName, currentEditingId);
+                    await updateDoc(docRef, payload);
+                } else {
+                    // Create
+                    await addDoc(colRef, payload);
+                }
+
+                document.getElementById('modal-data').classList.add('hidden');
+            } catch (error) {
+                console.error("Error saving doc:", error);
+                showAlert("Lỗi", "Không thể lưu thông tin. Vui lòng thử lại.");
+            } finally {
+                btnSave.disabled = false;
+                btnSave.innerHTML = '<i class="fa-solid fa-save mr-1"></i> Lưu thông tin';
+            }
+        });
+
+        document.getElementById('btn-delete-entry').addEventListener('click', () => {
+            if (!currentEditingId) return;
+            
+            showAlert("Xác nhận xóa", "Bạn có chắc chắn muốn xóa mục này không? Hành động này không thể hoàn tác.", true, async () => {
+                const user = auth.currentUser;
+                if (!user || !isAdmin) return;
+
+                const type = document.querySelector('input[name="entry-type"]:checked').value;
+                const collectionName = type === 'timetable' ? 'timetable' : 'notices';
+                
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', collectionName, currentEditingId);
+                    await deleteDoc(docRef);
+                    document.getElementById('modal-data').classList.add('hidden');
+                } catch (error) {
+                    console.error("Error deleting doc:", error);
+                    showAlert("Lỗi", "Không thể xóa thông tin.");
+                }
+            });
+        });
+
+        // Start app flow
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User authenticated");
+                fetchData(); // Fetch data once authenticated
+            }
+        });
+
+        // Initial setup call
+        setupAuth();
+        
+    </script>
+</body>
+</html>
