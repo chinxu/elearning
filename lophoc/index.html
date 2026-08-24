@@ -167,11 +167,15 @@
                 <button class="close-modal text-white hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="p-6">
-                <p class="text-sm text-gray-600 mb-4">Nhập mật khẩu để thêm hoặc chỉnh sửa thông báo.</p>
+                <p class="text-sm text-gray-600 mb-4">Đăng nhập tài khoản giáo viên do trường cung cấp.</p>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="admin-email">Email</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" id="admin-email" type="email" placeholder="Nhập email giáo viên">
+                </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="admin-password">Mật khẩu</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" id="admin-password" type="password" placeholder="Nhập mật khẩu">
-                    <p id="login-error" class="text-red-500 text-xs italic mt-2 hidden">Mật khẩu không đúng!</p>
+                    <p id="login-error" class="text-red-500 text-xs italic mt-2 hidden">Email hoặc mật khẩu không đúng!</p>
                 </div>
                 <div class="flex justify-end">
                     <button class="close-modal bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded mr-2">Hủy</button>
@@ -245,7 +249,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, doc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global App State
@@ -258,37 +262,22 @@
         let allNoticesData = [];
         let currentSearchQuery = "";
 
-        // Firebase Configuration parsing from environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'school-notice-board-app';
-        let firebaseConfig;
-        try {
-            firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-                // Dummy config for local preview without real firebase env
-                apiKey: "dummy", authDomain: "dummy", projectId: "dummy" 
-            };
-        } catch(e) {
-            console.error("Firebase config parsing error", e);
-        }
+        // Cấu hình Firebase thực tế của dự án webthongtin
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7h62vrcLkQ8jOBI6hSRNip8ZisEPtGYw",
+            authDomain: "webthongtin-5bc35.firebaseapp.com",
+            projectId: "webthongtin-5bc35",
+            storageBucket: "webthongtin-5bc35.firebasestorage.app",
+            messagingSenderId: "800829738212",
+            appId: "1:800829738212:web:9a89244c87c3abf7a170f1",
+            measurementId: "G-2QT70CLDZY"
+        };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
         
-        // Setup Authentication
-        async function setupAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                console.error("Authentication failed:", error);
-                showAlert("Lỗi", "Không thể kết nối với máy chủ. Vui lòng tải lại trang.");
-            }
-        }
-
         // DOM Elements
         const ttList = document.getElementById('timetable-list');
         const noticesList = document.getElementById('notices-list');
@@ -345,29 +334,42 @@
                 modal.classList.add('hidden');
             });
         }
-
-        const adminPass = "vodanh876"; // Updated password
         
         btnLogin.addEventListener('click', () => {
             document.getElementById('modal-login').classList.remove('hidden');
+            document.getElementById('admin-email').value = '';
             document.getElementById('admin-password').value = '';
             document.getElementById('login-error').classList.add('hidden');
         });
 
-        document.getElementById('btn-submit-login').addEventListener('click', () => {
+        document.getElementById('btn-submit-login').addEventListener('click', async () => {
+            const email = document.getElementById('admin-email').value;
             const pass = document.getElementById('admin-password').value;
-            if (pass === adminPass) {
-                isAdmin = true;
-                updateAdminUI();
+            const btnSubmit = document.getElementById('btn-submit-login');
+            
+            try {
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang xử lý...';
+                
+                // Gọi tới Firebase để đăng nhập thực sự, tuyệt đối không có mật khẩu trong source code!
+                await signInWithEmailAndPassword(auth, email, pass);
                 document.getElementById('modal-login').classList.add('hidden');
-            } else {
+            } catch (error) {
+                console.error("Login error:", error);
                 document.getElementById('login-error').classList.remove('hidden');
+                document.getElementById('login-error').textContent = 'Tài khoản hoặc mật khẩu không chính xác!';
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Đăng nhập';
             }
         });
 
-        btnLogout.addEventListener('click', () => {
-            isAdmin = false;
-            updateAdminUI();
+        btnLogout.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Logout error:", error);
+            }
         });
 
         function updateAdminUI() {
@@ -403,16 +405,13 @@
         };
 
         function fetchData() {
-            const user = auth.currentUser;
-            if (!user) return; // Wait for auth
-            
             // Clean up previous listeners
             if (unsubscribeTimetable) unsubscribeTimetable();
             if (unsubscribeNotices) unsubscribeNotices();
 
-            // Setup Collections paths (Following RULE 1 strictly for public collaborative data)
-            const ttRef = collection(db, 'artifacts', appId, 'public', 'data', 'timetable_v2');
-            const ntRef = collection(db, 'artifacts', appId, 'public', 'data', 'notices_v2');
+            // Cập nhật đường dẫn lưu dữ liệu trực tiếp vào dự án thật của bạn
+            const ttRef = collection(db, 'timetable');
+            const ntRef = collection(db, 'notices');
 
             toggleLoading('loading-timetable', true);
             toggleLoading('loading-notices', true);
@@ -641,13 +640,13 @@
                 btnSave.disabled = true;
                 btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang lưu...';
                 
-                const collectionName = type === 'timetable' ? 'timetable_v2' : 'notices_v2';
-                const colRef = collection(db, 'artifacts', appId, 'public', 'data', collectionName);
+                const collectionName = type === 'timetable' ? 'timetable' : 'notices';
+                const colRef = collection(db, collectionName);
 
                 if (currentEditingId) {
                     // Update - don't overwrite createdAt
                     delete payload.createdAt;
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', collectionName, currentEditingId);
+                    const docRef = doc(db, collectionName, currentEditingId);
                     await updateDoc(docRef, payload);
                 } else {
                     // Create
@@ -675,7 +674,7 @@
                 const collectionName = type === 'timetable' ? 'timetable' : 'notices';
                 
                 try {
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', collectionName, currentEditingId);
+                    const docRef = doc(db, collectionName, currentEditingId);
                     await deleteDoc(docRef);
                     document.getElementById('modal-data').classList.add('hidden');
                 } catch (error) {
@@ -689,12 +688,15 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log("User authenticated");
-                fetchData(); // Fetch data once authenticated
+                isAdmin = true;
+                updateAdminUI();
+            } else {
+                console.log("Guest mode");
+                isAdmin = false;
+                updateAdminUI();
             }
+            fetchData(); // Luôn luôn tải dữ liệu cho cả Phụ huynh và Giáo viên
         });
-
-        // Initial setup call
-        setupAuth();
         
     </script>
 </body>
