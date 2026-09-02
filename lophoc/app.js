@@ -11,13 +11,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBTzDdeqd7NujX9jHmQMTHKNAfOVoduSKo",
-  authDomain: "hien-webthongtin.firebaseapp.com",
-  projectId: "hien-webthongtin",
-  storageBucket: "hien-webthongtin.firebasestorage.app",
-  messagingSenderId: "1076938189345",
-  appId: "1:1076938189345:web:3f6f6ca88645df0af8d160",
-  measurementId: "G-TGX6XEQR9Q"
+  apiKey: "AIzaSyA7h62vrcLkQ8jOBI6hSRNip8ZisEPtGYw",
+  authDomain: "webthongtin-5bc35.firebaseapp.com",
+  projectId: "webthongtin-5bc35",
+  storageBucket: "webthongtin-5bc35.firebasestorage.app",
+  messagingSenderId: "800829738212",
+  appId: "1:800829738212:web:9a89244c87c3abf7a170f1",
+  measurementId: "G-2QT70CLDZY"
 };
 
 const app = initializeApp(firebaseConfig);
