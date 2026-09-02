@@ -101,6 +101,8 @@
     display:flex;align-items:center;justify-content:center;
   }
   .icon-btn:hover{background:rgba(255,255,255,.1);}
+  .icon-btn.danger{border-color:rgba(230,140,140,.5);color:#F0B9B9;}
+  .icon-btn.danger:hover{background:rgba(166,61,64,.35);}
 
   .class-list{
     display:flex;
@@ -574,6 +576,7 @@
       <div class="year-select-wrap">
         <select id="yearSelect"></select>
         <button class="icon-btn" id="addYearBtn" title="Thêm năm học mới">+</button>
+        <button class="icon-btn danger" id="deleteYearBtn" title="Xoá năm học này">&times;</button>
       </div>
     </div>
 
