@@ -111,6 +111,8 @@ const state = {
   yearId: null,
   years: [],
   students: [],
+  classes: [],
+  defaultClassId: null,
   selectedStudentId: null,
   tab: "lylich",
   selectedMonth: MONTHS[0].key,
@@ -118,6 +120,7 @@ const state = {
   comments: {},
   unsubStudents: null,
   unsubComments: null,
+  unsubClasses: null,
   parsedRows: null,
   workbook: null,
 };
@@ -192,6 +195,7 @@ onAuthStateChanged(auth, (user) => {
     $("loginScreen").style.display = "flex";
     if (state.unsubStudents) state.unsubStudents();
     if (state.unsubComments) state.unsubComments();
+    if (state.unsubClasses) state.unsubClasses();
   }
 });
 
@@ -227,12 +231,14 @@ function selectYear(yearId) {
   $("importYearSelect").value = yearId;
   deselectStudent();
   subscribeStudents();
+  subscribeClasses();
 }
 
 $("addYearBtn").addEventListener("click", () => openYearModal());
 
 function openYearModal() {
   $("newYearInput").value = "";
+  $("newYearClassInput").value = "";
   $("yearModal").classList.add("active");
   setTimeout(() => $("newYearInput").focus(), 30);
 }
@@ -240,6 +246,7 @@ $("closeYearBtn").addEventListener("click", () => $("yearModal").classList.remov
 $("cancelYearBtn").addEventListener("click", () => $("yearModal").classList.remove("active"));
 $("confirmYearBtn").addEventListener("click", async () => {
   const label = $("newYearInput").value.trim();
+  const className = $("newYearClassInput").value.trim();
   if (!label) return;
   $("confirmYearBtn").disabled = true;
   try {
@@ -248,6 +255,11 @@ $("confirmYearBtn").addEventListener("click", async () => {
     state.years.unshift({ id: ref.id, label });
     renderYearOptions();
     selectYear(ref.id);
+    if (className) {
+      const classRef = doc(collection(db, "schoolYears", ref.id, "classes"));
+      await setDoc(classRef, { name: className, createdAt: serverTimestamp() });
+      await updateDoc(doc(db, "schoolYears", ref.id), { defaultClassId: classRef.id });
+    }
     $("yearModal").classList.remove("active");
     toast("Đã thêm năm học " + label);
   } catch (err) {
@@ -257,6 +269,108 @@ $("confirmYearBtn").addEventListener("click", async () => {
     $("confirmYearBtn").disabled = false;
   }
 });
+
+// ---------------------------------------------------------------
+// Lớp trong năm học
+// ---------------------------------------------------------------
+function subscribeClasses() {
+  if (state.unsubClasses) state.unsubClasses();
+  state.classes = [];
+  state.defaultClassId = null;
+  if (!state.yearId) { renderClassList(); return; }
+  getDoc(doc(db, "schoolYears", state.yearId)).then(snap => {
+    state.defaultClassId = snap.exists() ? (snap.data().defaultClassId || null) : null;
+    renderClassList();
+  });
+  const col = collection(db, "schoolYears", state.yearId, "classes");
+  state.unsubClasses = onSnapshot(col, (snap) => {
+    state.classes = snap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (a.name || "").localeCompare(b.name || "", "vi"));
+    renderClassList();
+  });
+}
+
+function renderClassList() {
+  if (!state.classes.length) {
+    $("classList").innerHTML = `<span class="empty-note">Chưa có lớp nào.</span>`;
+    return;
+  }
+  $("classList").innerHTML = state.classes.map(c => `
+    <span class="class-chip ${c.id === state.defaultClassId ? "default" : ""}" data-class-id="${c.id}">
+      <button type="button" class="set-default" data-set-default="${c.id}" title="Đặt làm lớp mặc định khi xuất phiếu">${escapeHtml(c.name)}</button>
+      <button type="button" class="rm-class" data-rm-class="${c.id}" title="Xoá lớp">&times;</button>
+    </span>`).join("");
+  $("classList").querySelectorAll("[data-set-default]").forEach(btn => {
+    btn.addEventListener("click", () => setDefaultClass(btn.dataset.setDefault));
+  });
+  $("classList").querySelectorAll("[data-rm-class]").forEach(btn => {
+    btn.addEventListener("click", () => deleteClass(btn.dataset.rmClass));
+  });
+}
+
+async function setDefaultClass(classId) {
+  if (!state.yearId) return;
+  try {
+    await updateDoc(doc(db, "schoolYears", state.yearId), { defaultClassId: classId });
+    state.defaultClassId = classId;
+    renderClassList();
+  } catch (err) {
+    console.error(err);
+    toast("Không đặt được lớp mặc định.");
+  }
+}
+
+$("addClassBtn").addEventListener("click", addClass);
+$("newClassInput").addEventListener("keydown", (e) => { if (e.key === "Enter") addClass(); });
+
+async function addClass() {
+  const name = $("newClassInput").value.trim();
+  if (!name) return;
+  if (!state.yearId) { toast("Chọn hoặc thêm một năm học trước."); return; }
+  $("addClassBtn").disabled = true;
+  try {
+    const ref = doc(collection(db, "schoolYears", state.yearId, "classes"));
+    await setDoc(ref, { name, createdAt: serverTimestamp() });
+    if (!state.defaultClassId) {
+      await updateDoc(doc(db, "schoolYears", state.yearId), { defaultClassId: ref.id });
+      state.defaultClassId = ref.id;
+    }
+    $("newClassInput").value = "";
+    toast("Đã thêm lớp " + name);
+  } catch (err) {
+    console.error(err);
+    toast("Không thêm được lớp. Thử lại.");
+  } finally {
+    $("addClassBtn").disabled = false;
+  }
+}
+
+async function deleteClass(classId) {
+  const c = state.classes.find(x => x.id === classId);
+  if (!c) return;
+  if (!confirm(`Xoá lớp "${c.name}"? (Không ảnh hưởng đến lý lịch học sinh đã lưu.)`)) return;
+  try {
+    await deleteDoc(doc(db, "schoolYears", state.yearId, "classes", classId));
+    if (state.defaultClassId === classId) {
+      const next = state.classes.find(x => x.id !== classId);
+      await updateDoc(doc(db, "schoolYears", state.yearId), { defaultClassId: next ? next.id : null });
+      state.defaultClassId = next ? next.id : null;
+    }
+    toast("Đã xoá lớp.");
+  } catch (err) {
+    console.error(err);
+    toast("Không xoá được lớp. Thử lại.");
+  }
+}
+
+function resolveClassName(student) {
+  if (student?.fields?.className) return student.fields.className;
+  const def = state.classes.find(c => c.id === state.defaultClassId);
+  if (def) return def.name;
+  if (state.classes.length === 1) return state.classes[0].name;
+  return "";
+}
 
 // ---------------------------------------------------------------
 // Students list (realtime)
@@ -338,7 +452,8 @@ function renderStudentDetail() {
   if (!s) return;
   $("detailName").textContent = s.fields?.name || "(chưa có tên)";
   const bits = [];
-  if (s.fields?.className) bits.push("Lớp " + s.fields.className);
+  const cls = resolveClassName(s);
+  if (cls) bits.push("Lớp " + cls);
   if (s.fields?.dob) bits.push(s.fields.dob);
   $("detailSub").textContent = bits.join(" · ");
   renderFieldList();
@@ -555,6 +670,155 @@ $("exportSelectAllBtn").addEventListener("click", () => {
 
 $("exportWordBtn").addEventListener("click", exportWordReport);
 
+function buildWordDoc(s, selected, yearLabel) {
+  const { Document, Paragraph, TextRun, AlignmentType, PageBreak,
+    Table, TableRow, TableCell, WidthType, BorderStyle } = window.docx;
+  const FONT = "Times New Roman";
+  const SIZE = 26; // 13pt = 26 half-points
+  const NO_BORDER = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
+  const NO_BORDERS = { top: NO_BORDER, bottom: NO_BORDER, left: NO_BORDER, right: NO_BORDER, insideHorizontal: NO_BORDER, insideVertical: NO_BORDER };
+  const LINE_BORDER = { style: BorderStyle.SINGLE, size: 4, color: "000000" };
+  const BOX_BORDERS = { top: LINE_BORDER, bottom: LINE_BORDER, left: LINE_BORDER, right: LINE_BORDER, insideHorizontal: LINE_BORDER, insideVertical: LINE_BORDER };
+  const CELL_MARGIN = { top: 100, bottom: 100, left: 120, right: 120 };
+  const run = (text, opts = {}) => new TextRun({ text, font: FONT, size: SIZE, ...opts });
+
+  const studentName = s.fields?.name || "";
+  const className = resolveClassName(s);
+
+  function headerBlock() {
+    return new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      borders: NO_BORDERS,
+      rows: [new TableRow({
+        children: [
+          new TableCell({
+            width: { size: 50, type: WidthType.PERCENTAGE },
+            borders: NO_BORDERS,
+            children: [
+              new Paragraph({ children: [run("TRƯỜNG ...................................", { bold: true })] }),
+              new Paragraph({ children: [run("Lớp: ", { bold: true }), run(className || "...................")] }),
+            ],
+          }),
+          new TableCell({
+            width: { size: 50, type: WidthType.PERCENTAGE },
+            borders: NO_BORDERS,
+            children: [
+              new Paragraph({ alignment: AlignmentType.CENTER, children: [run("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM", { bold: true })] }),
+              new Paragraph({
+                alignment: AlignmentType.CENTER,
+                border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: "000000", space: 1 } },
+                children: [run("Độc lập - Tự do - Hạnh phúc", { bold: true })],
+              }),
+            ],
+          }),
+        ],
+      })],
+    });
+  }
+
+  function infoTable() {
+    return new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      borders: BOX_BORDERS,
+      rows: [
+        new TableRow({
+          children: [
+            new TableCell({
+              width: { size: 60, type: WidthType.PERCENTAGE },
+              margins: CELL_MARGIN,
+              children: [new Paragraph({ children: [run("Họ và tên học sinh: ", { bold: true }), run(studentName)] })],
+            }),
+            new TableCell({
+              width: { size: 40, type: WidthType.PERCENTAGE },
+              margins: CELL_MARGIN,
+              children: [new Paragraph({ children: [run("Lớp: ", { bold: true }), run(className)] })],
+            }),
+          ],
+        }),
+        new TableRow({
+          children: [
+            new TableCell({
+              columnSpan: 2,
+              margins: CELL_MARGIN,
+              children: [new Paragraph({ children: [run("Năm học: ", { bold: true }), run(yearLabel || "")] })],
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function commentBox(text) {
+    const content = (text || "").trim();
+    const lines = content ? content.split("\n") : ["(Chưa có nhận xét)"];
+    const paras = [
+      new Paragraph({ spacing: { after: 120 }, children: [run("NHẬN XÉT CỦA GIÁO VIÊN CHỦ NHIỆM:", { bold: true })] }),
+      ...lines.map(line => new Paragraph({ spacing: { after: 100, line: 360 }, children: [run(line || " ")] })),
+    ];
+    for (let i = 0; i < 5; i++) paras.push(new Paragraph({ children: [run(" ")] }));
+    return new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      borders: BOX_BORDERS,
+      rows: [new TableRow({ children: [new TableCell({ margins: CELL_MARGIN, children: paras })] })],
+    });
+  }
+
+  function signatureBlock() {
+    return [
+      new Paragraph({ alignment: AlignmentType.RIGHT, spacing: { before: 200, after: 40 }, children: [run("Đà Nẵng, ngày ...... tháng ...... năm ......", { italics: true })] }),
+      new Table({
+        width: { size: 100, type: WidthType.PERCENTAGE },
+        borders: NO_BORDERS,
+        rows: [new TableRow({
+          children: [
+            new TableCell({
+              width: { size: 50, type: WidthType.PERCENTAGE },
+              borders: NO_BORDERS,
+              children: [
+                new Paragraph({ alignment: AlignmentType.CENTER, children: [run("GIÁO VIÊN CHỦ NHIỆM", { bold: true })] }),
+                new Paragraph({ alignment: AlignmentType.CENTER, children: [run("(Ký, ghi rõ họ tên)", { italics: true })] }),
+              ],
+            }),
+            new TableCell({
+              width: { size: 50, type: WidthType.PERCENTAGE },
+              borders: NO_BORDERS,
+              children: [
+                new Paragraph({ alignment: AlignmentType.CENTER, children: [run("PHỤ HUYNH HỌC SINH", { bold: true })] }),
+                new Paragraph({ alignment: AlignmentType.CENTER, children: [run("(Ký, ghi rõ họ tên)", { italics: true })] }),
+              ],
+            }),
+          ],
+        })],
+      }),
+    ];
+  }
+
+  const children = [];
+  selected.forEach((m, idx) => {
+    if (idx > 0) children.push(new Paragraph({ children: [new PageBreak()] }));
+    children.push(headerBlock());
+    children.push(new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 240, after: 60 },
+      children: [run("PHIẾU THÔNG TIN RÈN LUYỆN", { bold: true })],
+    }));
+    children.push(new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { after: 240 },
+      children: [run(`${m.label} - Năm học ${yearLabel || ""}`, { italics: true })],
+    }));
+    children.push(infoTable());
+    children.push(new Paragraph({ spacing: { before: 200, after: 200 }, children: [] }));
+    children.push(commentBox(state.comments[m.key]?.text));
+    children.push(...signatureBlock());
+  });
+
+  return new Document({
+    styles: { default: { document: { run: { font: FONT, size: SIZE } } } },
+    sections: [{ children }],
+  });
+}
+
 async function exportWordReport() {
   const s = currentStudent();
   if (!s) return;
@@ -564,66 +828,14 @@ async function exportWordReport() {
     toast("Chưa tải được thư viện xuất Word — kiểm tra kết nối mạng rồi thử lại.");
     return;
   }
-  const { Document, Packer, Paragraph, TextRun, AlignmentType, PageBreak } = window.docx;
-  const FONT = "Times New Roman";
-  const SIZE = 26; // 13pt = 26 half-points
-
+  const { Packer } = window.docx;
   const studentName = s.fields?.name || "";
-  const className = s.fields?.className || "";
-  const children = [];
-
-  selected.forEach((m, idx) => {
-    if (idx > 0) {
-      children.push(new Paragraph({ children: [new PageBreak()] }));
-    }
-    children.push(new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { after: 160 },
-      children: [new TextRun({ text: "PHIẾU THÔNG TIN RÈN LUYỆN", bold: true, font: FONT, size: SIZE })],
-    }));
-    children.push(new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { after: 280 },
-      children: [new TextRun({ text: m.label, italics: true, font: FONT, size: SIZE })],
-    }));
-    children.push(new Paragraph({
-      spacing: { after: 120 },
-      children: [
-        new TextRun({ text: "Họ và tên học sinh: ", bold: true, font: FONT, size: SIZE }),
-        new TextRun({ text: studentName, font: FONT, size: SIZE }),
-      ],
-    }));
-    if (className) {
-      children.push(new Paragraph({
-        spacing: { after: 240 },
-        children: [
-          new TextRun({ text: "Lớp: ", bold: true, font: FONT, size: SIZE }),
-          new TextRun({ text: className, font: FONT, size: SIZE }),
-        ],
-      }));
-    } else {
-      children.push(new Paragraph({ spacing: { after: 120 }, children: [] }));
-    }
-    children.push(new Paragraph({
-      spacing: { after: 120 },
-      children: [new TextRun({ text: "Nhận xét của giáo viên chủ nhiệm:", bold: true, font: FONT, size: SIZE })],
-    }));
-    const text = state.comments[m.key]?.text?.trim() || "(Chưa có nhận xét)";
-    text.split("\n").forEach(line => {
-      children.push(new Paragraph({
-        spacing: { after: 100, line: 360 },
-        children: [new TextRun({ text: line || " ", font: FONT, size: SIZE })],
-      }));
-    });
-  });
+  const yearLabel = (state.years.find(y => y.id === state.yearId) || {}).label || "";
 
   $("exportWordBtn").disabled = true;
   $("exportWordBtn").textContent = "Đang tạo file…";
   try {
-    const docObj = new Document({
-      styles: { default: { document: { run: { font: FONT, size: SIZE } } } },
-      sections: [{ children }],
-    });
+    const docObj = buildWordDoc(s, selected, yearLabel);
     const blob = await Packer.toBlob(docObj);
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
