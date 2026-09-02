@@ -722,6 +722,23 @@
   </div>
 </div>
 
+<!-- ============ DELETE YEAR MODAL ============ -->
+<div class="modal-overlay" id="deleteYearModal">
+  <div class="modal" style="max-width:420px;">
+    <button class="modal-close" id="closeDeleteYearBtn">&times;</button>
+    <h3>Xoá năm học</h3>
+    <div class="sub" id="deleteYearWarning"></div>
+    <div class="field-group">
+      <label for="deleteYearConfirmInput">Gõ đúng tên năm học để xác nhận</label>
+      <input type="text" id="deleteYearConfirmInput" placeholder="" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="cancelDeleteYearBtn">Huỷ</button>
+      <button class="btn" id="confirmDeleteYearBtn" style="border-color:var(--red);color:var(--red);" disabled>Xoá vĩnh viễn</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module" src="./app.js"></script>
