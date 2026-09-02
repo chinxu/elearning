@@ -221,6 +221,8 @@ function renderYearOptions() {
     $("yearSelect").value = state.yearId;
     $("importYearSelect").value = state.yearId;
   }
+  $("deleteYearBtn").disabled = !state.years.length;
+  $("deleteYearBtn").style.opacity = state.years.length ? "1" : ".4";
 }
 
 $("yearSelect").addEventListener("change", (e) => selectYear(e.target.value));
@@ -269,6 +271,65 @@ $("confirmYearBtn").addEventListener("click", async () => {
     $("confirmYearBtn").disabled = false;
   }
 });
+
+$("deleteYearBtn").addEventListener("click", () => deleteYear(state.yearId));
+
+async function deleteYear(yearId) {
+  const year = state.years.find(y => y.id === yearId);
+  if (!year) { toast("Chưa có năm học nào để xoá."); return; }
+  const ok = confirm(
+    `XOÁ TOÀN BỘ năm học "${year.label}"?\n\nToàn bộ danh sách học sinh, lý lịch, nhận xét và các lớp trong năm học này sẽ bị xoá vĩnh viễn, không thể khôi phục.`
+  );
+  if (!ok) return;
+  const typed = prompt(`Để xác nhận, gõ đúng tên năm học "${year.label}" rồi bấm OK:`);
+  if (typed !== year.label) {
+    toast("Đã huỷ xoá — tên nhập không khớp.");
+    return;
+  }
+  $("deleteYearBtn").disabled = true;
+  try {
+    const studentsSnap = await getDocs(collection(db, "schoolYears", yearId, "students"));
+    const refsToDelete = [];
+    studentsSnap.docs.forEach(sDoc => {
+      MONTHS.forEach(m => {
+        refsToDelete.push(doc(db, "schoolYears", yearId, "students", sDoc.id, "comments", m.key));
+      });
+      refsToDelete.push(doc(db, "schoolYears", yearId, "students", sDoc.id));
+    });
+    const classesSnap = await getDocs(collection(db, "schoolYears", yearId, "classes"));
+    classesSnap.docs.forEach(cDoc => refsToDelete.push(doc(db, "schoolYears", yearId, "classes", cDoc.id)));
+    refsToDelete.push(doc(db, "schoolYears", yearId));
+
+    for (let i = 0; i < refsToDelete.length; i += 400) {
+      const batch = writeBatch(db);
+      refsToDelete.slice(i, i + 400).forEach(ref => batch.delete(ref));
+      await batch.commit();
+    }
+
+    state.years = state.years.filter(y => y.id !== yearId);
+    if (state.yearId === yearId) {
+      if (state.unsubStudents) state.unsubStudents();
+      if (state.unsubComments) state.unsubComments();
+      if (state.unsubClasses) state.unsubClasses();
+      state.yearId = null;
+      state.students = [];
+      state.classes = [];
+      state.defaultClassId = null;
+      deselectStudent();
+      renderStudentList();
+      renderClassList();
+      $("statCount").textContent = "0";
+    }
+    renderYearOptions();
+    if (!state.yearId && state.years.length) selectYear(state.years[0].id);
+    toast(`Đã xoá năm học "${year.label}".`);
+  } catch (err) {
+    console.error(err);
+    toast("Không xoá được năm học. Thử lại.");
+  } finally {
+    $("deleteYearBtn").disabled = false;
+  }
+}
 
 // ---------------------------------------------------------------
 // Lớp trong năm học
