@@ -102,6 +102,58 @@
   }
   .icon-btn:hover{background:rgba(255,255,255,.1);}
 
+  .class-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:8px;
+  }
+  .class-list .empty-note{
+    font-size:12px;
+    color:#8DA08D;
+  }
+  .class-chip{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:14px;
+    padding:4px 6px 4px 12px;
+    font-size:12.5px;
+    color:#E8E6D8;
+  }
+  .class-chip.default{
+    background:#fff;
+    color:var(--green-deep);
+    border-color:#fff;
+    font-weight:600;
+  }
+  .class-chip button.set-default{
+    background:none;border:none;color:inherit;
+    font-size:12.5px;padding:0;
+  }
+  .class-chip button.rm-class{
+    background:none;border:none;color:inherit;
+    opacity:.65;
+    font-size:13px;line-height:1;
+    width:16px;height:16px;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:50%;
+  }
+  .class-chip button.rm-class:hover{opacity:1;background:rgba(0,0,0,.12);}
+  .class-add-row{display:flex;gap:6px;}
+  .class-add-row input{
+    flex:1;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:7px 9px;
+    font-size:13px;
+  }
+  .class-add-row input::placeholder{color:#9FAE9F;}
+
   .search-row{padding:12px 20px;}
   #studentSearch{
     width:100%;
@@ -525,6 +577,15 @@
       </div>
     </div>
 
+    <div class="year-row">
+      <label>Lớp trong năm học này</label>
+      <div class="class-list" id="classList"></div>
+      <div class="class-add-row">
+        <input id="newClassInput" type="text" placeholder="Thêm lớp, ví dụ 8/16" />
+        <button class="icon-btn" id="addClassBtn" title="Thêm lớp">+</button>
+      </div>
+    </div>
+
     <div class="search-row">
       <input id="studentSearch" type="text" placeholder="Tìm học sinh…" />
     </div>
@@ -646,6 +707,10 @@
     <div class="sub">Ví dụ: 2026-2027</div>
     <div class="field-group">
       <input type="text" id="newYearInput" placeholder="2026-2027" />
+    </div>
+    <div class="field-group">
+      <label for="newYearClassInput" style="display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;">Tên lớp chủ nhiệm (không bắt buộc)</label>
+      <input type="text" id="newYearClassInput" placeholder="8/16" />
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" id="cancelYearBtn">Huỷ</button>
