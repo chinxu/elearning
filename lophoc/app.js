@@ -272,21 +272,38 @@ $("confirmYearBtn").addEventListener("click", async () => {
   }
 });
 
-$("deleteYearBtn").addEventListener("click", () => deleteYear(state.yearId));
+$("deleteYearBtn").addEventListener("click", () => openDeleteYearModal(state.yearId));
 
-async function deleteYear(yearId) {
+function openDeleteYearModal(yearId) {
   const year = state.years.find(y => y.id === yearId);
   if (!year) { toast("Chưa có năm học nào để xoá."); return; }
-  const ok = confirm(
-    `XOÁ TOÀN BỘ năm học "${year.label}"?\n\nToàn bộ danh sách học sinh, lý lịch, nhận xét và các lớp trong năm học này sẽ bị xoá vĩnh viễn, không thể khôi phục.`
-  );
-  if (!ok) return;
-  const typed = prompt(`Để xác nhận, gõ đúng tên năm học "${year.label}" rồi bấm OK:`);
-  if (typed !== year.label) {
-    toast("Đã huỷ xoá — tên nhập không khớp.");
-    return;
-  }
-  $("deleteYearBtn").disabled = true;
+  $("deleteYearWarning").textContent =
+    `Toàn bộ danh sách học sinh, lý lịch, nhận xét và các lớp trong năm học "${year.label}" sẽ bị xoá vĩnh viễn, không thể khôi phục.`;
+  $("deleteYearConfirmInput").value = "";
+  $("deleteYearConfirmInput").placeholder = year.label;
+  $("confirmDeleteYearBtn").disabled = true;
+  $("deleteYearModal").dataset.yearId = yearId;
+  $("deleteYearModal").classList.add("active");
+  setTimeout(() => $("deleteYearConfirmInput").focus(), 30);
+}
+$("closeDeleteYearBtn").addEventListener("click", () => $("deleteYearModal").classList.remove("active"));
+$("cancelDeleteYearBtn").addEventListener("click", () => $("deleteYearModal").classList.remove("active"));
+$("deleteYearConfirmInput").addEventListener("input", () => {
+  const yearId = $("deleteYearModal").dataset.yearId;
+  const year = state.years.find(y => y.id === yearId);
+  $("confirmDeleteYearBtn").disabled = !year || $("deleteYearConfirmInput").value.trim() !== year.label;
+});
+$("confirmDeleteYearBtn").addEventListener("click", async () => {
+  const yearId = $("deleteYearModal").dataset.yearId;
+  await performDeleteYear(yearId);
+  $("deleteYearModal").classList.remove("active");
+});
+
+async function performDeleteYear(yearId) {
+  const year = state.years.find(y => y.id === yearId);
+  if (!year) return;
+  $("confirmDeleteYearBtn").disabled = true;
+  $("confirmDeleteYearBtn").textContent = "Đang xoá…";
   try {
     const studentsSnap = await getDocs(collection(db, "schoolYears", yearId, "students"));
     const refsToDelete = [];
@@ -325,9 +342,10 @@ async function deleteYear(yearId) {
     toast(`Đã xoá năm học "${year.label}".`);
   } catch (err) {
     console.error(err);
-    toast("Không xoá được năm học. Thử lại.");
+    toast("Không xoá được năm học: " + (err && err.message ? err.message : "lỗi không xác định."));
   } finally {
-    $("deleteYearBtn").disabled = false;
+    $("confirmDeleteYearBtn").disabled = false;
+    $("confirmDeleteYearBtn").textContent = "Xoá vĩnh viễn";
   }
 }
 
