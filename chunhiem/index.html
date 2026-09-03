@@ -217,6 +217,13 @@
     text-align:left;
   }
   .import-btn:hover{background:#EFEDE2;}
+  .import-btn.secondary{
+    background:transparent;
+    color:#EFEDE2;
+    border:1px solid rgba(255,255,255,.25);
+    font-weight:500;
+  }
+  .import-btn.secondary:hover{background:rgba(255,255,255,.1);}
   .userline{
     display:flex;justify-content:space-between;align-items:center;
     font-size:12px;color:#9FAE9F;
@@ -349,11 +356,50 @@
     width:5px;height:5px;border-radius:50%;
     background:var(--red);
   }
+  .month-chip.has-violation::before{
+    content:'';
+    position:absolute;top:6px;left:7px;
+    width:5px;height:5px;border-radius:50%;
+    background:#C98A2C;
+  }
   .month-chip.active{
     background:var(--green);
     border-color:var(--green);
     color:#fff;
   }
+  .violations-box{
+    background:#FBF3E4;
+    border:1px solid #E8D2A0;
+    border-radius:4px;
+    padding:14px 16px;
+    margin-bottom:16px;
+  }
+  .violation-entry{
+    padding:7px 0;
+    border-bottom:1px solid rgba(0,0,0,.08);
+    font-size:13.5px;
+  }
+  .violation-entry:last-child{border-bottom:none;}
+  .violation-meta{
+    color:var(--muted);
+    font-size:11.5px;
+    margin-top:2px;
+  }
+  .violation-rm{
+    background:none;border:none;color:var(--red);
+    font-size:12px;padding:0;
+  }
+  .officer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:9px 0;
+    border-bottom:1px solid var(--line-soft);
+    font-size:13.5px;
+  }
+  .officer-row:last-child{border-bottom:none;}
+  .officer-sub{color:var(--muted);font-size:12px;margin-top:2px;}
+  .muted-inline{color:var(--muted);font-weight:normal;}
   .comment-box textarea{
     width:100%;
     min-height:220px;
@@ -597,6 +643,7 @@
 
     <div class="sidebar-footer">
       <button class="import-btn" id="openImportBtn">Nhập danh sách từ Excel</button>
+      <button class="import-btn secondary" id="manageOfficersBtn">Quản lý cán bộ lớp</button>
       <div class="userline">
         <span id="userEmailLabel"></span>
         <button id="logoutBtn">Đăng xuất</button>
@@ -641,6 +688,13 @@
       <!-- Nhận xét -->
       <div id="panelNhanXet" style="display:none;">
         <div class="month-row" id="monthRow"></div>
+
+        <div class="violations-box" id="violationsBox" style="display:none;">
+          <div class="export-title" style="font-size:14px;">Vi phạm cán bộ lớp báo cáo tháng này</div>
+          <div id="violationEntries"></div>
+          <button class="btn btn-ghost btn-sm" id="mergeViolationsBtn" style="margin-top:10px;">Chuyển vào ô nhận xét</button>
+        </div>
+
         <div class="comment-box">
           <textarea id="commentText" placeholder="Nhận xét học sinh trong tháng…"></textarea>
         </div>
@@ -735,6 +789,66 @@
     <div class="modal-actions">
       <button class="btn btn-ghost" id="cancelDeleteYearBtn">Huỷ</button>
       <button class="btn" id="confirmDeleteYearBtn" style="border-color:var(--red);color:var(--red);" disabled>Xoá vĩnh viễn</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ OFFICERS MANAGEMENT MODAL ============ -->
+<div class="modal-overlay" id="officersModal">
+  <div class="modal">
+    <button class="modal-close" id="closeOfficersBtn">&times;</button>
+    <h3>Cán bộ lớp — năm học <span id="officersModalYearLabel"></span></h3>
+    <div class="sub">Tài khoản nhỏ để cán bộ lớp đăng nhập và nhập vi phạm theo tháng. Chỉ tài khoản giáo viên chủ nhiệm mới thấy và quản lý được mục này.</div>
+
+    <div id="officersList" style="margin-bottom:18px;"></div>
+
+    <div style="border-top:1px solid var(--line);padding-top:16px;">
+      <div class="export-title" style="margin-bottom:10px;font-size:15px;">Cấp tài khoản mới</div>
+      <div class="import-row">
+        <div class="field-group"><label>Tên cán bộ (không bắt buộc)</label><input id="newOfficerName" type="text" placeholder="Nguyễn Văn A" /></div>
+        <div class="field-group"><label>Lớp phụ trách</label><select id="newOfficerClass"></select></div>
+      </div>
+      <div class="import-row">
+        <div class="field-group"><label>Email đăng nhập</label><input id="newOfficerEmail" type="email" placeholder="canbo1@lop.com" /></div>
+        <div class="field-group"><label>Mật khẩu</label><input id="newOfficerPassword" type="text" placeholder="Tối thiểu 6 ký tự" /></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary btn-sm" id="createOfficerBtn">Cấp tài khoản</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ OFFICER APP (giao diện cán bộ lớp) ============ -->
+<div id="officerApp" style="display:none;min-height:100vh;background:var(--paper);">
+  <div style="max-width:640px;margin:0 auto;padding:36px 20px 60px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;gap:12px;">
+      <div>
+        <h1 class="serif" style="font-size:22px;margin:0 0 4px;font-weight:600;">Cán bộ lớp</h1>
+        <div class="sub" id="officerMeta" style="color:var(--muted);font-size:13px;"></div>
+      </div>
+      <button id="officerLogoutBtn" class="btn btn-ghost btn-sm">Đăng xuất</button>
+    </div>
+
+    <div class="field-group">
+      <label for="officerStudentSelect">Học sinh</label>
+      <select id="officerStudentSelect" style="width:100%;border:1px solid var(--line);background:var(--paper-raised);border-radius:var(--radius);padding:9px 10px;font-size:14.5px;"></select>
+    </div>
+
+    <div class="field-group">
+      <label>Tháng</label>
+      <div class="month-row" id="officerMonthRow"></div>
+    </div>
+
+    <div class="field-group">
+      <label for="officerViolationText">Nội dung vi phạm</label>
+      <textarea id="officerViolationText" rows="3" placeholder="Ví dụ: đi học trễ, không làm bài tập…" style="width:100%;border:1px solid var(--line);background:var(--paper-raised);border-radius:var(--radius);padding:10px;font-size:14.5px;resize:vertical;"></textarea>
+    </div>
+    <button id="officerSubmitBtn" class="btn btn-primary btn-sm">Gửi vi phạm</button>
+
+    <div style="margin-top:30px;padding-top:20px;border-top:1px solid var(--line);">
+      <div class="export-title" style="font-size:15px;">Vi phạm đã gửi trong tháng này</div>
+      <div id="officerViolationList" style="margin-top:8px;"></div>
     </div>
   </div>
 </div>
