@@ -1,0 +1,4603 @@
+{
+ "ten": "Lớp 8",
+ "chuong": [
+  {
+   "ten": "Mở đầu",
+   "bai": [
+    {
+     "ten": "Bài 1. Sử dụng hóa chất và thiết bị cơ bản trong phòng thí nghiệm",
+     "cau": [
+      {
+       "noiDung": "Khi lấy hóa chất rắn dạng bột ra khỏi lọ, ta nên dùng dụng cụ nào?",
+       "luaChon": [
+        "Thìa (muỗng) thủy tinh hoặc nhựa chuyên dụng",
+        "Miệng ống hút",
+        "Tay không",
+        "Đũa thủy tinh ướt"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi lấy hóa chất lỏng, dụng cụ phù hợp là gì?",
+       "luaChon": [
+        "Tờ giấy gấp",
+        "Ống hút nhỏ giọt hoặc rót theo đũa thủy tinh",
+        "Cây bút chì",
+        "Bàn tay"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi pha loãng acid đặc, thao tác đúng là gì?",
+       "luaChon": [
+        "Rót từ từ acid vào nước và khuấy đều",
+        "Đun sôi acid rồi thêm nước",
+        "Rót nước vào acid đặc",
+        "Đổ nhanh cả hai vào nhau"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao tuyệt đối không được rót nước vào acid đặc?",
+       "luaChon": [
+        "Vì acid mất tác dụng",
+        "Vì phản ứng tỏa nhiệt mạnh làm acid bắn ra gây nguy hiểm",
+        "Vì nước sẽ bốc cháy",
+        "Vì acid sẽ đông đặc"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hóa chất đã lấy ra khỏi lọ nhưng dùng không hết thì xử lí thế nào?",
+       "luaChon": [
+        "Đổ xuống bồn rửa tay",
+        "Mang về nhà",
+        "Đổ lại vào lọ ban đầu",
+        "Không đổ ngược lại lọ, xử lí theo hướng dẫn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thiết bị nào dùng để đo cường độ dòng điện trong mạch?",
+       "luaChon": [
+        "Vôn kế",
+        "Lực kế",
+        "Ampe kế",
+        "Nhiệt kế"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vôn kế được dùng để đo đại lượng nào?",
+       "luaChon": [
+        "Hiệu điện thế",
+        "Nhiệt độ",
+        "Điện trở",
+        "Cường độ dòng điện"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trước khi đun nóng ống nghiệm, cần lưu ý điều gì?",
+       "luaChon": [
+        "Hướng miệng ống về phía mình",
+        "Cầm sát đáy ống bằng tay",
+        "Đậy kín miệng ống",
+        "Hướng miệng ống nghiệm về phía không có người"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi bị hóa chất dính vào da, việc cần làm ngay là gì?",
+       "luaChon": [
+        "Lau bằng khăn khô rồi để yên",
+        "Dùng cồn xoa mạnh",
+        "Bôi thêm hóa chất khác",
+        "Rửa ngay bằng nhiều nước sạch và báo giáo viên"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhãn hóa chất cần được đọc kĩ trước khi sử dụng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương I. Phản ứng hóa học",
+   "bai": [
+    {
+     "ten": "Bài 2. Phản ứng hóa học",
+     "cau": [
+      {
+       "noiDung": "Biến đổi nào sau đây là biến đổi hóa học?",
+       "luaChon": [
+        "Đun nước bốc hơi",
+        "Đốt cháy tờ giấy",
+        "Hòa tan muối vào nước",
+        "Nước đá tan thành nước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biến đổi nào sau đây là biến đổi vật lí?",
+       "luaChon": [
+        "Sắt bị gỉ",
+        "Đốt cháy than",
+        "Nước đá tan thành nước",
+        "Cơm bị thiu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Phản ứng hóa học là quá trình gì?",
+       "luaChon": [
+        "Sự hòa tan của chất",
+        "Biến đổi từ chất này thành chất khác",
+        "Sự thay đổi kích thước vật",
+        "Biến đổi trạng thái của chất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong phản ứng hóa học, yếu tố nào bị thay đổi?",
+       "luaChon": [
+        "Liên kết giữa các nguyên tử",
+        "Loại nguyên tố có mặt",
+        "Khối lượng tổng cộng",
+        "Số nguyên tử của mỗi nguyên tố"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dấu hiệu nào cho biết đã có phản ứng hóa học xảy ra?",
+       "luaChon": [
+        "Nước sôi bốc hơi",
+        "Đường tan trong nước",
+        "Xuất hiện chất kết tủa",
+        "Nước đá tan chảy"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đốt cháy than là một phản ứng tỏa nhiệt.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Phản ứng nào sau đây là phản ứng thu nhiệt?",
+       "luaChon": [
+        "Đốt cháy cồn",
+        "Nung đá vôi thành vôi sống",
+        "Đốt cháy khí gas",
+        "Sắt cháy trong oxygen"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong phản ứng hóa học, số nguyên tử của mỗi nguyên tố luôn được bảo toàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Chất tham gia phản ứng còn được gọi là gì?",
+       "luaChon": [
+        "Chất sản phẩm",
+        "Chất phản ứng",
+        "Dung môi",
+        "Chất xúc tác"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ứng dụng nào sau đây dựa trên phản ứng tỏa nhiệt?",
+       "luaChon": [
+        "Đốt nhiên liệu để đun nấu và chạy động cơ",
+        "Làm lạnh thực phẩm",
+        "Nghiền nhỏ đá vôi",
+        "Lọc nước đục"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 3. Mol và tỉ khối chất khí",
+     "cau": [
+      {
+       "noiDung": "Một mol chất chứa bao nhiêu hạt vi mô?",
+       "luaChon": [
+        "3,011 nhân 10 mũ 23",
+        "1 nhân 10 mũ 23",
+        "6,022 nhân 10 mũ 22",
+        "6,022 nhân 10 mũ 23"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khối lượng mol của nước H2O là bao nhiêu?",
+       "luaChon": [
+        "32 g/mol",
+        "20 g/mol",
+        "18 g/mol",
+        "16 g/mol"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khối lượng mol của khí carbon dioxide CO2 là bao nhiêu?",
+       "luaChon": [
+        "44 g/mol",
+        "28 g/mol",
+        "48 g/mol",
+        "32 g/mol"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở điều kiện chuẩn (25 độ C, 1 bar), một mol chất khí bất kì chiếm thể tích bao nhiêu?",
+       "luaChon": [
+        "24,79 lít",
+        "20 lít",
+        "18 lít",
+        "22,4 lít"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Công thức tính số mol khi biết khối lượng chất là gì?",
+       "luaChon": [
+        "n = m/M",
+        "n = m.M",
+        "n = m + M",
+        "n = M/m"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "0,5 mol nước có khối lượng là bao nhiêu?",
+       "luaChon": [
+        "9 g",
+        "18 g",
+        "4,5 g",
+        "36 g"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở điều kiện chuẩn, 2 mol khí oxygen chiếm thể tích bao nhiêu?",
+       "luaChon": [
+        "24,79 lít",
+        "22,4 lít",
+        "49,58 lít",
+        "44,8 lít"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Tỉ khối của khí carbon dioxide so với khí hydrogen là bao nhiêu?",
+       "luaChon": [
+        "44",
+        "22",
+        "11",
+        "32"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một chất khí nhẹ hơn không khí thì tỉ khối của nó so với không khí nhỏ hơn 1.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khí nào sau đây nhẹ hơn không khí?",
+       "luaChon": [
+        "Khí oxygen",
+        "Khí hydrogen",
+        "Khí chlorine",
+        "Khí carbon dioxide"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 4. Dung dịch và nồng độ",
+     "cau": [
+      {
+       "noiDung": "Dung dịch gồm những thành phần nào?",
+       "luaChon": [
+        "Chất khí và chất rắn",
+        "Chỉ có dung môi",
+        "Hai chất rắn",
+        "Chất tan và dung môi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong nước muối, dung môi là chất nào?",
+       "luaChon": [
+        "Không có dung môi",
+        "Cả hai",
+        "Nước",
+        "Muối ăn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dung dịch bão hòa là dung dịch như thế nào?",
+       "luaChon": [
+        "Không thể hòa tan thêm chất tan ở nhiệt độ đó",
+        "Còn hòa tan thêm được nhiều chất tan",
+        "Không chứa chất tan",
+        "Luôn có màu đậm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nồng độ phần trăm của dung dịch được tính bằng công thức nào?",
+       "luaChon": [
+        "Khối lượng chất tan chia khối lượng dung dịch rồi nhân 100 phần trăm",
+        "Khối lượng chất tan chia khối lượng dung môi",
+        "Khối lượng dung dịch chia chất tan",
+        "Số mol chất tan chia thể tích dung dịch"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hòa tan 20 g muối vào 180 g nước. Nồng độ phần trăm của dung dịch là bao nhiêu?",
+       "luaChon": [
+        "18 phần trăm",
+        "10 phần trăm",
+        "11 phần trăm",
+        "20 phần trăm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nồng độ mol của dung dịch cho biết điều gì?",
+       "luaChon": [
+        "Thể tích dung dịch",
+        "Khối lượng chất tan trong 100 g dung dịch",
+        "Số mol chất tan có trong một lít dung dịch",
+        "Số gam chất tan trong một lít dung môi"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hòa tan 0,5 mol NaCl vào nước được 1 lít dung dịch. Nồng độ mol là bao nhiêu?",
+       "luaChon": [
+        "0,25 mol/l",
+        "2 mol/l",
+        "0,5 mol/l",
+        "1 mol/l"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Yếu tố nào làm chất rắn tan nhanh hơn trong nước?",
+       "luaChon": [
+        "Đậy kín và không khuấy",
+        "Để yên trong nước lạnh",
+        "Dùng khối chất rắn to",
+        "Khuấy đều, nghiền nhỏ và tăng nhiệt độ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Độ tan của phần lớn chất rắn trong nước tăng khi nhiệt độ tăng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Độ tan của chất khí trong nước tăng khi nhiệt độ tăng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 5. Định luật bảo toàn khối lượng và phương trình hóa học",
+     "cau": [
+      {
+       "noiDung": "Theo định luật bảo toàn khối lượng, trong một phản ứng hóa học thì điều gì đúng?",
+       "luaChon": [
+        "Khối lượng thay đổi tùy nhiệt độ",
+        "Tổng khối lượng sản phẩm bằng tổng khối lượng chất tham gia",
+        "Tổng khối lượng sản phẩm nhỏ hơn",
+        "Tổng khối lượng sản phẩm lớn hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao khối lượng được bảo toàn trong phản ứng hóa học?",
+       "luaChon": [
+        "Vì chất mới nhẹ hơn",
+        "Vì số nguyên tử của mỗi nguyên tố không đổi, chỉ thay đổi liên kết",
+        "Vì nguyên tử bị phá hủy",
+        "Vì có thêm nguyên tử mới sinh ra"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cho A phản ứng hết với B tạo ra C. Biết khối lượng A là 8 g, B là 12 g. Khối lượng C là bao nhiêu?",
+       "luaChon": [
+        "20 g",
+        "4 g",
+        "12 g",
+        "96 g"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đốt cháy 12 g carbon cần 32 g oxygen. Khối lượng khí carbon dioxide thu được là bao nhiêu?",
+       "luaChon": [
+        "12 g",
+        "20 g",
+        "32 g",
+        "44 g"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Phương trình hóa học cho biết điều gì?",
+       "luaChon": [
+        "Màu sắc của các chất",
+        "Nhiệt độ sôi của các chất",
+        "Tỉ lệ số nguyên tử, số phân tử giữa các chất trong phản ứng",
+        "Giá thành của các chất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bước đầu tiên khi lập phương trình hóa học là gì?",
+       "luaChon": [
+        "Tính khối lượng chất",
+        "Ghi điều kiện phản ứng",
+        "Viết sơ đồ phản ứng với công thức hóa học các chất",
+        "Đặt hệ số cân bằng ngay"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi cân bằng phương trình hóa học, ta được phép thay đổi điều gì?",
+       "luaChon": [
+        "Hệ số đặt trước công thức hóa học",
+        "Kí hiệu nguyên tố",
+        "Tên chất",
+        "Chỉ số trong công thức hóa học"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong phương trình hóa học, mũi tên chỉ chiều nào?",
+       "luaChon": [
+        "Từ sản phẩm sang chất tham gia",
+        "Không có ý nghĩa",
+        "Từ chất tham gia sang chất sản phẩm",
+        "Hai chiều luôn luôn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi cân bằng phương trình, được phép sửa chỉ số trong công thức hóa học cho dễ cân bằng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong phản ứng có chất khí thoát ra, nếu cân trong bình hở thì khối lượng đo được sẽ giảm.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 6. Tính theo phương trình hóa học",
+     "cau": [
+      {
+       "noiDung": "Bước đầu tiên khi giải bài toán tính theo phương trình hóa học là gì?",
+       "luaChon": [
+        "Vẽ sơ đồ thí nghiệm",
+        "Tính ngay khối lượng sản phẩm",
+        "Đổi đơn vị thể tích",
+        "Viết và cân bằng phương trình hóa học"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sau khi cân bằng phương trình, bước tiếp theo thường là gì?",
+       "luaChon": [
+        "Đổi dữ kiện đề bài ra số mol",
+        "Tính tỉ khối",
+        "Tính nồng độ dung dịch",
+        "Vẽ đồ thị"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hiệu suất phản ứng cho biết điều gì?",
+       "luaChon": [
+        "Nhiệt lượng tỏa ra",
+        "Khối lượng chất xúc tác",
+        "Tốc độ phản ứng",
+        "Tỉ lệ phần trăm lượng sản phẩm thực tế so với lí thuyết"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nếu hiệu suất phản ứng là 100 phần trăm thì lượng sản phẩm thực tế thế nào so với lí thuyết?",
+       "luaChon": [
+        "Nhỏ hơn một nửa",
+        "Bằng nhau",
+        "Bằng không",
+        "Lớn hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong thực tế, hiệu suất phản ứng thường nhỏ hơn 100 phần trăm.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Số mol của 44 g khí CO2 là bao nhiêu?",
+       "luaChon": [
+        "0,5 mol",
+        "4 mol",
+        "1 mol",
+        "2 mol"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Số mol của 36 g nước là bao nhiêu?",
+       "luaChon": [
+        "1 mol",
+        "3 mol",
+        "2 mol",
+        "0,5 mol"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ở điều kiện chuẩn, 24,79 lít khí oxygen ứng với bao nhiêu mol?",
+       "luaChon": [
+        "1 mol",
+        "0,5 mol",
+        "24,79 mol",
+        "2 mol"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi một chất tham gia còn dư sau phản ứng, ta tính lượng sản phẩm theo chất nào?",
+       "luaChon": [
+        "Chất phản ứng hết",
+        "Chất có khối lượng lớn hơn",
+        "Chất xúc tác",
+        "Chất còn dư"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tỉ lệ hệ số trong phương trình hóa học cũng chính là tỉ lệ số mol các chất phản ứng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 7. Tốc độ phản ứng và chất xúc tác",
+     "cau": [
+      {
+       "noiDung": "Yếu tố nào sau đây làm tăng tốc độ phản ứng hóa học?",
+       "luaChon": [
+        "Giảm nồng độ chất tham gia",
+        "Dùng khối chất rắn to hơn",
+        "Hạ nhiệt độ xuống thấp",
+        "Tăng nhiệt độ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nghiền nhỏ chất rắn trước khi cho phản ứng có tác dụng gì?",
+       "luaChon": [
+        "Giảm tốc độ phản ứng",
+        "Làm chất rắn nặng hơn",
+        "Tăng diện tích tiếp xúc nên tăng tốc độ phản ứng",
+        "Không ảnh hưởng gì"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Chất xúc tác là chất như thế nào?",
+       "luaChon": [
+        "Làm tăng tốc độ phản ứng nhưng không bị biến đổi sau phản ứng",
+        "Bị tiêu hao hoàn toàn",
+        "Là sản phẩm của phản ứng",
+        "Luôn làm chậm phản ứng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi tăng nồng độ chất tham gia thì tốc độ phản ứng thay đổi thế nào?",
+       "luaChon": [
+        "Tăng lên",
+        "Giảm đi",
+        "Bằng không",
+        "Không đổi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bảo quản thức ăn trong tủ lạnh là cách làm chậm các phản ứng phân hủy thức ăn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao quạt hoặc thổi vào bếp than thì than cháy mạnh hơn?",
+       "luaChon": [
+        "Vì cung cấp thêm oxygen cho sự cháy",
+        "Vì làm than nặng hơn",
+        "Vì làm giảm nhiệt độ",
+        "Vì làm than nguội đi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Chất xúc tác bị tiêu hao hết sau khi phản ứng kết thúc.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Yếu tố nào sau đây KHÔNG ảnh hưởng đến tốc độ phản ứng?",
+       "luaChon": [
+        "Màu sắc của dụng cụ thí nghiệm",
+        "Nồng độ",
+        "Nhiệt độ",
+        "Diện tích bề mặt tiếp xúc"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cho cùng lượng đinh sắt vào hai cốc acid, cốc nào phản ứng nhanh hơn?",
+       "luaChon": [
+        "Không xác định được",
+        "Cốc đựng acid có nồng độ cao hơn",
+        "Cốc đựng acid loãng hơn",
+        "Hai cốc như nhau"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nấu thức ăn bằng nồi áp suất nhanh chín hơn vì nhiệt độ trong nồi cao hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương II. Một số hợp chất thông dụng",
+   "bai": [
+    {
+     "ten": "Bài 8. Acid",
+     "cau": [
+      {
+       "noiDung": "Dung dịch acid làm quỳ tím chuyển sang màu gì?",
+       "luaChon": [
+        "Không đổi màu",
+        "Màu xanh",
+        "Màu vàng",
+        "Màu đỏ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chất nào sau đây là acid?",
+       "luaChon": [
+        "NaOH",
+        "CaO",
+        "HCl",
+        "NaCl"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong phân tử acid luôn có nguyên tố nào?",
+       "luaChon": [
+        "Sodium",
+        "Calcium",
+        "Iron",
+        "Hydrogen"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Acid có trong dịch vị dạ dày của người là acid nào?",
+       "luaChon": [
+        "Acetic acid",
+        "Sulfuric acid",
+        "Nitric acid",
+        "Hydrochloric acid"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Acid nào có trong giấm ăn?",
+       "luaChon": [
+        "Acetic acid",
+        "Nitric acid",
+        "Sulfuric acid",
+        "Hydrochloric acid"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Acid nào có nhiều trong quả chanh, quả cam?",
+       "luaChon": [
+        "Citric acid",
+        "Sulfuric acid",
+        "Nitric acid",
+        "Hydrochloric acid"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi cho kim loại kẽm vào dung dịch HCl loãng thì có hiện tượng gì?",
+       "luaChon": [
+        "Có bọt khí thoát ra và kẽm tan dần",
+        "Không có hiện tượng gì",
+        "Kẽm chuyển sang màu xanh",
+        "Dung dịch hóa rắn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sulfuric acid đặc rất nguy hiểm vì có tính hút nước mạnh và gây bỏng nặng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ứng dụng nào sau đây là của sulfuric acid trong công nghiệp?",
+       "luaChon": [
+        "Làm nước rửa mặt",
+        "Làm nước giải khát",
+        "Sản xuất phân bón, ắc quy, chất tẩy rửa",
+        "Làm thuốc nhỏ mắt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Có thể dùng tay trần để lấy acid đặc ra khỏi lọ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 9. Base. Thang pH",
+     "cau": [
+      {
+       "noiDung": "Dung dịch base làm quỳ tím chuyển sang màu gì?",
+       "luaChon": [
+        "Màu vàng",
+        "Màu xanh",
+        "Màu đỏ",
+        "Không đổi màu"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chất nào sau đây là base?",
+       "luaChon": [
+        "CO2",
+        "NaOH",
+        "NaCl",
+        "HCl"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong phân tử base luôn có nhóm nguyên tử nào?",
+       "luaChon": [
+        "Nhóm nitrate",
+        "Nhóm carbonate",
+        "Nhóm hydroxide",
+        "Nhóm sulfate"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dung dịch base làm dung dịch phenolphthalein không màu chuyển sang màu gì?",
+       "luaChon": [
+        "Màu xanh",
+        "Màu vàng",
+        "Màu đen",
+        "Màu hồng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dung dịch có pH bằng 3 thuộc môi trường nào?",
+       "luaChon": [
+        "Acid",
+        "Không xác định",
+        "Trung tính",
+        "Base"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dung dịch có pH bằng 7 thuộc môi trường nào?",
+       "luaChon": [
+        "Base",
+        "Acid",
+        "Rất acid",
+        "Trung tính"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dung dịch base có pH lớn hơn 7.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Phản ứng giữa acid và base tạo ra sản phẩm nào?",
+       "luaChon": [
+        "Chỉ có nước",
+        "Muối và nước",
+        "Chỉ có muối",
+        "Oxide và khí"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao đất chua cần được bón vôi?",
+       "luaChon": [
+        "Vì vôi cung cấp đạm",
+        "Vì vôi giữ nước tốt hơn",
+        "Vì vôi có tính base, giúp trung hòa bớt độ chua của đất",
+        "Vì vôi làm đất chua thêm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Base nào sau đây tan được trong nước?",
+       "luaChon": [
+        "Cu(OH)2",
+        "Mg(OH)2",
+        "NaOH",
+        "Fe(OH)3"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 10. Oxide",
+     "cau": [
+      {
+       "noiDung": "Oxide là hợp chất của oxygen với mấy nguyên tố khác?",
+       "luaChon": [
+        "Hai nguyên tố",
+        "Nhiều nguyên tố",
+        "Ba nguyên tố",
+        "Một nguyên tố"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chất nào sau đây là oxide?",
+       "luaChon": [
+        "NaOH",
+        "CaO",
+        "HCl",
+        "NaCl"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chất nào sau đây là oxide base?",
+       "luaChon": [
+        "P2O5",
+        "SO2",
+        "CaO",
+        "CO2"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Chất nào sau đây là oxide acid?",
+       "luaChon": [
+        "CaO",
+        "CO2",
+        "MgO",
+        "Na2O"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Oxide acid tác dụng với dung dịch base tạo ra sản phẩm nào?",
+       "luaChon": [
+        "Acid và khí",
+        "Kim loại và nước",
+        "Chỉ có khí",
+        "Muối và nước"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Oxide base tác dụng với dung dịch acid tạo ra sản phẩm nào?",
+       "luaChon": [
+        "Base và khí",
+        "Muối và nước",
+        "Kim loại và oxygen",
+        "Chỉ có khí"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vôi sống có công thức hóa học là gì?",
+       "luaChon": [
+        "CaO",
+        "CaCO3",
+        "CaCl2",
+        "Ca(OH)2"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khí carbon dioxide làm vẩn đục nước vôi trong.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vôi sống thường được dùng để làm gì trong nông nghiệp?",
+       "luaChon": [
+        "Làm tăng độ chua của đất",
+        "Diệt hết vi sinh vật có lợi",
+        "Khử chua đất trồng",
+        "Cung cấp đạm cho cây"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mọi oxide đều tan được trong nước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 11. Muối",
+     "cau": [
+      {
+       "noiDung": "Muối là hợp chất được tạo thành từ những thành phần nào?",
+       "luaChon": [
+        "Hai phi kim",
+        "Oxygen và kim loại",
+        "Hai kim loại",
+        "Ion kim loại (hoặc ion ammonium) và gốc acid"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chất nào sau đây là muối?",
+       "luaChon": [
+        "NaOH",
+        "NaCl",
+        "HCl",
+        "CaO"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sodium chloride (muối ăn) có công thức hóa học là gì?",
+       "luaChon": [
+        "Na2O",
+        "NaOH",
+        "NaCl",
+        "NaHCO3"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Muối nào sau đây được dùng làm bột nở trong làm bánh?",
+       "luaChon": [
+        "NaHCO3",
+        "CuSO4",
+        "NaCl",
+        "CaCO3"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đá vôi có thành phần chính là muối nào?",
+       "luaChon": [
+        "CaCO3",
+        "NaCl",
+        "KNO3",
+        "CaSO4"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Phản ứng nào tạo thành muối?",
+       "luaChon": [
+        "Acid tác dụng với base",
+        "Acid tác dụng với acid",
+        "Base tác dụng với base",
+        "Muối tác dụng với muối tan hết không tạo kết tủa"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Muối nào sau đây tan tốt trong nước?",
+       "luaChon": [
+        "CaCO3",
+        "NaCl",
+        "BaSO4",
+        "AgCl"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Muối nào sau đây không tan trong nước, thường tạo kết tủa trắng?",
+       "luaChon": [
+        "Na2SO4",
+        "NaCl",
+        "KNO3",
+        "BaSO4"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Muối ăn được khai thác chủ yếu từ nguồn nào ở nước ta?",
+       "luaChon": [
+        "Dầu mỏ",
+        "Nước biển",
+        "Quặng sắt",
+        "Đá granite"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mọi muối đều có vị mặn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 12. Phân bón hóa học",
+     "cau": [
+      {
+       "noiDung": "Phân đạm cung cấp cho cây trồng nguyên tố dinh dưỡng nào?",
+       "luaChon": [
+        "Nitrogen",
+        "Calcium",
+        "Phosphorus",
+        "Potassium"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Phân lân cung cấp cho cây trồng nguyên tố dinh dưỡng nào?",
+       "luaChon": [
+        "Potassium",
+        "Phosphorus",
+        "Nitrogen",
+        "Magnesium"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Phân kali cung cấp cho cây trồng nguyên tố dinh dưỡng nào?",
+       "luaChon": [
+        "Sulfur",
+        "Nitrogen",
+        "Phosphorus",
+        "Potassium"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Phân đạm có tác dụng chủ yếu gì với cây trồng?",
+       "luaChon": [
+        "Làm quả chín nhanh",
+        "Kích thích ra rễ",
+        "Giúp cây cứng cáp chống rét",
+        "Kích thích cây phát triển thân, lá"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Phân bón NPK là loại phân gì?",
+       "luaChon": [
+        "Phân hữu cơ",
+        "Phân chỉ chứa đạm",
+        "Phân chỉ chứa lân",
+        "Phân hỗn hợp chứa cả đạm, lân và kali"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Bón quá nhiều phân hóa học có thể gây ô nhiễm đất và nguồn nước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao không nên bón phân đạm vào lúc trời nắng gắt giữa trưa?",
+       "luaChon": [
+        "Vì phân hết tác dụng khi có nắng",
+        "Vì dễ làm cháy lá và phân bị mất do bay hơi",
+        "Vì phân sẽ đóng băng",
+        "Vì cây không cần đạm ban ngày"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bón phân đúng loại, đúng liều, đúng lúc và đúng cách gọi là nguyên tắc gì?",
+       "luaChon": [
+        "Bón phân tối đa",
+        "Bón phân một lần duy nhất",
+        "Bón phân hợp lí",
+        "Bón phân tùy ý"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Phân hữu cơ có ưu điểm gì so với phân hóa học?",
+       "luaChon": [
+        "Cải tạo đất, giúp đất tơi xốp và bền vững hơn",
+        "Không chứa chất dinh dưỡng",
+        "Cho hiệu quả tức thì mạnh hơn",
+        "Dễ gây chai đất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bón thật nhiều phân đạm luôn giúp cây trồng cho năng suất cao nhất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương III. Khối lượng riêng và áp suất",
+   "bai": [
+    {
+     "ten": "Bài 13. Khối lượng riêng",
+     "cau": [
+      {
+       "noiDung": "Công thức tính khối lượng riêng của một chất là gì?",
+       "luaChon": [
+        "D = V/m",
+        "D = m.V",
+        "D = m/V",
+        "D = m + V"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đơn vị đo khối lượng riêng trong hệ SI là gì?",
+       "luaChon": [
+        "kilôgam",
+        "kg trên mét khối",
+        "mét khối",
+        "newton trên mét khối"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khối lượng riêng của nước xấp xỉ bao nhiêu?",
+       "luaChon": [
+        "1000 kg trên mét khối",
+        "10 kg trên mét khối",
+        "10000 kg trên mét khối",
+        "100 kg trên mét khối"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khối lượng riêng cho biết điều gì?",
+       "luaChon": [
+        "Thể tích của vật",
+        "Kích thước của vật",
+        "Trọng lượng của vật",
+        "Khối lượng của một đơn vị thể tích chất đó"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Một vật có khối lượng 500 g và thể tích 250 cm khối. Khối lượng riêng của vật là bao nhiêu?",
+       "luaChon": [
+        "750 g trên cm khối",
+        "2 g trên cm khối",
+        "125 g trên cm khối",
+        "0,5 g trên cm khối"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một khối kim loại có thể tích 0,002 mét khối và khối lượng 15,6 kg. Khối lượng riêng là bao nhiêu?",
+       "luaChon": [
+        "0,000128 kg trên mét khối",
+        "780 kg trên mét khối",
+        "7800 kg trên mét khối",
+        "78 kg trên mét khối"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hai vật cùng chất nhưng khác thể tích thì có cùng khối lượng riêng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật nào sau đây nổi được trên mặt nước?",
+       "luaChon": [
+        "Vật có khối lượng riêng lớn hơn nước",
+        "Vật có khối lượng riêng nhỏ hơn nước",
+        "Vật có khối lượng lớn",
+        "Vật có thể tích lớn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao dầu ăn nổi trên mặt nước?",
+       "luaChon": [
+        "Vì dầu không tan trong nước nên tự nổi",
+        "Vì khối lượng riêng của dầu nhỏ hơn của nước",
+        "Vì dầu nhẹ hơn về khối lượng",
+        "Vì dầu có màu vàng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khối lượng riêng của một chất phụ thuộc vào kích thước của vật làm bằng chất đó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 14. Thực hành xác định khối lượng riêng",
+     "cau": [
+      {
+       "noiDung": "Để xác định khối lượng riêng của một vật, cần đo những đại lượng nào?",
+       "luaChon": [
+        "Lực và tốc độ",
+        "Trọng lượng và thời gian",
+        "Khối lượng và thể tích của vật",
+        "Chiều dài và nhiệt độ"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dụng cụ nào dùng để đo khối lượng của vật trong bài thực hành?",
+       "luaChon": [
+        "Cân điện tử",
+        "Thước dây",
+        "Bình chia độ",
+        "Nhiệt kế"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dụng cụ nào dùng để đo thể tích vật rắn không thấm nước có hình dạng bất kì?",
+       "luaChon": [
+        "Lực kế",
+        "Bình chia độ",
+        "Cân",
+        "Thước kẻ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nguyên tắc đo thể tích vật rắn bằng bình chia độ là gì?",
+       "luaChon": [
+        "Thể tích vật bằng khối lượng vật",
+        "Thể tích vật bằng chiều cao bình",
+        "Thể tích vật bằng phần thể tích nước dâng lên",
+        "Thể tích vật bằng toàn bộ nước trong bình"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Với vật rắn hình hộp chữ nhật, có thể tính thể tích bằng cách nào?",
+       "luaChon": [
+        "Đo chu vi rồi bình phương",
+        "Đo ba kích thước rồi nhân với nhau",
+        "Cân vật rồi chia cho 10",
+        "Đo nhiệt độ vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trước khi cân, cần điều chỉnh cân về vạch số 0.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao nên đo và tính khối lượng riêng nhiều lần rồi lấy trung bình?",
+       "luaChon": [
+        "Để tốn nhiều thời gian hơn",
+        "Để nước sạch hơn",
+        "Để vật nặng thêm",
+        "Để giảm sai số của phép đo"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi đọc thể tích nước trong bình chia độ, phải đặt mắt thế nào?",
+       "luaChon": [
+        "Nhìn từ dưới lên",
+        "Nhìn từ trên xuống",
+        "Ngang bằng với mực chất lỏng",
+        "Nhìn nghiêng từ xa"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nếu vật nổi trên nước thì có thể dùng vật nặng buộc kèm để dìm vật xuống khi đo thể tích.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kết quả tính khối lượng riêng cần ghi kèm đơn vị đo phù hợp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 15. Áp suất trên một bề mặt",
+     "cau": [
+      {
+       "noiDung": "Áp lực là gì?",
+       "luaChon": [
+        "Lực kéo theo phương ngang",
+        "Lực ép có phương vuông góc với mặt bị ép",
+        "Lực hút của Trái Đất",
+        "Lực ma sát trên bề mặt"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Áp suất được tính bằng công thức nào?",
+       "luaChon": [
+        "p = F/S",
+        "p = S/F",
+        "p = F + S",
+        "p = F.S"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đơn vị đo áp suất trong hệ SI là gì?",
+       "luaChon": [
+        "Jun",
+        "Pascal",
+        "Newton",
+        "Watt"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một lực 200 N ép vuông góc lên diện tích 0,5 mét vuông. Áp suất là bao nhiêu?",
+       "luaChon": [
+        "200 Pa",
+        "0,0025 Pa",
+        "400 Pa",
+        "100 Pa"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Muốn giảm áp suất tác dụng lên mặt đất, ta nên làm gì?",
+       "luaChon": [
+        "Giảm diện tích bị ép",
+        "Giảm nhiệt độ",
+        "Tăng áp lực",
+        "Tăng diện tích bị ép"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao lưỡi dao được mài thật mỏng?",
+       "luaChon": [
+        "Để dao đẹp hơn",
+        "Để giảm diện tích tiếp xúc, tăng áp suất nên cắt dễ hơn",
+        "Để dao nhẹ hơn",
+        "Để tăng diện tích tiếp xúc"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao xe tăng và máy kéo dùng bản xích rộng?",
+       "luaChon": [
+        "Để tăng áp suất lên mặt đất",
+        "Để chạy nhanh hơn",
+        "Để tăng diện tích tiếp xúc, giảm áp suất lên nền đất mềm",
+        "Để tiết kiệm nhiên liệu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao móng nhà thường được xây rộng hơn tường?",
+       "luaChon": [
+        "Để nhà nhẹ hơn",
+        "Để tiết kiệm vật liệu",
+        "Để giảm áp suất lên nền đất",
+        "Để tăng áp suất lên nền đất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Với cùng một áp lực, diện tích bị ép càng nhỏ thì áp suất càng lớn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Áp lực luôn có phương song song với mặt bị ép.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 16. Áp suất chất lỏng. Áp suất khí quyển",
+     "cau": [
+      {
+       "noiDung": "Áp suất của chất lỏng tăng dần theo độ sâu.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Chất lỏng gây áp suất theo hướng nào?",
+       "luaChon": [
+        "Chỉ theo hướng xuống đáy bình",
+        "Theo mọi hướng lên đáy bình, thành bình và các vật trong lòng nó",
+        "Chỉ theo phương ngang",
+        "Chỉ theo hướng lên trên"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao thợ lặn xuống sâu phải mặc áo lặn chịu áp suất?",
+       "luaChon": [
+        "Vì nước sâu có nhiều cá",
+        "Vì nước càng sâu càng lạnh",
+        "Vì càng xuống sâu áp suất nước càng lớn",
+        "Vì thiếu ánh sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao đập nước thường được xây phần chân dày hơn phần đỉnh?",
+       "luaChon": [
+        "Vì nước ở trên nặng hơn",
+        "Vì áp suất nước ở đáy lớn hơn ở trên",
+        "Vì để đẹp hơn",
+        "Vì để tiết kiệm vật liệu"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bình thông nhau chứa cùng một chất lỏng đứng yên thì mực chất lỏng ở các nhánh thế nào?",
+       "luaChon": [
+        "Nhánh to cao hơn",
+        "Bằng nhau",
+        "Luôn chênh lệch nhau",
+        "Nhánh nhỏ cao hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Máy thủy lực (kích thủy lực) hoạt động dựa trên nguyên lí nào?",
+       "luaChon": [
+        "Sự nở vì nhiệt",
+        "Sự bay hơi",
+        "Lực ma sát",
+        "Áp suất truyền nguyên vẹn trong lòng chất lỏng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Áp suất khí quyển là gì?",
+       "luaChon": [
+        "Áp suất trong lòng đất",
+        "Áp suất do lớp không khí bao quanh Trái Đất gây ra",
+        "Áp suất do ánh sáng gây ra",
+        "Áp suất trong lòng nước biển"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Càng lên cao thì áp suất khí quyển thay đổi thế nào?",
+       "luaChon": [
+        "Tăng rồi giảm",
+        "Càng tăng",
+        "Càng giảm",
+        "Không đổi"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thí nghiệm nổi tiếng chứng minh sự tồn tại của áp suất khí quyển là thí nghiệm nào?",
+       "luaChon": [
+        "Thí nghiệm mặt phẳng nghiêng",
+        "Thí nghiệm con lắc đơn",
+        "Thí nghiệm quả cầu Newton",
+        "Thí nghiệm hai bán cầu Magdeburg"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao khi hút nước bằng ống hút thì nước dâng lên trong ống?",
+       "luaChon": [
+        "Vì áp suất khí quyển đẩy nước vào ống khi ta hút bớt không khí",
+        "Vì nước nhẹ hơn không khí",
+        "Vì nước tự bay lên",
+        "Vì miệng ống hút hút nước"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 17. Lực đẩy Archimedes",
+     "cau": [
+      {
+       "noiDung": "Lực đẩy Archimedes tác dụng lên vật nhúng trong chất lỏng có phương và chiều thế nào?",
+       "luaChon": [
+        "Nằm ngang",
+        "Xiên góc 45 độ",
+        "Thẳng đứng, chiều từ trên xuống",
+        "Thẳng đứng, chiều từ dưới lên"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Độ lớn của lực đẩy Archimedes bằng đại lượng nào?",
+       "luaChon": [
+        "Thể tích của bình chứa",
+        "Khối lượng của vật",
+        "Trọng lượng của phần chất lỏng bị vật chiếm chỗ",
+        "Trọng lượng của cả vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một vật sẽ nổi trên mặt chất lỏng khi nào?",
+       "luaChon": [
+        "Khi vật có màu nhạt",
+        "Khi vật rất nặng",
+        "Khi khối lượng riêng của vật nhỏ hơn khối lượng riêng của chất lỏng",
+        "Khi vật có thể tích lớn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một vật chìm xuống đáy khi nào?",
+       "luaChon": [
+        "Khi hai lực cân bằng",
+        "Khi trọng lượng vật lớn hơn lực đẩy Archimedes",
+        "Khi trọng lượng vật nhỏ hơn lực đẩy",
+        "Khi vật rỗng bên trong"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao tàu thủy bằng thép rất nặng nhưng vẫn nổi được trên nước?",
+       "luaChon": [
+        "Vì tàu có khoảng rỗng lớn nên khối lượng riêng trung bình nhỏ hơn nước",
+        "Vì thép nhẹ hơn nước",
+        "Vì tàu được sơn màu sáng",
+        "Vì tàu chạy nhanh"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhúng cùng một vật vào nước và vào dầu, lực đẩy Archimedes ở đâu lớn hơn?",
+       "luaChon": [
+        "Trong dầu",
+        "Bằng nhau",
+        "Trong nước, vì khối lượng riêng của nước lớn hơn",
+        "Không xác định được"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật càng nhúng chìm sâu trong cùng một chất lỏng thì lực đẩy Archimedes càng tăng, kể cả khi đã chìm hoàn toàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao khi ở dưới nước ta cảm thấy cơ thể nhẹ hơn?",
+       "luaChon": [
+        "Vì cơ thể mất khối lượng",
+        "Vì trọng lực biến mất",
+        "Vì nước làm cơ thể nhỏ lại",
+        "Vì nước tác dụng lên cơ thể lực đẩy Archimedes hướng lên"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khinh khí cầu bay lên được cũng nhờ lực đẩy Archimedes của không khí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lực đẩy Archimedes phụ thuộc vào thể tích phần vật chìm trong chất lỏng và khối lượng riêng của chất lỏng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương IV. Tác dụng làm quay của lực",
+   "bai": [
+    {
+     "ten": "Bài 18. Tác dụng làm quay của lực. Moment lực",
+     "cau": [
+      {
+       "noiDung": "Moment lực đặc trưng cho tác dụng nào của lực?",
+       "luaChon": [
+        "Tác dụng làm vật đổi màu",
+        "Tác dụng làm vật tan ra",
+        "Tác dụng làm quay vật quanh một trục",
+        "Tác dụng làm vật nóng lên"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Moment lực càng lớn khi nào?",
+       "luaChon": [
+        "Khi lực nhỏ và cánh tay đòn ngắn",
+        "Khi trục quay càng to",
+        "Khi vật càng nhẹ",
+        "Khi lực càng lớn và cánh tay đòn càng dài"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đơn vị của moment lực là gì?",
+       "luaChon": [
+        "N",
+        "Pa",
+        "m",
+        "N.m"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cánh tay đòn của lực là gì?",
+       "luaChon": [
+        "Khoảng cách từ trục quay đến giá của lực",
+        "Chiều dài của vật",
+        "Độ lớn của lực",
+        "Khoảng cách từ điểm đặt lực đến mặt đất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lực có giá đi qua trục quay thì không làm cho vật quay quanh trục đó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao vặn ốc bằng cờ lê có cán dài lại nhẹ hơn cờ lê cán ngắn?",
+       "luaChon": [
+        "Vì ma sát giảm đi",
+        "Vì cờ lê dài nhẹ hơn",
+        "Vì cánh tay đòn lớn hơn nên moment lực lớn hơn",
+        "Vì ốc nóng lên"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao tay nắm cửa thường được đặt xa bản lề?",
+       "luaChon": [
+        "Để cửa chắc chắn hơn",
+        "Để cửa đẹp hơn",
+        "Để cửa kín gió hơn",
+        "Để cánh tay đòn lớn, mở cửa nhẹ hơn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Một lực 20 N tác dụng với cánh tay đòn 0,5 m thì moment lực bằng bao nhiêu?",
+       "luaChon": [
+        "0,025 N.m",
+        "40 N.m",
+        "20,5 N.m",
+        "10 N.m"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Muốn tăng moment lực mà không tăng độ lớn lực, ta làm gì?",
+       "luaChon": [
+        "Giảm cánh tay đòn",
+        "Giảm khối lượng vật",
+        "Tăng cánh tay đòn",
+        "Đổi chiều lực"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật đang chịu hai moment lực bằng nhau nhưng ngược chiều quay thì vật sẽ đứng yên (cân bằng).",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 19. Đòn bẩy và ứng dụng",
+     "cau": [
+      {
+       "noiDung": "Đòn bẩy gồm những yếu tố chính nào?",
+       "luaChon": [
+        "Điểm tựa, điểm đặt lực tác dụng và điểm đặt trọng vật",
+        "Chỉ có lực tác dụng",
+        "Chỉ có trọng vật",
+        "Chỉ có điểm tựa"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong đòn bẩy, điểm tựa là gì?",
+       "luaChon": [
+        "Điểm đặt lực tác dụng",
+        "Điểm giữa của đòn bẩy",
+        "Điểm mà đòn bẩy quay quanh nó",
+        "Điểm đặt của vật nặng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dụng cụ nào sau đây hoạt động dựa trên nguyên tắc đòn bẩy?",
+       "luaChon": [
+        "Cân điện tử",
+        "Bóng đèn điện",
+        "Nhiệt kế",
+        "Búa nhổ đinh"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cái kéo cắt giấy hoạt động dựa trên nguyên tắc đòn bẩy.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao dùng búa có cán dài thì nhổ đinh dễ hơn búa cán ngắn?",
+       "luaChon": [
+        "Vì đinh bị nóng lên",
+        "Vì búa cán dài nặng hơn",
+        "Vì búa cán dài cứng hơn",
+        "Vì cánh tay đòn dài hơn nên moment lực lớn hơn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Xe cút kít (xe rùa) là ứng dụng của loại máy cơ đơn giản nào?",
+       "luaChon": [
+        "Bánh xe và trục",
+        "Ròng rọc",
+        "Đòn bẩy",
+        "Mặt phẳng nghiêng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bộ phận nào của cơ thể người hoạt động như một đòn bẩy khi ta nâng vật?",
+       "luaChon": [
+        "Hộp sọ",
+        "Cánh tay với khớp khuỷu làm điểm tựa",
+        "Lồng ngực",
+        "Dạ dày"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Muốn dùng đòn bẩy để nâng vật nặng nhẹ nhàng hơn, ta nên bố trí thế nào?",
+       "luaChon": [
+        "Đặt điểm tựa xa vật nặng",
+        "Đặt vật nặng ở giữa đòn",
+        "Đặt điểm tựa gần vật nặng và tác dụng lực ở xa điểm tựa",
+        "Tác dụng lực sát điểm tựa"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đòn bẩy giúp ta thay đổi được độ lớn và hướng của lực khi nâng vật.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cái mở nắp chai và cái bấm móng tay đều là ứng dụng của đòn bẩy.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương V. Điện",
+   "bai": [
+    {
+     "ten": "Bài 20. Hiện tượng nhiễm điện do cọ xát",
+     "cau": [
+      {
+       "noiDung": "Vật bị nhiễm điện có khả năng gì?",
+       "luaChon": [
+        "Phát ra ánh sáng mạnh",
+        "Hút được các vật nhẹ như mẩu giấy vụn",
+        "Tự bay lên cao",
+        "Tự nóng chảy"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cách nào sau đây làm cho một vật bị nhiễm điện?",
+       "luaChon": [
+        "Cọ xát vật đó với vật khác",
+        "Cân vật trên cân",
+        "Đun nóng vật",
+        "Nhúng vật vào nước"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có mấy loại điện tích?",
+       "luaChon": [
+        "Một loại duy nhất",
+        "Hai loại: điện tích dương và điện tích âm",
+        "Bốn loại",
+        "Ba loại"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hai vật nhiễm điện cùng loại khi đặt gần nhau sẽ thế nào?",
+       "luaChon": [
+        "Hút nhau",
+        "Dính chặt vào nhau",
+        "Đẩy nhau",
+        "Không tương tác"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hai vật nhiễm điện khác loại khi đặt gần nhau sẽ thế nào?",
+       "luaChon": [
+        "Không tương tác",
+        "Đẩy nhau",
+        "Cùng phát sáng",
+        "Hút nhau"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi cọ xát thanh nhựa vào vải khô, thanh nhựa nhận thêm electron nên nhiễm điện gì?",
+       "luaChon": [
+        "Cả hai loại điện tích",
+        "Điện tích âm",
+        "Điện tích dương",
+        "Không nhiễm điện"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật nhiễm điện dương là vật đã mất bớt electron.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao vào mùa hanh khô, chải tóc bằng lược nhựa thấy tóc dựng lên?",
+       "luaChon": [
+        "Vì tóc bị khô cứng",
+        "Vì lược và tóc nhiễm điện trái dấu nên hút nhau, các sợi tóc cùng dấu đẩy nhau",
+        "Vì tóc bị nóng lên",
+        "Vì lược có nam châm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hiện tượng sấm sét trong tự nhiên liên quan đến sự nhiễm điện của các đám mây.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cột thu lôi trên nóc nhà cao tầng có tác dụng gì?",
+       "luaChon": [
+        "Đo tốc độ gió",
+        "Dẫn dòng điện do sét xuống đất an toàn",
+        "Thu ánh sáng mặt trời",
+        "Phát ra sóng vô tuyến"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 21. Dòng điện. Nguồn điện",
+     "cau": [
+      {
+       "noiDung": "Dòng điện là gì?",
+       "luaChon": [
+        "Dòng nhiệt truyền trong kim loại",
+        "Dòng ánh sáng trong dây dẫn",
+        "Dòng chuyển động hỗn loạn của phân tử",
+        "Dòng chuyển dời có hướng của các hạt mang điện"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong kim loại, dòng điện là dòng chuyển dời có hướng của hạt nào?",
+       "luaChon": [
+        "Các proton",
+        "Các nguyên tử",
+        "Các electron tự do",
+        "Các neutron"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nguồn điện có tác dụng gì?",
+       "luaChon": [
+        "Tiêu thụ điện năng",
+        "Làm tắt dòng điện",
+        "Đo cường độ dòng điện",
+        "Cung cấp năng lượng để duy trì dòng điện trong mạch"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thiết bị nào sau đây là nguồn điện?",
+       "luaChon": [
+        "Quạt điện",
+        "Pin",
+        "Bóng đèn",
+        "Bàn là"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mỗi nguồn điện có mấy cực?",
+       "luaChon": [
+        "Bốn cực",
+        "Ba cực",
+        "Hai cực",
+        "Một cực"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật liệu nào sau đây dẫn điện tốt?",
+       "luaChon": [
+        "Cốc thủy tinh",
+        "Thanh gỗ khô",
+        "Thanh nhựa",
+        "Dây đồng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vật liệu nào sau đây là chất cách điện?",
+       "luaChon": [
+        "Sắt",
+        "Nhựa",
+        "Nhôm",
+        "Đồng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao vỏ dây điện thường được bọc nhựa?",
+       "luaChon": [
+        "Vì nhựa làm dây dẫn điện nhanh hơn",
+        "Vì nhựa dẫn điện tốt",
+        "Vì nhựa cách điện, bảo đảm an toàn cho người dùng",
+        "Vì nhựa làm dây nặng hơn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dòng điện chỉ chạy được khi mạch điện kín.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Pin và acquy đều là nguồn điện dự trữ năng lượng dưới dạng hóa năng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 22. Mạch điện đơn giản",
+     "cau": [
+      {
+       "noiDung": "Một mạch điện đơn giản thường gồm những bộ phận nào?",
+       "luaChon": [
+        "Chỉ có nguồn điện",
+        "Chỉ có bóng đèn",
+        "Nguồn điện, dây dẫn, thiết bị tiêu thụ điện và công tắc",
+        "Chỉ có dây dẫn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Công tắc trong mạch điện có tác dụng gì?",
+       "luaChon": [
+        "Tạo ra dòng điện",
+        "Làm tăng cường độ dòng điện",
+        "Đóng hoặc ngắt mạch điện",
+        "Đo hiệu điện thế"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi công tắc mở, mạch điện ở trạng thái nào?",
+       "luaChon": [
+        "Mạch kín, có dòng điện",
+        "Mạch phát nổ",
+        "Mạch bị đoản mạch",
+        "Mạch hở, không có dòng điện chạy qua"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cầu chì trong mạch điện gia đình có tác dụng gì?",
+       "luaChon": [
+        "Làm tăng cường độ dòng điện",
+        "Làm đèn sáng hơn",
+        "Tự ngắt mạch khi dòng điện quá lớn để bảo vệ mạch",
+        "Tiết kiệm điện năng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hiện tượng đoản mạch (ngắn mạch) có thể gây ra hậu quả gì?",
+       "luaChon": [
+        "Làm giảm tiền điện",
+        "Làm đèn sáng lâu hơn",
+        "Không gây hậu quả gì",
+        "Cháy nổ, hỏng thiết bị điện"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong đoạn mạch mắc nối tiếp, cường độ dòng điện tại mọi điểm có đặc điểm gì?",
+       "luaChon": [
+        "Bằng nhau tại mọi điểm",
+        "Càng xa nguồn càng nhỏ",
+        "Bằng không ở cuối mạch",
+        "Càng xa nguồn càng lớn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong đoạn mạch mắc nối tiếp, nếu một bóng đèn bị đứt dây tóc thì đèn còn lại thế nào?",
+       "luaChon": [
+        "Cũng không sáng vì mạch bị hở",
+        "Bị nổ",
+        "Sáng mạnh hơn",
+        "Vẫn sáng bình thường"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong đoạn mạch song song, nếu một bóng đèn hỏng thì các đèn còn lại vẫn sáng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong sơ đồ mạch điện, mỗi bộ phận được biểu diễn bằng một kí hiệu quy ước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Chiều dòng điện được quy ước là chiều nào?",
+       "luaChon": [
+        "Thay đổi liên tục",
+        "Từ cực âm sang cực dương",
+        "Theo chiều chuyển động của electron",
+        "Từ cực dương qua dây dẫn tới cực âm của nguồn điện"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 23. Tác dụng của dòng điện",
+     "cau": [
+      {
+       "noiDung": "Bàn là điện hoạt động dựa trên tác dụng nào của dòng điện?",
+       "luaChon": [
+        "Tác dụng phát sáng",
+        "Tác dụng từ",
+        "Tác dụng hóa học",
+        "Tác dụng nhiệt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Bóng đèn LED hoạt động dựa trên tác dụng nào của dòng điện?",
+       "luaChon": [
+        "Tác dụng sinh lí",
+        "Tác dụng phát sáng",
+        "Tác dụng từ",
+        "Tác dụng nhiệt"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chuông điện hoạt động dựa trên tác dụng nào của dòng điện?",
+       "luaChon": [
+        "Tác dụng nhiệt",
+        "Tác dụng hóa học",
+        "Tác dụng phát sáng",
+        "Tác dụng từ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Mạ điện (mạ vàng, mạ kẽm) dựa trên tác dụng nào của dòng điện?",
+       "luaChon": [
+        "Tác dụng phát sáng",
+        "Tác dụng nhiệt",
+        "Tác dụng từ",
+        "Tác dụng hóa học"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Tác dụng sinh lí của dòng điện được ứng dụng trong lĩnh vực nào?",
+       "luaChon": [
+        "Chiếu sáng đường phố",
+        "Y học, ví dụ máy kích tim",
+        "Đo chiều dài",
+        "Nấu ăn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Dòng điện đi qua cơ thể người có thể gây nguy hiểm đến tính mạng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ấm đun nước siêu tốc hoạt động dựa trên tác dụng nhiệt của dòng điện.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nam châm điện trong cần cẩu điện là ứng dụng của tác dụng nào?",
+       "luaChon": [
+        "Tác dụng hóa học",
+        "Tác dụng sinh lí",
+        "Tác dụng từ",
+        "Tác dụng phát sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Việc nào sau đây là an toàn khi sử dụng điện?",
+       "luaChon": [
+        "Kéo dây điện bằng cách giật mạnh",
+        "Dùng tay ướt cắm phích điện",
+        "Dùng dây điện bị hở lõi",
+        "Ngắt cầu dao trước khi sửa chữa thiết bị điện"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi phát hiện người bị điện giật, việc đầu tiên cần làm là gì?",
+       "luaChon": [
+        "Dội nước lên người nạn nhân",
+        "Bỏ chạy đi nơi khác",
+        "Ngắt nguồn điện rồi mới sơ cứu",
+        "Dùng tay kéo nạn nhân ra ngay"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 24. Cường độ dòng điện và hiệu điện thế",
+     "cau": [
+      {
+       "noiDung": "Đơn vị đo cường độ dòng điện là gì?",
+       "luaChon": [
+        "Watt",
+        "Vôn",
+        "Ôm",
+        "Ampe"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đơn vị đo hiệu điện thế là gì?",
+       "luaChon": [
+        "Ampe",
+        "Ôm",
+        "Jun",
+        "Vôn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dụng cụ dùng để đo cường độ dòng điện là gì?",
+       "luaChon": [
+        "Lực kế",
+        "Vôn kế",
+        "Nhiệt kế",
+        "Ampe kế"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dụng cụ dùng để đo hiệu điện thế là gì?",
+       "luaChon": [
+        "Cân",
+        "Vôn kế",
+        "Tốc kế",
+        "Ampe kế"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cường độ dòng điện cho biết điều gì?",
+       "luaChon": [
+        "Khả năng phát sáng của đèn",
+        "Chiều dài mạch điện",
+        "Khối lượng dây dẫn",
+        "Độ mạnh yếu của dòng điện"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "1 ampe bằng bao nhiêu miliampe?",
+       "luaChon": [
+        "10000 mA",
+        "1000 mA",
+        "100 mA",
+        "10 mA"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ampe kế được mắc như thế nào trong mạch?",
+       "luaChon": [
+        "Mắc tùy ý",
+        "Mắc song song với vật cần đo",
+        "Mắc nối tiếp với vật cần đo",
+        "Mắc riêng ngoài mạch"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vôn kế được mắc song song với đoạn mạch cần đo hiệu điện thế.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi mắc ampe kế và vôn kế, cần chú ý mắc đúng chốt dương và chốt âm.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Số vôn ghi trên mỗi dụng cụ điện cho biết điều gì?",
+       "luaChon": [
+        "Hiệu điện thế định mức để dụng cụ hoạt động bình thường",
+        "Giá tiền của dụng cụ",
+        "Tuổi thọ của dụng cụ",
+        "Khối lượng của dụng cụ"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 25. Thực hành đo cường độ dòng điện và hiệu điện thế",
+     "cau": [
+      {
+       "noiDung": "Trước khi mắc mạch điện để đo, cần làm gì với công tắc?",
+       "luaChon": [
+        "Nối tắt công tắc",
+        "Tháo bỏ công tắc",
+        "Đóng công tắc ngay từ đầu",
+        "Để công tắc ở trạng thái ngắt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi chọn thang đo của ampe kế, cần chọn thế nào?",
+       "luaChon": [
+        "Không cần quan tâm thang đo",
+        "Chọn tùy ý",
+        "Chọn thang đo lớn hơn giá trị cần đo",
+        "Chọn thang đo nhỏ nhất luôn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nếu mắc ampe kế song song trực tiếp với nguồn điện thì có thể xảy ra hiện tượng gì?",
+       "luaChon": [
+        "Đèn sáng mạnh hơn",
+        "Không có gì xảy ra",
+        "Ampe kế đo chính xác hơn",
+        "Đoản mạch, hỏng ampe kế"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi kim của ampe kế quay ngược, ta cần làm gì?",
+       "luaChon": [
+        "Đảo lại hai chốt nối của ampe kế",
+        "Tăng hiệu điện thế",
+        "Đọc kết quả với dấu âm",
+        "Bỏ ampe kế đi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong đoạn mạch nối tiếp gồm hai bóng đèn, cường độ dòng điện qua hai đèn thế nào?",
+       "luaChon": [
+        "Không xác định",
+        "Đèn xa nguồn lớn hơn",
+        "Đèn gần nguồn lớn hơn",
+        "Bằng nhau"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong đoạn mạch nối tiếp, hiệu điện thế toàn mạch bằng gì?",
+       "luaChon": [
+        "Hiệu điện thế trên một bộ phận",
+        "Hiệu của hai hiệu điện thế",
+        "Bằng không",
+        "Tổng hiệu điện thế trên từng bộ phận"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong đoạn mạch song song, hiệu điện thế giữa hai đầu các nhánh bằng nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao phải đo nhiều lần và ghi lại kết quả trong bài thực hành?",
+       "luaChon": [
+        "Để dụng cụ bền hơn",
+        "Để mạch nóng lên",
+        "Để giảm sai số và có kết quả tin cậy hơn",
+        "Để tốn nhiều pin hơn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sau khi đo xong, cần ngắt công tắc và tháo mạch theo hướng dẫn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể tùy ý dùng nguồn điện có hiệu điện thế lớn hơn nhiều so với định mức của bóng đèn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VI. Nhiệt",
+   "bai": [
+    {
+     "ten": "Bài 26. Năng lượng nhiệt và nội năng",
+     "cau": [
+      {
+       "noiDung": "Năng lượng nhiệt của một vật liên quan đến điều gì?",
+       "luaChon": [
+        "Màu sắc của vật",
+        "Chuyển động của các phân tử, nguyên tử cấu tạo nên vật",
+        "Hình dạng của vật",
+        "Vị trí của vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhiệt độ của vật càng cao thì các phân tử cấu tạo nên vật chuyển động thế nào?",
+       "luaChon": [
+        "Càng chậm",
+        "Không thay đổi",
+        "Đứng yên",
+        "Càng nhanh"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nội năng của vật là gì?",
+       "luaChon": [
+        "Chỉ là thế năng hấp dẫn",
+        "Khối lượng của vật",
+        "Tổng động năng và thế năng của các phân tử cấu tạo nên vật",
+        "Chỉ là động năng của cả vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Có mấy cách làm thay đổi nội năng của vật?",
+       "luaChon": [
+        "Ba cách",
+        "Hai cách: thực hiện công và truyền nhiệt",
+        "Một cách duy nhất",
+        "Bốn cách"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Xoa hai bàn tay vào nhau thấy nóng lên là ví dụ về cách nào làm tăng nội năng?",
+       "luaChon": [
+        "Truyền nhiệt",
+        "Thực hiện công",
+        "Bức xạ nhiệt",
+        "Đối lưu"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thả miếng kim loại nóng vào cốc nước lạnh là ví dụ về cách nào?",
+       "luaChon": [
+        "Ma sát",
+        "Nén khí",
+        "Thực hiện công",
+        "Truyền nhiệt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong hệ SI, đơn vị đo nhiệt độ là gì?",
+       "luaChon": [
+        "Jun",
+        "Độ C",
+        "Độ F",
+        "Kelvin"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dụng cụ dùng để đo nhiệt độ là gì?",
+       "luaChon": [
+        "Nhiệt kế",
+        "Lực kế",
+        "Tốc kế",
+        "Ampe kế"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhiệt lượng là phần năng lượng nhiệt mà vật nhận thêm hoặc mất bớt khi truyền nhiệt.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đơn vị đo nhiệt lượng là gì?",
+       "luaChon": [
+        "Newton",
+        "Pascal",
+        "Jun",
+        "Ampe"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 27. Thực hành đo năng lượng nhiệt bằng joulemeter",
+     "cau": [
+      {
+       "noiDung": "Joulemeter (oát kế điện năng) dùng để đo đại lượng nào?",
+       "luaChon": [
+        "Năng lượng điện đã cung cấp cho thiết bị",
+        "Tốc độ dòng nước",
+        "Khối lượng vật",
+        "Chiều dài dây dẫn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong thí nghiệm đun nước bằng điện, năng lượng điện chuyển hóa chủ yếu thành dạng nào?",
+       "luaChon": [
+        "Quang năng",
+        "Năng lượng nhiệt làm nóng nước",
+        "Hóa năng",
+        "Năng lượng âm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi làm thí nghiệm đun nước, cần lưu ý điều gì để an toàn?",
+       "luaChon": [
+        "Không chạm tay vào bộ phận đun và nước nóng",
+        "Cắm điện bằng tay ướt",
+        "Nhúng joulemeter vào nước",
+        "Đun cạn nước"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Để so sánh năng lượng nhiệt cần cung cấp, ta nên giữ những yếu tố nào giống nhau?",
+       "luaChon": [
+        "Màu sắc cốc",
+        "Thời điểm trong ngày",
+        "Khối lượng nước và độ tăng nhiệt độ",
+        "Vị trí đặt bàn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao nên khuấy nhẹ nước khi đun trong thí nghiệm?",
+       "luaChon": [
+        "Để nước bay hơi nhanh hơn",
+        "Để nhiệt độ nước đồng đều, đo chính xác hơn",
+        "Để nước lạnh đi",
+        "Để tăng khối lượng nước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nếu tăng gấp đôi khối lượng nước cần đun lên cùng độ tăng nhiệt độ thì năng lượng nhiệt cần cung cấp thế nào?",
+       "luaChon": [
+        "Giảm một nửa",
+        "Không đổi",
+        "Tăng lên khoảng gấp đôi",
+        "Bằng không"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao kết quả đo thực tế thường lớn hơn tính toán lí thuyết?",
+       "luaChon": [
+        "Vì nước tự sinh nhiệt",
+        "Vì joulemeter luôn sai",
+        "Vì nhiệt kế bị hỏng",
+        "Vì có năng lượng hao phí tỏa ra môi trường và làm nóng dụng cụ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trước khi đun, cần ghi lại nhiệt độ ban đầu của nước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhiệt kế phải được nhúng vào nước, không chạm đáy và thành cốc khi đo.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong mọi thí nghiệm nhiệt, toàn bộ năng lượng điện đều chuyển hết thành nhiệt của nước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 28. Sự truyền nhiệt",
+     "cau": [
+      {
+       "noiDung": "Có mấy hình thức truyền nhiệt chính?",
+       "luaChon": [
+        "Bốn hình thức",
+        "Một: chỉ có dẫn nhiệt",
+        "Ba: dẫn nhiệt, đối lưu, bức xạ nhiệt",
+        "Hai: dẫn nhiệt và đối lưu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dẫn nhiệt là hình thức truyền nhiệt chủ yếu trong môi trường nào?",
+       "luaChon": [
+        "Chất khí",
+        "Chất rắn",
+        "Chất lỏng",
+        "Chân không"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chất nào sau đây dẫn nhiệt tốt nhất?",
+       "luaChon": [
+        "Gỗ",
+        "Không khí",
+        "Kim loại",
+        "Nhựa"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hình thức đối lưu xảy ra chủ yếu trong môi trường nào?",
+       "luaChon": [
+        "Chỉ trong chân không",
+        "Chỉ trong chất rắn",
+        "Chất lỏng và chất khí",
+        "Chỉ trong kim loại"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bức xạ nhiệt có thể truyền được trong chân không.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Năng lượng từ Mặt Trời truyền tới Trái Đất chủ yếu bằng hình thức nào?",
+       "luaChon": [
+        "Dẫn nhiệt",
+        "Thực hiện công",
+        "Bức xạ nhiệt",
+        "Đối lưu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao mùa đông mặc áo bông lại thấy ấm?",
+       "luaChon": [
+        "Vì bông làm tăng nhiệt độ phòng",
+        "Vì bông tự sinh ra nhiệt",
+        "Vì bông hút nhiệt từ không khí",
+        "Vì lớp không khí trong bông dẫn nhiệt kém, giữ nhiệt cho cơ thể"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao cán nồi, cán chảo thường làm bằng gỗ hoặc nhựa?",
+       "luaChon": [
+        "Vì các vật liệu này dẫn nhiệt kém, tránh bị bỏng",
+        "Vì chúng rất nặng",
+        "Vì chúng dẫn nhiệt tốt",
+        "Vì chúng rẻ tiền"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhiệt luôn tự truyền từ vật có nhiệt độ cao sang vật có nhiệt độ thấp hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao vào mùa hè nên mặc áo màu sáng?",
+       "luaChon": [
+        "Vì áo màu sáng hấp thụ nhiều nhiệt hơn",
+        "Vì áo màu sáng dày hơn",
+        "Vì áo màu sáng hấp thụ ít bức xạ nhiệt hơn",
+        "Vì áo màu sáng nặng hơn"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 29. Sự nở vì nhiệt",
+     "cau": [
+      {
+       "noiDung": "Hầu hết các chất rắn đều nở ra khi nóng lên và co lại khi lạnh đi.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong ba chất rắn, lỏng, khí thì chất nào nở vì nhiệt nhiều nhất?",
+       "luaChon": [
+        "Chất rắn",
+        "Ba chất như nhau",
+        "Chất lỏng",
+        "Chất khí"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao giữa hai đầu thanh ray đường sắt phải để một khe hở nhỏ?",
+       "luaChon": [
+        "Để thoát nước mưa",
+        "Để tiết kiệm vật liệu",
+        "Để thanh ray nở ra khi trời nóng mà không bị cong vênh",
+        "Để tàu chạy êm hơn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao không nên đổ nước thật đầy ấm rồi mới đun?",
+       "luaChon": [
+        "Vì nước sẽ bay hơi hết",
+        "Vì nước sẽ không sôi",
+        "Vì ấm sẽ nhẹ hơn",
+        "Vì nước nở ra khi nóng lên sẽ tràn ra ngoài"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao khi rót nước sôi vào cốc thủy tinh dày dễ bị nứt hơn cốc mỏng?",
+       "luaChon": [
+        "Vì cốc dày dẫn nhiệt tốt hơn",
+        "Vì cốc dày nặng hơn",
+        "Vì cốc dày chứa nhiều nước hơn",
+        "Vì mặt trong và mặt ngoài nở vì nhiệt không đều"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Băng kép được cấu tạo từ gì và ứng dụng ở đâu?",
+       "luaChon": [
+        "Hai thanh gỗ ghép lại, dùng làm bàn",
+        "Hai thanh kim loại khác nhau ghép lại, dùng trong rơ le nhiệt",
+        "Một thanh nhựa, dùng làm thước",
+        "Hai tấm kính, dùng làm cửa"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao khinh khí cầu dùng khí nóng lại bay lên được?",
+       "luaChon": [
+        "Vì không khí nóng nở ra, khối lượng riêng giảm nên nhẹ hơn không khí xung quanh",
+        "Vì khí nóng nặng hơn",
+        "Vì có động cơ đẩy lên",
+        "Vì có nam châm hút lên"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao các đường ống dẫn hơi dài thường có các đoạn uốn cong?",
+       "luaChon": [
+        "Để giảm khối lượng ống",
+        "Để ống nở dài vì nhiệt mà không bị gãy",
+        "Để trang trí",
+        "Để hơi chảy chậm lại"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nước là chất lỏng nở vì nhiệt hoàn toàn bình thường ở mọi khoảng nhiệt độ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao cầu bê tông thường có khe co giãn?",
+       "luaChon": [
+        "Vì để nước mưa thoát nhanh",
+        "Vì bê tông nở ra và co lại theo nhiệt độ",
+        "Vì để xe chạy êm hơn",
+        "Vì để cầu nhẹ hơn"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VII. Sinh học cơ thể người",
+   "bai": [
+    {
+     "ten": "Bài 30. Khái quát về cơ thể người",
+     "cau": [
+      {
+       "noiDung": "Cơ thể người được chia thành mấy phần chính?",
+       "luaChon": [
+        "Bốn phần",
+        "Ba phần: đầu, thân và tay chân",
+        "Năm phần",
+        "Hai phần"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khoang ngực và khoang bụng của cơ thể người được ngăn cách bởi bộ phận nào?",
+       "luaChon": [
+        "Cơ hoành",
+        "Xương ức",
+        "Cột sống",
+        "Da bụng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ quan nào sau đây nằm trong khoang ngực?",
+       "luaChon": [
+        "Thận",
+        "Dạ dày",
+        "Tim và phổi",
+        "Gan"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cơ thể người gồm khoảng bao nhiêu hệ cơ quan chính?",
+       "luaChon": [
+        "Hai mươi hệ cơ quan",
+        "Hai hệ cơ quan",
+        "Ba hệ cơ quan",
+        "Khoảng mười hệ cơ quan"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Hệ cơ quan nào thực hiện chức năng vận chuyển máu đi khắp cơ thể?",
+       "luaChon": [
+        "Hệ bài tiết",
+        "Hệ hô hấp",
+        "Hệ tuần hoàn",
+        "Hệ vận động"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hệ cơ quan nào giúp cơ thể lấy oxygen và thải khí carbon dioxide?",
+       "luaChon": [
+        "Hệ tiêu hóa",
+        "Hệ nội tiết",
+        "Hệ hô hấp",
+        "Hệ bài tiết"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hệ cơ quan nào điều khiển và phối hợp hoạt động của các cơ quan khác?",
+       "luaChon": [
+        "Hệ vận động",
+        "Hệ sinh dục",
+        "Hệ bài tiết",
+        "Hệ thần kinh"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Các hệ cơ quan trong cơ thể người hoạt động độc lập, không liên quan đến nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đơn vị cấu tạo cơ bản của cơ thể người là gì?",
+       "luaChon": [
+        "Tế bào",
+        "Mô",
+        "Hệ cơ quan",
+        "Cơ quan"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thứ tự các cấp tổ chức trong cơ thể người là gì?",
+       "luaChon": [
+        "Tế bào, mô, cơ quan, hệ cơ quan, cơ thể",
+        "Tế bào, cơ quan, mô, cơ thể",
+        "Cơ quan, mô, tế bào, cơ thể",
+        "Mô, tế bào, cơ quan, cơ thể"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 31. Hệ vận động ở người",
+     "cau": [
+      {
+       "noiDung": "Hệ vận động ở người gồm những thành phần nào?",
+       "luaChon": [
+        "Xương và da",
+        "Chỉ có hệ cơ",
+        "Chỉ có bộ xương",
+        "Bộ xương và hệ cơ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chức năng nào sau đây là của bộ xương?",
+       "luaChon": [
+        "Trao đổi khí",
+        "Nâng đỡ, bảo vệ cơ thể và tạo khung cho vận động",
+        "Tiêu hóa thức ăn",
+        "Lọc máu"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Xương được cấu tạo từ những thành phần chính nào?",
+       "luaChon": [
+        "Chất hữu cơ (cốt giao) và chất khoáng",
+        "Chỉ có chất hữu cơ",
+        "Chỉ có chất khoáng",
+        "Chỉ có nước"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Xương dài ra được là nhờ bộ phận nào?",
+       "luaChon": [
+        "Màng xương ở giữa thân",
+        "Tủy xương vàng",
+        "Khớp bất động",
+        "Sụn tăng trưởng ở hai đầu xương"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khớp nào sau đây là khớp động?",
+       "luaChon": [
+        "Khớp ở xương chậu",
+        "Khớp hộp sọ",
+        "Khớp gối",
+        "Khớp giữa các đốt sống cùng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ngồi học sai tư thế trong thời gian dài có thể gây cong vẹo cột sống.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thiếu calcium và vitamin D kéo dài dễ dẫn đến bệnh nào về xương?",
+       "luaChon": [
+        "Đau dạ dày",
+        "Viêm họng",
+        "Còi xương, loãng xương",
+        "Bệnh cúm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi gặp người bị gãy xương tay, việc nên làm là gì?",
+       "luaChon": [
+        "Cố định chỗ gãy bằng nẹp rồi đưa đến cơ sở y tế",
+        "Để người đó tự vận động",
+        "Kéo mạnh tay cho thẳng lại",
+        "Xoa bóp mạnh chỗ gãy"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thường xuyên mang cặp sách lệch về một bên vai là thói quen tốt cho cột sống.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biện pháp nào giúp hệ vận động khỏe mạnh?",
+       "luaChon": [
+        "Tập thể dục đều đặn, ăn đủ chất và ngồi đúng tư thế",
+        "Chỉ ăn đồ ngọt",
+        "Ngồi yên cả ngày",
+        "Thức khuya thường xuyên"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 32. Dinh dưỡng và tiêu hóa ở người",
+     "cau": [
+      {
+       "noiDung": "Nhóm chất nào cung cấp năng lượng chính cho cơ thể?",
+       "luaChon": [
+        "Nước",
+        "Vitamin",
+        "Chất khoáng",
+        "Carbohydrate (chất bột đường)"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thực phẩm nào sau đây giàu protein?",
+       "luaChon": [
+        "Gạo, ngô",
+        "Đường kính",
+        "Thịt, cá, trứng",
+        "Dầu ăn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Quá trình tiêu hóa tinh bột bắt đầu ở cơ quan nào?",
+       "luaChon": [
+        "Dạ dày",
+        "Ruột già",
+        "Ruột non",
+        "Khoang miệng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Quá trình tiêu hóa protein bắt đầu chủ yếu ở cơ quan nào?",
+       "luaChon": [
+        "Ruột già",
+        "Khoang miệng",
+        "Thực quản",
+        "Dạ dày"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chất dinh dưỡng được hấp thụ chủ yếu ở cơ quan nào?",
+       "luaChon": [
+        "Dạ dày",
+        "Thực quản",
+        "Ruột già",
+        "Ruột non"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đặc điểm nào của ruột non giúp tăng khả năng hấp thụ chất dinh dưỡng?",
+       "luaChon": [
+        "Ruột non không có mạch máu",
+        "Thành ruột rất dày",
+        "Có nhiều nếp gấp và lông ruột làm tăng diện tích bề mặt",
+        "Ruột non rất ngắn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vai trò của chất xơ đối với cơ thể là gì?",
+       "luaChon": [
+        "Tạo nên cơ bắp",
+        "Vận chuyển oxygen",
+        "Giúp hoạt động tiêu hóa dễ dàng, phòng táo bón",
+        "Cung cấp năng lượng chính"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thiếu vitamin A kéo dài có thể gây bệnh gì về mắt?",
+       "luaChon": [
+        "Đau mắt đỏ",
+        "Bệnh khô mắt, quáng gà",
+        "Viêm kết mạc do vi khuẩn",
+        "Cận thị bẩm sinh"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nguyên nhân chính gây ngộ độc thực phẩm là gì?",
+       "luaChon": [
+        "Ăn quá ít rau xanh",
+        "Uống nhiều nước lọc",
+        "Ăn đúng giờ mỗi ngày",
+        "Ăn phải thức ăn nhiễm vi sinh vật hoặc hóa chất độc hại"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thường xuyên nhịn ăn sáng là thói quen tốt cho sức khỏe.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 33. Máu và hệ tuần hoàn",
+     "cau": [
+      {
+       "noiDung": "Máu gồm những thành phần nào?",
+       "luaChon": [
+        "Huyết tương và các tế bào máu",
+        "Chỉ có huyết tương",
+        "Nước và muối khoáng",
+        "Chỉ có hồng cầu"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Loại tế bào máu nào làm nhiệm vụ vận chuyển oxygen?",
+       "luaChon": [
+        "Hồng cầu",
+        "Bạch cầu",
+        "Tế bào lympho",
+        "Tiểu cầu"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Loại tế bào máu nào tham gia bảo vệ cơ thể chống tác nhân gây bệnh?",
+       "luaChon": [
+        "Huyết tương",
+        "Tiểu cầu",
+        "Hồng cầu",
+        "Bạch cầu"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thành phần nào của máu tham gia vào quá trình đông máu?",
+       "luaChon": [
+        "Nước",
+        "Tiểu cầu",
+        "Hồng cầu",
+        "Bạch cầu"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tim của người có mấy ngăn?",
+       "luaChon": [
+        "5",
+        "4",
+        "2",
+        "3"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hệ tuần hoàn ở người gồm những bộ phận nào?",
+       "luaChon": [
+        "Tim và hệ mạch",
+        "Tim và phổi",
+        "Chỉ có mạch máu",
+        "Chỉ có tim"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Người có nhóm máu O được gọi là nhóm máu chuyên cho.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Loại mạch nào đưa máu từ tim đi đến các cơ quan?",
+       "luaChon": [
+        "Bạch mạch",
+        "Mao mạch",
+        "Tĩnh mạch",
+        "Động mạch"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sự trao đổi chất giữa máu và tế bào diễn ra chủ yếu ở loại mạch nào?",
+       "luaChon": [
+        "Tĩnh mạch chủ",
+        "Mao mạch",
+        "Động mạch lớn",
+        "Tim"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biện pháp nào giúp bảo vệ hệ tim mạch?",
+       "luaChon": [
+        "Ăn nhiều đồ chiên rán",
+        "Ít vận động",
+        "Thức khuya thường xuyên",
+        "Tập thể dục đều đặn, hạn chế ăn nhiều mỡ động vật"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 34. Hệ hô hấp ở người",
+     "cau": [
+      {
+       "noiDung": "Cơ quan trao đổi khí chủ yếu của cơ thể người là gì?",
+       "luaChon": [
+        "Khí quản",
+        "Phổi",
+        "Da",
+        "Tim"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đơn vị trực tiếp thực hiện trao đổi khí trong phổi là gì?",
+       "luaChon": [
+        "Cơ hoành",
+        "Thanh quản",
+        "Khí quản",
+        "Phế nang"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đường dẫn khí của hệ hô hấp gồm những bộ phận nào?",
+       "luaChon": [
+        "Chỉ có mũi",
+        "Miệng và dạ dày",
+        "Chỉ có phổi",
+        "Mũi, họng, thanh quản, khí quản, phế quản"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chức năng của lông mũi và lớp niêm mạc mũi là gì?",
+       "luaChon": [
+        "Lọc bụi, làm ấm và ẩm không khí",
+        "Tiêu hóa thức ăn",
+        "Vận chuyển máu",
+        "Trao đổi khí trực tiếp"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi hít vào, không khí đi vào phổi chứa nhiều oxygen hơn khí thở ra.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ nào đóng vai trò chính trong động tác hít vào và thở ra?",
+       "luaChon": [
+        "Cơ bắp tay",
+        "Cơ tim",
+        "Cơ mặt",
+        "Cơ hoành và cơ liên sườn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Hút thuốc lá làm tổn thương phổi và tăng nguy cơ mắc bệnh hô hấp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bệnh nào sau đây thuộc bệnh về đường hô hấp?",
+       "luaChon": [
+        "Viêm phổi",
+        "Thiếu máu",
+        "Sỏi thận",
+        "Viêm loét dạ dày"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biện pháp nào giúp bảo vệ hệ hô hấp?",
+       "luaChon": [
+        "Hít thở sâu trong không khí ô nhiễm",
+        "Đeo khẩu trang nơi nhiều bụi, không hút thuốc, trồng cây xanh",
+        "Ở lâu trong phòng kín nhiều khói",
+        "Không vệ sinh nhà cửa"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi gặp người bị ngạt thở, việc cần làm là gì?",
+       "luaChon": [
+        "Đưa nạn nhân ra nơi thoáng khí và gọi cấp cứu",
+        "Để nạn nhân nằm yên nơi kín gió",
+        "Đóng kín cửa lại",
+        "Cho nạn nhân uống nước ngay"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 35. Hệ bài tiết ở người",
+     "cau": [
+      {
+       "noiDung": "Cơ quan chính của hệ bài tiết nước tiểu là gì?",
+       "luaChon": [
+        "Gan",
+        "Phổi",
+        "Thận",
+        "Dạ dày"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hệ bài tiết nước tiểu gồm những cơ quan nào?",
+       "luaChon": [
+        "Gan và ruột",
+        "Chỉ có thận",
+        "Thận, ống dẫn nước tiểu, bóng đái và ống đái",
+        "Thận và phổi"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đơn vị chức năng của thận là gì?",
+       "luaChon": [
+        "Nơron thần kinh",
+        "Đơn vị chức năng thận (nephron)",
+        "Phế nang",
+        "Lông ruột"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vai trò của hệ bài tiết là gì?",
+       "luaChon": [
+        "Điều khiển vận động",
+        "Lọc và thải các chất cặn bã, chất dư thừa ra khỏi cơ thể",
+        "Vận chuyển oxygen",
+        "Tiêu hóa thức ăn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ngoài thận, cơ quan nào cũng tham gia bài tiết ở người?",
+       "luaChon": [
+        "Da và phổi",
+        "Tim và não",
+        "Xương và cơ",
+        "Dạ dày và gan"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bệnh sỏi thận có thể hình thành do nguyên nhân nào?",
+       "luaChon": [
+        "Vận động thường xuyên",
+        "Uống nhiều nước lọc",
+        "Ăn nhiều rau xanh",
+        "Uống ít nước và chế độ ăn không hợp lí"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Biện pháp nào giúp bảo vệ hệ bài tiết?",
+       "luaChon": [
+        "Uống đủ nước, không nhịn tiểu, ăn uống hợp vệ sinh",
+        "Uống ít nước",
+        "Ăn thật mặn",
+        "Nhịn tiểu càng lâu càng tốt"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nước tiểu chính thức được tạo thành sau quá trình lọc máu và hấp thụ lại ở thận.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhịn tiểu thường xuyên có thể gây hại cho bóng đái và thận.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi thận suy giảm chức năng nặng, người bệnh có thể phải điều trị bằng phương pháp nào?",
+       "luaChon": [
+        "Chạy thận nhân tạo hoặc ghép thận",
+        "Tập thể dục cường độ cao",
+        "Uống thêm nước ngọt",
+        "Nhịn ăn hoàn toàn"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 36. Điều hòa môi trường trong của cơ thể",
+     "cau": [
+      {
+       "noiDung": "Môi trường trong của cơ thể gồm những thành phần nào?",
+       "luaChon": [
+        "Không khí trong phổi",
+        "Máu, nước mô và bạch huyết",
+        "Chỉ có máu",
+        "Chỉ có nước mô"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cân bằng môi trường trong của cơ thể là gì?",
+       "luaChon": [
+        "Làm thay đổi liên tục nồng độ các chất",
+        "Duy trì ổn định các điều kiện lí, hóa của môi trường trong",
+        "Tăng thân nhiệt liên tục",
+        "Ngừng trao đổi chất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao việc duy trì ổn định môi trường trong lại quan trọng?",
+       "luaChon": [
+        "Vì để da đẹp hơn",
+        "Vì tế bào chỉ hoạt động bình thường trong điều kiện ổn định",
+        "Vì để cơ thể nặng hơn",
+        "Vì để tăng chiều cao"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cơ quan nào đóng vai trò quan trọng trong điều hòa lượng nước và muối khoáng của cơ thể?",
+       "luaChon": [
+        "Thận",
+        "Xương",
+        "Dạ dày",
+        "Phổi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Chỉ số đường huyết ở người bình thường lúc đói khoảng bao nhiêu?",
+       "luaChon": [
+        "Khoảng 0,5 mmol trên lít",
+        "Khoảng 3,9 đến 6,4 mmol trên lít",
+        "Khoảng 30 mmol trên lít",
+        "Khoảng 15 mmol trên lít"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Xét nghiệm máu và nước tiểu giúp đánh giá tình trạng môi trường trong của cơ thể.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi cơ thể mất nhiều mồ hôi, cần bổ sung gì?",
+       "luaChon": [
+        "Nước và chất điện giải",
+        "Không cần bổ sung gì",
+        "Chỉ cần nghỉ ngơi",
+        "Chỉ cần ăn thêm đường"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Uống đủ nước và ăn uống cân đối giúp duy trì ổn định môi trường trong cơ thể.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi kết quả xét nghiệm vượt ngưỡng bình thường, người bệnh nên làm gì?",
+       "luaChon": [
+        "Nhịn ăn hoàn toàn",
+        "Tự mua thuốc uống theo mạng",
+        "Đi khám và làm theo chỉ dẫn của bác sĩ",
+        "Bỏ qua vì không quan trọng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Môi trường trong cơ thể luôn thay đổi mạnh và không cần được điều hòa.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 37. Hệ thần kinh và các giác quan",
+     "cau": [
+      {
+       "noiDung": "Hệ thần kinh ở người gồm những bộ phận nào?",
+       "luaChon": [
+        "Chỉ có dây thần kinh",
+        "Bộ phận trung ương và bộ phận ngoại biên",
+        "Chỉ có não",
+        "Chỉ có tủy sống"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bộ phận trung ương của hệ thần kinh gồm những gì?",
+       "luaChon": [
+        "Các hạch thần kinh",
+        "Các giác quan",
+        "Não và tủy sống",
+        "Các dây thần kinh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đơn vị cấu tạo của hệ thần kinh là gì?",
+       "luaChon": [
+        "Hồng cầu",
+        "Nơron (tế bào thần kinh)",
+        "Phế nang",
+        "Nephron"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chức năng của hệ thần kinh là gì?",
+       "luaChon": [
+        "Lọc máu",
+        "Điều khiển, điều hòa và phối hợp hoạt động của các cơ quan",
+        "Tiêu hóa thức ăn",
+        "Vận chuyển oxygen"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cơ quan cảm giác nào giúp ta nhìn thấy vật?",
+       "luaChon": [
+        "Mũi",
+        "Mắt",
+        "Tai",
+        "Lưỡi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bộ phận nào của mắt điều tiết để nhìn rõ vật ở các khoảng cách khác nhau?",
+       "luaChon": [
+        "Mí mắt",
+        "Thể thủy tinh",
+        "Lông mi",
+        "Giác mạc"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Người bị cận thị nhìn rõ vật ở khoảng cách nào?",
+       "luaChon": [
+        "Nhìn rõ vật ở xa, khó nhìn vật ở gần",
+        "Nhìn rõ mọi khoảng cách",
+        "Không nhìn thấy gì",
+        "Nhìn rõ vật ở gần, khó nhìn rõ vật ở xa"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Kính dùng cho người cận thị là loại kính nào?",
+       "luaChon": [
+        "Kính râm",
+        "Kính hội tụ",
+        "Kính phân kì",
+        "Kính lúp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thói quen nào giúp bảo vệ mắt?",
+       "luaChon": [
+        "Dụi mắt bằng tay bẩn",
+        "Đọc sách trong bóng tối",
+        "Nhìn thẳng vào mặt trời",
+        "Đọc sách nơi đủ ánh sáng, nghỉ mắt sau thời gian nhìn màn hình"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nghe âm thanh quá to trong thời gian dài có thể làm giảm thính lực.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 38. Hệ nội tiết ở người",
+     "cau": [
+      {
+       "noiDung": "Tuyến nội tiết tiết ra chất gì?",
+       "luaChon": [
+        "Nước bọt vào miệng",
+        "Enzyme tiêu hóa vào ruột",
+        "Mồ hôi ra ngoài da",
+        "Hormone đổ thẳng vào máu"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Điểm khác nhau cơ bản giữa tuyến nội tiết và tuyến ngoại tiết là gì?",
+       "luaChon": [
+        "Tuyến nội tiết lớn hơn",
+        "Tuyến nội tiết không có mạch máu",
+        "Tuyến ngoại tiết nằm trong não",
+        "Tuyến nội tiết đổ sản phẩm vào máu, tuyến ngoại tiết đổ ra ngoài qua ống dẫn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Tuyến nào tiết hormone insulin điều hòa đường huyết?",
+       "luaChon": [
+        "Tuyến tụy",
+        "Tuyến trên thận",
+        "Tuyến yên",
+        "Tuyến giáp"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hormone insulin có tác dụng gì?",
+       "luaChon": [
+        "Làm tăng đường huyết",
+        "Tăng chiều cao",
+        "Làm giảm nồng độ đường trong máu",
+        "Điều hòa thân nhiệt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bệnh bướu cổ thường liên quan đến việc thiếu nguyên tố nào trong khẩu phần ăn?",
+       "luaChon": [
+        "Kẽm",
+        "Sắt",
+        "Iodine",
+        "Calcium"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Tuyến nào được xem là tuyến chỉ huy, tiết nhiều hormone điều khiển các tuyến khác?",
+       "luaChon": [
+        "Tuyến yên",
+        "Tuyến tụy",
+        "Tuyến sinh dục",
+        "Tuyến giáp"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hormone được vận chuyển đi khắp cơ thể nhờ hệ nào?",
+       "luaChon": [
+        "Hệ bài tiết",
+        "Hệ tiêu hóa",
+        "Hệ tuần hoàn",
+        "Hệ hô hấp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dùng muối iodine trong bữa ăn hằng ngày giúp phòng bệnh bướu cổ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Người mắc bệnh tiểu đường cần tuân thủ chế độ ăn và chỉ dẫn của bác sĩ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hormone chỉ cần với lượng rất nhỏ nhưng có tác dụng mạnh tới hoạt động của cơ thể.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 39. Da và điều hòa thân nhiệt",
+     "cau": [
+      {
+       "noiDung": "Da của người gồm mấy lớp chính?",
+       "luaChon": [
+        "Năm lớp",
+        "Hai lớp",
+        "Một lớp",
+        "Ba lớp: biểu bì, bì và lớp mỡ dưới da"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chức năng nào sau đây là của da?",
+       "luaChon": [
+        "Lọc nước tiểu hoàn toàn",
+        "Vận chuyển máu",
+        "Bảo vệ cơ thể, cảm giác và điều hòa thân nhiệt",
+        "Tiêu hóa thức ăn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thân nhiệt của người bình thường khoảng bao nhiêu?",
+       "luaChon": [
+        "Khoảng 40 độ C",
+        "Khoảng 25 độ C",
+        "Khoảng 30 độ C",
+        "Khoảng 37 độ C"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi trời nóng, cơ thể điều hòa thân nhiệt bằng cách nào?",
+       "luaChon": [
+        "Mạch máu dưới da dãn ra và tăng tiết mồ hôi",
+        "Giảm hô hấp",
+        "Run cơ liên tục",
+        "Mạch máu co lại và ngừng tiết mồ hôi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi trời lạnh, cơ thể phản ứng thế nào để giữ nhiệt?",
+       "luaChon": [
+        "Dãn mạch máu tối đa",
+        "Tăng tiết mồ hôi",
+        "Mạch máu dưới da co lại, có thể run cơ để sinh nhiệt",
+        "Ngừng hô hấp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mồ hôi bay hơi trên da giúp cơ thể mát hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biện pháp nào giúp bảo vệ da?",
+       "luaChon": [
+        "Tắm rửa sạch sẽ, dùng kem chống nắng khi ra ngoài nắng gắt",
+        "Phơi nắng gắt cả buổi trưa",
+        "Dùng chung khăn mặt với người bệnh",
+        "Nặn mụn bằng tay bẩn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi bị bỏng nhẹ do nước sôi, việc cần làm ngay là gì?",
+       "luaChon": [
+        "Bôi kem đánh răng lên vết bỏng",
+        "Chọc vỡ các nốt phồng",
+        "Làm mát vùng bỏng bằng nước sạch mát trong nhiều phút",
+        "Chườm đá trực tiếp lên da"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Say nắng, say nóng xảy ra khi nào?",
+       "luaChon": [
+        "Khi uống quá nhiều nước",
+        "Khi ngủ đủ giấc",
+        "Khi ở lâu dưới nắng nóng làm cơ thể mất khả năng điều hòa thân nhiệt",
+        "Khi ở phòng lạnh quá lâu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Tuyến mồ hôi và mạch máu dưới da đóng vai trò quan trọng trong điều hòa thân nhiệt.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 40. Sinh sản ở người",
+     "cau": [
+      {
+       "noiDung": "Cơ quan sinh dục nam tạo ra tế bào sinh dục nào?",
+       "luaChon": [
+        "Tinh trùng",
+        "Trứng",
+        "Bạch cầu",
+        "Hồng cầu"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ quan sinh dục nữ tạo ra tế bào sinh dục nào?",
+       "luaChon": [
+        "Tinh trùng",
+        "Tiểu cầu",
+        "Nơron",
+        "Trứng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ở người, sự thụ tinh thường diễn ra ở cơ quan nào?",
+       "luaChon": [
+        "Ống dẫn trứng",
+        "Gan",
+        "Phổi",
+        "Dạ dày"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hợp tử được hình thành từ quá trình nào?",
+       "luaChon": [
+        "Sự lớn lên của tế bào da",
+        "Sự kết hợp giữa tinh trùng và trứng",
+        "Sự tiêu hóa thức ăn",
+        "Sự phân chia của hồng cầu"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thai nhi phát triển trong cơ quan nào của người mẹ?",
+       "luaChon": [
+        "Phổi",
+        "Dạ dày",
+        "Tử cung",
+        "Bóng đái"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thai nhi nhận chất dinh dưỡng và oxygen từ mẹ qua bộ phận nào?",
+       "luaChon": [
+        "Da thai nhi",
+        "Nhau thai và dây rốn",
+        "Phổi thai nhi",
+        "Miệng thai nhi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tuổi dậy thì ở người là giai đoạn cơ thể có nhiều thay đổi về thể chất và tâm sinh lí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở tuổi dậy thì, học sinh nên làm gì để giữ gìn sức khỏe?",
+       "luaChon": [
+        "Ít vận động",
+        "Nhịn ăn để giảm cân nhanh",
+        "Ăn uống đủ chất, vệ sinh cá nhân, tập thể dục và ngủ đủ giấc",
+        "Thức khuya thường xuyên"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Biện pháp nào giúp phòng tránh các bệnh lây truyền qua đường tình dục?",
+       "luaChon": [
+        "Sống lành mạnh và tuân thủ hướng dẫn y tế",
+        "Bỏ qua khám sức khỏe",
+        "Tự ý dùng thuốc",
+        "Dùng chung kim tiêm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi có thắc mắc về sức khỏe tuổi dậy thì, học sinh nên hỏi ai?",
+       "luaChon": [
+        "Chỉ tin theo tin đồn",
+        "Tự tìm cách giấu kín",
+        "Không hỏi ai cả",
+        "Cha mẹ, thầy cô hoặc cán bộ y tế"
+       ],
+       "dapAn": 3
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VIII. Sinh vật và môi trường",
+   "bai": [
+    {
+     "ten": "Bài 41. Môi trường và các nhân tố sinh thái",
+     "cau": [
+      {
+       "noiDung": "Môi trường sống của sinh vật là gì?",
+       "luaChon": [
+        "Chỉ là không khí",
+        "Chỉ là đất",
+        "Nơi sinh sống của sinh vật, gồm tất cả những gì bao quanh chúng",
+        "Chỉ là nước"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Có mấy loại môi trường sống chủ yếu của sinh vật?",
+       "luaChon": [
+        "Năm loại",
+        "Ba loại",
+        "Hai loại",
+        "Bốn: nước, trên cạn, trong đất và sinh vật"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhân tố nào sau đây là nhân tố sinh thái vô sinh?",
+       "luaChon": [
+        "Cây cỏ",
+        "Ánh sáng",
+        "Vi khuẩn",
+        "Con người"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhân tố nào sau đây là nhân tố sinh thái hữu sinh?",
+       "luaChon": [
+        "Nhiệt độ",
+        "Con người",
+        "Độ ẩm",
+        "Ánh sáng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Con người được xếp vào nhóm nhân tố sinh thái hữu sinh.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Giới hạn sinh thái là gì?",
+       "luaChon": [
+        "Khoảng giá trị của nhân tố sinh thái mà sinh vật có thể tồn tại và phát triển",
+        "Thời gian sống của sinh vật",
+        "Diện tích nơi sinh vật sống",
+        "Số lượng cá thể tối đa của loài"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây ưa sáng thường có đặc điểm nào?",
+       "luaChon": [
+        "Chỉ sống dưới nước",
+        "Không có diệp lục",
+        "Lá nhỏ, dày, mọc nơi trống trải nhiều nắng",
+        "Lá to, mỏng, mọc dưới tán rừng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Động vật hằng nhiệt có đặc điểm gì?",
+       "luaChon": [
+        "Nhiệt độ cơ thể ổn định, ít phụ thuộc nhiệt độ môi trường",
+        "Chỉ sống ở vùng lạnh",
+        "Nhiệt độ cơ thể thay đổi theo môi trường",
+        "Không có thân nhiệt"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ví dụ nào sau đây là môi trường sinh vật?",
+       "luaChon": [
+        "Cá sống trong ao",
+        "Chim sống trên cây",
+        "Giun sán sống trong ruột người",
+        "Giun đất sống trong đất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sinh vật vừa chịu tác động của môi trường, vừa tác động trở lại môi trường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 42. Quần thể sinh vật",
+     "cau": [
+      {
+       "noiDung": "Quần thể sinh vật là tập hợp các cá thể như thế nào?",
+       "luaChon": [
+        "Cùng loài, sống trong một khoảng không gian và thời gian nhất định",
+        "Khác loài và khác nơi sống",
+        "Cùng loài nhưng ở các nơi khác nhau",
+        "Khác loài, sống cùng một nơi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tập hợp nào sau đây là một quần thể sinh vật?",
+       "luaChon": [
+        "Các loài chim trong rừng",
+        "Các cây thông trong một rừng thông",
+        "Các sinh vật trong một khu vườn",
+        "Các loài cá trong một hồ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đặc trưng nào sau đây là của quần thể?",
+       "luaChon": [
+        "Chuỗi thức ăn",
+        "Mật độ cá thể, tỉ lệ giới tính, thành phần nhóm tuổi",
+        "Số loài trong quần xã",
+        "Độ đa dạng loài"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mật độ cá thể của quần thể là gì?",
+       "luaChon": [
+        "Tuổi thọ trung bình",
+        "Tổng số cá thể của loài trên Trái Đất",
+        "Tỉ lệ đực trên cái",
+        "Số lượng cá thể trên một đơn vị diện tích hoặc thể tích"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi mật độ quần thể quá cao thì thường xảy ra hiện tượng gì?",
+       "luaChon": [
+        "Các cá thể luôn hỗ trợ nhau tốt hơn",
+        "Tỉ lệ sinh tăng vô hạn",
+        "Cạnh tranh gay gắt về thức ăn và nơi ở",
+        "Không có ảnh hưởng gì"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Quan hệ hỗ trợ giữa các cá thể cùng loài thể hiện qua ví dụ nào?",
+       "luaChon": [
+        "Đàn trâu rừng cùng bảo vệ con non",
+        "Hai cây tranh giành ánh sáng",
+        "Chó sói tranh mồi",
+        "Cỏ dại lấn át cây trồng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhóm tuổi của quần thể thường được chia thành những nhóm nào?",
+       "luaChon": [
+        "Nhóm to và nhóm nhỏ",
+        "Trước sinh sản, đang sinh sản và sau sinh sản",
+        "Nhóm khỏe và nhóm yếu",
+        "Nhóm đực và nhóm cái"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Kích thước của quần thể luôn tăng lên vô hạn nếu không có kẻ thù.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bảo vệ quần thể các loài quý hiếm góp phần bảo vệ đa dạng sinh học.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Yếu tố nào sau đây làm thay đổi số lượng cá thể của quần thể?",
+       "luaChon": [
+        "Tỉ lệ sinh, tỉ lệ tử và sự di cư, nhập cư",
+        "Chỉ có tên gọi của loài",
+        "Chỉ có màu sắc của cá thể",
+        "Chỉ có kích thước cơ thể"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 43. Quần xã sinh vật",
+     "cau": [
+      {
+       "noiDung": "Quần xã sinh vật là gì?",
+       "luaChon": [
+        "Tập hợp các quần thể khác loài cùng sống trong một sinh cảnh",
+        "Tập hợp các cá thể cùng loài",
+        "Tập hợp các nhân tố vô sinh",
+        "Một cá thể duy nhất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đặc trưng nào sau đây là của quần xã?",
+       "luaChon": [
+        "Nhóm tuổi",
+        "Tỉ lệ giới tính",
+        "Độ đa dạng và thành phần loài",
+        "Mật độ cá thể của một loài"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Loài ưu thế trong quần xã là loài như thế nào?",
+       "luaChon": [
+        "Không có vai trò gì",
+        "Có số lượng nhiều, ảnh hưởng lớn đến các loài khác",
+        "Có số lượng ít nhất",
+        "Chỉ sống ở rìa quần xã"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mối quan hệ giữa cây phong lan bám trên thân cây gỗ là quan hệ gì?",
+       "luaChon": [
+        "Hội sinh",
+        "Kí sinh",
+        "Cạnh tranh",
+        "Sinh vật ăn sinh vật khác"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mối quan hệ giữa giun sán và cơ thể người là quan hệ gì?",
+       "luaChon": [
+        "Cộng sinh",
+        "Kí sinh",
+        "Hội sinh",
+        "Hợp tác"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mối quan hệ giữa vi khuẩn cố định đạm và cây họ Đậu là quan hệ gì?",
+       "luaChon": [
+        "Cộng sinh",
+        "Kí sinh",
+        "Ức chế cảm nhiễm",
+        "Cạnh tranh"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Quan hệ giữa hổ và nai trong rừng là quan hệ gì?",
+       "luaChon": [
+        "Hội sinh",
+        "Cộng sinh",
+        "Sinh vật này ăn sinh vật khác",
+        "Hợp tác"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Độ đa dạng của quần xã càng cao thì quần xã càng ổn định.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong quần xã, các loài chỉ có quan hệ đối kháng, không có quan hệ hỗ trợ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biện pháp nào giúp bảo vệ quần xã sinh vật tự nhiên?",
+       "luaChon": [
+        "Xả thải chưa xử lí ra sông",
+        "Đốt rừng làm rẫy",
+        "Khai thác gỗ ồ ạt",
+        "Bảo vệ rừng và hạn chế săn bắt bừa bãi"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 44. Hệ sinh thái",
+     "cau": [
+      {
+       "noiDung": "Hệ sinh thái bao gồm những thành phần nào?",
+       "luaChon": [
+        "Chỉ gồm một quần thể",
+        "Quần xã sinh vật và môi trường sống của chúng",
+        "Chỉ gồm quần xã sinh vật",
+        "Chỉ gồm nhân tố vô sinh"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong một chuỗi thức ăn, cây xanh giữ vai trò gì?",
+       "luaChon": [
+        "Sinh vật phân giải",
+        "Sinh vật tiêu thụ bậc 2",
+        "Sinh vật sản xuất",
+        "Sinh vật tiêu thụ bậc 1"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nhóm sinh vật nào đóng vai trò sinh vật phân giải trong hệ sinh thái?",
+       "luaChon": [
+        "Động vật ăn thịt",
+        "Vi khuẩn và nấm",
+        "Động vật ăn cỏ",
+        "Cây xanh"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một chuỗi thức ăn thường bắt đầu bằng nhóm sinh vật nào?",
+       "luaChon": [
+        "Động vật ăn thịt",
+        "Sinh vật phân giải",
+        "Sinh vật sản xuất",
+        "Sinh vật tiêu thụ bậc 2"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong chuỗi thức ăn: cỏ, châu chấu, ếch, rắn thì ếch thuộc bậc nào?",
+       "luaChon": [
+        "Sinh vật tiêu thụ bậc 2",
+        "Sinh vật phân giải",
+        "Sinh vật tiêu thụ bậc 1",
+        "Sinh vật sản xuất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lưới thức ăn là gì?",
+       "luaChon": [
+        "Một loài sinh vật",
+        "Một nhân tố vô sinh",
+        "Một chuỗi thức ăn duy nhất",
+        "Tập hợp nhiều chuỗi thức ăn có mắt xích chung"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Hệ sinh thái nào sau đây là hệ sinh thái nhân tạo?",
+       "luaChon": [
+        "Rạn san hô",
+        "Rừng nguyên sinh",
+        "Hồ tự nhiên",
+        "Ruộng lúa"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Năng lượng trong hệ sinh thái được truyền theo chiều nào?",
+       "luaChon": [
+        "Theo vòng tuần hoàn khép kín và không mất đi",
+        "Từ sinh vật phân giải lên cây xanh",
+        "Không có chiều xác định",
+        "Theo một chiều, từ sinh vật sản xuất tới các bậc tiêu thụ rồi mất dần dưới dạng nhiệt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nếu số lượng một mắt xích trong lưới thức ăn thay đổi mạnh thì các loài khác cũng bị ảnh hưởng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biện pháp nào giúp bảo vệ hệ sinh thái?",
+       "luaChon": [
+        "Trồng rừng, xử lí rác thải và hạn chế dùng thuốc trừ sâu bừa bãi",
+        "Săn bắt động vật hoang dã",
+        "Xả rác xuống sông",
+        "Đốt rừng làm nương rẫy"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 45. Sinh quyển",
+     "cau": [
+      {
+       "noiDung": "Sinh quyển là gì?",
+       "luaChon": [
+        "Toàn bộ nơi có sinh vật sinh sống trên Trái Đất",
+        "Chỉ là các đại dương",
+        "Chỉ là lớp đất mặt",
+        "Chỉ là lớp không khí"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sinh quyển bao gồm những phần nào của Trái Đất?",
+       "luaChon": [
+        "Chỉ có lõi Trái Đất",
+        "Một phần của khí quyển, thủy quyển và thạch quyển nơi có sinh vật sống",
+        "Chỉ có thủy quyển",
+        "Chỉ có khí quyển"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khu sinh học nào trên cạn có đa dạng sinh học cao nhất?",
+       "luaChon": [
+        "Vùng núi băng tuyết",
+        "Sa mạc",
+        "Rừng mưa nhiệt đới",
+        "Đồng rêu hàn đới"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khu sinh học nào có lượng mưa rất thấp và biên độ nhiệt ngày đêm lớn?",
+       "luaChon": [
+        "Rừng mưa nhiệt đới",
+        "Rừng ngập mặn",
+        "Sa mạc",
+        "Rạn san hô"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nguyên nhân chủ yếu làm suy giảm đa dạng sinh học là gì?",
+       "luaChon": [
+        "Sự thay đổi của các vì sao",
+        "Hoạt động của con người như phá rừng, săn bắt quá mức, ô nhiễm",
+        "Sự lên xuống của thủy triều",
+        "Sự quay của Trái Đất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biến đổi khí hậu ảnh hưởng thế nào đến sinh quyển?",
+       "luaChon": [
+        "Làm tăng đa dạng sinh học",
+        "Không ảnh hưởng gì",
+        "Chỉ ảnh hưởng đến sa mạc",
+        "Làm thay đổi môi trường sống, đe dọa nhiều loài sinh vật"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Biện pháp nào góp phần bảo vệ sinh quyển?",
+       "luaChon": [
+        "Trồng rừng, tiết kiệm năng lượng và giảm rác thải nhựa",
+        "Dùng nhiều túi nylon",
+        "Xả nước thải chưa xử lí",
+        "Đốt rừng làm rẫy"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sách Đỏ Việt Nam được lập ra nhằm mục đích gì?",
+       "luaChon": [
+        "Liệt kê các loài đã tuyệt chủng hoàn toàn",
+        "Ghi lại các loài gây hại",
+        "Ghi nhận các loài quý hiếm cần được bảo vệ",
+        "Giới thiệu món ăn từ động vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Rừng ngập mặn ven biển có vai trò chắn sóng, chống xói lở và là nơi sinh sản của nhiều loài thủy sản.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mỗi học sinh đều có thể góp phần bảo vệ sinh quyển bằng những hành động nhỏ hằng ngày.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

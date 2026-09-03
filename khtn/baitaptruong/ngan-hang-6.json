@@ -1,0 +1,5604 @@
+{
+ "ten": "Lớp 6",
+ "chuong": [
+  {
+   "ten": "Mở đầu về khoa học tự nhiên",
+   "bai": [
+    {
+     "ten": "Bài 1. Giới thiệu về khoa học tự nhiên",
+     "cau": [
+      {
+       "noiDung": "Khoa học tự nhiên nghiên cứu về đối tượng nào?",
+       "luaChon": [
+        "Các sự vật, hiện tượng trong thế giới tự nhiên",
+        "Các quy tắc ứng xử xã hội",
+        "Các tác phẩm văn học",
+        "Lịch sử loài người"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hoạt động nào sau đây KHÔNG phải nghiên cứu khoa học tự nhiên?",
+       "luaChon": [
+        "Quan sát vi khuẩn bằng kính hiển vi",
+        "Đo nhiệt độ sôi của nước",
+        "Sáng tác một bài thơ",
+        "Theo dõi hạt đậu nảy mầm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật sống khác vật không sống ở đặc điểm nào?",
+       "luaChon": [
+        "Có thể di chuyển",
+        "Có trao đổi chất, lớn lên, sinh sản",
+        "Có màu sắc rõ ràng",
+        "Có khối lượng xác định"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật nào sau đây là vật sống?",
+       "luaChon": [
+        "Cây bàng",
+        "Xe đạp",
+        "Hòn đá",
+        "Chiếc bàn gỗ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lĩnh vực nào của khoa học tự nhiên nghiên cứu về các chất và sự biến đổi của chúng?",
+       "luaChon": [
+        "Vật lí",
+        "Hóa học",
+        "Thiên văn học",
+        "Sinh học"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Lĩnh vực nào nghiên cứu về các vật sống?",
+       "luaChon": [
+        "Sinh học",
+        "Khoa học Trái Đất",
+        "Vật lí",
+        "Hóa học"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nghiên cứu về động đất, núi lửa thuộc lĩnh vực nào?",
+       "luaChon": [
+        "Khoa học Trái Đất",
+        "Hóa học",
+        "Sinh học",
+        "Thiên văn học"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vai trò nào sau đây là của khoa học tự nhiên với đời sống?",
+       "luaChon": [
+        "Cung cấp thông tin và nâng cao hiểu biết, phát triển công nghệ",
+        "Làm cạn kiệt tài nguyên",
+        "Gây ô nhiễm môi trường",
+        "Thay thế hoàn toàn lao động của con người"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khoa học tự nhiên chỉ có ích, không bao giờ gây tác hại nếu con người sử dụng sai mục đích.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chiếc ô tô đang chạy được xếp vào nhóm vật sống vì nó chuyển động được.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 2. An toàn trong phòng thực hành",
+     "cau": [
+      {
+       "noiDung": "Khi mới vào phòng thực hành, học sinh cần làm việc gì trước tiên?",
+       "luaChon": [
+        "Bật hết các thiết bị điện",
+        "Mở tất cả các bình hóa chất",
+        "Đọc kĩ nội quy và làm theo hướng dẫn của giáo viên",
+        "Tự lấy hóa chất ra thử"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Việc nào tuyệt đối KHÔNG được làm trong phòng thực hành?",
+       "luaChon": [
+        "Rửa tay sau khi thực hành",
+        "Nếm hoặc ngửi trực tiếp hóa chất",
+        "Đeo găng tay khi làm thí nghiệm",
+        "Đọc nhãn hóa chất trước khi dùng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi làm đổ hóa chất ra bàn, việc đầu tiên cần làm là gì?",
+       "luaChon": [
+        "Báo ngay cho giáo viên",
+        "Bỏ đi chỗ khác",
+        "Lấy tay lau ngay",
+        "Đổ thêm nước lên trên"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biển báo hình tam giác viền đen, nền vàng có ý nghĩa gì?",
+       "luaChon": [
+        "Chỉ dẫn đường thoát hiểm",
+        "Cảnh báo nguy hiểm",
+        "Cấm thực hiện",
+        "Bắt buộc thực hiện"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biển báo hình tròn, nền đỏ, có gạch chéo mang ý nghĩa gì?",
+       "luaChon": [
+        "Bắt buộc thực hiện",
+        "Cấm thực hiện",
+        "Hướng dẫn sử dụng",
+        "Cảnh báo nguy hiểm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trang phục bảo hộ nào cần dùng khi làm thí nghiệm với hóa chất?",
+       "luaChon": [
+        "Kính bảo hộ, găng tay, áo choàng",
+        "Chỉ cần đi giày",
+        "Chỉ cần đội mũ",
+        "Không cần gì cả"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi bị hóa chất bắn vào mắt, việc cần làm ngay là gì?",
+       "luaChon": [
+        "Nhắm mắt lại và ngồi yên",
+        "Dụi mắt thật mạnh",
+        "Nhỏ hóa chất khác vào để trung hòa",
+        "Rửa mắt bằng nhiều nước sạch và báo giáo viên"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sau khi thực hành xong, học sinh phải dọn dụng cụ và rửa tay bằng xà phòng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Được phép ăn uống trong phòng thực hành nếu chỉ ăn ở góc bàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi kết thúc thí nghiệm với đèn cồn, ta tắt đèn bằng cách nào?",
+       "luaChon": [
+        "Thổi mạnh vào ngọn lửa",
+        "Để đèn tự tắt",
+        "Đổ nước vào đèn",
+        "Đậy nắp đèn lại"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 3. Sử dụng kính lúp",
+     "cau": [
+      {
+       "noiDung": "Kính lúp được dùng để làm gì?",
+       "luaChon": [
+        "Đo nhiệt độ",
+        "Quan sát vật nhỏ mà mắt thường khó nhìn rõ",
+        "Đo khối lượng vật",
+        "Quan sát các vì sao"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bộ phận chính của kính lúp là gì?",
+       "luaChon": [
+        "Một lăng kính",
+        "Tấm kính trong, dày, phần rìa mỏng hơn phần giữa",
+        "Một tấm gương phẳng",
+        "Một tấm nhựa mờ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Số bội giác ghi trên kính lúp cho biết điều gì?",
+       "luaChon": [
+        "Số lần phóng to ảnh của vật",
+        "Khối lượng của kính",
+        "Giá tiền của kính",
+        "Đường kính của kính"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cách sử dụng kính lúp đúng là gì?",
+       "luaChon": [
+        "Đặt kính gần vật, mắt nhìn qua kính rồi từ từ điều chỉnh đến khi rõ nét",
+        "Chiếu đèn thẳng vào mắt qua kính",
+        "Để kính cách vật thật xa",
+        "Đặt kính sát mắt và ép vào vật"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kính lúp có số bội giác 5x thì phóng to ảnh của vật lên bao nhiêu lần?",
+       "luaChon": [
+        "50 lần",
+        "500 lần",
+        "0,5 lần",
+        "5 lần"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Loại kính lúp nào thường được dùng để soi mẫu vật nhỏ khi làm việc lâu, giải phóng đôi tay?",
+       "luaChon": [
+        "Kính lúp cầm tay",
+        "Kính lúp bỏ túi",
+        "Kính lúp có giá đỡ (kính lúp để bàn)",
+        "Kính lúp đeo mắt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Có thể dùng kính lúp để quan sát tế bào vi khuẩn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sau khi dùng xong, kính lúp cần được lau sạch bằng khăn mềm và cất nơi khô ráo.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật nào sau đây phù hợp để quan sát bằng kính lúp?",
+       "luaChon": [
+        "Gân của một chiếc lá",
+        "Tế bào hồng cầu",
+        "Ngôi sao trên bầu trời",
+        "Virus cúm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Không nên để kính lúp hứng ánh nắng mặt trời chiếu vào giấy khô vì lí do gì?",
+       "luaChon": [
+        "Làm giấy đổi màu xanh",
+        "Không có lí do gì",
+        "Làm kính bị lạnh",
+        "Có thể hội tụ ánh sáng gây cháy"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 4. Sử dụng kính hiển vi quang học",
+     "cau": [
+      {
+       "noiDung": "Kính hiển vi quang học được dùng để quan sát vật nào?",
+       "luaChon": [
+        "Các tòa nhà",
+        "Các hành tinh",
+        "Cây cối ngoài sân trường",
+        "Những vật rất nhỏ như tế bào"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Kính hiển vi quang học có thể phóng to ảnh của vật lên khoảng bao nhiêu lần?",
+       "luaChon": [
+        "Từ 40 đến 3000 lần",
+        "Từ 10 đến 20 lần",
+        "Trên 1 triệu lần",
+        "Từ 2 đến 5 lần"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bộ phận nào của kính hiển vi là nơi ta đặt mắt vào để quan sát?",
+       "luaChon": [
+        "Chân kính",
+        "Bàn kính",
+        "Thị kính",
+        "Vật kính"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bộ phận nào của kính hiển vi ở gần mẫu vật nhất?",
+       "luaChon": [
+        "Chân kính",
+        "Vật kính",
+        "Ốc điều chỉnh",
+        "Thị kính"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bộ phận nào giúp điều chỉnh cho ảnh của mẫu vật rõ nét?",
+       "luaChon": [
+        "Thị kính",
+        "Chân kính",
+        "Ốc điều chỉnh",
+        "Đèn chiếu sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mẫu vật cần quan sát được đặt ở bộ phận nào?",
+       "luaChon": [
+        "Thị kính",
+        "Ốc to",
+        "Chân kính",
+        "Bàn kính"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thứ tự đúng khi sử dụng kính hiển vi là gì?",
+       "luaChon": [
+        "Điều chỉnh ốc trước khi đặt tiêu bản",
+        "Chọn vật kính, điều chỉnh ánh sáng, đặt tiêu bản, điều chỉnh ốc cho rõ nét",
+        "Nhìn vào vật kính từ phía dưới",
+        "Đặt tiêu bản rồi tắt hết đèn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tiêu bản quan sát bằng kính hiển vi cần có đặc điểm gì?",
+       "luaChon": [
+        "Dày và đục",
+        "Càng lớn càng tốt",
+        "Mỏng và trong suốt để ánh sáng xuyên qua",
+        "Có màu đen tuyệt đối"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi di chuyển kính hiển vi, ta phải một tay cầm thân kính, một tay đỡ chân kính.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể dùng khăn giấy ráp để lau vật kính cho thật sạch.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 5. Đo chiều dài",
+     "cau": [
+      {
+       "noiDung": "Đơn vị đo chiều dài trong hệ SI là gì?",
+       "luaChon": [
+        "Mét",
+        "Inch",
+        "Kilômét",
+        "Centimét"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Giới hạn đo (GHĐ) của thước là gì?",
+       "luaChon": [
+        "Độ dài của vật cần đo",
+        "Độ dài lớn nhất ghi trên thước",
+        "Độ dài giữa hai vạch chia liên tiếp",
+        "Sai số của thước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Độ chia nhỏ nhất (ĐCNN) của thước là gì?",
+       "luaChon": [
+        "Chiều dài của thước",
+        "Vạch số 0 của thước",
+        "Độ dài giữa hai vạch chia liên tiếp trên thước",
+        "Độ dài lớn nhất ghi trên thước"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "1 mét bằng bao nhiêu centimét?",
+       "luaChon": [
+        "1000 cm",
+        "10 cm",
+        "60 cm",
+        "100 cm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "1 kilômét bằng bao nhiêu mét?",
+       "luaChon": [
+        "10 m",
+        "100 m",
+        "10000 m",
+        "1000 m"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Để đo chu vi của một thân cây, dụng cụ phù hợp nhất là gì?",
+       "luaChon": [
+        "Compa",
+        "Thước dây",
+        "Thước ê ke",
+        "Thước kẻ 20 cm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi đo chiều dài, phải đặt mắt nhìn thế nào để đọc kết quả?",
+       "luaChon": [
+        "Nhìn xiên từ bên trái",
+        "Nhìn vuông góc với cạnh thước tại đầu vật",
+        "Nhìn xiên từ bên phải",
+        "Nhìn từ phía sau thước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi đo, cần đặt vật sao cho một đầu vật ngang với vạch số 0 của thước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bước đầu tiên khi thực hiện phép đo chiều dài là gì?",
+       "luaChon": [
+        "Đọc và ghi ngay kết quả",
+        "Ghi kết quả rồi mới đo",
+        "Ước lượng chiều dài để chọn thước phù hợp",
+        "Vẽ hình của vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một thước có GHĐ 30 cm thì có thể dùng để đo trực tiếp chiều dài lớp học.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 6. Đo khối lượng",
+     "cau": [
+      {
+       "noiDung": "Dụng cụ dùng để đo khối lượng là gì?",
+       "luaChon": [
+        "Bình chia độ",
+        "Thước dây",
+        "Nhiệt kế",
+        "Cân"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đơn vị đo khối lượng trong hệ SI là gì?",
+       "luaChon": [
+        "Gam",
+        "Tấn",
+        "Kilôgam",
+        "Tạ"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "1 kilôgam bằng bao nhiêu gam?",
+       "luaChon": [
+        "10000 g",
+        "10 g",
+        "1000 g",
+        "100 g"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "1 tấn bằng bao nhiêu kilôgam?",
+       "luaChon": [
+        "1000 kg",
+        "100 kg",
+        "10000 kg",
+        "10 kg"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khối lượng của một vật cho biết điều gì?",
+       "luaChon": [
+        "Độ dài của vật",
+        "Lượng chất chứa trong vật",
+        "Màu sắc của vật",
+        "Nhiệt độ của vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Loại cân nào thường được dùng để cân vàng bạc, đá quý?",
+       "luaChon": [
+        "Cân tiểu li (cân điện tử có ĐCNN rất nhỏ)",
+        "Cân đồng hồ loại 5 kg",
+        "Cân treo",
+        "Cân bàn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trước khi cân, kim của cân đồng hồ phải ở vị trí nào?",
+       "luaChon": [
+        "Vạch cuối cùng",
+        "Vạch số 0",
+        "Vạch giữa mặt cân",
+        "Vị trí bất kì"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi cân, cần đặt vật ở vị trí nào của đĩa cân?",
+       "luaChon": [
+        "Treo lơ lửng phía trên",
+        "Bên cạnh cân",
+        "Chính giữa đĩa cân",
+        "Sát mép đĩa cân"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bước đầu tiên khi đo khối lượng là ước lượng khối lượng vật để chọn cân phù hợp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể dùng cân có GHĐ 200 g để cân một bao gạo 10 kg.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 7. Đo thời gian",
+     "cau": [
+      {
+       "noiDung": "Đơn vị đo thời gian trong hệ SI là gì?",
+       "luaChon": [
+        "Ngày",
+        "Giây",
+        "Giờ",
+        "Phút"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một giờ bằng bao nhiêu giây?",
+       "luaChon": [
+        "600 giây",
+        "86400 giây",
+        "3600 giây",
+        "60 giây"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một phút bằng bao nhiêu giây?",
+       "luaChon": [
+        "60 giây",
+        "30 giây",
+        "100 giây",
+        "3600 giây"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Để đo thời gian chạy 100 m của một học sinh, dụng cụ phù hợp nhất là gì?",
+       "luaChon": [
+        "Đồng hồ bấm giây",
+        "Nhiệt kế",
+        "Đồng hồ treo tường",
+        "Lịch để bàn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Một ngày có bao nhiêu giây?",
+       "luaChon": [
+        "3600 giây",
+        "1440 giây",
+        "24000 giây",
+        "86400 giây"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao dùng đồng hồ bấm giây bằng tay lại có sai số?",
+       "luaChon": [
+        "Do ánh sáng chiếu vào đồng hồ",
+        "Do đồng hồ luôn chạy sai",
+        "Do không khí cản trở",
+        "Do thời gian phản xạ của người bấm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Bước đầu tiên khi đo thời gian là gì?",
+       "luaChon": [
+        "Ước lượng khoảng thời gian để chọn đồng hồ phù hợp",
+        "Ghi kết quả trước rồi đo sau",
+        "Chọn đồng hồ đắt nhất",
+        "Đọc ngay kết quả"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trước khi bấm giờ, phải chỉnh đồng hồ bấm giây về vạch số 0.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Để giảm sai số khi đo thời gian, ta nên làm gì?",
+       "luaChon": [
+        "Đoán kết quả",
+        "Đo nhiều lần rồi lấy giá trị trung bình",
+        "Đo khi đang mất tập trung",
+        "Chỉ đo một lần duy nhất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đồng hồ đo thời gian hiện số dùng cổng quang điện cho kết quả chính xác hơn bấm tay.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 8. Đo nhiệt độ",
+     "cau": [
+      {
+       "noiDung": "Dụng cụ dùng để đo nhiệt độ là gì?",
+       "luaChon": [
+        "Lực kế",
+        "Nhiệt kế",
+        "Tốc kế",
+        "Ampe kế"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong hệ SI, đơn vị đo nhiệt độ là gì?",
+       "luaChon": [
+        "Độ F",
+        "Kelvin",
+        "Jun",
+        "Độ C"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nước đá đang tan có nhiệt độ là bao nhiêu?",
+       "luaChon": [
+        "32 độ C",
+        "4 độ C",
+        "100 độ C",
+        "0 độ C"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ở điều kiện thường, nước sôi ở nhiệt độ nào?",
+       "luaChon": [
+        "212 độ C",
+        "100 độ C",
+        "37 độ C",
+        "50 độ C"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhiệt độ cơ thể người bình thường khoảng bao nhiêu?",
+       "luaChon": [
+        "40 độ C",
+        "30 độ C",
+        "25 độ C",
+        "37 độ C"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhiệt kế y tế thường dùng để đo gì?",
+       "luaChon": [
+        "Nhiệt độ không khí ngoài trời",
+        "Nhiệt độ của lò nung",
+        "Nhiệt độ nước sôi",
+        "Nhiệt độ cơ thể người"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhiệt kế hoạt động dựa trên hiện tượng nào?",
+       "luaChon": [
+        "Sự bay hơi của nước",
+        "Sự dẫn điện của kim loại",
+        "Sự nở vì nhiệt của chất",
+        "Sự phản xạ ánh sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi đo nhiệt độ, bầu nhiệt kế phải tiếp xúc tốt với vật cần đo.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể dùng nhiệt kế y tế để đo nhiệt độ của nước đang sôi.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhiệt độ càng cao thì các phân tử cấu tạo nên vật chuyển động như thế nào?",
+       "luaChon": [
+        "Không thay đổi",
+        "Càng nhanh",
+        "Càng chậm",
+        "Đứng yên"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương II. Chất quanh ta",
+   "bai": [
+    {
+     "ten": "Bài 9. Sự đa dạng của chất",
+     "cau": [
+      {
+       "noiDung": "Vật thể nào sau đây là vật thể tự nhiên?",
+       "luaChon": [
+        "Cái bút",
+        "Ngôi nhà",
+        "Cây tre",
+        "Chiếc bàn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật thể nào sau đây là vật thể nhân tạo?",
+       "luaChon": [
+        "Cây cỏ",
+        "Chiếc xe đạp",
+        "Con sông",
+        "Núi đá"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chất là gì?",
+       "luaChon": [
+        "Một hiện tượng tự nhiên",
+        "Một dạng năng lượng",
+        "Một loại vật thể",
+        "Thứ tạo nên vật thể"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chiếc thìa inox được làm từ chất nào là chủ yếu?",
+       "luaChon": [
+        "Nhựa",
+        "Kim loại",
+        "Gỗ",
+        "Thủy tinh"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tính chất nào sau đây là tính chất vật lí của chất?",
+       "luaChon": [
+        "Khả năng cháy",
+        "Khả năng bị phân hủy",
+        "Khả năng tác dụng với acid",
+        "Màu sắc, mùi vị, nhiệt độ sôi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Tính chất nào sau đây là tính chất hóa học của chất?",
+       "luaChon": [
+        "Nhiệt độ sôi",
+        "Màu sắc",
+        "Khả năng cháy được",
+        "Khối lượng riêng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một vật thể có thể được tạo nên từ nhiều chất khác nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hiện tượng nào sau đây thể hiện tính chất hóa học?",
+       "luaChon": [
+        "Nước đá tan",
+        "Đinh sắt để lâu ngoài trời bị gỉ",
+        "Cốc thủy tinh bị vỡ",
+        "Đường tan trong nước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật thể nào sau đây là vật thể vô sinh?",
+       "luaChon": [
+        "Con mèo",
+        "Hòn đá",
+        "Cây bàng",
+        "Vi khuẩn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mỗi chất đều có những tính chất nhất định giúp ta phân biệt chất này với chất khác.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 10. Các thể của chất và sự chuyển thể",
+     "cau": [
+      {
+       "noiDung": "Ba thể cơ bản của chất là gì?",
+       "luaChon": [
+        "Nặng, nhẹ, vừa",
+        "Rắn, mềm, cứng",
+        "Nóng, lạnh, ấm",
+        "Rắn, lỏng, khí"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chất ở thể rắn có đặc điểm nào?",
+       "luaChon": [
+        "Không có hình dạng và thể tích xác định",
+        "Luôn chảy được",
+        "Có hình dạng và thể tích xác định",
+        "Có thể tích xác định, hình dạng của vật chứa"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Chất ở thể lỏng có đặc điểm nào?",
+       "luaChon": [
+        "Có thể tích xác định, hình dạng theo vật chứa",
+        "Có hình dạng xác định",
+        "Luôn lan tỏa khắp phòng",
+        "Không có thể tích xác định"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Chất ở thể khí có đặc điểm nào?",
+       "luaChon": [
+        "Có thể tích xác định",
+        "Không thể nén được",
+        "Không có hình dạng và thể tích xác định",
+        "Có hình dạng và thể tích xác định"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nước đá chuyển thành nước lỏng gọi là quá trình gì?",
+       "luaChon": [
+        "Sự đông đặc",
+        "Sự ngưng tụ",
+        "Sự nóng chảy",
+        "Sự bay hơi"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nước lỏng chuyển thành nước đá gọi là quá trình gì?",
+       "luaChon": [
+        "Sự nóng chảy",
+        "Sự đông đặc",
+        "Sự ngưng tụ",
+        "Sự bay hơi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hơi nước gặp lạnh tạo giọt nước đọng trên nắp nồi là quá trình gì?",
+       "luaChon": [
+        "Sự thăng hoa",
+        "Sự ngưng tụ",
+        "Sự nóng chảy",
+        "Sự bay hơi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sự bay hơi chỉ xảy ra khi chất lỏng đạt tới nhiệt độ sôi.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cách nào sau đây làm quần áo ướt mau khô hơn?",
+       "luaChon": [
+        "Vò tròn để trong chậu",
+        "Gấp gọn rồi treo lên",
+        "Phơi nơi có nắng và gió",
+        "Phơi trong phòng kín"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi chất chuyển từ thể này sang thể khác thì chất đó biến thành một chất mới.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 11. Oxygen. Không khí",
+     "cau": [
+      {
+       "noiDung": "Khí nào chiếm tỉ lệ thể tích lớn nhất trong không khí?",
+       "luaChon": [
+        "Oxygen",
+        "Nitrogen",
+        "Hơi nước",
+        "Carbon dioxide"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Oxygen chiếm khoảng bao nhiêu phần trăm thể tích không khí?",
+       "luaChon": [
+        "78 phần trăm",
+        "36 phần trăm",
+        "54 phần trăm",
+        "21 phần trăm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khí nitrogen chiếm khoảng bao nhiêu phần trăm thể tích không khí?",
+       "luaChon": [
+        "21 phần trăm",
+        "78 phần trăm",
+        "50 phần trăm",
+        "1 phần trăm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ở điều kiện thường, oxygen tồn tại ở thể nào và có màu, mùi ra sao?",
+       "luaChon": [
+        "Thể khí, không màu, không mùi",
+        "Thể khí, màu vàng, mùi hắc",
+        "Thể lỏng, màu xanh",
+        "Thể rắn, màu trắng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khí nào duy trì sự cháy và sự sống?",
+       "luaChon": [
+        "Oxygen",
+        "Carbon dioxide",
+        "Khí hiếm",
+        "Nitrogen"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Oxygen tan rất nhiều trong nước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trùm chăn ướt lên đám cháy nhỏ dựa trên nguyên tắc nào?",
+       "luaChon": [
+        "Thêm nhiên liệu",
+        "Tăng nhiệt độ đám cháy",
+        "Cung cấp thêm oxygen",
+        "Ngăn chất cháy tiếp xúc với oxygen"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Không khí là đơn chất hay hỗn hợp?",
+       "luaChon": [
+        "Hợp chất",
+        "Hỗn hợp",
+        "Một nguyên tố",
+        "Đơn chất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Việc làm nào sau đây gây ô nhiễm không khí?",
+       "luaChon": [
+        "Đốt rơm rạ ngoài đồng ruộng",
+        "Dùng điện mặt trời",
+        "Đi xe đạp tới trường",
+        "Trồng nhiều cây xanh"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây xanh góp phần làm giảm lượng khí carbon dioxide trong không khí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương III. Một số vật liệu, nguyên liệu, nhiên liệu, lương thực – thực phẩm",
+   "bai": [
+    {
+     "ten": "Bài 12. Một số vật liệu",
+     "cau": [
+      {
+       "noiDung": "Vật liệu nào sau đây dẫn điện tốt?",
+       "luaChon": [
+        "Nhựa",
+        "Gỗ khô",
+        "Đồng",
+        "Thủy tinh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật liệu nào được dùng làm lốp xe đạp, xe máy?",
+       "luaChon": [
+        "Nhôm",
+        "Gốm sứ",
+        "Cao su",
+        "Thủy tinh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật liệu nào thường dùng làm cửa kính, cốc uống nước?",
+       "luaChon": [
+        "Thủy tinh",
+        "Cao su",
+        "Gỗ",
+        "Cao su non"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tính chất nào là ưu điểm của vật liệu nhựa?",
+       "luaChon": [
+        "Dẫn điện tốt",
+        "Dễ bị gỉ sét",
+        "Rất nặng",
+        "Nhẹ, bền, dễ tạo hình, không dẫn điện"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao chuôi (cán) của nồi thường làm bằng nhựa hoặc gỗ?",
+       "luaChon": [
+        "Vì chúng dẫn điện tốt",
+        "Vì các vật liệu này dẫn nhiệt kém, tránh bị bỏng",
+        "Vì chúng rất nặng",
+        "Vì chúng dẫn nhiệt tốt"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhược điểm lớn nhất của rác thải nhựa đối với môi trường là gì?",
+       "luaChon": [
+        "Làm sạch nguồn nước",
+        "Làm đất tơi xốp",
+        "Rất khó phân hủy trong tự nhiên",
+        "Phân hủy quá nhanh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật liệu nào dễ bị gỉ khi để lâu ngoài không khí ẩm?",
+       "luaChon": [
+        "Nhựa",
+        "Thủy tinh",
+        "Vàng",
+        "Sắt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sử dụng vật liệu tái chế góp phần bảo vệ môi trường và tiết kiệm tài nguyên.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật liệu nào sau đây thường được dùng để làm dây dẫn điện trong gia đình?",
+       "luaChon": [
+        "Cao su",
+        "Đồng",
+        "Thủy tinh",
+        "Gỗ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mọi vật liệu đều có thể tái chế được hoàn toàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 13. Một số nguyên liệu",
+     "cau": [
+      {
+       "noiDung": "Nguyên liệu là gì?",
+       "luaChon": [
+        "Một loại nhiên liệu",
+        "Sản phẩm đã hoàn thiện",
+        "Vật liệu tự nhiên chưa qua xử lí, dùng để sản xuất ra sản phẩm",
+        "Một dạng năng lượng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nguyên liệu chính để sản xuất xi măng là gì?",
+       "luaChon": [
+        "Đá vôi và đất sét",
+        "Quặng sắt",
+        "Cát và muối ăn",
+        "Gỗ rừng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguyên liệu chính để sản xuất thủy tinh là gì?",
+       "luaChon": [
+        "Cát",
+        "Gỗ",
+        "Quặng bauxite",
+        "Đá vôi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Quặng bauxite là nguyên liệu để sản xuất kim loại nào?",
+       "luaChon": [
+        "Đồng",
+        "Sắt",
+        "Vàng",
+        "Nhôm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguyên liệu chính để làm đồ gốm sứ là gì?",
+       "luaChon": [
+        "Quặng sắt",
+        "Dầu mỏ",
+        "Đất sét",
+        "Cát trắng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đá vôi khi nung ở nhiệt độ cao tạo thành sản phẩm nào?",
+       "luaChon": [
+        "Nhôm",
+        "Xi măng",
+        "Thủy tinh",
+        "Vôi sống"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguyên liệu trong tự nhiên là vô tận, dùng bao nhiêu cũng được.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Việc khai thác nguyên liệu quá mức có thể gây hậu quả gì?",
+       "luaChon": [
+        "Làm sạch không khí",
+        "Không gây hậu quả nào",
+        "Cạn kiệt tài nguyên và ô nhiễm môi trường",
+        "Làm tăng đa dạng sinh học"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Quặng là gì?",
+       "luaChon": [
+        "Một loại nhiên liệu lỏng",
+        "Loại đá chứa nhiều khoáng chất có thể khai thác để lấy kim loại",
+        "Một dạng năng lượng",
+        "Một loại lương thực"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cần sử dụng nguyên liệu một cách tiết kiệm và hiệu quả.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 14. Một số nhiên liệu",
+     "cau": [
+      {
+       "noiDung": "Nhiên liệu là gì?",
+       "luaChon": [
+        "Chất dùng làm đồ dùng",
+        "Một dạng vật liệu xây dựng",
+        "Chất khi cháy tỏa nhiệt và phát sáng, cung cấp năng lượng",
+        "Chất dùng để ăn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nhiên liệu nào sau đây ở thể rắn?",
+       "luaChon": [
+        "Khí gas",
+        "Than đá",
+        "Dầu hỏa",
+        "Xăng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhiên liệu nào sau đây ở thể lỏng?",
+       "luaChon": [
+        "Than đá",
+        "Củi",
+        "Khí gas",
+        "Xăng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhiên liệu nào sau đây là nhiên liệu hóa thạch?",
+       "luaChon": [
+        "Năng lượng gió",
+        "Sức nước",
+        "Dầu mỏ",
+        "Năng lượng mặt trời"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao khi đun bếp củi, người ta thường chẻ nhỏ củi?",
+       "luaChon": [
+        "Để tăng diện tích tiếp xúc với oxygen, củi cháy nhanh hơn",
+        "Để giảm nhiệt lượng tỏa ra",
+        "Để củi nặng hơn",
+        "Để củi lâu cháy hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sản phẩm cháy của nhiên liệu hóa thạch gây tác hại gì cho môi trường?",
+       "luaChon": [
+        "Làm mát Trái Đất",
+        "Tăng lượng oxygen",
+        "Làm sạch không khí",
+        "Thải khí độc và khí nhà kính gây ô nhiễm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguồn năng lượng nào sau đây là năng lượng tái tạo?",
+       "luaChon": [
+        "Than đá",
+        "Dầu mỏ",
+        "Năng lượng mặt trời",
+        "Khí thiên nhiên"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nhiên liệu hóa thạch được hình thành trong thời gian rất dài và có thể cạn kiệt.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biện pháp nào giúp sử dụng nhiên liệu an toàn và tiết kiệm?",
+       "luaChon": [
+        "Đặt bình gas cạnh nguồn lửa",
+        "Tắt bếp gas khi không dùng và kiểm tra rò rỉ thường xuyên",
+        "Để bếp gas cháy suốt ngày",
+        "Dùng bình gas quá hạn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi ngửi thấy mùi gas rò rỉ trong bếp, việc nên làm là gì?",
+       "luaChon": [
+        "Khóa van bình gas, mở cửa thông thoáng, không bật công tắc điện",
+        "Bật quạt điện ngay",
+        "Bật đèn để nhìn cho rõ",
+        "Châm lửa để kiểm tra"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 15. Một số lương thực, thực phẩm",
+     "cau": [
+      {
+       "noiDung": "Lương thực nào là nguồn cung cấp tinh bột chính của người Việt Nam?",
+       "luaChon": [
+        "Thịt bò",
+        "Trứng gà",
+        "Gạo",
+        "Dầu ăn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nhóm chất nào cung cấp năng lượng chính cho cơ thể?",
+       "luaChon": [
+        "Chất khoáng",
+        "Carbohydrate (chất bột đường)",
+        "Vitamin",
+        "Nước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thực phẩm nào sau đây giàu protein?",
+       "luaChon": [
+        "Đường kính",
+        "Gạo, ngô",
+        "Dầu ăn",
+        "Thịt, cá, trứng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thực phẩm nào sau đây giàu chất béo?",
+       "luaChon": [
+        "Nước lọc",
+        "Rau cải",
+        "Cam, quýt",
+        "Dầu ăn, mỡ động vật"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhóm thực phẩm nào giàu vitamin và chất khoáng?",
+       "luaChon": [
+        "Rau xanh và trái cây",
+        "Đường kính",
+        "Cơm trắng",
+        "Mỡ lợn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao cần ăn phối hợp nhiều loại thực phẩm?",
+       "luaChon": [
+        "Để ăn được nhiều hơn",
+        "Để cung cấp đủ các nhóm chất dinh dưỡng cho cơ thể",
+        "Để tiết kiệm tiền",
+        "Để thức ăn ngon mắt hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Dấu hiệu nào cho thấy thực phẩm đã bị hỏng?",
+       "luaChon": [
+        "Bao bì còn nguyên vẹn",
+        "Có màu sắc tươi tự nhiên",
+        "Có mùi lạ, đổi màu, xuất hiện nấm mốc",
+        "Mùi thơm đặc trưng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thức ăn đã bị ôi thiu vẫn có thể dùng được nếu nấu chín thật kĩ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cách bảo quản nào giúp thực phẩm tươi lâu hơn?",
+       "luaChon": [
+        "Bảo quản lạnh trong tủ lạnh",
+        "Để nơi nắng nóng",
+        "Ngâm trong nước bẩn",
+        "Để hở ngoài không khí ẩm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nước tuy không cung cấp năng lượng nhưng rất cần thiết cho cơ thể.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương IV. Hỗn hợp. Tách chất ra khỏi hỗn hợp",
+   "bai": [
+    {
+     "ten": "Bài 16. Hỗn hợp các chất",
+     "cau": [
+      {
+       "noiDung": "Hỗn hợp là gì?",
+       "luaChon": [
+        "Luôn có màu trắng",
+        "Chỉ gồm một chất duy nhất",
+        "Luôn là chất lỏng",
+        "Gồm hai hay nhiều chất trộn lẫn với nhau"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chất nào sau đây là chất tinh khiết?",
+       "luaChon": [
+        "Nước biển",
+        "Nước chanh",
+        "Nước khoáng",
+        "Nước cất"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dung dịch gồm những thành phần nào?",
+       "luaChon": [
+        "Hai chất rắn",
+        "Chất khí và chất rắn",
+        "Chỉ có dung môi",
+        "Chất tan và dung môi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong nước đường, dung môi là chất nào?",
+       "luaChon": [
+        "Không có dung môi",
+        "Đường",
+        "Cả hai",
+        "Nước"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nước phù sa là ví dụ của loại hỗn hợp nào?",
+       "luaChon": [
+        "Chất tinh khiết",
+        "Dung dịch",
+        "Nhũ tương",
+        "Huyền phù"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sữa tươi là ví dụ của loại hỗn hợp nào?",
+       "luaChon": [
+        "Dung dịch",
+        "Nhũ tương",
+        "Chất tinh khiết",
+        "Huyền phù"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chất rắn nào sau đây tan tốt trong nước?",
+       "luaChon": [
+        "Dầu ăn",
+        "Bột sắt",
+        "Muối ăn",
+        "Cát"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cách nào làm đường tan nhanh hơn trong nước?",
+       "luaChon": [
+        "Đậy kín, không khuấy",
+        "Để yên trong nước lạnh",
+        "Khuấy đều và dùng nước nóng",
+        "Dùng viên đường thật to"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hỗn hợp đồng nhất là hỗn hợp có thành phần giống nhau ở mọi vị trí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Không khí là một hỗn hợp đồng nhất của nhiều chất khí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 17. Tách chất khỏi hỗn hợp",
+     "cau": [
+      {
+       "noiDung": "Muốn tách cát ra khỏi nước, ta dùng phương pháp nào?",
+       "luaChon": [
+        "Lọc",
+        "Cô cạn",
+        "Chiết",
+        "Chưng cất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Muốn thu muối ăn từ nước biển, người ta dùng phương pháp nào?",
+       "luaChon": [
+        "Nghiền nhỏ",
+        "Cô cạn (làm bay hơi nước)",
+        "Lọc",
+        "Chiết"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Muốn tách dầu ăn ra khỏi nước, ta dùng phương pháp nào?",
+       "luaChon": [
+        "Chiết",
+        "Cô cạn",
+        "Đun sôi",
+        "Lọc"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Phương pháp lọc dựa trên sự khác nhau về yếu tố nào?",
+       "luaChon": [
+        "Kích thước hạt của các chất",
+        "Màu sắc của các chất",
+        "Mùi của các chất",
+        "Giá trị của các chất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Phương pháp cô cạn dùng để tách chất nào ra khỏi dung dịch?",
+       "luaChon": [
+        "Chất khí",
+        "Chất lỏng dễ bay hơi",
+        "Hai chất lỏng hòa tan hoàn toàn",
+        "Chất rắn tan không bị phân hủy bởi nhiệt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Phương pháp chiết dùng để tách hai chất lỏng có đặc điểm gì?",
+       "luaChon": [
+        "Không tan vào nhau",
+        "Có cùng khối lượng",
+        "Có cùng màu sắc",
+        "Tan hoàn toàn vào nhau"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dụng cụ nào thường dùng trong phương pháp lọc ở phòng thực hành?",
+       "luaChon": [
+        "Nhiệt kế",
+        "Đèn cồn",
+        "Cân điện tử",
+        "Phễu và giấy lọc"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Để làm sạch nước đục lấy từ ao hồ, bước đầu tiên nên làm gì?",
+       "luaChon": [
+        "Lọc để loại bỏ chất rắn không tan",
+        "Cho thêm muối",
+        "Cho thêm đường",
+        "Đun sôi ngay"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nước sau khi lọc bằng giấy lọc là nước tinh khiết hoàn toàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Việc chọn phương pháp tách chất phụ thuộc vào tính chất của các chất trong hỗn hợp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương V. Tế bào",
+   "bai": [
+    {
+     "ten": "Bài 18. Tế bào – đơn vị cơ bản của sự sống",
+     "cau": [
+      {
+       "noiDung": "Đơn vị cấu tạo cơ bản của mọi cơ thể sống là gì?",
+       "luaChon": [
+        "Mô",
+        "Tế bào",
+        "Hệ cơ quan",
+        "Cơ quan"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ai là người đầu tiên quan sát và đặt tên cho tế bào?",
+       "luaChon": [
+        "Isaac Newton",
+        "Charles Darwin",
+        "Robert Hooke",
+        "Louis Pasteur"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao nói tế bào là đơn vị cơ bản của sự sống?",
+       "luaChon": [
+        "Vì tế bào không thể phân chia",
+        "Vì tế bào có màu xanh",
+        "Vì tế bào rất nhỏ",
+        "Vì mọi cơ thể sống đều được cấu tạo từ tế bào và tế bào thực hiện các hoạt động sống"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Mọi tế bào đều có thể quan sát được bằng mắt thường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tế bào nào sau đây có thể quan sát được bằng mắt thường?",
+       "luaChon": [
+        "Tế bào hồng cầu",
+        "Tế bào trứng gà",
+        "Tế bào biểu bì da",
+        "Tế bào vi khuẩn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Kích thước của phần lớn tế bào được đo bằng đơn vị nào?",
+       "luaChon": [
+        "Kilômét",
+        "Mét",
+        "Micrômét",
+        "Centimét"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Tế bào nhân sơ khác tế bào nhân thực ở điểm nào?",
+       "luaChon": [
+        "Không có màng tế bào",
+        "Không có vật chất di truyền",
+        "Không có chất tế bào",
+        "Chưa có nhân hoàn chỉnh (không có màng nhân)"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sinh vật nào sau đây có cấu tạo tế bào nhân sơ?",
+       "luaChon": [
+        "Con mèo",
+        "Cây lúa",
+        "Vi khuẩn",
+        "Nấm rơm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hình dạng của tế bào rất đa dạng, phù hợp với chức năng của chúng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tế bào thần kinh ở người có đặc điểm hình dạng nào?",
+       "luaChon": [
+        "Hình cầu nhỏ",
+        "Hình vuông đều đặn",
+        "Kéo dài thành sợi để dẫn truyền xung thần kinh",
+        "Hình đĩa lõm hai mặt"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 19. Cấu tạo và chức năng các thành phần của tế bào",
+     "cau": [
+      {
+       "noiDung": "Ba thành phần chính có ở mọi tế bào là gì?",
+       "luaChon": [
+        "Màng tế bào, chất tế bào, nhân hoặc vùng nhân",
+        "Nhân, thành tế bào, diệp lục",
+        "Thành tế bào, lục lạp, không bào",
+        "Màng tế bào, lục lạp, ti thể"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thành phần nào có ở tế bào thực vật mà không có ở tế bào động vật?",
+       "luaChon": [
+        "Nhân tế bào",
+        "Màng tế bào",
+        "Thành tế bào",
+        "Chất tế bào"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Màng tế bào có chức năng gì?",
+       "luaChon": [
+        "Thực hiện quang hợp",
+        "Bao bọc tế bào và kiểm soát các chất ra vào tế bào",
+        "Chứa dịch tế bào",
+        "Điều khiển mọi hoạt động sống"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhân tế bào có chức năng gì?",
+       "luaChon": [
+        "Tổng hợp chất diệp lục",
+        "Điều khiển mọi hoạt động sống của tế bào",
+        "Vận chuyển nước",
+        "Bảo vệ tế bào"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bào quan nào giúp tế bào thực vật thực hiện quang hợp?",
+       "luaChon": [
+        "Không bào",
+        "Ti thể",
+        "Lục lạp",
+        "Nhân"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thành tế bào ở thực vật có chức năng gì?",
+       "luaChon": [
+        "Điều khiển hoạt động sống",
+        "Giữ hình dạng ổn định và bảo vệ tế bào",
+        "Vận chuyển máu",
+        "Thực hiện hô hấp"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Không bào ở tế bào thực vật trưởng thành thường có đặc điểm gì?",
+       "luaChon": [
+        "Rất nhỏ hoặc không có",
+        "Chứa diệp lục",
+        "Kích thước lớn, chứa dịch tế bào",
+        "Là nơi chứa vật chất di truyền"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Chất tế bào là nơi diễn ra phần lớn các hoạt động sống của tế bào.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tế bào động vật có thành tế bào bằng cellulose giống tế bào thực vật.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vùng nhân của tế bào nhân sơ có đặc điểm gì?",
+       "luaChon": [
+        "Có màng nhân rõ ràng",
+        "Chứa vật chất di truyền nhưng không có màng nhân bao bọc",
+        "Là nơi quang hợp",
+        "Không chứa vật chất di truyền"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 20. Sự lớn lên và sinh sản của tế bào",
+     "cau": [
+      {
+       "noiDung": "Sự lớn lên của tế bào là gì?",
+       "luaChon": [
+        "Tế bào phân chia thành nhiều tế bào",
+        "Tế bào chết đi",
+        "Tế bào tăng dần về kích thước và khối lượng",
+        "Tế bào đổi màu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sự sinh sản của tế bào là quá trình gì?",
+       "luaChon": [
+        "Tế bào lớn lên",
+        "Tế bào phân chia tạo ra các tế bào mới",
+        "Tế bào hấp thụ nước",
+        "Tế bào già đi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một tế bào mẹ sau một lần phân chia tạo ra bao nhiêu tế bào con?",
+       "luaChon": [
+        "4",
+        "2",
+        "1",
+        "3"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một tế bào phân chia liên tiếp 2 lần thì tạo ra bao nhiêu tế bào con?",
+       "luaChon": [
+        "2",
+        "6",
+        "4",
+        "8"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một tế bào phân chia liên tiếp 3 lần thì tạo ra bao nhiêu tế bào con?",
+       "luaChon": [
+        "16",
+        "6",
+        "4",
+        "8"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ý nghĩa của sự lớn lên và sinh sản của tế bào là gì?",
+       "luaChon": [
+        "Giúp cơ thể ngừng trao đổi chất",
+        "Giúp cơ thể lớn lên và thay thế tế bào già, tế bào chết",
+        "Giúp cơ thể đổi màu",
+        "Giúp cơ thể hạ nhiệt độ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhờ đâu mà vết thương ngoài da có thể liền lại?",
+       "luaChon": [
+        "Nhờ sự phân chia của các tế bào",
+        "Nhờ xương phát triển",
+        "Nhờ máu đông cứng vĩnh viễn",
+        "Nhờ da tự dày lên"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tế bào lớn lên nhờ quá trình trao đổi chất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tế bào có thể lớn lên mãi mãi mà không cần phân chia.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ở thực vật, bộ phận nào có các tế bào phân chia mạnh giúp cây lớn lên?",
+       "luaChon": [
+        "Khí khổng",
+        "Mô phân sinh",
+        "Lông hút",
+        "Gân lá"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 21. Thực hành: Quan sát và phân biệt một số loại tế bào",
+     "cau": [
+      {
+       "noiDung": "Mẫu vật nào thường được dùng để quan sát tế bào thực vật ở trường phổ thông?",
+       "luaChon": [
+        "Biểu bì vảy hành",
+        "Cát khô",
+        "Tóc người",
+        "Móng tay"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao phải tách lớp biểu bì vảy hành thật mỏng?",
+       "luaChon": [
+        "Để mẫu vật nặng hơn",
+        "Để ánh sáng xuyên qua được, nhìn rõ tế bào",
+        "Để mẫu có màu đẹp",
+        "Để giữ được lâu hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Dụng cụ nào dùng để nhỏ nước lên tiêu bản?",
+       "luaChon": [
+        "Kẹp gắp",
+        "Ống nhỏ giọt",
+        "Kim mũi mác",
+        "Đèn cồn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao khi đậy lamen phải đậy từ từ, nghiêng một góc?",
+       "luaChon": [
+        "Để lamen không bị vỡ",
+        "Để tăng độ phóng đại",
+        "Để tránh tạo bọt khí dưới lamen",
+        "Để mẫu vật khô nhanh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thuốc nhuộm được dùng trong tiêu bản nhằm mục đích gì?",
+       "luaChon": [
+        "Làm tế bào lớn lên",
+        "Bảo quản mẫu vật vĩnh viễn",
+        "Làm rõ các thành phần của tế bào khi quan sát",
+        "Làm tế bào phân chia"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi quan sát tiêu bản, nên bắt đầu với vật kính nào?",
+       "luaChon": [
+        "Vật kính bất kì",
+        "Vật kính có độ phóng đại lớn nhất",
+        "Vật kính có độ phóng đại nhỏ nhất",
+        "Không cần chọn vật kính"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đặc điểm nào giúp phân biệt tế bào thực vật với tế bào động vật khi quan sát?",
+       "luaChon": [
+        "Tế bào thực vật có thành tế bào nên hình dạng cố định",
+        "Tế bào thực vật không có nhân",
+        "Tế bào động vật có lục lạp",
+        "Tế bào động vật lớn hơn nhiều lần"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong quá trình thực hành, cần vẽ và ghi chú lại hình dạng tế bào đã quan sát được.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể quan sát tế bào biểu bì vảy hành bằng kính lúp cầm tay.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sau khi thực hành xong, phải làm gì với dụng cụ đã dùng?",
+       "luaChon": [
+        "Rửa sạch, lau khô và sắp xếp lại đúng nơi quy định",
+        "Để nguyên trên bàn",
+        "Vứt vào thùng rác",
+        "Cất ngay khi còn ướt"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VI. Từ tế bào đến cơ thể",
+   "bai": [
+    {
+     "ten": "Bài 22. Cơ thể sinh vật",
+     "cau": [
+      {
+       "noiDung": "Cơ thể đơn bào là cơ thể như thế nào?",
+       "luaChon": [
+        "Không có tế bào",
+        "Chỉ được cấu tạo từ một tế bào",
+        "Chỉ gồm các mô",
+        "Được cấu tạo từ nhiều tế bào"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sinh vật nào sau đây là cơ thể đơn bào?",
+       "luaChon": [
+        "Trùng biến hình",
+        "Con mèo",
+        "Cây lúa",
+        "Con giun đất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ thể đa bào là cơ thể như thế nào?",
+       "luaChon": [
+        "Chỉ gồm một tế bào",
+        "Không có nhân",
+        "Được cấu tạo từ nhiều tế bào",
+        "Chỉ gồm chất tế bào"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sinh vật nào sau đây là cơ thể đa bào?",
+       "luaChon": [
+        "Cây phượng",
+        "Vi khuẩn E. coli",
+        "Trùng giày",
+        "Tảo lục đơn bào"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ thể sống có những đặc trưng nào?",
+       "luaChon": [
+        "Trao đổi chất, lớn lên, sinh sản, cảm ứng",
+        "Chỉ có khả năng di chuyển",
+        "Chỉ có màu sắc",
+        "Chỉ có khối lượng và thể tích"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vi khuẩn là cơ thể đơn bào.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở cơ thể đơn bào, mọi hoạt động sống đều diễn ra trong một tế bào duy nhất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ thể đa bào chỉ được cấu tạo từ một loại tế bào duy nhất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trùng roi xanh vừa có khả năng quang hợp vừa di chuyển được bằng roi.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nấm men là cơ thể thuộc loại nào?",
+       "luaChon": [
+        "Không có tế bào",
+        "Đa bào",
+        "Đơn bào",
+        "Là một loại virus"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 23. Tổ chức cơ thể đa bào",
+     "cau": [
+      {
+       "noiDung": "Thứ tự các cấp tổ chức trong cơ thể đa bào là gì?",
+       "luaChon": [
+        "Tế bào, cơ quan, mô, cơ thể",
+        "Mô, tế bào, cơ quan, cơ thể",
+        "Tế bào, mô, cơ quan, hệ cơ quan, cơ thể",
+        "Cơ quan, mô, tế bào, cơ thể"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mô là gì?",
+       "luaChon": [
+        "Một hệ cơ quan",
+        "Một tế bào lớn",
+        "Tập hợp nhiều cơ quan",
+        "Nhóm tế bào cùng loại cùng thực hiện một chức năng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cơ quan là gì?",
+       "luaChon": [
+        "Toàn bộ cơ thể",
+        "Tập hợp nhiều mô cùng thực hiện một chức năng nhất định",
+        "Một tế bào duy nhất",
+        "Một nhóm hệ cơ quan"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cơ quan nào sau đây thuộc hệ tiêu hóa ở người?",
+       "luaChon": [
+        "Thận",
+        "Dạ dày",
+        "Tim",
+        "Phổi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hệ cơ quan nào thực hiện chức năng vận chuyển máu đi khắp cơ thể?",
+       "luaChon": [
+        "Hệ bài tiết",
+        "Hệ tuần hoàn",
+        "Hệ hô hấp",
+        "Hệ thần kinh"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ở thực vật có hoa, cơ quan sinh dưỡng gồm những bộ phận nào?",
+       "luaChon": [
+        "Thân, hoa, quả",
+        "Rễ, hoa, hạt",
+        "Hoa, quả, hạt",
+        "Rễ, thân, lá"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cơ quan sinh sản của cây có hoa gồm những bộ phận nào?",
+       "luaChon": [
+        "Rễ và hạt",
+        "Thân và lá",
+        "Rễ, thân, lá",
+        "Hoa, quả, hạt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Mô nào ở thực vật có chức năng vận chuyển các chất?",
+       "luaChon": [
+        "Mô dẫn",
+        "Mô thần kinh",
+        "Mô cơ",
+        "Mô biểu bì"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Các hệ cơ quan trong cơ thể hoạt động độc lập, không liên quan đến nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hệ cơ quan nào ở người thực hiện chức năng trao đổi khí?",
+       "luaChon": [
+        "Hệ vận động",
+        "Hệ bài tiết",
+        "Hệ tiêu hóa",
+        "Hệ hô hấp"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 24. Thực hành: Quan sát sinh vật đơn bào và đa bào",
+     "cau": [
+      {
+       "noiDung": "Để quan sát trùng giày, ta nên lấy mẫu nước ở đâu?",
+       "luaChon": [
+        "Nước ao tù, có nhiều rơm rạ ngâm",
+        "Nước máy vừa mở vòi",
+        "Nước cất trong phòng thí nghiệm",
+        "Nước đá tan"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dụng cụ nào cần dùng để quan sát trùng roi, trùng giày?",
+       "luaChon": [
+        "Ống nhòm",
+        "Kính lúp cầm tay",
+        "Mắt thường",
+        "Kính hiển vi quang học"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao khi làm tiêu bản quan sát trùng giày nên nhỏ thêm sợi bông vào giọt nước?",
+       "luaChon": [
+        "Để trùng giày sinh sản nhanh",
+        "Để hạn chế trùng giày di chuyển quá nhanh",
+        "Để tăng độ phóng đại",
+        "Để nước không bay hơi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi quan sát cơ thể đa bào như cây xanh, ta có thể dùng dụng cụ nào?",
+       "luaChon": [
+        "Chỉ ống nhòm thiên văn",
+        "Chỉ kính hiển vi điện tử",
+        "Mắt thường và kính lúp",
+        "Không quan sát được"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đặc điểm nào giúp nhận biết một sinh vật là cơ thể đơn bào khi quan sát?",
+       "luaChon": [
+        "Có bộ xương",
+        "Có rễ, thân, lá",
+        "Toàn bộ cơ thể chỉ là một tế bào",
+        "Có nhiều cơ quan rõ rệt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong khi quan sát, cần ghi lại điều gì?",
+       "luaChon": [
+        "Chỉ ghi ngày tháng",
+        "Hình dạng, cách di chuyển và các đặc điểm nhận biết của mẫu vật",
+        "Không cần ghi gì",
+        "Chỉ ghi tên bạn cùng nhóm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi kết thúc quan sát mẫu nước ao, cần xử lí mẫu vật thế nào?",
+       "luaChon": [
+        "Xử lí theo hướng dẫn của giáo viên, không đổ bừa bãi",
+        "Đổ thẳng ra sân trường",
+        "Đổ vào bồn nước uống",
+        "Mang về nhà"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể quan sát rõ cấu tạo bên trong của trùng giày bằng mắt thường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi quan sát tiêu bản sống, phải luôn đậy lamen trước khi đưa lên bàn kính.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây xanh, con giun đất và con người đều là cơ thể đa bào.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VII. Đa dạng thế giới sống",
+   "bai": [
+    {
+     "ten": "Bài 25. Hệ thống phân loại sinh vật",
+     "cau": [
+      {
+       "noiDung": "Phân loại sinh vật là gì?",
+       "luaChon": [
+        "Đặt tên cho từng cá thể",
+        "Sắp xếp sinh vật vào các nhóm dựa trên đặc điểm giống nhau",
+        "Đếm số lượng sinh vật",
+        "Nuôi sinh vật trong phòng thí nghiệm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đơn vị phân loại nhỏ nhất của sinh vật là gì?",
+       "luaChon": [
+        "Giới",
+        "Loài",
+        "Chi",
+        "Ngành"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đơn vị phân loại lớn nhất trong hệ thống phân loại là gì?",
+       "luaChon": [
+        "Loài",
+        "Chi",
+        "Họ",
+        "Giới"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thế giới sống được chia thành mấy giới?",
+       "luaChon": [
+        "7",
+        "3",
+        "4",
+        "5"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Giới nào gồm các sinh vật nhân sơ như vi khuẩn?",
+       "luaChon": [
+        "Giới Khởi sinh",
+        "Giới Nguyên sinh",
+        "Giới Thực vật",
+        "Giới Nấm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây lúa thuộc giới nào?",
+       "luaChon": [
+        "Giới Động vật",
+        "Giới Nấm",
+        "Giới Thực vật",
+        "Giới Khởi sinh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nấm rơm thuộc giới nào?",
+       "luaChon": [
+        "Giới Động vật",
+        "Giới Nguyên sinh",
+        "Giới Thực vật",
+        "Giới Nấm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Tên khoa học của loài thường gồm mấy phần?",
+       "luaChon": [
+        "Hai phần: tên chi và tên loài",
+        "Ba phần",
+        "Bốn phần",
+        "Một phần duy nhất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tên khoa học của sinh vật được viết bằng tiếng Latin.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trình tự các bậc phân loại từ lớn đến nhỏ là gì?",
+       "luaChon": [
+        "Ngành, giới, loài, chi",
+        "Giới, ngành, lớp, bộ, họ, chi, loài",
+        "Loài, chi, họ, bộ, lớp, ngành, giới",
+        "Giới, loài, họ, ngành"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 26. Khóa lưỡng phân",
+     "cau": [
+      {
+       "noiDung": "Khóa lưỡng phân được dùng để làm gì?",
+       "luaChon": [
+        "Bảo quản mẫu vật",
+        "Phân loại và nhận biết sinh vật",
+        "Nhân giống cây trồng",
+        "Đo kích thước sinh vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nguyên tắc của khóa lưỡng phân là gì?",
+       "luaChon": [
+        "Ở mỗi bước, chia sinh vật thành hai nhóm dựa trên một đặc điểm đối lập",
+        "Xếp theo thứ tự bảng chữ cái",
+        "Chia thành ba nhóm mỗi lần",
+        "Xếp theo kích thước từ nhỏ đến lớn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở mỗi bước của khóa lưỡng phân có bao nhiêu lựa chọn?",
+       "luaChon": [
+        "Bốn",
+        "Nhiều tùy ý",
+        "Ba",
+        "Hai"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đặc điểm nào phù hợp để dùng trong khóa lưỡng phân?",
+       "luaChon": [
+        "Đặc điểm dễ quan sát và rõ ràng, có hoặc không",
+        "Đặc điểm thay đổi liên tục theo giờ",
+        "Tên gọi địa phương của sinh vật",
+        "Đặc điểm khó nhìn thấy"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bước đầu tiên khi xây dựng khóa lưỡng phân là gì?",
+       "luaChon": [
+        "Đặt tên khoa học cho sinh vật",
+        "Đếm số lượng cá thể",
+        "Xác định các đặc điểm đặc trưng của từng sinh vật",
+        "Vẽ tranh sinh vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cặp đặc điểm nào sau đây là đối lập, phù hợp cho khóa lưỡng phân?",
+       "luaChon": [
+        "To và nặng",
+        "Có xương sống và không có xương sống",
+        "Hữu ích và quý hiếm",
+        "Đẹp và xấu"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khóa lưỡng phân chỉ dùng được cho động vật, không dùng cho thực vật.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Kết quả cuối cùng của việc dùng khóa lưỡng phân là gì?",
+       "luaChon": [
+        "Biết được tuổi của sinh vật",
+        "Xác định được tên của sinh vật cần nhận biết",
+        "Biết được giá trị kinh tế",
+        "Biết được cân nặng của sinh vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi xây dựng khóa lưỡng phân, có thể dùng đặc điểm mang tính cảm tính như đẹp hay xấu.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khóa lưỡng phân giúp việc nhận biết sinh vật trở nên nhanh và có hệ thống hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 27. Vi khuẩn",
+     "cau": [
+      {
+       "noiDung": "Vi khuẩn thuộc nhóm sinh vật nào?",
+       "luaChon": [
+        "Sinh vật nhân sơ đơn bào",
+        "Sinh vật nhân thực đơn bào",
+        "Sinh vật chưa có cấu tạo tế bào",
+        "Sinh vật nhân thực đa bào"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vi khuẩn có kích thước khoảng bao nhiêu?",
+       "luaChon": [
+        "Vài milimét",
+        "Vài centimét",
+        "Vài micrômét",
+        "Vài mét"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Muốn quan sát vi khuẩn, ta cần dụng cụ nào?",
+       "luaChon": [
+        "Ống nhòm",
+        "Kính lúp cầm tay",
+        "Mắt thường",
+        "Kính hiển vi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Bệnh nào sau đây do vi khuẩn gây ra?",
+       "luaChon": [
+        "Bệnh thủy đậu",
+        "Bệnh sởi",
+        "Bệnh cúm",
+        "Bệnh lao"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vi khuẩn được ứng dụng để làm ra sản phẩm nào?",
+       "luaChon": [
+        "Sữa chua",
+        "Muối ăn",
+        "Nước cất",
+        "Nước đá"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vai trò nào sau đây là của vi khuẩn trong tự nhiên?",
+       "luaChon": [
+        "Tạo ra nước mưa",
+        "Tạo ra gió",
+        "Phân giải xác sinh vật, làm sạch môi trường",
+        "Tạo ra ánh sáng mặt trời"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Biện pháp nào giúp phòng bệnh do vi khuẩn gây ra?",
+       "luaChon": [
+        "Ăn thức ăn ôi thiu",
+        "Giữ vệ sinh cá nhân, ăn chín uống sôi",
+        "Uống nước ao hồ",
+        "Không rửa tay trước khi ăn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vi khuẩn nào có lợi trong việc muối dưa, muối cà?",
+       "luaChon": [
+        "Vi khuẩn lactic",
+        "Vi khuẩn tả",
+        "Vi khuẩn lao",
+        "Vi khuẩn than"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tất cả vi khuẩn đều gây hại cho con người.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vi khuẩn không có nhân hoàn chỉnh mà chỉ có vùng nhân.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 28. Thực hành: Làm sữa chua và quan sát vi khuẩn",
+     "cau": [
+      {
+       "noiDung": "Nguyên liệu chính để làm sữa chua tại nhà là gì?",
+       "luaChon": [
+        "Nước lọc và muối",
+        "Nước cam và đường",
+        "Dầu ăn và bột mì",
+        "Sữa và một hộp sữa chua làm men"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vi khuẩn nào có vai trò lên men trong quá trình làm sữa chua?",
+       "luaChon": [
+        "Vi khuẩn lao",
+        "Vi khuẩn lactic",
+        "Vi khuẩn E. coli gây bệnh",
+        "Vi khuẩn than"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao sữa chua có vị chua?",
+       "luaChon": [
+        "Do vi khuẩn lên men tạo thành acid lactic",
+        "Do đường chuyển thành muối",
+        "Do sữa bị hỏng",
+        "Do người làm cho thêm giấm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhiệt độ ủ sữa chua thích hợp khoảng bao nhiêu?",
+       "luaChon": [
+        "Khoảng 15 độ C",
+        "Khoảng 0 độ C",
+        "Khoảng 100 độ C",
+        "Khoảng 40 đến 45 độ C"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao phải để sữa nguội bớt trước khi cho men sữa chua vào?",
+       "luaChon": [
+        "Vì sữa nóng sẽ đông đặc ngay",
+        "Vì sữa nóng làm hộp bị vỡ",
+        "Vì sữa nóng có màu đậm hơn",
+        "Vì nhiệt độ quá cao sẽ làm chết vi khuẩn có lợi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao dụng cụ làm sữa chua cần được tráng nước sôi trước khi dùng?",
+       "luaChon": [
+        "Để sữa chua ngọt hơn",
+        "Để hạn chế vi sinh vật gây hại lẫn vào",
+        "Để dụng cụ sáng bóng",
+        "Để rút ngắn thời gian ủ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sau khi ủ xong, sữa chua nên được bảo quản ở đâu?",
+       "luaChon": [
+        "Cạnh bếp lửa",
+        "Trong ngăn mát tủ lạnh",
+        "Trong ngăn đá cho đông cứng",
+        "Ngoài trời nắng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Để quan sát vi khuẩn lactic trong sữa chua cần dùng dụng cụ nào?",
+       "luaChon": [
+        "Kính hiển vi",
+        "Ống nhòm",
+        "Mắt thường",
+        "Kính lúp"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nếu ủ sữa chua ở nhiệt độ quá thấp thì vi khuẩn hoạt động yếu, sữa lâu đông.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sữa chua là thực phẩm có lợi cho hệ tiêu hóa.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 29. Virus",
+     "cau": [
+      {
+       "noiDung": "Virus có đặc điểm nào sau đây?",
+       "luaChon": [
+        "Là tế bào nhân thực",
+        "Là tế bào nhân sơ",
+        "Chưa có cấu tạo tế bào",
+        "Là một loại vi khuẩn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Virus có cấu tạo tế bào hoàn chỉnh như vi khuẩn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Virus chỉ có thể nhân lên trong điều kiện nào?",
+       "luaChon": [
+        "Khi ở trong nước cất",
+        "Khi ở trong không khí khô",
+        "Khi ở ngoài môi trường đất",
+        "Khi kí sinh trong tế bào vật chủ sống"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cấu tạo cơ bản của một virus gồm những phần nào?",
+       "luaChon": [
+        "Chất tế bào và ti thể",
+        "Màng tế bào và nhân",
+        "Lớp vỏ protein và phần lõi vật chất di truyền",
+        "Thành tế bào và lục lạp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bệnh nào sau đây do virus gây ra?",
+       "luaChon": [
+        "Bệnh sởi",
+        "Bệnh than",
+        "Bệnh tả",
+        "Bệnh lao"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bệnh dại ở người và động vật do tác nhân nào gây ra?",
+       "luaChon": [
+        "Nấm",
+        "Virus",
+        "Vi khuẩn",
+        "Nguyên sinh vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biện pháp hiệu quả nhất để phòng nhiều bệnh do virus là gì?",
+       "luaChon": [
+        "Uống thật nhiều nước",
+        "Tiêm vaccine phòng bệnh",
+        "Tránh vận động",
+        "Ăn nhiều đường"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Kích thước của virus so với vi khuẩn thì thế nào?",
+       "luaChon": [
+        "Lớn gấp mười lần",
+        "Bằng nhau",
+        "Lớn hơn nhiều",
+        "Nhỏ hơn nhiều"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thuốc kháng sinh có tác dụng tiêu diệt virus.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Virus cũng có thể được ứng dụng có ích, ví dụ trong sản xuất vaccine.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 30. Nguyên sinh vật",
+     "cau": [
+      {
+       "noiDung": "Nguyên sinh vật có đặc điểm chung nào?",
+       "luaChon": [
+        "Đều chưa có nhân",
+        "Đều có khả năng quang hợp",
+        "Đều là sinh vật đa bào",
+        "Phần lớn là cơ thể đơn bào nhân thực"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguyên sinh vật nào là tác nhân gây bệnh sốt rét ở người?",
+       "luaChon": [
+        "Trùng sốt rét",
+        "Trùng roi xanh",
+        "Trùng giày",
+        "Tảo lục"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bệnh sốt rét lây truyền sang người qua vật trung gian nào?",
+       "luaChon": [
+        "Ruồi nhà",
+        "Chuột",
+        "Gián",
+        "Muỗi Anopheles"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguyên sinh vật nào gây bệnh kiết lị ở người?",
+       "luaChon": [
+        "Trùng giày",
+        "Tảo silic",
+        "Trùng roi xanh",
+        "Trùng kiết lị"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trùng roi xanh có khả năng đặc biệt nào?",
+       "luaChon": [
+        "Không cần dinh dưỡng",
+        "Vừa quang hợp được vừa di chuyển được",
+        "Sinh sản hữu tính",
+        "Chỉ sống trên cạn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trùng giày di chuyển được nhờ bộ phận nào?",
+       "luaChon": [
+        "Lông bơi",
+        "Roi",
+        "Chân giả",
+        "Vây"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trùng biến hình di chuyển và bắt mồi nhờ bộ phận nào?",
+       "luaChon": [
+        "Lông bơi",
+        "Roi",
+        "Cánh",
+        "Chân giả"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Biện pháp nào giúp phòng bệnh sốt rét?",
+       "luaChon": [
+        "Tắm nước lạnh",
+        "Uống nhiều nước ngọt",
+        "Ăn nhiều thịt",
+        "Ngủ màn, diệt muỗi và loăng quăng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Tất cả nguyên sinh vật đều gây hại cho con người.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tảo là nhóm sinh vật có vai trò cung cấp oxygen cho môi trường nước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 31. Thực hành: Quan sát nguyên sinh vật",
+     "cau": [
+      {
+       "noiDung": "Mẫu nước nào phù hợp để quan sát nguyên sinh vật?",
+       "luaChon": [
+        "Nước cất",
+        "Nước đá tan",
+        "Nước ao hồ có nhiều rong rêu",
+        "Nước muối sinh lí"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dụng cụ chính dùng để quan sát nguyên sinh vật là gì?",
+       "luaChon": [
+        "Ống nhòm",
+        "Kính hiển vi quang học",
+        "Mắt thường",
+        "Kính lúp cầm tay"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao nên lấy mẫu nước ở gần bề mặt và chỗ có nhiều thực vật thủy sinh?",
+       "luaChon": [
+        "Vì nơi đó thường có nhiều nguyên sinh vật",
+        "Vì nước ở đó lạnh hơn",
+        "Vì nước ở đó sạch nhất",
+        "Vì nước ở đó không có sinh vật"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi làm tiêu bản, ta nhỏ mẫu nước lên đâu?",
+       "luaChon": [
+        "Vật kính",
+        "Chân kính",
+        "Lam kính",
+        "Thị kính"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao chỉ nên nhỏ một giọt nước nhỏ lên lam kính?",
+       "luaChon": [
+        "Để mẫu vật khô nhanh",
+        "Để tiết kiệm nước",
+        "Để tăng độ phóng đại",
+        "Để nước không tràn ra ngoài và dễ quan sát"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đặc điểm nào dùng để nhận biết trùng giày khi quan sát?",
+       "luaChon": [
+        "Không di chuyển",
+        "Có nhiều chân giả",
+        "Hình dạng giống chiếc giày, có lông bơi",
+        "Có màu xanh và roi dài"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đặc điểm nào giúp nhận biết trùng roi xanh?",
+       "luaChon": [
+        "Di chuyển bằng chân giả",
+        "Có vỏ cứng bao ngoài",
+        "Không có màu",
+        "Có màu xanh do có lục lạp và di chuyển bằng roi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sau khi quan sát xong, mẫu nước ao phải được xử lí theo hướng dẫn của giáo viên.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong khi quan sát, nên bắt đầu bằng vật kính có độ phóng đại nhỏ rồi tăng dần.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể nhìn thấy rõ trùng giày bằng mắt thường mà không cần kính hiển vi.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 32. Nấm",
+     "cau": [
+      {
+       "noiDung": "Nấm thuộc giới nào trong hệ thống phân loại?",
+       "luaChon": [
+        "Giới Nấm",
+        "Giới Thực vật",
+        "Giới Khởi sinh",
+        "Giới Động vật"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nấm thuộc giới Thực vật vì tế bào nấm có thành tế bào.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao nấm không thể tự tổng hợp chất hữu cơ như thực vật?",
+       "luaChon": [
+        "Vì nấm có kích thước nhỏ",
+        "Vì nấm sống dưới đất",
+        "Vì nấm không có thành tế bào",
+        "Vì tế bào nấm không có lục lạp"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Loại nấm nào sau đây là nấm đơn bào?",
+       "luaChon": [
+        "Nấm mộc nhĩ",
+        "Nấm rơm",
+        "Nấm men",
+        "Nấm hương"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nấm men được ứng dụng trong sản xuất sản phẩm nào?",
+       "luaChon": [
+        "Muối ăn",
+        "Bánh mì và rượu",
+        "Sữa chua",
+        "Nước mắm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nấm nào sau đây được dùng làm thức ăn cho người?",
+       "luaChon": [
+        "Nấm độc tán trắng",
+        "Nấm gây bệnh lang ben",
+        "Nấm mốc trên bánh mì",
+        "Nấm rơm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vai trò nào sau đây là của nấm trong tự nhiên?",
+       "luaChon": [
+        "Tạo ra khí oxygen nhờ quang hợp",
+        "Phân giải xác sinh vật thành chất đơn giản",
+        "Tạo ra nước mưa",
+        "Tạo ra ánh sáng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bệnh nào ở người do nấm gây ra?",
+       "luaChon": [
+        "Bệnh nấm da, lang ben",
+        "Bệnh cúm",
+        "Bệnh sởi",
+        "Bệnh lao"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Điều kiện nào thuận lợi cho nấm mốc phát triển trên thức ăn?",
+       "luaChon": [
+        "Nơi khô ráo và lạnh",
+        "Nơi chân không",
+        "Nơi ẩm ướt và ấm",
+        "Nơi có ánh nắng gắt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nên ăn thử nấm lạ hái ngoài rừng để biết nấm đó có độc hay không.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 33. Thực hành: Quan sát các loại nấm",
+     "cau": [
+      {
+       "noiDung": "Để quan sát cấu tạo hiển vi của nấm men, ta cần dụng cụ nào?",
+       "luaChon": [
+        "Kính hiển vi",
+        "Mắt thường",
+        "Ống nhòm",
+        "Kính lúp cầm tay"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể quan sát mũ nấm, cuống nấm của nấm rơm bằng cách nào?",
+       "luaChon": [
+        "Chỉ bằng ống nhòm",
+        "Chỉ bằng kính hiển vi điện tử",
+        "Bằng mắt thường hoặc kính lúp",
+        "Không quan sát được"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bộ phận nào của nấm rơm mang các bào tử?",
+       "luaChon": [
+        "Sợi nấm dưới đất",
+        "Chân nấm",
+        "Phiến nấm dưới mũ nấm",
+        "Cuống nấm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi quan sát nấm mốc trên bánh mì, cần lưu ý điều gì?",
+       "luaChon": [
+        "Để bào tử bay khắp phòng",
+        "Nếm thử để biết vị",
+        "Không ngửi trực tiếp và phải rửa tay sau khi thực hành",
+        "Bóp nát rồi hít mạnh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao khi quan sát nấm mốc nên đeo khẩu trang?",
+       "luaChon": [
+        "Vì phòng thí nghiệm lạnh",
+        "Vì để nhìn rõ hơn",
+        "Vì nấm mốc có mùi thơm",
+        "Vì bào tử nấm mốc có thể gây dị ứng đường hô hấp"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Muốn nuôi nấm mốc để quan sát, nên đặt mẫu bánh mì ở điều kiện nào?",
+       "luaChon": [
+        "Ngâm trong nước muối",
+        "Nơi nắng gắt và khô",
+        "Nơi ẩm và ấm, có đậy hộp",
+        "Trong ngăn đá tủ lạnh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sợi nấm của nấm mốc khi quan sát dưới kính hiển vi có dạng gì?",
+       "luaChon": [
+        "Các sợi mảnh phân nhánh",
+        "Các khối cầu đặc",
+        "Các ống tròn to như dây điện",
+        "Các phiến dẹt vuông"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sau khi quan sát xong mẫu nấm mốc, cần xử lí mẫu vật thế nào?",
+       "luaChon": [
+        "Bỏ vào nơi quy định và rửa tay sạch",
+        "Để lại trên bàn học",
+        "Mang về nhà ăn",
+        "Vứt ra sân trường"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nấm men khi quan sát dưới kính hiển vi thường có hình cầu hoặc hình trứng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong khi thực hành, cần vẽ lại hình dạng và ghi chú đặc điểm của nấm quan sát được.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 34. Thực vật",
+     "cau": [
+      {
+       "noiDung": "Nhóm thực vật nào chưa có mạch dẫn?",
+       "luaChon": [
+        "Rêu",
+        "Hạt trần",
+        "Hạt kín",
+        "Dương xỉ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây nào sau đây sinh sản bằng bào tử?",
+       "luaChon": [
+        "Cây thông",
+        "Cây dương xỉ",
+        "Cây cam",
+        "Cây ngô"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cây nào sau đây thuộc nhóm hạt trần?",
+       "luaChon": [
+        "Cây khoai lang",
+        "Cây lúa",
+        "Cây thông",
+        "Cây bưởi"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đặc điểm nào là của thực vật hạt kín?",
+       "luaChon": [
+        "Chưa có rễ thật",
+        "Hạt nằm lộ trên lá noãn",
+        "Sinh sản bằng bào tử",
+        "Có hoa, hạt nằm trong quả"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhóm thực vật nào đa dạng và phân bố rộng nhất hiện nay?",
+       "luaChon": [
+        "Rêu",
+        "Hạt trần",
+        "Dương xỉ",
+        "Hạt kín"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Rêu thường sống ở môi trường nào?",
+       "luaChon": [
+        "Trên đá khô nóng",
+        "Sa mạc khô hạn",
+        "Trong nước mặn",
+        "Nơi ẩm ướt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vai trò nào sau đây là của thực vật?",
+       "luaChon": [
+        "Gây xói mòn đất",
+        "Làm tăng khí carbon dioxide",
+        "Cung cấp oxygen, giữ đất và giữ nước",
+        "Làm khô hạn đất đai"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thực vật là nguồn cung cấp thức ăn cho nhiều loài động vật và con người.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây dương xỉ đã có mạch dẫn nhưng chưa có hoa và quả.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bộ phận nào của cây hạt kín phát triển thành quả sau khi thụ tinh?",
+       "luaChon": [
+        "Đài hoa",
+        "Lá cây",
+        "Bầu nhụy",
+        "Cánh hoa"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 35. Thực hành: Phân biệt một số nhóm thực vật",
+     "cau": [
+      {
+       "noiDung": "Đặc điểm nào dùng để phân biệt rêu với dương xỉ?",
+       "luaChon": [
+        "Rêu có hoa, dương xỉ không có hoa",
+        "Rêu có quả, dương xỉ không có quả",
+        "Rêu chưa có mạch dẫn, dương xỉ đã có mạch dẫn",
+        "Rêu lớn hơn dương xỉ"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đặc điểm nào giúp phân biệt cây hạt trần với cây hạt kín?",
+       "luaChon": [
+        "Hạt trần có hạt nằm lộ, hạt kín có hạt nằm trong quả",
+        "Hạt trần nhỏ hơn hạt kín",
+        "Hạt trần sống dưới nước",
+        "Hạt trần có hoa, hạt kín không có hoa"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi quan sát mặt dưới lá dương xỉ già, ta thường thấy các đốm nhỏ. Đó là gì?",
+       "luaChon": [
+        "Rễ phụ",
+        "Quả non",
+        "Túi bào tử",
+        "Hạt của cây"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mẫu vật nào phù hợp để quan sát nhóm thực vật hạt trần?",
+       "luaChon": [
+        "Cành thông có nón",
+        "Lá dương xỉ",
+        "Cây rêu tường",
+        "Cành hoa hồng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi thu mẫu thực vật ngoài thiên nhiên, cần lưu ý điều gì?",
+       "luaChon": [
+        "Nhổ cả cây lên mang về",
+        "Bẻ càng nhiều cành càng tốt",
+        "Hái hết hoa của cây",
+        "Chỉ lấy lượng vừa đủ, không phá hoại cây cối"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dụng cụ nào giúp quan sát rõ hơn các chi tiết nhỏ trên lá và túi bào tử?",
+       "luaChon": [
+        "Kính lúp",
+        "Cân điện tử",
+        "Lực kế",
+        "Nhiệt kế"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây có rễ, thân, lá và có hoa, quả thì thuộc nhóm nào?",
+       "luaChon": [
+        "Rêu",
+        "Thực vật hạt kín",
+        "Dương xỉ",
+        "Thực vật hạt trần"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong bài thực hành, việc lập bảng so sánh đặc điểm các nhóm thực vật có tác dụng gì?",
+       "luaChon": [
+        "Giúp hệ thống và phân biệt các nhóm rõ ràng hơn",
+        "Chỉ để cho đẹp vở",
+        "Để đo chiều cao cây",
+        "Để đếm số cây"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể dùng khóa lưỡng phân để phân biệt các nhóm thực vật đã quan sát.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sau khi thực hành ngoài thiên nhiên, cần rửa tay sạch và vệ sinh dụng cụ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 36. Động vật",
+     "cau": [
+      {
+       "noiDung": "Động vật nào sau đây thuộc nhóm không xương sống?",
+       "luaChon": [
+        "Con chim bồ câu",
+        "Con cá chép",
+        "Con ếch",
+        "Con tôm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ngành động vật nào có cơ thể đối xứng tỏa tròn, sống ở nước?",
+       "luaChon": [
+        "Chân khớp",
+        "Thân mềm",
+        "Ruột khoang",
+        "Giun đốt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Con nào sau đây thuộc ngành Thân mềm?",
+       "luaChon": [
+        "Con giun đất",
+        "Con chuồn chuồn",
+        "Con nhện",
+        "Con ốc sên"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Con nào sau đây thuộc ngành Chân khớp?",
+       "luaChon": [
+        "Con nhện",
+        "Con sán lá gan",
+        "Con giun đũa",
+        "Con trai sông"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhóm động vật có xương sống nào hô hấp bằng mang suốt đời?",
+       "luaChon": [
+        "Cá",
+        "Chim",
+        "Bò sát",
+        "Lưỡng cư"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Động vật nào sau đây thuộc lớp Lưỡng cư?",
+       "luaChon": [
+        "Ếch đồng",
+        "Chim sẻ",
+        "Rùa",
+        "Thằn lằn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Động vật nào sau đây thuộc lớp Thú?",
+       "luaChon": [
+        "Cá sấu",
+        "Cá chép",
+        "Cá voi",
+        "Chim cánh cụt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cá heo là một loài cá vì nó sống dưới nước.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tác hại nào sau đây do động vật gây ra cho con người?",
+       "luaChon": [
+        "Truyền bệnh và phá hoại mùa màng",
+        "Làm tơi xốp đất",
+        "Cung cấp thực phẩm",
+        "Giúp thụ phấn cho cây"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Giun đất có vai trò nào đối với đất trồng?",
+       "luaChon": [
+        "Hút hết nước trong đất",
+        "Làm đất bị chai cứng",
+        "Làm đất tơi xốp và màu mỡ",
+        "Gây xói mòn đất"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 37. Thực hành: Quan sát một số nhóm động vật ngoài thiên nhiên",
+     "cau": [
+      {
+       "noiDung": "Khi quan sát động vật ngoài thiên nhiên, nguyên tắc quan trọng nhất là gì?",
+       "luaChon": [
+        "Bắt càng nhiều càng tốt",
+        "Mang tất cả về nhà nuôi",
+        "Phá tổ để nhìn cho rõ",
+        "Quan sát mà không làm hại sinh vật và môi trường"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dụng cụ nào cần chuẩn bị khi đi quan sát động vật ngoài thiên nhiên?",
+       "luaChon": [
+        "Cân điện tử",
+        "Nhiệt kế y tế",
+        "Kính lúp, sổ ghi chép, máy ảnh",
+        "Đèn cồn và hóa chất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đặc điểm nào giúp nhận biết nhóm Chân khớp khi quan sát?",
+       "luaChon": [
+        "Cơ thể phân đốt, có bộ xương ngoài và chân phân đốt",
+        "Cơ thể mềm, không phân đốt",
+        "Có xương sống bên trong",
+        "Có lông vũ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi phát hiện tổ ong hoặc rắn trong lúc quan sát, em nên làm gì?",
+       "luaChon": [
+        "Bắt về làm mẫu vật",
+        "Lại gần chọc phá",
+        "Ném đá vào tổ",
+        "Giữ khoảng cách an toàn và báo cho giáo viên"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nên quan sát côn trùng vào thời điểm nào trong ngày là thuận lợi?",
+       "luaChon": [
+        "Buổi sáng sớm hoặc chiều mát",
+        "Giữa trưa nắng gắt",
+        "Nửa đêm",
+        "Khi trời mưa to"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nội dung nào cần ghi lại khi quan sát động vật ngoài thiên nhiên?",
+       "luaChon": [
+        "Chỉ ghi thời tiết",
+        "Chỉ ghi ngày tháng",
+        "Tên, nơi sống, đặc điểm hình dạng và cách di chuyển",
+        "Không cần ghi gì"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sau khi quan sát xong, các động vật bắt tạm để xem cần được xử lí thế nào?",
+       "luaChon": [
+        "Mang về nhà nuôi nhốt",
+        "Bỏ vào thùng rác",
+        "Thả lại đúng nơi đã bắt",
+        "Đem cho bạn khác"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trang phục phù hợp khi đi quan sát ngoài thiên nhiên là gì?",
+       "luaChon": [
+        "Quần áo dài, đội mũ, đi giày kín",
+        "Quần đùi, dép lê",
+        "Áo hai dây",
+        "Đi chân đất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Việc chụp ảnh thay cho việc bắt giữ động vật là cách quan sát thân thiện với môi trường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sau buổi thực hành ngoài thiên nhiên, cần viết báo cáo về những gì đã quan sát được.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 38. Đa dạng sinh học",
+     "cau": [
+      {
+       "noiDung": "Đa dạng sinh học là gì?",
+       "luaChon": [
+        "Số lượng người trong một vùng",
+        "Số lượng cây trồng trong vườn",
+        "Sự phong phú về số lượng loài, số cá thể và môi trường sống",
+        "Số lượng đá và khoáng sản"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Kiểu hệ sinh thái nào trên cạn có đa dạng sinh học cao nhất?",
+       "luaChon": [
+        "Rừng mưa nhiệt đới",
+        "Vùng núi băng tuyết",
+        "Sa mạc",
+        "Đồng rêu hàn đới"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khu vực nào có đa dạng sinh học thấp nhất?",
+       "luaChon": [
+        "Sa mạc",
+        "Rừng nhiệt đới",
+        "Rạn san hô",
+        "Rừng ngập mặn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguyên nhân chủ yếu làm suy giảm đa dạng sinh học là gì?",
+       "luaChon": [
+        "Sự thay đổi của các vì sao",
+        "Sự quay của Trái Đất",
+        "Sự lên xuống của thủy triều",
+        "Hoạt động của con người như phá rừng, săn bắt quá mức"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Biện pháp nào góp phần bảo vệ đa dạng sinh học?",
+       "luaChon": [
+        "Đốt rừng làm nương rẫy",
+        "Xả rác xuống sông",
+        "Trồng rừng và thành lập khu bảo tồn",
+        "Săn bắt động vật hoang dã"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vai trò nào sau đây là của đa dạng sinh học đối với con người?",
+       "luaChon": [
+        "Gây xói mòn đất",
+        "Làm tăng ô nhiễm không khí",
+        "Cung cấp lương thực, dược liệu và nguyên liệu",
+        "Làm cạn kiệt nguồn nước"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sách Đỏ Việt Nam được lập ra nhằm mục đích gì?",
+       "luaChon": [
+        "Ghi lại các loài gây hại",
+        "Liệt kê các loài đã tuyệt chủng hoàn toàn",
+        "Ghi nhận các loài quý hiếm cần được bảo vệ",
+        "Giới thiệu món ăn từ động vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đa dạng sinh học càng cao thì hệ sinh thái càng ổn định.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Việc săn bắt và buôn bán động vật hoang dã trái phép là hành vi bị pháp luật nghiêm cấm.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vườn quốc gia và khu bảo tồn thiên nhiên có vai trò gì?",
+       "luaChon": [
+        "Xây dựng nhà máy",
+        "Phát triển khu công nghiệp",
+        "Bảo vệ nơi sống của các loài sinh vật hoang dã",
+        "Khai thác gỗ quy mô lớn"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 39. Tìm hiểu sinh vật ngoài thiên nhiên",
+     "cau": [
+      {
+       "noiDung": "Mục đích của việc tìm hiểu sinh vật ngoài thiên nhiên là gì?",
+       "luaChon": [
+        "Thu thập gỗ quý",
+        "Quan sát, nhận biết sinh vật và mối quan hệ của chúng với môi trường",
+        "Bắt sinh vật về nuôi",
+        "Đo nhiệt độ không khí"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trước buổi đi thực địa, việc cần chuẩn bị là gì?",
+       "luaChon": [
+        "Lập kế hoạch, chuẩn bị dụng cụ và tìm hiểu địa điểm",
+        "Chỉ mang theo đồ ăn",
+        "Không cần chuẩn bị gì",
+        "Chỉ mang theo tiền"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dụng cụ nào giúp ghi lại hình ảnh sinh vật mà không cần bắt chúng?",
+       "luaChon": [
+        "Kẹp gắp",
+        "Vợt bắt côn trùng",
+        "Lọ đựng mẫu",
+        "Máy ảnh hoặc điện thoại"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi gặp cây lạ có gai hoặc nhựa mủ, em nên làm gì?",
+       "luaChon": [
+        "Bôi nhựa lên da",
+        "Bẻ cành mang về",
+        "Không chạm vào và hỏi ý kiến giáo viên",
+        "Nếm thử nhựa cây"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Việc dùng khóa lưỡng phân trong buổi thực địa có tác dụng gì?",
+       "luaChon": [
+        "Giúp dự báo thời tiết",
+        "Giúp nhận biết và phân loại sinh vật quan sát được",
+        "Giúp đo chiều cao cây",
+        "Giúp xác định phương hướng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nội dung nào cần có trong báo cáo sau buổi tìm hiểu ngoài thiên nhiên?",
+       "luaChon": [
+        "Chỉ có tên các bạn trong nhóm",
+        "Chỉ có ảnh chụp cả lớp",
+        "Danh sách sinh vật quan sát được, nơi sống và nhận xét",
+        "Chỉ có ngày tháng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao không nên gây tiếng động lớn khi quan sát động vật hoang dã?",
+       "luaChon": [
+        "Vì làm động vật hoảng sợ và bỏ chạy",
+        "Vì làm cây cối héo úa",
+        "Vì làm trời mưa",
+        "Vì làm hỏng kính lúp"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sau buổi thực địa, rác thải của nhóm cần được xử lí thế nào?",
+       "luaChon": [
+        "Ném xuống suối",
+        "Thu gom mang về bỏ đúng nơi quy định",
+        "Bỏ lại tại chỗ",
+        "Chôn xuống đất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Việc tìm hiểu sinh vật ngoài thiên nhiên giúp học sinh hiểu rõ hơn mối quan hệ giữa sinh vật và môi trường sống.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi đi thực địa, học sinh nên tách đoàn đi một mình để quan sát được nhiều hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VIII. Lực trong đời sống",
+   "bai": [
+    {
+     "ten": "Bài 40. Lực là gì?",
+     "cau": [
+      {
+       "noiDung": "Lực là gì?",
+       "luaChon": [
+        "Một đơn vị đo khối lượng",
+        "Một dạng năng lượng",
+        "Một loại vật chất",
+        "Tác dụng đẩy hoặc kéo của vật này lên vật khác"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đơn vị đo lực là gì?",
+       "luaChon": [
+        "Mét",
+        "Newton",
+        "Kilôgam",
+        "Jun"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Dụng cụ dùng để đo lực là gì?",
+       "luaChon": [
+        "Bình chia độ",
+        "Lực kế",
+        "Nhiệt kế",
+        "Cân đồng hồ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Lực tác dụng lên vật có thể gây ra kết quả nào?",
+       "luaChon": [
+        "Chỉ làm vật nặng thêm",
+        "Chỉ làm vật nóng lên",
+        "Làm thay đổi tốc độ, hướng chuyển động hoặc làm biến dạng vật",
+        "Chỉ làm vật đổi màu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Lực nào sau đây là lực tiếp xúc?",
+       "luaChon": [
+        "Lực nam châm hút viên bi sắt",
+        "Lực tay đẩy chiếc xe",
+        "Lực hút giữa Mặt Trăng và Trái Đất",
+        "Lực hút của Trái Đất lên quả táo"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Lực nào sau đây là lực không tiếp xúc?",
+       "luaChon": [
+        "Lực nam châm hút viên bi sắt",
+        "Lực tay kéo lò xo",
+        "Lực gió đẩy cánh buồm",
+        "Lực chân đá quả bóng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi thủ môn bắt bóng, lực của tay đã gây ra kết quả gì cho quả bóng?",
+       "luaChon": [
+        "Làm quả bóng nặng thêm",
+        "Làm quả bóng đổi màu",
+        "Làm quả bóng nóng lên",
+        "Làm quả bóng dừng lại và bị biến dạng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi đá quả bóng đang lăn theo hướng khác, lực đã làm thay đổi điều gì?",
+       "luaChon": [
+        "Khối lượng quả bóng",
+        "Hướng chuyển động của quả bóng",
+        "Thể tích quả bóng",
+        "Màu sắc quả bóng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một lực tác dụng lên vật có thể vừa làm biến dạng vật vừa làm thay đổi chuyển động của vật.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lực chỉ xuất hiện khi hai vật tiếp xúc trực tiếp với nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 41. Biểu diễn lực",
+     "cau": [
+      {
+       "noiDung": "Lực là đại lượng có đặc điểm gì?",
+       "luaChon": [
+        "Chỉ có hướng",
+        "Chỉ có độ lớn",
+        "Có cả độ lớn và hướng",
+        "Không có độ lớn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Người ta biểu diễn lực bằng hình gì?",
+       "luaChon": [
+        "Mũi tên",
+        "Hình tròn",
+        "Đoạn thẳng không có mũi tên",
+        "Hình vuông"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Gốc của mũi tên biểu diễn lực cho biết điều gì?",
+       "luaChon": [
+        "Khối lượng của vật",
+        "Đơn vị của lực",
+        "Độ lớn của lực",
+        "Điểm đặt của lực"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chiều của mũi tên biểu diễn lực cho biết điều gì?",
+       "luaChon": [
+        "Thời gian tác dụng",
+        "Điểm đặt của lực",
+        "Hướng (chiều) của lực",
+        "Độ lớn của lực"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Độ dài của mũi tên biểu diễn lực cho biết điều gì?",
+       "luaChon": [
+        "Điểm đặt của lực",
+        "Độ lớn của lực theo một tỉ xích chọn trước",
+        "Khối lượng của vật",
+        "Chiều của lực"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Với tỉ xích 1 cm ứng với 5 N, mũi tên dài 3 cm biểu diễn lực có độ lớn bao nhiêu?",
+       "luaChon": [
+        "5 N",
+        "3 N",
+        "8 N",
+        "15 N"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Với tỉ xích 1 cm ứng với 10 N, lực 40 N được biểu diễn bằng mũi tên dài bao nhiêu?",
+       "luaChon": [
+        "10 cm",
+        "4 cm",
+        "40 cm",
+        "14 cm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hai lực cân bằng là hai lực có đặc điểm gì?",
+       "luaChon": [
+        "Vuông góc với nhau",
+        "Khác độ lớn và ngược chiều",
+        "Cùng độ lớn, cùng phương nhưng ngược chiều, cùng tác dụng lên một vật",
+        "Cùng độ lớn và cùng chiều"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một quyển sách nằm yên trên bàn chịu tác dụng của hai lực cân bằng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi biểu diễn lực, không cần chọn tỉ xích vì mọi mũi tên đều dài như nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 42. Biến dạng của lò xo",
+     "cau": [
+      {
+       "noiDung": "Khi kéo dãn lò xo rồi buông tay, lò xo trở về hình dạng ban đầu. Đó là biến dạng gì?",
+       "luaChon": [
+        "Biến dạng dẻo",
+        "Biến dạng đàn hồi",
+        "Biến dạng vĩnh viễn",
+        "Không phải biến dạng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Độ dãn của lò xo được tính như thế nào?",
+       "luaChon": [
+        "Chiều dài tự nhiên chia đôi",
+        "Chiều dài khi bị kéo trừ đi chiều dài tự nhiên",
+        "Khối lượng vật treo nhân hai",
+        "Chiều dài tự nhiên cộng chiều dài khi kéo"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi treo vật nặng hơn vào lò xo thì độ dãn của lò xo càng lớn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Một lò xo có chiều dài tự nhiên 10 cm, khi treo vật thì dài 14 cm. Độ dãn của lò xo là bao nhiêu?",
+       "luaChon": [
+        "24 cm",
+        "14 cm",
+        "4 cm",
+        "10 cm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Lò xo dài tự nhiên 12 cm, treo vật làm lò xo dãn 5 cm. Chiều dài lúc đó là bao nhiêu?",
+       "luaChon": [
+        "5 cm",
+        "17 cm",
+        "12 cm",
+        "7 cm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Lực xuất hiện khi lò xo bị biến dạng và có xu hướng đưa lò xo về hình dạng cũ gọi là gì?",
+       "luaChon": [
+        "Lực đẩy Archimedes",
+        "Trọng lực",
+        "Lực đàn hồi",
+        "Lực ma sát"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Lực kế hoạt động dựa trên nguyên tắc nào?",
+       "luaChon": [
+        "Dựa vào dòng điện",
+        "Dựa vào ánh sáng",
+        "Dựa vào sự nở vì nhiệt",
+        "Dựa vào độ dãn của lò xo khi có lực tác dụng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nếu treo vật quá nặng vượt giới hạn cho phép thì lò xo sẽ thế nào?",
+       "luaChon": [
+        "Nhẹ đi rõ rệt",
+        "Trở lại y như cũ",
+        "Bị biến dạng vĩnh viễn, không trở về hình dạng ban đầu",
+        "Đổi màu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật nào sau đây có tính chất đàn hồi?",
+       "luaChon": [
+        "Miếng bánh mì",
+        "Thanh chì",
+        "Dây cao su",
+        "Cục đất sét"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong giới hạn đàn hồi, độ dãn của lò xo tỉ lệ thuận với lực tác dụng lên nó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 43. Trọng lượng, lực hấp dẫn",
+     "cau": [
+      {
+       "noiDung": "Trọng lực tác dụng lên một vật là lực gì?",
+       "luaChon": [
+        "Lực đẩy của không khí",
+        "Lực đàn hồi của lò xo",
+        "Lực ma sát của mặt đất",
+        "Lực hút của Trái Đất lên vật"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trọng lực có phương và chiều như thế nào?",
+       "luaChon": [
+        "Phương xiên 45 độ",
+        "Phương thẳng đứng, chiều hướng về phía Trái Đất",
+        "Phương nằm ngang, chiều sang phải",
+        "Phương thẳng đứng, chiều đi lên"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trọng lượng của một vật là gì?",
+       "luaChon": [
+        "Lượng chất chứa trong vật",
+        "Nhiệt độ của vật",
+        "Thể tích của vật",
+        "Độ lớn của trọng lực tác dụng lên vật"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Một vật có khối lượng 1 kg thì trọng lượng khoảng bao nhiêu?",
+       "luaChon": [
+        "1 N",
+        "10 N",
+        "1000 N",
+        "100 N"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một vật có khối lượng 5 kg thì trọng lượng khoảng bao nhiêu?",
+       "luaChon": [
+        "5 N",
+        "50 N",
+        "500 N",
+        "0,5 N"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một vật có trọng lượng 30 N thì khối lượng khoảng bao nhiêu?",
+       "luaChon": [
+        "300 kg",
+        "0,3 kg",
+        "30 kg",
+        "3 kg"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Lực hấp dẫn là lực gì?",
+       "luaChon": [
+        "Lực hút giữa các vật có khối lượng",
+        "Lực chỉ có trong chất lỏng",
+        "Lực chỉ có ở nam châm",
+        "Lực đẩy giữa các vật"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khối lượng của một vật thay đổi khi mang vật đó lên Mặt Trăng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trọng lượng của một vật trên Mặt Trăng nhỏ hơn trên Trái Đất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao quả táo rụng luôn rơi xuống đất?",
+       "luaChon": [
+        "Vì quả táo tự chuyển động",
+        "Vì không khí đẩy xuống",
+        "Vì Trái Đất hút quả táo",
+        "Vì gió thổi xuống"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 44. Lực ma sát",
+     "cau": [
+      {
+       "noiDung": "Lực ma sát xuất hiện ở đâu?",
+       "luaChon": [
+        "Ở bề mặt tiếp xúc giữa hai vật",
+        "Bên trong lòng vật",
+        "Chỉ giữa hai nam châm",
+        "Chỉ trong chân không"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lực ma sát trượt xuất hiện khi nào?",
+       "luaChon": [
+        "Khi vật rơi tự do trong chân không",
+        "Khi một vật trượt trên bề mặt vật khác",
+        "Khi vật nổi trên nước",
+        "Khi vật đứng yên hoàn toàn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Lực ma sát nghỉ có tác dụng gì?",
+       "luaChon": [
+        "Làm vật chuyển động nhanh hơn",
+        "Làm vật nóng lên rất nhanh",
+        "Giữ cho vật không bị trượt khi có lực tác dụng",
+        "Làm vật bay lên"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trường hợp nào lực ma sát là có ích?",
+       "luaChon": [
+        "Ma sát làm mòn xích xe đạp",
+        "Ma sát làm nóng ổ trục máy",
+        "Ma sát giữa lốp xe và mặt đường giúp xe không bị trượt",
+        "Ma sát làm mòn đế giày"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trường hợp nào lực ma sát là có hại?",
+       "luaChon": [
+        "Ma sát giúp đi lại không trượt ngã",
+        "Ma sát làm mòn xích và líp xe đạp",
+        "Ma sát giúp phanh xe",
+        "Ma sát giúp ta cầm nắm đồ vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Biện pháp nào làm giảm lực ma sát?",
+       "luaChon": [
+        "Làm nhám bề mặt tiếp xúc",
+        "Tăng khối lượng vật",
+        "Rắc cát lên mặt đường",
+        "Tra dầu mỡ vào ổ trục"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Biện pháp nào làm tăng lực ma sát?",
+       "luaChon": [
+        "Đánh bóng bề mặt",
+        "Khía rãnh sâu ở lốp xe",
+        "Dùng bánh xe thay vì kéo lê",
+        "Bôi trơn bằng dầu nhớt"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Lực ma sát luôn luôn có hại nên cần loại bỏ hoàn toàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao khi trời mưa, đường trơn dễ gây tai nạn?",
+       "luaChon": [
+        "Vì trọng lực giảm đi",
+        "Vì xe nhẹ hơn",
+        "Vì lực ma sát tăng lên",
+        "Vì lực ma sát giữa lốp xe và mặt đường giảm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Lực ma sát có chiều như thế nào so với chiều chuyển động của vật?",
+       "luaChon": [
+        "Vuông góc với chuyển động",
+        "Cùng chiều chuyển động",
+        "Thay đổi liên tục",
+        "Ngược chiều chuyển động"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 45. Lực cản của nước",
+     "cau": [
+      {
+       "noiDung": "Khi một vật chuyển động trong nước, nước tác dụng lên vật lực gì?",
+       "luaChon": [
+        "Lực hút về phía đáy",
+        "Không có lực nào",
+        "Lực cản",
+        "Lực đẩy cùng chiều chuyển động"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Lực cản của nước có chiều như thế nào?",
+       "luaChon": [
+        "Cùng chiều chuyển động",
+        "Ngược chiều chuyển động của vật",
+        "Vuông góc với chuyển động",
+        "Hướng thẳng đứng lên trên"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật chuyển động càng nhanh trong nước thì lực cản của nước thế nào?",
+       "luaChon": [
+        "Bằng không",
+        "Càng nhỏ",
+        "Càng lớn",
+        "Không đổi"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao tàu ngầm và cá heo có hình dạng thuôn dài?",
+       "luaChon": [
+        "Để giảm lực cản của nước",
+        "Để tăng lực cản của nước",
+        "Để nổi tốt hơn",
+        "Để nhẹ hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "So với không khí, lực cản của nước lên cùng một vật chuyển động với cùng tốc độ thì thế nào?",
+       "luaChon": [
+        "Lớn hơn",
+        "Bằng không",
+        "Bằng nhau",
+        "Nhỏ hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Diện tích mặt cản của vật càng lớn thì lực cản của nước thế nào?",
+       "luaChon": [
+        "Càng lớn",
+        "Bằng không",
+        "Không đổi",
+        "Càng nhỏ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao vận động viên bơi lội thường mặc đồ bó sát và đội mũ bơi?",
+       "luaChon": [
+        "Để tăng lực cản của nước",
+        "Để dễ nổi hơn",
+        "Để giảm lực cản của nước",
+        "Để giữ ấm cơ thể"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Không khí cũng tác dụng lực cản lên vật chuyển động trong nó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lực cản của nước làm cho vật chuyển động trong nước chậm dần lại.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao đi bộ dưới nước ngang bụng khó hơn đi trên cạn?",
+       "luaChon": [
+        "Vì trọng lực tăng lên",
+        "Vì nước tác dụng lực cản lớn lên cơ thể",
+        "Vì không khí đẩy ngược",
+        "Vì cơ thể nặng hơn"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương IX. Năng lượng",
+   "bai": [
+    {
+     "ten": "Bài 46. Năng lượng và sự truyền năng lượng",
+     "cau": [
+      {
+       "noiDung": "Đơn vị đo năng lượng là gì?",
+       "luaChon": [
+        "Newton",
+        "Pascal",
+        "Watt",
+        "Jun"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vật có năng lượng thì có khả năng gì?",
+       "luaChon": [
+        "Thực hiện công, làm vật khác chuyển động hoặc biến dạng",
+        "Tự sinh ra khối lượng",
+        "Tự đổi màu",
+        "Tự biến mất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Năng lượng có thể truyền từ vật này sang vật khác bằng cách nào?",
+       "luaChon": [
+        "Truyền nhiệt hoặc thực hiện công",
+        "Không thể truyền được",
+        "Chỉ bằng âm thanh",
+        "Chỉ bằng cách đổi màu"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi đun nước, năng lượng được truyền từ đâu sang đâu?",
+       "luaChon": [
+        "Từ bếp sang ấm nước và nước",
+        "Từ ấm sang bếp",
+        "Từ nước sang bếp",
+        "Từ không khí sang bếp"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Gió mạnh làm cây nghiêng ngả chứng tỏ điều gì?",
+       "luaChon": [
+        "Gió mang năng lượng",
+        "Gió có khối lượng lớn",
+        "Gió có màu sắc",
+        "Cây rất yếu"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Năng lượng càng lớn thì lực tác dụng có thể gây ra biến đổi càng lớn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mọi hoạt động của con người và máy móc đều cần năng lượng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguồn năng lượng chủ yếu cung cấp cho sự sống trên Trái Đất là gì?",
+       "luaChon": [
+        "Lòng đất",
+        "Mặt Trời",
+        "Các vì sao xa",
+        "Mặt Trăng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Con người lấy năng lượng cho hoạt động sống từ đâu?",
+       "luaChon": [
+        "Từ thức ăn",
+        "Từ ánh sáng chiếu vào da",
+        "Từ không khí hít vào",
+        "Từ nước uống"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Năng lượng của gió được dùng để làm gì?",
+       "luaChon": [
+        "Làm ngưng chuyển động",
+        "Làm vật đổi màu",
+        "Làm tăng khối lượng vật",
+        "Quay tua bin phát điện, đẩy thuyền buồm"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 47. Một số dạng năng lượng",
+     "cau": [
+      {
+       "noiDung": "Vật đang chuyển động thì có dạng năng lượng nào?",
+       "luaChon": [
+        "Thế năng hấp dẫn",
+        "Hóa năng",
+        "Quang năng",
+        "Động năng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vật ở trên cao so với mặt đất thì có dạng năng lượng nào?",
+       "luaChon": [
+        "Điện năng",
+        "Động năng",
+        "Quang năng",
+        "Thế năng hấp dẫn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Lò xo bị nén hoặc kéo dãn dự trữ dạng năng lượng nào?",
+       "luaChon": [
+        "Thế năng đàn hồi",
+        "Hóa năng",
+        "Động năng",
+        "Nhiệt năng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thức ăn, pin, xăng dầu dự trữ dạng năng lượng nào?",
+       "luaChon": [
+        "Quang năng",
+        "Điện năng",
+        "Thế năng đàn hồi",
+        "Hóa năng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ánh sáng Mặt Trời mang dạng năng lượng nào?",
+       "luaChon": [
+        "Thế năng",
+        "Quang năng",
+        "Hóa năng",
+        "Điện năng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật nóng lên thì dạng năng lượng nào tăng?",
+       "luaChon": [
+        "Điện năng",
+        "Nhiệt năng",
+        "Thế năng đàn hồi",
+        "Hóa năng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tiếng trống phát ra mang dạng năng lượng nào?",
+       "luaChon": [
+        "Năng lượng âm",
+        "Hóa năng",
+        "Điện năng",
+        "Quang năng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật càng chuyển động nhanh thì động năng của nó càng lớn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật càng ở cao và càng nặng thì thế năng hấp dẫn càng lớn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dòng điện chạy trong dây dẫn mang dạng năng lượng nào?",
+       "luaChon": [
+        "Điện năng",
+        "Thế năng đàn hồi",
+        "Hóa năng",
+        "Quang năng"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 48. Sự chuyển hóa năng lượng",
+     "cau": [
+      {
+       "noiDung": "Khi bóng đèn dây tóc sáng, điện năng chủ yếu chuyển hóa thành những dạng nào?",
+       "luaChon": [
+        "Chỉ có hóa năng",
+        "Chỉ có cơ năng",
+        "Hóa năng và cơ năng",
+        "Quang năng và nhiệt năng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Pin mặt trời chuyển hóa năng lượng ánh sáng thành dạng nào?",
+       "luaChon": [
+        "Hóa năng",
+        "Cơ năng",
+        "Điện năng",
+        "Năng lượng âm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi quả bóng rơi từ trên cao xuống, năng lượng chuyển hóa như thế nào?",
+       "luaChon": [
+        "Thế năng chuyển thành động năng",
+        "Động năng chuyển thành thế năng",
+        "Quang năng thành nhiệt năng",
+        "Hóa năng thành điện năng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi ta ăn cơm rồi chạy bộ, năng lượng chuyển hóa thế nào?",
+       "luaChon": [
+        "Quang năng thành hóa năng",
+        "Nhiệt năng thành điện năng",
+        "Điện năng thành hóa năng",
+        "Hóa năng trong thức ăn thành động năng và nhiệt năng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Quạt điện đang quay chuyển hóa điện năng thành dạng nào là chính?",
+       "luaChon": [
+        "Động năng",
+        "Thế năng đàn hồi",
+        "Hóa năng",
+        "Quang năng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nội dung nào đúng với định luật bảo toàn năng lượng?",
+       "luaChon": [
+        "Năng lượng chỉ tồn tại ở một dạng",
+        "Năng lượng luôn mất đi hoàn toàn",
+        "Năng lượng có thể tự sinh ra",
+        "Năng lượng không tự sinh ra và không tự mất đi, chỉ chuyển hóa hoặc truyền từ vật này sang vật khác"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Năng lượng có thể tự sinh ra mà không cần chuyển hóa từ dạng khác.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong nhà máy thủy điện, năng lượng chuyển hóa theo thứ tự nào?",
+       "luaChon": [
+        "Điện năng thành thế năng",
+        "Nhiệt năng thành hóa năng",
+        "Thế năng của nước thành động năng rồi thành điện năng",
+        "Hóa năng thành quang năng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi cọ xát hai bàn tay vào nhau thấy nóng lên, năng lượng đã chuyển hóa thế nào?",
+       "luaChon": [
+        "Nhiệt năng thành động năng",
+        "Động năng chuyển thành nhiệt năng",
+        "Hóa năng thành quang năng",
+        "Điện năng thành cơ năng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong quá trình chuyển hóa, tổng năng lượng luôn được bảo toàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 49. Năng lượng hao phí",
+     "cau": [
+      {
+       "noiDung": "Năng lượng hao phí là gì?",
+       "luaChon": [
+        "Phần năng lượng chuyển hóa thành dạng không mong muốn",
+        "Phần năng lượng có ích",
+        "Năng lượng bị mất hoàn toàn",
+        "Năng lượng tự sinh ra"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở bóng đèn sợi đốt, năng lượng hao phí chủ yếu ở dạng nào?",
+       "luaChon": [
+        "Nhiệt năng",
+        "Hóa năng",
+        "Quang năng",
+        "Điện năng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi xe máy chạy, năng lượng hao phí chủ yếu do đâu?",
+       "luaChon": [
+        "Do ánh sáng đèn xe",
+        "Do màu sơn của xe",
+        "Do ma sát và tỏa nhiệt ra môi trường",
+        "Do tiếng còi xe"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao đèn LED tiết kiệm điện hơn đèn sợi đốt?",
+       "luaChon": [
+        "Vì phần điện năng chuyển thành nhiệt hao phí ít hơn",
+        "Vì đèn LED có nhiều màu",
+        "Vì đèn LED nhỏ hơn",
+        "Vì đèn LED rẻ hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong mọi quá trình chuyển hóa năng lượng đều có phần năng lượng hao phí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biện pháp nào giúp giảm năng lượng hao phí do ma sát ở máy móc?",
+       "luaChon": [
+        "Tăng tải trọng cho máy",
+        "Làm nhám các chi tiết máy",
+        "Tra dầu mỡ bôi trơn thường xuyên",
+        "Để máy chạy liên tục không nghỉ"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Năng lượng có ích là gì?",
+       "luaChon": [
+        "Toàn bộ năng lượng đầu vào",
+        "Phần năng lượng tỏa nhiệt vô ích",
+        "Phần năng lượng chuyển hóa thành dạng ta mong muốn",
+        "Phần năng lượng bị mất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Năng lượng hao phí thường xuất hiện dưới dạng nào là chủ yếu?",
+       "luaChon": [
+        "Thế năng đàn hồi",
+        "Nhiệt năng tỏa ra môi trường",
+        "Điện năng",
+        "Hóa năng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Có thể chế tạo được máy biến đổi toàn bộ năng lượng đầu vào thành năng lượng có ích, không hao phí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao vỏ máy tính hoặc điện thoại nóng lên khi dùng lâu?",
+       "luaChon": [
+        "Vì màn hình phát sáng",
+        "Vì máy hút nhiệt từ không khí",
+        "Vì pin nở ra",
+        "Vì một phần điện năng chuyển thành nhiệt năng hao phí"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 50. Năng lượng tái tạo",
+     "cau": [
+      {
+       "noiDung": "Nguồn năng lượng nào sau đây là năng lượng tái tạo?",
+       "luaChon": [
+        "Năng lượng mặt trời",
+        "Than đá",
+        "Khí thiên nhiên",
+        "Dầu mỏ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguồn năng lượng nào sau đây là năng lượng không tái tạo?",
+       "luaChon": [
+        "Ánh sáng mặt trời",
+        "Sức nước",
+        "Sức gió",
+        "Dầu mỏ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Năng lượng tái tạo có đặc điểm gì?",
+       "luaChon": [
+        "Liên tục được bổ sung, gần như vô tận",
+        "Sẽ cạn kiệt trong vài năm",
+        "Chỉ có ở vùng lạnh",
+        "Chỉ dùng cho công nghiệp"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhà máy điện gió sử dụng nguồn năng lượng nào?",
+       "luaChon": [
+        "Năng lượng gió",
+        "Năng lượng hạt nhân",
+        "Năng lượng từ than đá",
+        "Năng lượng từ dầu mỏ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhà máy thủy điện sử dụng nguồn năng lượng nào?",
+       "luaChon": [
+        "Năng lượng từ than",
+        "Năng lượng gió",
+        "Năng lượng mặt trời",
+        "Năng lượng của dòng nước"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ưu điểm nổi bật của năng lượng tái tạo là gì?",
+       "luaChon": [
+        "Có ở mọi nơi với sản lượng như nhau",
+        "Không cần bảo trì",
+        "Ít gây ô nhiễm môi trường",
+        "Giá thiết bị luôn rẻ nhất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nhược điểm của năng lượng mặt trời và năng lượng gió là gì?",
+       "luaChon": [
+        "Phụ thuộc vào thời tiết nên không ổn định",
+        "Làm cạn kiệt tài nguyên",
+        "Gây ô nhiễm không khí nặng",
+        "Tạo ra nhiều khí thải"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhiên liệu hóa thạch được hình thành trong thời gian rất dài và có thể cạn kiệt.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Việc sử dụng năng lượng tái tạo góp phần giảm phát thải khí nhà kính.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Năng lượng sinh khối được tạo ra từ nguồn nào?",
+       "luaChon": [
+        "Từ khí hiếm",
+        "Từ quặng kim loại",
+        "Từ nước biển mặn",
+        "Từ thực vật, chất thải nông nghiệp"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 51. Tiết kiệm năng lượng",
+     "cau": [
+      {
+       "noiDung": "Vì sao cần tiết kiệm năng lượng?",
+       "luaChon": [
+        "Vì nguồn năng lượng hóa thạch có hạn và việc sử dụng gây ô nhiễm",
+        "Vì máy móc không cần năng lượng",
+        "Vì năng lượng tự sinh ra",
+        "Vì năng lượng rất dễ kiếm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Việc làm nào giúp tiết kiệm điện?",
+       "luaChon": [
+        "Mở tủ lạnh thật lâu",
+        "Tắt đèn và quạt khi ra khỏi phòng",
+        "Bật điều hòa khi không có người",
+        "Để máy tính chạy suốt đêm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sử dụng loại đèn nào giúp tiết kiệm điện nhất?",
+       "luaChon": [
+        "Đèn dầu",
+        "Đèn sợi đốt",
+        "Đèn LED",
+        "Đèn halogen công suất lớn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Việc làm nào giúp tiết kiệm nhiên liệu khi đi lại?",
+       "luaChon": [
+        "Đi bộ, đi xe đạp hoặc dùng phương tiện công cộng",
+        "Đi xe máy cho quãng đường 100 mét",
+        "Để xe nổ máy khi dừng lâu",
+        "Chở quá tải thường xuyên"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tận dụng ánh sáng tự nhiên trong nhà giúp tiết kiệm điện chiếu sáng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao nên rút phích cắm các thiết bị điện khi không sử dụng?",
+       "luaChon": [
+        "Vì làm thiết bị chạy nhanh hơn",
+        "Vì để dây điện nghỉ ngơi",
+        "Vì thiết bị ở chế độ chờ vẫn tiêu thụ điện",
+        "Vì phích cắm dễ hỏng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Việc làm nào sau đây gây lãng phí năng lượng?",
+       "luaChon": [
+        "Dùng nồi có đáy phẳng vừa bếp",
+        "Đậy vung khi đun nấu",
+        "Tắt bếp ngay khi nấu xong",
+        "Để vòi nước chảy tràn khi không dùng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đậy vung nồi khi đun nấu giúp thức ăn nhanh chín và tiết kiệm nhiên liệu.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tiết kiệm năng lượng chỉ là trách nhiệm của nhà máy, không phải của học sinh.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Lợi ích của việc tiết kiệm năng lượng là gì?",
+       "luaChon": [
+        "Làm giảm tuổi thọ đồ dùng",
+        "Làm hỏng thiết bị",
+        "Làm tăng giá điện",
+        "Giảm chi phí và bảo vệ môi trường"
+       ],
+       "dapAn": 3
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương X. Trái Đất và bầu trời",
+   "bai": [
+    {
+     "ten": "Bài 52. Chuyển động nhìn thấy của Mặt Trời. Thiên thể",
+     "cau": [
+      {
+       "noiDung": "Trái Đất tự quay quanh trục của nó hết bao lâu?",
+       "luaChon": [
+        "24 giờ",
+        "30 ngày",
+        "12 giờ",
+        "365 ngày"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hiện tượng ngày và đêm luân phiên trên Trái Đất là do đâu?",
+       "luaChon": [
+        "Trái Đất tự quay quanh trục của nó",
+        "Trái Đất đứng yên",
+        "Mặt Trăng che khuất Mặt Trời",
+        "Mặt Trời quay quanh Trái Đất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hằng ngày, ta nhìn thấy Mặt Trời mọc ở hướng nào?",
+       "luaChon": [
+        "Hướng bắc",
+        "Hướng tây",
+        "Hướng nam",
+        "Hướng đông"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ta nhìn thấy Mặt Trời lặn ở hướng nào?",
+       "luaChon": [
+        "Hướng bắc",
+        "Hướng nam",
+        "Hướng tây",
+        "Hướng đông"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trái Đất tự quay quanh trục theo chiều nào?",
+       "luaChon": [
+        "Từ bắc xuống nam",
+        "Từ tây sang đông",
+        "Từ nam lên bắc",
+        "Từ đông sang tây"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thiên thể là gì?",
+       "luaChon": [
+        "Các thiết bị do con người chế tạo",
+        "Các vật thể tự nhiên tồn tại trong vũ trụ",
+        "Các đám mây trong khí quyển",
+        "Các loại đá trên mặt đất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thiên thể nào sau đây tự phát ra ánh sáng?",
+       "luaChon": [
+        "Hành tinh",
+        "Sao chổi",
+        "Ngôi sao",
+        "Vệ tinh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Chuyển động của Mặt Trời từ đông sang tây mà ta nhìn thấy hằng ngày là chuyển động thật của Mặt Trời.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vệ tinh nhân tạo là thiên thể tự nhiên trong vũ trụ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vào buổi trưa, bóng của vật trên mặt đất có đặc điểm gì?",
+       "luaChon": [
+        "Biến mất hoàn toàn",
+        "Ngắn nhất trong ngày",
+        "Dài nhất trong ngày",
+        "Không thay đổi so với buổi sáng"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 53. Mặt Trăng",
+     "cau": [
+      {
+       "noiDung": "Mặt Trăng là gì của Trái Đất?",
+       "luaChon": [
+        "Một hành tinh",
+        "Một ngôi sao",
+        "Vệ tinh tự nhiên",
+        "Một thiên hà"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao ta nhìn thấy Mặt Trăng sáng?",
+       "luaChon": [
+        "Vì Mặt Trăng phản xạ ánh sáng Mặt Trời",
+        "Vì Mặt Trăng ở gần Trái Đất",
+        "Vì Mặt Trăng tự phát sáng",
+        "Vì Mặt Trăng rất nóng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mặt Trăng chuyển động một vòng quanh Trái Đất hết khoảng bao lâu?",
+       "luaChon": [
+        "Khoảng một ngày",
+        "Khoảng một tuần",
+        "Khoảng một tháng",
+        "Khoảng một năm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao hình dạng nhìn thấy của Mặt Trăng thay đổi theo ngày?",
+       "luaChon": [
+        "Vì phần bề mặt được chiếu sáng mà ta nhìn thấy thay đổi",
+        "Vì Mặt Trăng bị vỡ ra",
+        "Vì Mặt Trăng tự đổi hình dạng",
+        "Vì mây che khuất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Pha nào của Mặt Trăng ứng với lúc ta nhìn thấy Mặt Trăng tròn nhất?",
+       "luaChon": [
+        "Trăng non",
+        "Trăng khuyết đầu tháng",
+        "Trăng tròn",
+        "Không trăng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vào ngày không trăng, ta không nhìn thấy Mặt Trăng vì phần được chiếu sáng quay về phía nào?",
+       "luaChon": [
+        "Quay về phía Mặt Trời, không hướng về Trái Đất",
+        "Bị mây che kín",
+        "Quay hẳn về phía Trái Đất",
+        "Bị Trái Đất che kín"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Chu kì thay đổi các pha của Mặt Trăng khoảng bao nhiêu ngày?",
+       "luaChon": [
+        "Khoảng 7 ngày",
+        "Khoảng 365 ngày",
+        "Khoảng 29 đến 30 ngày",
+        "Khoảng 100 ngày"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mặt Trăng là một ngôi sao vì ban đêm nó phát sáng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trên Mặt Trăng không có không khí như trên Trái Đất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trăng non và trăng tròn cách nhau khoảng bao lâu?",
+       "luaChon": [
+        "Khoảng ba tháng",
+        "Khoảng một năm",
+        "Khoảng hai tuần",
+        "Khoảng một ngày"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 54. Hệ Mặt Trời",
+     "cau": [
+      {
+       "noiDung": "Hệ Mặt Trời gồm những thành phần nào?",
+       "luaChon": [
+        "Toàn bộ vũ trụ",
+        "Chỉ có Mặt Trời",
+        "Mặt Trời và các thiên thể chuyển động quanh nó",
+        "Chỉ có Trái Đất và Mặt Trăng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hệ Mặt Trời có bao nhiêu hành tinh?",
+       "luaChon": [
+        "9",
+        "6",
+        "7",
+        "8"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Hành tinh nào gần Mặt Trời nhất?",
+       "luaChon": [
+        "Kim tinh",
+        "Thủy tinh",
+        "Hỏa tinh",
+        "Trái Đất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trái Đất là hành tinh thứ mấy tính từ Mặt Trời?",
+       "luaChon": [
+        "Thứ ba",
+        "Thứ tư",
+        "Thứ hai",
+        "Thứ nhất"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hành tinh nào lớn nhất trong Hệ Mặt Trời?",
+       "luaChon": [
+        "Trái Đất",
+        "Thủy tinh",
+        "Mộc tinh",
+        "Hỏa tinh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mặt Trời là thiên thể loại nào?",
+       "luaChon": [
+        "Một vệ tinh",
+        "Một ngôi sao",
+        "Một hành tinh",
+        "Một sao chổi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trái Đất chuyển động một vòng quanh Mặt Trời hết bao lâu?",
+       "luaChon": [
+        "Khoảng 365 ngày",
+        "1 ngày",
+        "1 tháng",
+        "10 năm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hành tinh càng xa Mặt Trời thì chu kì quay quanh Mặt Trời càng dài.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Các hành tinh trong Hệ Mặt Trời đều tự phát sáng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hành tinh nào được gọi là hành tinh đỏ?",
+       "luaChon": [
+        "Kim tinh",
+        "Hải Vương tinh",
+        "Thổ tinh",
+        "Hỏa tinh"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 55. Ngân Hà",
+     "cau": [
+      {
+       "noiDung": "Ngân Hà là gì?",
+       "luaChon": [
+        "Một vệ tinh của Trái Đất",
+        "Một ngôi sao sáng",
+        "Một hành tinh lớn",
+        "Một thiên hà chứa Hệ Mặt Trời của chúng ta"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thiên hà là gì?",
+       "luaChon": [
+        "Một đám mây trong khí quyển",
+        "Một hành tinh và các vệ tinh",
+        "Tập hợp rất nhiều sao, khí, bụi liên kết với nhau bởi lực hấp dẫn",
+        "Một hệ thống vệ tinh nhân tạo"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hệ Mặt Trời nằm ở đâu trong Ngân Hà?",
+       "luaChon": [
+        "Ở một vùng ngoài rìa, cách xa trung tâm Ngân Hà",
+        "Ngoài hoàn toàn Ngân Hà",
+        "Ngay chính giữa trung tâm",
+        "Trong một thiên hà khác"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ngân Hà chứa khoảng bao nhiêu ngôi sao?",
+       "luaChon": [
+        "Khoảng một triệu ngôi sao",
+        "Hàng trăm tỉ ngôi sao",
+        "Chỉ có Mặt Trời",
+        "Khoảng một nghìn ngôi sao"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong vũ trụ có bao nhiêu thiên hà?",
+       "luaChon": [
+        "Rất nhiều, hàng tỉ thiên hà",
+        "Đúng mười thiên hà",
+        "Chỉ có một thiên hà duy nhất",
+        "Khoảng một trăm thiên hà"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ngân Hà có hình dạng như thế nào?",
+       "luaChon": [
+        "Hình tam giác",
+        "Hình xoắn ốc dẹt",
+        "Hình ống trụ dài",
+        "Hình lập phương"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vào đêm trời quang, không trăng, ở nơi ít ánh đèn ta có thể nhìn thấy dải Ngân Hà bằng mắt thường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ngân Hà và Hệ Mặt Trời là hai tên gọi khác nhau của cùng một thứ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mặt Trời có chuyển động quanh tâm Ngân Hà không?",
+       "luaChon": [
+        "Chỉ chuyển động khi có nhật thực",
+        "Có, Mặt Trời chuyển động quanh tâm Ngân Hà",
+        "Không, Mặt Trời đứng yên tuyệt đối",
+        "Chỉ chuyển động vào ban đêm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ánh sáng từ các ngôi sao xa phải mất rất nhiều năm mới tới được Trái Đất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

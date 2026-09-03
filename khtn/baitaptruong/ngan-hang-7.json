@@ -1,0 +1,4283 @@
+{
+ "ten": "Lớp 7",
+ "chuong": [
+  {
+   "ten": "Mở đầu",
+   "bai": [
+    {
+     "ten": "Bài 1. Phương pháp và kĩ năng học tập môn Khoa học tự nhiên",
+     "cau": [
+      {
+       "noiDung": "Bước đầu tiên trong tiến trình tìm hiểu tự nhiên là gì?",
+       "luaChon": [
+        "Thực hiện kế hoạch",
+        "Viết báo cáo",
+        "Lập kế hoạch kiểm tra giả thuyết",
+        "Đề xuất vấn đề cần tìm hiểu"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sau khi đề xuất vấn đề, bước tiếp theo là gì?",
+       "luaChon": [
+        "Viết báo cáo kết quả",
+        "Đưa ra dự đoán (giả thuyết) khoa học",
+        "Dọn dẹp dụng cụ",
+        "Đo lại số liệu cũ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bước cuối cùng trong tiến trình tìm hiểu tự nhiên là gì?",
+       "luaChon": [
+        "Đưa ra giả thuyết",
+        "Đề xuất vấn đề",
+        "Viết báo cáo, thảo luận và trình bày kết quả",
+        "Lập kế hoạch"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Kĩ năng quan sát trong học tập môn KHTN là gì?",
+       "luaChon": [
+        "Ghi nhớ thuộc lòng bài học",
+        "Chép lại kết quả của bạn",
+        "Dùng giác quan và dụng cụ để thu thập thông tin về sự vật, hiện tượng",
+        "Đoán mò kết quả"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Kĩ năng dự báo là gì?",
+       "luaChon": [
+        "Phân loại mẫu vật",
+        "Đưa ra dự đoán về điều sẽ xảy ra dựa trên dữ liệu đã có",
+        "Sao chép số liệu từ sách",
+        "Đo lại nhiều lần"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Giả thuyết khoa học cần được kiểm chứng bằng thí nghiệm hoặc quan sát.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi kết quả thí nghiệm không phù hợp với giả thuyết, người làm khoa học nên làm gì?",
+       "luaChon": [
+        "Xem xét lại giả thuyết và kiểm tra thêm",
+        "Sửa số liệu cho khớp giả thuyết",
+        "Kết luận thí nghiệm vô nghĩa",
+        "Bỏ qua kết quả đó"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thiết bị nào đo được cả cường độ dòng điện và hiệu điện thế?",
+       "luaChon": [
+        "Đồng hồ đo điện đa năng",
+        "Nhiệt kế",
+        "Cân điện tử",
+        "Lực kế"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đồng hồ đo thời gian hiện số dùng kèm cổng quang điện có ưu điểm gì?",
+       "luaChon": [
+        "Đo được nhiệt độ",
+        "Đo được khối lượng",
+        "Đo thời gian chính xác hơn bấm giờ bằng tay",
+        "Đo được lực"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong báo cáo thực hành, phần kết luận phải dựa trên số liệu thực tế thu được.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương I. Nguyên tử. Nguyên tố hóa học. Bảng tuần hoàn",
+   "bai": [
+    {
+     "ten": "Bài 2. Nguyên tử",
+     "cau": [
+      {
+       "noiDung": "Hạt nhân nguyên tử được tạo nên từ những loại hạt nào?",
+       "luaChon": [
+        "Proton và neutron",
+        "Proton và electron",
+        "Chỉ có proton",
+        "Neutron và electron"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hạt nào trong nguyên tử mang điện tích âm?",
+       "luaChon": [
+        "Neutron",
+        "Electron",
+        "Proton",
+        "Hạt nhân"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hạt nào trong nguyên tử không mang điện?",
+       "luaChon": [
+        "Neutron",
+        "Proton",
+        "Electron",
+        "Không có hạt nào"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao nguyên tử trung hòa về điện?",
+       "luaChon": [
+        "Vì nguyên tử rất nhỏ",
+        "Vì nguyên tử không chứa hạt mang điện",
+        "Vì số neutron bằng số electron",
+        "Vì số proton bằng số electron"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khối lượng của nguyên tử tập trung chủ yếu ở đâu?",
+       "luaChon": [
+        "Lớp vỏ electron",
+        "Hạt nhân",
+        "Khoảng không giữa các electron",
+        "Phân bố đều khắp nguyên tử"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Electron chuyển động ở vị trí nào trong nguyên tử?",
+       "luaChon": [
+        "Bên ngoài nguyên tử",
+        "Bám chặt vào proton",
+        "Trong hạt nhân",
+        "Ở lớp vỏ, xung quanh hạt nhân"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Lớp electron thứ nhất chứa tối đa bao nhiêu electron?",
+       "luaChon": [
+        "2",
+        "4",
+        "18",
+        "8"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Lớp electron thứ hai chứa tối đa bao nhiêu electron?",
+       "luaChon": [
+        "18",
+        "6",
+        "2",
+        "8"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguyên tử oxygen có 8 proton thì có bao nhiêu electron?",
+       "luaChon": [
+        "10",
+        "8",
+        "6",
+        "16"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đơn vị dùng để đo khối lượng nguyên tử là gì?",
+       "luaChon": [
+        "mét",
+        "amu",
+        "kilôgam",
+        "mol"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 3. Nguyên tố hóa học",
+     "cau": [
+      {
+       "noiDung": "Nguyên tố hóa học là tập hợp những nguyên tử có cùng đặc điểm nào?",
+       "luaChon": [
+        "Cùng khối lượng",
+        "Cùng số proton trong hạt nhân",
+        "Cùng màu sắc",
+        "Cùng số neutron"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Số proton trong hạt nhân còn được gọi là gì?",
+       "luaChon": [
+        "Số hiệu nguyên tử",
+        "Số phân tử",
+        "Hóa trị",
+        "Số khối"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kí hiệu hóa học của nguyên tố sodium (natri) là gì?",
+       "luaChon": [
+        "N",
+        "Na",
+        "S",
+        "K"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Kí hiệu hóa học của nguyên tố potassium (kali) là gì?",
+       "luaChon": [
+        "Ka",
+        "P",
+        "Po",
+        "K"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Kí hiệu hóa học của nguyên tố carbon là gì?",
+       "luaChon": [
+        "Ca",
+        "Co",
+        "C",
+        "Cr"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Kí hiệu hóa học của nguyên tố iron (sắt) là gì?",
+       "luaChon": [
+        "F",
+        "Ir",
+        "I",
+        "Fe"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cách viết kí hiệu hóa học đúng quy ước là như thế nào?",
+       "luaChon": [
+        "Viết thường chữ đầu, viết hoa chữ sau",
+        "Viết thường cả hai chữ cái",
+        "Viết hoa cả hai chữ cái",
+        "Chữ cái đầu viết hoa, chữ cái thứ hai (nếu có) viết thường"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Hai nguyên tử có cùng số proton thì thuộc cùng một nguyên tố hóa học.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguyên tố nào chiếm tỉ lệ lớn nhất trong vỏ Trái Đất?",
+       "luaChon": [
+        "Iron",
+        "Nitrogen",
+        "Oxygen",
+        "Carbon"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mỗi nguyên tố hóa học có thể có nhiều kí hiệu hóa học khác nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 4. Sơ lược về bảng tuần hoàn các nguyên tố hóa học",
+     "cau": [
+      {
+       "noiDung": "Các nguyên tố trong bảng tuần hoàn được sắp xếp theo nguyên tắc nào?",
+       "luaChon": [
+        "Theo chiều tăng dần điện tích hạt nhân",
+        "Theo năm phát hiện",
+        "Theo màu sắc của đơn chất",
+        "Theo thứ tự bảng chữ cái"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Số thứ tự của ô nguyên tố bằng số proton trong hạt nhân nguyên tử.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Số thứ tự chu kì của một nguyên tố cho biết điều gì?",
+       "luaChon": [
+        "Số lớp electron của nguyên tử",
+        "Số electron lớp ngoài cùng",
+        "Số proton trong hạt nhân",
+        "Số neutron"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bảng tuần hoàn hiện nay gồm bao nhiêu chu kì?",
+       "luaChon": [
+        "8",
+        "6",
+        "7",
+        "5"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Các nguyên tố trong cùng một nhóm A có đặc điểm chung nào?",
+       "luaChon": [
+        "Có cùng số electron ở lớp ngoài cùng",
+        "Có cùng màu sắc",
+        "Có cùng số lớp electron",
+        "Có cùng khối lượng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Các nguyên tố nhóm IA (trừ hydrogen) thuộc loại nguyên tố nào?",
+       "luaChon": [
+        "Khí hiếm",
+        "Á kim",
+        "Phi kim",
+        "Kim loại"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguyên tố nào sau đây là khí hiếm?",
+       "luaChon": [
+        "Oxygen",
+        "Nitrogen",
+        "Chlorine",
+        "Neon"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nguyên tố nào sau đây là phi kim?",
+       "luaChon": [
+        "Copper",
+        "Iron",
+        "Aluminium",
+        "Oxygen"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ô nguyên tố trong bảng tuần hoàn cho biết những thông tin nào?",
+       "luaChon": [
+        "Chỉ có tên nguyên tố",
+        "Chỉ có giá tiền",
+        "Chỉ có màu sắc",
+        "Số hiệu nguyên tử, kí hiệu hóa học, tên và khối lượng nguyên tử"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong bảng tuần hoàn, các kim loại thường nằm ở phía bên trái và phía dưới.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương II. Phân tử. Liên kết hóa học",
+   "bai": [
+    {
+     "ten": "Bài 5. Phân tử – Đơn chất – Hợp chất",
+     "cau": [
+      {
+       "noiDung": "Phân tử là gì?",
+       "luaChon": [
+        "Hạt chỉ có ở chất khí",
+        "Hạt nhỏ nhất mang điện dương",
+        "Hạt đại diện cho chất, gồm các nguyên tử liên kết với nhau",
+        "Một loại nguyên tố"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đơn chất được tạo nên từ mấy nguyên tố hóa học?",
+       "luaChon": [
+        "Nhiều hơn ba",
+        "Hai nguyên tố",
+        "Một nguyên tố",
+        "Ba nguyên tố"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hợp chất được tạo nên từ mấy nguyên tố hóa học trở lên?",
+       "luaChon": [
+        "Một nguyên tố",
+        "Bốn nguyên tố",
+        "Ba nguyên tố",
+        "Hai nguyên tố"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chất nào sau đây là hợp chất?",
+       "luaChon": [
+        "Sắt",
+        "Carbon dioxide",
+        "Khí oxygen",
+        "Khí nitrogen"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chất nào sau đây là đơn chất?",
+       "luaChon": [
+        "Đường",
+        "Muối ăn",
+        "Nước",
+        "Khí oxygen"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Phân tử nước được tạo nên từ những nguyên tử nào?",
+       "luaChon": [
+        "2 nguyên tử hydrogen và 1 nguyên tử oxygen",
+        "1 hydrogen và 2 oxygen",
+        "1 hydrogen và 1 oxygen",
+        "2 hydrogen và 2 oxygen"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khối lượng phân tử của nước là bao nhiêu amu?",
+       "luaChon": [
+        "32",
+        "16",
+        "18",
+        "20"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khối lượng phân tử của khí carbon dioxide là bao nhiêu amu?",
+       "luaChon": [
+        "32",
+        "44",
+        "48",
+        "28"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khối lượng phân tử của khí oxygen là bao nhiêu amu?",
+       "luaChon": [
+        "32",
+        "48",
+        "16",
+        "34"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nước là một đơn chất vì nước chỉ gồm một loại phân tử.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 6. Giới thiệu về liên kết hóa học",
+     "cau": [
+      {
+       "noiDung": "Vì sao nguyên tử khí hiếm bền vững, khó tham gia phản ứng?",
+       "luaChon": [
+        "Vì khối lượng rất lớn",
+        "Vì không có hạt nhân",
+        "Vì lớp electron ngoài cùng đã có đủ số electron tối đa",
+        "Vì không có electron"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi tham gia liên kết, các nguyên tử có xu hướng đạt cấu trúc electron giống nguyên tử nào?",
+       "luaChon": [
+        "Nguyên tử hydrogen",
+        "Nguyên tử carbon",
+        "Nguyên tử kim loại kiềm",
+        "Nguyên tử khí hiếm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Liên kết ion được hình thành như thế nào?",
+       "luaChon": [
+        "Do nhiệt độ cao",
+        "Do lực hút giữa các ion mang điện tích trái dấu",
+        "Do dùng chung electron",
+        "Do các nguyên tử va chạm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Liên kết cộng hóa trị được hình thành như thế nào?",
+       "luaChon": [
+        "Do lực từ",
+        "Do các nguyên tử dùng chung một hay nhiều cặp electron",
+        "Do lực hấp dẫn",
+        "Do cho và nhận electron"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Liên kết trong phân tử sodium chloride thuộc loại nào?",
+       "luaChon": [
+        "Liên kết cộng hóa trị",
+        "Liên kết ion",
+        "Liên kết hydrogen",
+        "Liên kết kim loại"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Liên kết trong phân tử nước thuộc loại nào?",
+       "luaChon": [
+        "Liên kết cộng hóa trị",
+        "Liên kết kim loại",
+        "Liên kết ion",
+        "Không có liên kết"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguyên tử kim loại khi tham gia liên kết ion thường có xu hướng gì?",
+       "luaChon": [
+        "Nhường electron để tạo thành ion dương",
+        "Dùng chung electron",
+        "Không thay đổi gì",
+        "Nhận electron để tạo ion âm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguyên tử phi kim khi tham gia liên kết ion thường có xu hướng gì?",
+       "luaChon": [
+        "Nhận electron để tạo thành ion âm",
+        "Nhường electron tạo ion dương",
+        "Không nhận cũng không nhường",
+        "Tự phân hủy"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hợp chất ion thường tồn tại ở thể rắn, có nhiệt độ nóng chảy cao.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hợp chất tạo bởi kim loại điển hình và phi kim điển hình thường có liên kết ion.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 7. Hóa trị và công thức hóa học",
+     "cau": [
+      {
+       "noiDung": "Hóa trị của nguyên tố hydrogen trong hợp chất là bao nhiêu?",
+       "luaChon": [
+        "IV",
+        "III",
+        "I",
+        "II"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong các hợp chất, oxygen thường có hóa trị bao nhiêu?",
+       "luaChon": [
+        "IV",
+        "II",
+        "I",
+        "III"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong công thức hóa học, chỉ số ghi phía dưới kí hiệu nguyên tố cho biết điều gì?",
+       "luaChon": [
+        "Số lớp electron",
+        "Hóa trị của nguyên tố",
+        "Số nguyên tử của nguyên tố đó trong phân tử",
+        "Khối lượng nguyên tử"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Công thức hóa học của nước là gì?",
+       "luaChon": [
+        "H2O2",
+        "HO",
+        "OH",
+        "H2O"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Công thức hóa học của khí carbon dioxide là gì?",
+       "luaChon": [
+        "CO",
+        "CO3",
+        "CO2",
+        "C2O"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong hợp chất Al2O3, nhôm (Al) có hóa trị bao nhiêu?",
+       "luaChon": [
+        "IV",
+        "II",
+        "I",
+        "III"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong hợp chất CH4, carbon có hóa trị bao nhiêu?",
+       "luaChon": [
+        "I",
+        "II",
+        "III",
+        "IV"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Quy tắc hóa trị phát biểu thế nào cho hợp chất hai nguyên tố?",
+       "luaChon": [
+        "Hóa trị hai nguyên tố luôn bằng nhau",
+        "Tổng hóa trị luôn bằng 8",
+        "Tích của chỉ số và hóa trị của nguyên tố này bằng tích của chỉ số và hóa trị của nguyên tố kia",
+        "Chỉ số luôn bằng hóa trị"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Công thức hóa học cho biết những thông tin nào về chất?",
+       "luaChon": [
+        "Màu sắc của chất",
+        "Nhiệt độ sôi của chất",
+        "Nguyên tố tạo nên chất và số nguyên tử mỗi nguyên tố trong phân tử",
+        "Giá thành của chất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hóa trị của một nguyên tố luôn cố định trong mọi hợp chất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương III. Tốc độ",
+   "bai": [
+    {
+     "ten": "Bài 8. Tốc độ chuyển động",
+     "cau": [
+      {
+       "noiDung": "Công thức tính tốc độ của chuyển động là gì?",
+       "luaChon": [
+        "v = s.t",
+        "v = t/s",
+        "v = s/t",
+        "v = s + t"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đơn vị đo tốc độ trong hệ SI là gì?",
+       "luaChon": [
+        "m/phút",
+        "km/phút",
+        "m/s",
+        "km/h"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Tốc độ cho biết điều gì về chuyển động?",
+       "luaChon": [
+        "Sự nhanh hay chậm của chuyển động",
+        "Hướng của chuyển động",
+        "Khối lượng của vật",
+        "Hình dạng quỹ đạo"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tốc độ 36 km/h bằng bao nhiêu m/s?",
+       "luaChon": [
+        "6 m/s",
+        "60 m/s",
+        "10 m/s",
+        "36 m/s"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Tốc độ 72 km/h bằng bao nhiêu m/s?",
+       "luaChon": [
+        "20 m/s",
+        "36 m/s",
+        "7,2 m/s",
+        "72 m/s"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tốc độ 15 m/s bằng bao nhiêu km/h?",
+       "luaChon": [
+        "150 km/h",
+        "4,2 km/h",
+        "15 km/h",
+        "54 km/h"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Một ô tô đi được 60 km trong 2 giờ. Tốc độ trung bình là bao nhiêu?",
+       "luaChon": [
+        "30 km/h",
+        "20 km/h",
+        "120 km/h",
+        "60 km/h"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Một người đi bộ 3 km hết 0,5 giờ. Tốc độ trung bình là bao nhiêu?",
+       "luaChon": [
+        "1,5 km/h",
+        "3 km/h",
+        "6 km/h",
+        "9 km/h"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Một vật đi 100 m trong 20 giây. Tốc độ của vật là bao nhiêu?",
+       "luaChon": [
+        "5 m/s",
+        "20 m/s",
+        "100 m/s",
+        "2 m/s"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật chuyển động với tốc độ càng lớn thì trong cùng một thời gian đi được quãng đường càng dài.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 9. Đo tốc độ",
+     "cau": [
+      {
+       "noiDung": "Để tính tốc độ, cần đo những đại lượng nào?",
+       "luaChon": [
+        "Quãng đường và thời gian",
+        "Lực và khối lượng",
+        "Nhiệt độ và thời gian",
+        "Khối lượng và thể tích"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dụng cụ nào dùng để đo quãng đường trong thí nghiệm đo tốc độ?",
+       "luaChon": [
+        "Lực kế",
+        "Cân",
+        "Nhiệt kế",
+        "Thước"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Dụng cụ đo tốc độ gắn trên xe máy, ô tô gọi là gì?",
+       "luaChon": [
+        "Ampe kế",
+        "Nhiệt kế",
+        "Lực kế",
+        "Tốc kế"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thiết bị bắn tốc độ của cảnh sát giao thông dùng để làm gì?",
+       "luaChon": [
+        "Đo lượng xăng tiêu thụ",
+        "Đo khối lượng xe",
+        "Kiểm tra tốc độ của các phương tiện giao thông",
+        "Đếm số xe qua lại"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao đo thời gian bằng đồng hồ bấm tay lại kém chính xác?",
+       "luaChon": [
+        "Do không khí cản trở",
+        "Do đồng hồ luôn hỏng",
+        "Do ánh sáng chiếu vào",
+        "Do thời gian phản xạ của người bấm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Cổng quang điện có tác dụng gì trong thí nghiệm đo tốc độ?",
+       "luaChon": [
+        "Làm vật chạy nhanh hơn",
+        "Tự động ghi thời điểm vật đi qua nên đo thời gian chính xác hơn",
+        "Đo nhiệt độ vật",
+        "Đo khối lượng vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Để giảm sai số khi đo tốc độ, ta nên làm gì?",
+       "luaChon": [
+        "Đo nhiều lần rồi lấy giá trị trung bình",
+        "Chỉ đo một lần",
+        "Đo khi mất tập trung",
+        "Đoán kết quả"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trước khi bấm giờ, cần chỉnh đồng hồ bấm giây về vạch số 0.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đồng hồ đo thời gian hiện số dùng cổng quang cho kết quả chính xác hơn bấm tay.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Một vật đi quãng đường 0,5 m trong 0,1 giây thì tốc độ là bao nhiêu?",
+       "luaChon": [
+        "0,05 m/s",
+        "5 m/s",
+        "0,5 m/s",
+        "50 m/s"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 10. Đồ thị quãng đường – thời gian",
+     "cau": [
+      {
+       "noiDung": "Đồ thị quãng đường – thời gian của vật chuyển động với tốc độ không đổi có dạng gì?",
+       "luaChon": [
+        "Một đường gấp khúc lên xuống",
+        "Một đường parabol",
+        "Một đường tròn",
+        "Một đoạn thẳng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trên đồ thị quãng đường – thời gian, trục nằm ngang thường biểu diễn đại lượng nào?",
+       "luaChon": [
+        "Thời gian",
+        "Tốc độ",
+        "Quãng đường",
+        "Khối lượng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đoạn đồ thị nằm ngang song song với trục thời gian cho biết điều gì?",
+       "luaChon": [
+        "Vật đang đứng yên",
+        "Vật đang chuyển động nhanh",
+        "Vật đang quay",
+        "Vật đang chuyển động chậm dần"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đường đồ thị càng dốc thì cho biết điều gì về tốc độ?",
+       "luaChon": [
+        "Tốc độ càng nhỏ",
+        "Vật đứng yên",
+        "Vật chuyển động ngược lại",
+        "Tốc độ càng lớn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Từ đồ thị quãng đường – thời gian, ta có thể xác định được gì?",
+       "luaChon": [
+        "Quãng đường đi được sau một khoảng thời gian và tốc độ chuyển động",
+        "Nhiệt độ của vật",
+        "Khối lượng của vật",
+        "Màu sắc của vật"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Một vật đi được 40 m trong 8 giây theo đồ thị đường thẳng. Tốc độ của vật là bao nhiêu?",
+       "luaChon": [
+        "8 m/s",
+        "320 m/s",
+        "5 m/s",
+        "40 m/s"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi vẽ đồ thị quãng đường – thời gian, cần chọn tỉ lệ thích hợp cho hai trục.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đồ thị quãng đường – thời gian của vật đứng yên là một đoạn thẳng dốc lên.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Một xe chạy đều rồi dừng lại nghỉ, đồ thị sẽ gồm những phần nào?",
+       "luaChon": [
+        "Chỉ một đoạn dốc lên",
+        "Một đoạn dốc lên rồi một đoạn nằm ngang",
+        "Một đường tròn khép kín",
+        "Chỉ một đoạn nằm ngang"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Quãng đường của vật chuyển động đều tỉ lệ thuận với thời gian chuyển động.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 11. Tốc độ và an toàn giao thông",
+     "cau": [
+      {
+       "noiDung": "Vì sao khi xe chạy càng nhanh thì càng nguy hiểm?",
+       "luaChon": [
+        "Vì xe tốn ít xăng hơn",
+        "Vì xe nhẹ hơn",
+        "Vì quãng đường phanh dài hơn và va chạm mạnh hơn",
+        "Vì lốp xe mòn nhanh hơn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Xe chạy càng nhanh thì quãng đường đi được từ lúc phanh đến khi dừng hẳn càng ngắn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khoảng cách an toàn giữa hai xe phụ thuộc chủ yếu vào yếu tố nào?",
+       "luaChon": [
+        "Loại nhạc đang bật trong xe",
+        "Số người trên xe",
+        "Màu sơn của xe",
+        "Tốc độ của xe"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Biển báo giới hạn tốc độ trên đường có ý nghĩa gì?",
+       "luaChon": [
+        "Quy định tốc độ tối đa được phép chạy",
+        "Quy định khối lượng hàng hóa",
+        "Quy định số người được chở",
+        "Quy định giờ được đi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thời gian phản ứng của người lái xe là gì?",
+       "luaChon": [
+        "Khoảng thời gian từ khi nhận ra nguy hiểm đến khi bắt đầu đạp phanh",
+        "Thời gian xe chạy hết quãng đường",
+        "Thời gian nổ máy xe",
+        "Thời gian dừng đèn đỏ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi trời mưa, đường trơn thì người lái xe nên làm gì?",
+       "luaChon": [
+        "Tăng tốc để nhanh về nhà",
+        "Giảm tốc độ và tăng khoảng cách với xe phía trước",
+        "Bám sát xe trước",
+        "Tắt đèn xe"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao học sinh đi xe đạp cần đội mũ bảo hiểm?",
+       "luaChon": [
+        "Để cho đẹp",
+        "Để giảm chấn thương vùng đầu khi xảy ra va chạm",
+        "Để đi nhanh hơn",
+        "Để tránh nắng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Việc sử dụng điện thoại khi đang lái xe làm tăng thời gian phản ứng và rất nguy hiểm.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở khu vực đông dân cư và gần trường học, người lái xe cần làm gì?",
+       "luaChon": [
+        "Tăng tốc để qua nhanh",
+        "Bấm còi liên tục và giữ nguyên tốc độ",
+        "Đi chậm và quan sát kĩ",
+        "Đi vào làn ngược chiều"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Camera bắn tốc độ giúp phát hiện các phương tiện chạy quá tốc độ cho phép.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương IV. Âm thanh",
+   "bai": [
+    {
+     "ten": "Bài 12. Sóng âm",
+     "cau": [
+      {
+       "noiDung": "Nguồn âm là những vật như thế nào?",
+       "luaChon": [
+        "Vật đang đứng yên",
+        "Vật đang dao động",
+        "Vật đang nóng lên",
+        "Vật có màu sáng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sóng âm được tạo ra và lan truyền như thế nào?",
+       "luaChon": [
+        "Do vật đổi màu",
+        "Do vật nóng lên",
+        "Do ánh sáng chiếu vào vật",
+        "Do vật dao động làm các hạt của môi trường dao động và truyền đi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Âm KHÔNG truyền được trong môi trường nào?",
+       "luaChon": [
+        "Chất khí",
+        "Chất lỏng",
+        "Chân không",
+        "Chất rắn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong môi trường nào âm truyền đi nhanh nhất?",
+       "luaChon": [
+        "Chất lỏng",
+        "Chân không",
+        "Chất rắn",
+        "Chất khí"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao trong vũ trụ các nhà du hành phải liên lạc bằng bộ đàm?",
+       "luaChon": [
+        "Vì tiếng nói quá nhỏ",
+        "Vì ngoài không gian là chân không, âm không truyền được",
+        "Vì âm truyền quá nhanh",
+        "Vì tai họ bị bịt kín"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi gõ vào mặt trống, bộ phận nào của trống dao động phát ra âm?",
+       "luaChon": [
+        "Chân trống",
+        "Tang trống bằng gỗ",
+        "Mặt trống",
+        "Dùi trống"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sóng âm truyền trong không khí là sóng lan truyền theo dạng nào?",
+       "luaChon": [
+        "Sự nóng lên của không khí",
+        "Sự nén và dãn của các lớp không khí",
+        "Sự phát sáng của không khí",
+        "Sự đổi màu của không khí"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Áp tai xuống mặt bàn nghe rõ tiếng gõ nhẹ hơn so với nghe qua không khí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi dây đàn ngừng dao động thì âm cũng ngừng phát ra.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bộ phận nào của cơ thể người tiếp nhận sóng âm?",
+       "luaChon": [
+        "Mắt",
+        "Tai",
+        "Da tay",
+        "Mũi"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 13. Độ to và độ cao của âm",
+     "cau": [
+      {
+       "noiDung": "Độ cao của âm phụ thuộc vào đại lượng nào?",
+       "luaChon": [
+        "Biên độ dao động",
+        "Tần số dao động",
+        "Nhiệt độ môi trường",
+        "Khối lượng nguồn âm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đơn vị đo tần số là gì?",
+       "luaChon": [
+        "Newton",
+        "Jun",
+        "Đêxiben",
+        "Hertz"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Tần số dao động là gì?",
+       "luaChon": [
+        "Độ lệch lớn nhất của vật khỏi vị trí cân bằng",
+        "Số dao động vật thực hiện được trong một giây",
+        "Quãng đường vật đi được",
+        "Thời gian vật dao động"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật dao động càng nhanh (tần số càng lớn) thì âm phát ra thế nào?",
+       "luaChon": [
+        "Càng to",
+        "Càng cao (càng bổng)",
+        "Càng thấp (càng trầm)",
+        "Càng nhỏ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Độ to của âm phụ thuộc vào đại lượng nào?",
+       "luaChon": [
+        "Biên độ dao động",
+        "Màu sắc nguồn âm",
+        "Tần số dao động",
+        "Khối lượng không khí"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biên độ dao động càng lớn thì âm phát ra càng to.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đơn vị thường dùng để đo độ to của âm là gì?",
+       "luaChon": [
+        "Đêxiben",
+        "Hertz",
+        "Watt",
+        "Mét"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tai người bình thường nghe được âm có tần số trong khoảng nào?",
+       "luaChon": [
+        "Từ 20 Hz đến 20000 Hz",
+        "Từ 1 Hz đến 10 Hz",
+        "Từ 0 Hz đến 20 Hz",
+        "Trên 100000 Hz"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Âm có tần số lớn hơn 20000 Hz gọi là gì?",
+       "luaChon": [
+        "Âm trầm",
+        "Siêu âm",
+        "Tiếng vang",
+        "Hạ âm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tiếng ồn quá to và kéo dài có thể gây hại cho thính giác.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 14. Phản xạ âm, chống ô nhiễm tiếng ồn",
+     "cau": [
+      {
+       "noiDung": "Tiếng vang là gì?",
+       "luaChon": [
+        "Âm phản xạ nghe được tách biệt với âm phát ra trực tiếp",
+        "Âm có tần số rất cao",
+        "Âm truyền trong chân không",
+        "Âm phát ra từ nguồn âm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật nào sau đây phản xạ âm tốt?",
+       "luaChon": [
+        "Rèm nhung dày",
+        "Tấm bông",
+        "Mặt tường gạch nhẵn",
+        "Tấm xốp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật nào sau đây hấp thụ âm tốt (phản xạ âm kém)?",
+       "luaChon": [
+        "Mặt gương",
+        "Rèm nhung dày",
+        "Tấm kim loại nhẵn",
+        "Mặt đá hoa"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đặc điểm chung của các vật phản xạ âm tốt là gì?",
+       "luaChon": [
+        "Nhẹ và mỏng",
+        "Cứng, nhẵn và có bề mặt phẳng",
+        "Mềm, xốp và gồ ghề",
+        "Có màu sáng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ô nhiễm tiếng ồn xảy ra khi nào?",
+       "luaChon": [
+        "Khi tiếng ồn to và kéo dài, gây hại cho sức khỏe",
+        "Khi có tiếng nói chuyện nhỏ",
+        "Khi có tiếng nhạc êm dịu",
+        "Khi phòng quá yên tĩnh"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biện pháp nào giúp chống ô nhiễm tiếng ồn?",
+       "luaChon": [
+        "Mở loa thật to át tiếng ồn",
+        "Trồng cây xanh, treo rèm dày, dùng vật liệu cách âm",
+        "Mở toang cửa ra đường",
+        "Xây tường mỏng hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao trong phòng thu âm người ta thường dán các tấm mút xốp gồ ghề lên tường?",
+       "luaChon": [
+        "Để phòng đẹp hơn",
+        "Để hấp thụ âm, giảm phản xạ âm",
+        "Để tăng tiếng vang",
+        "Để cách nhiệt"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Siêu âm được ứng dụng trong lĩnh vực nào sau đây?",
+       "luaChon": [
+        "Đo nhiệt độ phòng",
+        "Đo khối lượng vật",
+        "Khám bệnh và dò tìm vật dưới nước",
+        "Chiếu sáng nhà cửa"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Loài dơi định vị con mồi trong đêm nhờ sử dụng sóng siêu âm.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đeo tai nghe với âm lượng lớn trong thời gian dài không ảnh hưởng đến thính giác.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương V. Ánh sáng",
+   "bai": [
+    {
+     "ten": "Bài 15. Năng lượng ánh sáng. Tia sáng, vùng tối",
+     "cau": [
+      {
+       "noiDung": "Ánh sáng mang dạng năng lượng nào?",
+       "luaChon": [
+        "Năng lượng âm",
+        "Năng lượng ánh sáng (quang năng)",
+        "Hóa năng",
+        "Thế năng đàn hồi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Pin quang điện biến đổi năng lượng ánh sáng thành dạng nào?",
+       "luaChon": [
+        "Cơ năng",
+        "Hóa năng",
+        "Điện năng",
+        "Năng lượng âm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trong môi trường trong suốt và đồng tính, ánh sáng truyền đi theo đường nào?",
+       "luaChon": [
+        "Đường tròn",
+        "Đường thẳng",
+        "Đường cong",
+        "Đường gấp khúc"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chùm sáng phát ra từ đèn pin càng đi xa càng loe rộng là chùm sáng gì?",
+       "luaChon": [
+        "Chùm sáng đơn sắc",
+        "Chùm sáng phân kì",
+        "Chùm sáng hội tụ",
+        "Chùm sáng song song"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bóng tối được tạo thành là do đâu?",
+       "luaChon": [
+        "Vật cản tự phát ra bóng",
+        "Ánh sáng bị hút vào vật cản",
+        "Không khí hấp thụ hết ánh sáng",
+        "Ánh sáng truyền thẳng bị vật cản chắn lại"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vùng nửa tối là vùng như thế nào?",
+       "luaChon": [
+        "Hoàn toàn không nhận được ánh sáng",
+        "Nhận được toàn bộ ánh sáng",
+        "Chỉ nhận được một phần ánh sáng từ nguồn sáng",
+        "Tự phát ra ánh sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vật sáng là vật như thế nào?",
+       "luaChon": [
+        "Vật luôn nóng",
+        "Chỉ là vật màu trắng",
+        "Vật tự phát ra ánh sáng hoặc hắt lại ánh sáng chiếu vào nó",
+        "Chỉ là vật tự phát sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mặt Trăng là một nguồn sáng vì ban đêm ta nhìn thấy nó sáng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật có màu đen hấp thụ hầu hết ánh sáng chiếu tới nó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao vào mùa hè nên mặc áo màu sáng?",
+       "luaChon": [
+        "Vì áo màu sáng dày hơn",
+        "Vì áo màu sáng hấp thụ nhiều nhiệt hơn",
+        "Vì áo màu sáng nặng hơn",
+        "Vì áo màu sáng phản xạ nhiều ánh sáng nên đỡ nóng"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 16. Sự phản xạ ánh sáng",
+     "cau": [
+      {
+       "noiDung": "Theo định luật phản xạ ánh sáng, góc phản xạ có quan hệ thế nào với góc tới?",
+       "luaChon": [
+        "Lớn hơn góc tới",
+        "Bằng góc tới",
+        "Nhỏ hơn góc tới",
+        "Bằng nửa góc tới"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Góc tới là góc hợp bởi tia tới và đường nào?",
+       "luaChon": [
+        "Tia phản xạ",
+        "Pháp tuyến tại điểm tới",
+        "Mặt phẳng gương",
+        "Mặt đất"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tia phản xạ nằm trong mặt phẳng nào?",
+       "luaChon": [
+        "Mặt phẳng chứa tia tới và pháp tuyến tại điểm tới",
+        "Mặt phẳng gương",
+        "Mặt phẳng nằm ngang",
+        "Mặt phẳng bất kì"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nếu góc tới bằng 30 độ thì góc phản xạ bằng bao nhiêu?",
+       "luaChon": [
+        "15 độ",
+        "60 độ",
+        "30 độ",
+        "90 độ"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nếu tia tới vuông góc với mặt gương thì tia phản xạ có đặc điểm gì?",
+       "luaChon": [
+        "Truyền song song mặt gương",
+        "Truyền ngược trở lại theo phương tia tới",
+        "Lệch một góc 45 độ",
+        "Bị hấp thụ hết"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Phản xạ khuếch tán xảy ra trên bề mặt như thế nào?",
+       "luaChon": [
+        "Bề mặt trong suốt",
+        "Bề mặt nhẵn bóng như gương",
+        "Bề mặt gồ ghề, không nhẵn bóng",
+        "Bề mặt phát sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao ta nhìn thấy được hầu hết các vật xung quanh?",
+       "luaChon": [
+        "Vì mọi vật đều tự phát sáng",
+        "Vì không khí phát sáng",
+        "Vì ánh sáng phản xạ khuếch tán từ vật truyền tới mắt ta",
+        "Vì mắt phát ra tia sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mặt nước phẳng lặng có thể phản xạ ánh sáng giống như một gương phẳng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong hiện tượng phản xạ ánh sáng, tia tới và tia phản xạ nằm ở hai phía của pháp tuyến.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ứng dụng nào sau đây dựa trên sự phản xạ ánh sáng?",
+       "luaChon": [
+        "Bóng đèn dây tóc",
+        "Kính lúp phóng to vật",
+        "Pin mặt trời",
+        "Gương chiếu hậu trên xe máy"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 17. Ảnh của vật qua gương phẳng",
+     "cau": [
+      {
+       "noiDung": "Ảnh của một vật tạo bởi gương phẳng có đặc điểm gì?",
+       "luaChon": [
+        "Ảnh thật, lớn bằng vật",
+        "Ảnh ảo, nhỏ hơn vật",
+        "Ảnh ảo, lớn bằng vật",
+        "Ảnh thật, nhỏ hơn vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ảnh ảo là ảnh như thế nào?",
+       "luaChon": [
+        "Không hứng được trên màn chắn",
+        "Luôn ngược chiều với vật",
+        "Hứng được trên màn chắn",
+        "Luôn nhỏ hơn vật"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khoảng cách từ ảnh đến gương phẳng so với khoảng cách từ vật đến gương thì thế nào?",
+       "luaChon": [
+        "Không xác định",
+        "Nhỏ bằng một nửa",
+        "Lớn gấp đôi",
+        "Bằng nhau"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Một người đứng cách gương phẳng 1,5 m thì ảnh của người đó cách gương bao nhiêu?",
+       "luaChon": [
+        "1,5 m",
+        "3 m",
+        "0 m",
+        "0,75 m"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Một người đứng cách gương 2 m thì khoảng cách từ người đó tới ảnh của mình là bao nhiêu?",
+       "luaChon": [
+        "2 m",
+        "1 m",
+        "8 m",
+        "4 m"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi ta tiến lại gần gương phẳng thì độ lớn của ảnh thay đổi thế nào?",
+       "luaChon": [
+        "Nhỏ dần đi",
+        "Biến mất",
+        "Không đổi, luôn bằng vật",
+        "Lớn dần lên"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ảnh qua gương phẳng của chữ viết bị đảo ngược trái phải so với vật.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể hứng được ảnh của vật qua gương phẳng trên một tờ giấy đặt sau gương.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ứng dụng nào sau đây sử dụng gương phẳng?",
+       "luaChon": [
+        "Kính lúp",
+        "Lăng kính tán sắc",
+        "Gương soi trong nhà",
+        "Thấu kính máy ảnh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ảnh của vật qua gương phẳng và vật đối xứng với nhau qua mặt gương.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VI. Từ",
+   "bai": [
+    {
+     "ten": "Bài 18. Nam châm",
+     "cau": [
+      {
+       "noiDung": "Nam châm hút được vật làm bằng vật liệu nào sau đây?",
+       "luaChon": [
+        "Nhựa",
+        "Nhôm",
+        "Sắt",
+        "Đồng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Mỗi nam châm có bao nhiêu cực?",
+       "luaChon": [
+        "Hai cực",
+        "Ba cực",
+        "Một cực",
+        "Bốn cực"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cực Bắc của nam châm thường được kí hiệu bằng chữ cái nào?",
+       "luaChon": [
+        "B",
+        "N",
+        "S",
+        "E"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Đưa hai cực cùng tên của hai nam châm lại gần nhau thì xảy ra hiện tượng gì?",
+       "luaChon": [
+        "Chúng đứng yên",
+        "Chúng dính chặt vào nhau",
+        "Chúng đẩy nhau",
+        "Chúng hút nhau"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đưa hai cực khác tên của hai nam châm lại gần nhau thì xảy ra hiện tượng gì?",
+       "luaChon": [
+        "Chúng đẩy nhau",
+        "Chúng hút nhau",
+        "Không có hiện tượng gì",
+        "Chúng bị nóng lên"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Kim nam châm để tự do khi đứng cân bằng luôn chỉ theo hướng nào?",
+       "luaChon": [
+        "Hướng thẳng đứng",
+        "Hướng bất kì",
+        "Hướng Đông – Tây",
+        "Hướng Bắc – Nam"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "La bàn được dùng để làm gì?",
+       "luaChon": [
+        "Đo thời gian",
+        "Xác định phương hướng",
+        "Đo khối lượng",
+        "Đo nhiệt độ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nam châm hút được cả nhôm và đồng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vật liệu nào sau đây bị nam châm hút?",
+       "luaChon": [
+        "Cao su",
+        "Thép",
+        "Gỗ",
+        "Thủy tinh"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nếu bẻ đôi một thanh nam châm thì mỗi nửa vẫn có đủ hai cực từ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 19. Từ trường",
+     "cau": [
+      {
+       "noiDung": "Xung quanh nam châm và xung quanh dòng điện tồn tại cái gì?",
+       "luaChon": [
+        "Điện trường tĩnh",
+        "Chân không",
+        "Trọng trường",
+        "Từ trường"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Làm thế nào để nhận biết được từ trường tại một vị trí?",
+       "luaChon": [
+        "Nhìn bằng mắt thường",
+        "Đưa kim nam châm tới đó, nếu kim bị lệch thì có từ trường",
+        "Dùng nhiệt kế đo",
+        "Dùng cân để cân"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Từ phổ là gì?",
+       "luaChon": [
+        "Một dụng cụ đo từ trường",
+        "Một loại nam châm mạnh",
+        "Hình ảnh các đường mạt sắt sắp xếp xung quanh nam châm",
+        "Một loại kim loại"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Đường sức từ bên ngoài nam châm có chiều như thế nào?",
+       "luaChon": [
+        "Đi ra từ cực Bắc và đi vào cực Nam",
+        "Không có chiều xác định",
+        "Luôn song song mặt đất",
+        "Đi ra từ cực Nam và đi vào cực Bắc"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nơi nào của nam châm có từ trường mạnh nhất?",
+       "luaChon": [
+        "Ở phía trên nam châm",
+        "Ở mọi nơi như nhau",
+        "Ở hai đầu cực từ",
+        "Ở chính giữa thanh nam châm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trái Đất cũng có từ trường bao quanh nó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kim la bàn chỉ hướng Bắc – Nam là do tác dụng của cái gì?",
+       "luaChon": [
+        "Từ trường Trái Đất",
+        "Trọng lực",
+        "Ánh sáng Mặt Trời",
+        "Sức gió"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dòng điện chạy trong dây dẫn cũng sinh ra từ trường xung quanh dây.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nơi nào các đường sức từ càng dày thì từ trường ở đó càng mạnh.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vật liệu nào sau đây bị nhiễm từ khi đặt trong từ trường?",
+       "luaChon": [
+        "Thủy tinh",
+        "Nhựa",
+        "Sắt non",
+        "Gỗ"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 20. Chế tạo nam châm điện đơn giản",
+     "cau": [
+      {
+       "noiDung": "Nam châm điện đơn giản gồm những bộ phận nào?",
+       "luaChon": [
+        "Một tấm gương và một bóng đèn",
+        "Ống dây dẫn có dòng điện chạy qua và lõi sắt non",
+        "Hai thanh nhựa cọ xát",
+        "Một thanh gỗ quấn dây"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nam châm điện mất từ tính khi ngắt dòng điện chạy qua nó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Muốn tăng lực từ của nam châm điện, ta có thể làm gì?",
+       "luaChon": [
+        "Tăng cường độ dòng điện hoặc tăng số vòng dây",
+        "Giảm số vòng dây",
+        "Rút lõi sắt ra",
+        "Ngắt bớt nguồn điện"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao lõi của nam châm điện thường làm bằng sắt non mà không dùng thép?",
+       "luaChon": [
+        "Vì sắt non rẻ hơn",
+        "Vì sắt non mất từ tính ngay khi ngắt dòng điện",
+        "Vì sắt non dẫn điện tốt hơn",
+        "Vì sắt non nhẹ hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ưu điểm của nam châm điện so với nam châm vĩnh cửu là gì?",
+       "luaChon": [
+        "Không bao giờ hỏng",
+        "Có thể bật, tắt và thay đổi được lực từ",
+        "Luôn có từ tính",
+        "Không cần nguồn điện"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ứng dụng nào sau đây dựa trên nam châm điện?",
+       "luaChon": [
+        "Ấm đun nước",
+        "Bàn là điện",
+        "Bóng đèn sợi đốt",
+        "Cần cẩu điện nâng sắt thép phế liệu"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chuông điện hoạt động dựa trên tác dụng nào của dòng điện?",
+       "luaChon": [
+        "Tác dụng phát sáng",
+        "Tác dụng hóa học",
+        "Tác dụng từ",
+        "Tác dụng nhiệt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi đảo chiều dòng điện qua ống dây thì hai cực từ của nam châm điện cũng đổi chỗ cho nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi làm thí nghiệm với nam châm điện, cần lưu ý điều gì?",
+       "luaChon": [
+        "Dùng nguồn điện càng mạnh càng tốt",
+        "Chạm tay vào dây khi đang nóng",
+        "Không để dòng điện chạy quá lâu làm nóng dây dẫn",
+        "Nối trực tiếp hai cực nguồn điện"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Rơ le điện từ trong các thiết bị điện hoạt động nhờ nam châm điện.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VII. Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+   "bai": [
+    {
+     "ten": "Bài 21. Khái quát về trao đổi chất và chuyển hóa năng lượng",
+     "cau": [
+      {
+       "noiDung": "Trao đổi chất ở sinh vật là gì?",
+       "luaChon": [
+        "Chỉ là quá trình thải chất cặn bã",
+        "Chỉ là quá trình lấy thức ăn",
+        "Sự tăng kích thước cơ thể",
+        "Tập hợp các biến đổi hóa học trong tế bào và sự trao đổi chất với môi trường"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chuyển hóa năng lượng là gì?",
+       "luaChon": [
+        "Sự mất đi của năng lượng",
+        "Sự biến đổi năng lượng từ dạng này sang dạng khác",
+        "Sự sinh ra năng lượng mới",
+        "Sự tăng khối lượng cơ thể"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sinh vật nào sau đây là sinh vật tự dưỡng?",
+       "luaChon": [
+        "Con người",
+        "Con bò",
+        "Nấm rơm",
+        "Cây xanh"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sinh vật dị dưỡng lấy chất hữu cơ bằng cách nào?",
+       "luaChon": [
+        "Lấy từ sinh vật khác qua thức ăn",
+        "Tự tổng hợp từ nước và khí carbon dioxide",
+        "Không cần chất hữu cơ",
+        "Hấp thụ trực tiếp ánh sáng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vai trò của trao đổi chất và chuyển hóa năng lượng đối với cơ thể là gì?",
+       "luaChon": [
+        "Chỉ để tăng cân",
+        "Chỉ để tạo màu sắc",
+        "Cung cấp nguyên liệu và năng lượng cho các hoạt động sống",
+        "Chỉ để làm mát cơ thể"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Trao đổi chất và chuyển hóa năng lượng luôn diễn ra đồng thời trong cơ thể sống.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ thể lấy vào những gì trong quá trình trao đổi chất với môi trường?",
+       "luaChon": [
+        "Chỉ có nhiệt",
+        "Thức ăn, nước và khí oxygen",
+        "Chỉ có âm thanh",
+        "Chỉ có ánh sáng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Sản phẩm thải của quá trình trao đổi chất ở người gồm những gì?",
+       "luaChon": [
+        "Chỉ có mồ hôi",
+        "Chỉ có khí oxygen",
+        "Khí carbon dioxide, nước tiểu, mồ hôi",
+        "Chỉ có nước bọt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nếu quá trình trao đổi chất ngừng lại thì cơ thể vẫn sống bình thường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Năng lượng trong cơ thể sinh vật cuối cùng thường được giải phóng ra môi trường dưới dạng nào?",
+       "luaChon": [
+        "Quang năng",
+        "Hóa năng",
+        "Điện năng",
+        "Nhiệt năng"
+       ],
+       "dapAn": 3
+      }
+     ]
+    },
+    {
+     "ten": "Bài 22. Quang hợp ở thực vật",
+     "cau": [
+      {
+       "noiDung": "Nguyên liệu của quá trình quang hợp là gì?",
+       "luaChon": [
+        "Nước và carbon dioxide",
+        "Glucose và oxygen",
+        "Nước và oxygen",
+        "Glucose và carbon dioxide"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sản phẩm của quá trình quang hợp là gì?",
+       "luaChon": [
+        "Glucose và oxygen",
+        "Chỉ có oxygen",
+        "Chỉ có nước",
+        "Nước và carbon dioxide"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bào quan nào thực hiện chức năng quang hợp?",
+       "luaChon": [
+        "Không bào",
+        "Lục lạp",
+        "Nhân tế bào",
+        "Ti thể"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cơ quan nào của cây thực hiện quang hợp là chủ yếu?",
+       "luaChon": [
+        "Lá",
+        "Thân",
+        "Hoa",
+        "Rễ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sắc tố nào trong lục lạp hấp thụ năng lượng ánh sáng?",
+       "luaChon": [
+        "Diệp lục",
+        "Melanin",
+        "Hemoglobin",
+        "Insulin"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Quang hợp chuyển hóa năng lượng ánh sáng thành dạng năng lượng nào?",
+       "luaChon": [
+        "Năng lượng âm",
+        "Nhiệt năng",
+        "Điện năng",
+        "Hóa năng tích lũy trong chất hữu cơ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khí khổng ở lá có vai trò gì trong quang hợp?",
+       "luaChon": [
+        "Bảo vệ lá khỏi sâu bệnh",
+        "Vận chuyển chất hữu cơ",
+        "Trao đổi khí carbon dioxide và oxygen với môi trường",
+        "Hút nước từ đất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ở đa số cây, khí khổng tập trung chủ yếu ở mặt dưới của lá.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Đặc điểm nào của lá giúp lá thu nhận được nhiều ánh sáng?",
+       "luaChon": [
+        "Lá có màu trắng",
+        "Phiến lá rộng, mỏng và xếp so le nhau",
+        "Phiến lá dày và tròn",
+        "Lá mọc chụm một chỗ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Quang hợp của cây xanh góp phần cung cấp oxygen và làm giảm khí carbon dioxide trong khí quyển.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 23. Một số yếu tố ảnh hưởng đến quang hợp",
+     "cau": [
+      {
+       "noiDung": "Yếu tố nào sau đây ảnh hưởng đến quang hợp của cây?",
+       "luaChon": [
+        "Chỉ có chiều cao của cây",
+        "Chỉ có tuổi của cây",
+        "Ánh sáng, nước, nồng độ carbon dioxide và nhiệt độ",
+        "Chỉ có màu sắc của hoa"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi cường độ ánh sáng tăng dần trong giới hạn cho phép thì quang hợp thế nào?",
+       "luaChon": [
+        "Giảm dần",
+        "Không đổi",
+        "Tăng dần",
+        "Ngừng hẳn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cây thiếu nước kéo dài thì quang hợp sẽ thế nào?",
+       "luaChon": [
+        "Tăng mạnh",
+        "Không bị ảnh hưởng",
+        "Giảm mạnh vì khí khổng đóng lại",
+        "Chỉ diễn ra vào ban đêm"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nhóm cây nào sau đây là cây ưa bóng?",
+       "luaChon": [
+        "Cây lá lốt, cây trầu không",
+        "Cây lúa, cây ngô",
+        "Cây phi lao",
+        "Cây xương rồng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhiệt độ quá cao hoặc quá thấp ảnh hưởng thế nào đến quang hợp?",
+       "luaChon": [
+        "Không ảnh hưởng gì",
+        "Làm giảm hoặc ngừng quang hợp",
+        "Luôn làm tăng quang hợp",
+        "Làm cây quang hợp cả ban đêm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao trong trồng trọt cần trồng cây với mật độ hợp lí?",
+       "luaChon": [
+        "Để đất cứng hơn",
+        "Để tiết kiệm hạt giống",
+        "Để giảm số lần tưới nước",
+        "Để cây nhận đủ ánh sáng và quang hợp tốt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong nhà kính, người ta có thể tăng nồng độ khí carbon dioxide để tăng năng suất cây trồng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao không nên tưới cây vào giữa trưa nắng gắt?",
+       "luaChon": [
+        "Vì nước lúc đó bị nhiễm bẩn",
+        "Vì cây không cần nước ban ngày",
+        "Vì lá cây bị đóng băng",
+        "Vì nước bốc hơi nhanh và dễ làm cây bị sốc nhiệt"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trồng xen cây ưa bóng dưới tán cây ưa sáng là biện pháp tận dụng ánh sáng hợp lí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây trồng được chiếu sáng càng mạnh thì quang hợp luôn càng tăng, không có giới hạn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 24. Thực hành: Chứng minh quang hợp ở cây xanh",
+     "cau": [
+      {
+       "noiDung": "Thí nghiệm chứng minh lá cây tạo tinh bột khi quang hợp dùng hóa chất nào để nhận biết?",
+       "luaChon": [
+        "Giấm ăn",
+        "Nước muối",
+        "Nước vôi trong",
+        "Dung dịch iodine"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Tinh bột khi gặp dung dịch iodine sẽ có màu gì?",
+       "luaChon": [
+        "Màu xanh tím",
+        "Màu đỏ",
+        "Màu vàng",
+        "Không đổi màu"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao phải đặt cây vào chỗ tối khoảng hai ngày trước khi làm thí nghiệm?",
+       "luaChon": [
+        "Để lá dùng hết tinh bột đã tích lũy trước đó",
+        "Để cây ra hoa",
+        "Để lá dày lên",
+        "Để lá xanh hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao phải đun lá trong cồn trước khi nhỏ iodine?",
+       "luaChon": [
+        "Để lá mềm ra",
+        "Để lá không bị rách",
+        "Để tạo thêm tinh bột",
+        "Để tẩy hết diệp lục, dễ quan sát màu của tinh bột"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong thí nghiệm bịt kín một phần lá bằng giấy đen, phần bị bịt sau khi nhỏ iodine sẽ thế nào?",
+       "luaChon": [
+        "Chuyển màu đỏ",
+        "Chuyển màu xanh tím đậm nhất",
+        "Bị cháy đen",
+        "Không chuyển màu xanh tím vì không quang hợp được"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thí nghiệm chứng minh quang hợp thải khí oxygen thường dùng cây thủy sinh nào?",
+       "luaChon": [
+        "Cây xương rồng",
+        "Cây thông",
+        "Rong đuôi chó",
+        "Cây phi lao"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khí thu được trong thí nghiệm với rong đuôi chó làm que đóm còn tàn đỏ bùng cháy, chứng tỏ đó là khí gì?",
+       "luaChon": [
+        "Carbon dioxide",
+        "Hydrogen",
+        "Nitrogen",
+        "Oxygen"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi đun cách thủy cồn, tuyệt đối không được đun trực tiếp trên ngọn lửa vì cồn dễ cháy.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cần đeo găng tay và cẩn thận khi làm việc với nước nóng và cồn trong bài thực hành.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kết quả thí nghiệm cần được ghi lại và giải thích dựa trên hiện tượng quan sát được.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 25. Hô hấp tế bào",
+     "cau": [
+      {
+       "noiDung": "Hô hấp tế bào là quá trình gì?",
+       "luaChon": [
+        "Tổng hợp chất hữu cơ từ nước và khí",
+        "Vận chuyển nước trong cây",
+        "Hấp thụ ánh sáng",
+        "Phân giải chất hữu cơ, giải phóng năng lượng cho tế bào"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Hô hấp tế bào diễn ra chủ yếu ở bào quan nào?",
+       "luaChon": [
+        "Không bào",
+        "Lục lạp",
+        "Ti thể",
+        "Ribosome"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nguyên liệu chính của hô hấp tế bào là gì?",
+       "luaChon": [
+        "Nước và carbon dioxide",
+        "Chỉ có ánh sáng",
+        "Glucose và oxygen",
+        "Chỉ có nước"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sản phẩm của hô hấp tế bào là gì?",
+       "luaChon": [
+        "Glucose và oxygen",
+        "Carbon dioxide, nước và năng lượng",
+        "Chỉ có oxygen",
+        "Chỉ có tinh bột"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Quang hợp và hô hấp tế bào có mối quan hệ như thế nào?",
+       "luaChon": [
+        "Không liên quan gì",
+        "Hoàn toàn giống nhau",
+        "Trái ngược nhau nhưng liên quan chặt chẽ với nhau",
+        "Chỉ xảy ra ở động vật"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cây xanh chỉ hô hấp vào ban đêm, ban ngày không hô hấp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Hô hấp tế bào xảy ra ở mọi tế bào sống của cơ thể.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Năng lượng giải phóng từ hô hấp tế bào được tích lũy chủ yếu trong hợp chất nào?",
+       "luaChon": [
+        "ATP",
+        "Cellulose",
+        "Tinh bột",
+        "Diệp lục"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nếu thiếu oxygen kéo dài thì hô hấp tế bào ở người sẽ thế nào?",
+       "luaChon": [
+        "Bị ảnh hưởng nghiêm trọng, tế bào thiếu năng lượng",
+        "Không bị ảnh hưởng",
+        "Chuyển thành quang hợp",
+        "Diễn ra mạnh hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở thực vật, cơ quan nào cũng cần hô hấp tế bào để lấy năng lượng?",
+       "luaChon": [
+        "Chỉ có hoa",
+        "Chỉ có lá",
+        "Tất cả các cơ quan như rễ, thân, lá, hoa",
+        "Chỉ có rễ"
+       ],
+       "dapAn": 2
+      }
+     ]
+    },
+    {
+     "ten": "Bài 26. Một số yếu tố ảnh hưởng đến hô hấp tế bào",
+     "cau": [
+      {
+       "noiDung": "Yếu tố nào sau đây ảnh hưởng đến hô hấp tế bào?",
+       "luaChon": [
+        "Chỉ có chiều cao cây",
+        "Chỉ có màu sắc của lá",
+        "Chỉ có tuổi của cây",
+        "Nhiệt độ, nồng độ oxygen, nước và nồng độ carbon dioxide"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao bảo quản rau quả trong tủ lạnh giúp giữ được lâu hơn?",
+       "luaChon": [
+        "Vì tủ lạnh diệt hết vi khuẩn",
+        "Vì rau quả hút thêm nước",
+        "Vì rau quả ngừng sống hẳn",
+        "Vì nhiệt độ thấp làm giảm cường độ hô hấp tế bào"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Bảo quản hạt giống trong điều kiện nào là tốt nhất?",
+       "luaChon": [
+        "Đậy kín khi còn ẩm",
+        "Khô ráo, thoáng mát",
+        "Ngâm trong nước",
+        "Ẩm ướt và nóng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao phải làm đất tơi xốp trước khi gieo trồng?",
+       "luaChon": [
+        "Để rễ cây có đủ oxygen cho hô hấp",
+        "Để hạn chế rễ phát triển",
+        "Để đất nặng hơn",
+        "Để giữ nước nhiều nhất có thể"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao cây trồng bị ngập úng lâu ngày dễ chết?",
+       "luaChon": [
+        "Vì cây thừa ánh sáng",
+        "Vì cây thiếu nước",
+        "Vì rễ thiếu oxygen nên hô hấp bị cản trở",
+        "Vì cây quang hợp quá mạnh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Bảo quản nông sản trong môi trường giàu khí carbon dioxide có tác dụng gì?",
+       "luaChon": [
+        "Làm nông sản chín nhanh hơn",
+        "Ức chế hô hấp tế bào, giữ nông sản lâu hỏng",
+        "Làm mất nước nhanh",
+        "Làm tăng hô hấp"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhiệt độ quá cao có thể làm hỏng enzyme và ngừng hô hấp tế bào.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hạt giống được phơi khô rồi cất giữ vì độ ẩm thấp làm giảm hô hấp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kho bảo quản nông sản cần được thông thoáng để tránh tích tụ nhiệt và khí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ngâm hạt trong nước quá lâu trước khi gieo có thể làm hạt bị thối do thiếu oxygen.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 27. Thực hành: Hô hấp ở thực vật",
+     "cau": [
+      {
+       "noiDung": "Thí nghiệm chứng minh hô hấp ở hạt nảy mầm thải khí carbon dioxide dùng hóa chất nào?",
+       "luaChon": [
+        "Nước vôi trong",
+        "Nước muối",
+        "Dung dịch iodine",
+        "Cồn 90 độ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hiện tượng nào cho biết khí thoát ra là carbon dioxide?",
+       "luaChon": [
+        "Nước vôi trong đông đặc",
+        "Nước vôi trong bị vẩn đục",
+        "Nước vôi trong chuyển màu xanh",
+        "Nước vôi trong sôi lên"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao trong thí nghiệm phải dùng bình kín chứa hạt đang nảy mầm?",
+       "luaChon": [
+        "Để hạt không bị lạnh",
+        "Để khí do hạt thải ra không thoát ra ngoài",
+        "Để hạt mọc nhanh hơn",
+        "Để lấy ánh sáng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thí nghiệm chứng minh hô hấp tỏa nhiệt được nhận biết bằng dụng cụ nào?",
+       "luaChon": [
+        "Thước dây",
+        "Nhiệt kế",
+        "Ampe kế",
+        "Lực kế"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong bình chứa hạt nảy mầm, nhiệt độ thường thay đổi thế nào so với bình chứa hạt đã luộc chín?",
+       "luaChon": [
+        "Thấp hơn",
+        "Không đo được",
+        "Cao hơn vì hạt sống hô hấp tỏa nhiệt",
+        "Bằng nhau"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao thí nghiệm cần có bình đối chứng chứa hạt đã luộc chín?",
+       "luaChon": [
+        "Để hạt chín đẹp hơn",
+        "Để tăng nhiệt độ phòng",
+        "Để cho đủ dụng cụ",
+        "Để so sánh, khẳng định hiện tượng do hô hấp của hạt sống gây ra"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Muốn hạt nảy mầm tốt trước khi làm thí nghiệm, cần điều kiện gì?",
+       "luaChon": [
+        "Đủ nước, đủ không khí và nhiệt độ thích hợp",
+        "Để trong ngăn đá",
+        "Phơi khô dưới nắng gắt",
+        "Ngâm ngập trong nước liên tục"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Thí nghiệm chứng minh hạt nảy mầm hút khí oxygen dùng dấu hiệu nào?",
+       "luaChon": [
+        "Que đóm đang cháy đưa vào bình bị tắt",
+        "Bình bị vỡ",
+        "Bình nóng lên",
+        "Que đóm cháy sáng bùng lên"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kết quả thí nghiệm phải được ghi chép trung thực, không sửa cho khớp dự đoán.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sau khi thực hành, cần thu dọn dụng cụ và xử lí mẫu vật theo hướng dẫn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 28. Trao đổi khí ở sinh vật",
+     "cau": [
+      {
+       "noiDung": "Trao đổi khí ở sinh vật diễn ra theo cơ chế nào?",
+       "luaChon": [
+        "Ngưng tụ",
+        "Khuếch tán",
+        "Vận chuyển chủ động cần nhiều năng lượng",
+        "Bay hơi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ở thực vật, trao đổi khí diễn ra chủ yếu qua bộ phận nào?",
+       "luaChon": [
+        "Khí khổng ở lá",
+        "Lông hút ở rễ",
+        "Vỏ thân cây",
+        "Mạch gỗ"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi cây quang hợp, khí nào được lấy vào và khí nào được thải ra?",
+       "luaChon": [
+        "Lấy carbon dioxide, thải oxygen",
+        "Lấy hơi nước, thải nitrogen",
+        "Lấy oxygen, thải carbon dioxide",
+        "Lấy nitrogen, thải oxygen"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi cây hô hấp, khí nào được lấy vào và khí nào được thải ra?",
+       "luaChon": [
+        "Lấy carbon dioxide, thải oxygen",
+        "Lấy nitrogen, thải hơi nước",
+        "Lấy oxygen, thải carbon dioxide",
+        "Không trao đổi khí"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cơ quan trao đổi khí chủ yếu ở người là gì?",
+       "luaChon": [
+        "Thận",
+        "Da",
+        "Dạ dày",
+        "Phổi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đơn vị trực tiếp thực hiện trao đổi khí trong phổi người là gì?",
+       "luaChon": [
+        "Thanh quản",
+        "Phế nang",
+        "Khí quản",
+        "Cơ hoành"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cá trao đổi khí bằng cơ quan nào?",
+       "luaChon": [
+        "Ruột",
+        "Mang",
+        "Phổi",
+        "Da"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Côn trùng như châu chấu trao đổi khí bằng hệ cơ quan nào?",
+       "luaChon": [
+        "Mang",
+        "Hệ thống ống khí",
+        "Da trần",
+        "Phổi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi hít vào, không khí đi vào phổi chứa nhiều oxygen hơn khí thở ra.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hút thuốc lá làm tổn thương phổi và giảm hiệu quả trao đổi khí.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 29. Vai trò của nước và chất dinh dưỡng đối với sinh vật",
+     "cau": [
+      {
+       "noiDung": "Vai trò nào sau đây là của nước đối với cơ thể sinh vật?",
+       "luaChon": [
+        "Là dung môi hòa tan, vận chuyển chất và điều hòa thân nhiệt",
+        "Tạo nên bộ xương",
+        "Chỉ để làm mát bên ngoài da",
+        "Cung cấp năng lượng chính"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nước chiếm khoảng bao nhiêu phần trăm khối lượng cơ thể người trưởng thành?",
+       "luaChon": [
+        "Khoảng 20 phần trăm",
+        "Khoảng 70 phần trăm",
+        "Khoảng 5 phần trăm",
+        "Khoảng 95 phần trăm"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mỗi ngày, một học sinh nên uống khoảng bao nhiêu nước?",
+       "luaChon": [
+        "Khoảng 0,5 lít",
+        "Khoảng 0,2 lít",
+        "Khoảng 1,5 đến 2 lít",
+        "Khoảng 6 lít"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nhóm chất nào cung cấp năng lượng chính cho cơ thể người?",
+       "luaChon": [
+        "Chất khoáng",
+        "Vitamin",
+        "Carbohydrate (chất bột đường)",
+        "Nước"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Chất dinh dưỡng nào là nguyên liệu chính xây dựng tế bào và cơ thể?",
+       "luaChon": [
+        "Protein (chất đạm)",
+        "Chất xơ",
+        "Nước",
+        "Vitamin C"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nguyên tố khoáng nào cây cần nhiều nhất để phát triển thân lá?",
+       "luaChon": [
+        "Nitrogen",
+        "Chlorine",
+        "Sắt",
+        "Iodine"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây thiếu nước kéo dài sẽ có biểu hiện gì?",
+       "luaChon": [
+        "Lá xanh đậm hơn",
+        "Héo lá, giảm sinh trưởng",
+        "Thân to nhanh hơn",
+        "Ra hoa nhiều hơn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Cây trồng được tưới càng nhiều nước thì càng phát triển tốt.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Chế độ ăn cân đối cần đầy đủ chất bột đường, đạm, béo, vitamin và chất khoáng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao cần bón phân hợp lí cho cây trồng?",
+       "luaChon": [
+        "Để cung cấp đủ chất dinh dưỡng mà không gây lãng phí và ô nhiễm",
+        "Để đất cứng hơn",
+        "Để cây ngừng phát triển",
+        "Để giảm năng suất"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 30. Trao đổi nước và chất dinh dưỡng ở thực vật",
+     "cau": [
+      {
+       "noiDung": "Nước được cây hút vào chủ yếu qua bộ phận nào?",
+       "luaChon": [
+        "Cánh hoa",
+        "Lông hút của rễ",
+        "Vỏ thân",
+        "Khí khổng ở lá"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Mạch gỗ trong thân cây vận chuyển chất gì?",
+       "luaChon": [
+        "Nước và muối khoáng từ rễ lên lá",
+        "Chỉ vận chuyển đường",
+        "Khí oxygen",
+        "Chất hữu cơ từ lá đi nuôi cây"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mạch rây trong thân cây vận chuyển chất gì?",
+       "luaChon": [
+        "Khí carbon dioxide",
+        "Chất hữu cơ từ lá đi nuôi các bộ phận của cây",
+        "Muối khoáng từ đất lên lá",
+        "Nước từ rễ lên lá"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Quá trình thoát hơi nước ở cây diễn ra chủ yếu qua bộ phận nào?",
+       "luaChon": [
+        "Vỏ thân cây",
+        "Khí khổng ở lá",
+        "Quả",
+        "Lông hút của rễ"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thoát hơi nước ở lá tạo lực hút kéo nước từ rễ lên lá.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vai trò nào sau đây là của thoát hơi nước?",
+       "luaChon": [
+        "Làm rễ ngừng hút nước",
+        "Ngăn cây quang hợp",
+        "Làm mát cây và tạo động lực hút nước",
+        "Làm cây héo nhanh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Yếu tố nào ảnh hưởng đến sự hút nước của rễ cây?",
+       "luaChon": [
+        "Chiều cao của cây",
+        "Màu sắc của lá",
+        "Tuổi của hạt giống",
+        "Độ ẩm đất, nhiệt độ và độ thoáng khí của đất"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao khi trồng cây cần tưới nước vừa đủ, không để úng?",
+       "luaChon": [
+        "Vì úng nước làm rễ thiếu oxygen và dễ thối",
+        "Vì nước làm cây ra hoa sớm",
+        "Vì nước làm lá bạc màu",
+        "Vì nước làm thân cây cứng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cắt bỏ bớt lá khi bứng cây đi trồng nơi khác nhằm mục đích gì?",
+       "luaChon": [
+        "Giảm thoát hơi nước giúp cây dễ sống",
+        "Giúp cây quang hợp mạnh hơn",
+        "Giúp cây ra quả sớm",
+        "Làm cây nhẹ hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nên tưới nước cho cây vào buổi sáng sớm hoặc chiều mát.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 31. Trao đổi nước và chất dinh dưỡng ở động vật",
+     "cau": [
+      {
+       "noiDung": "Ở người, chất dinh dưỡng được hấp thụ chủ yếu ở cơ quan nào?",
+       "luaChon": [
+        "Ruột già",
+        "Dạ dày",
+        "Thực quản",
+        "Ruột non"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ở người, phần lớn nước được hấp thụ ở cơ quan nào?",
+       "luaChon": [
+        "Phổi",
+        "Khí quản",
+        "Ruột non và ruột già",
+        "Thực quản"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Chất dinh dưỡng sau khi hấp thụ được vận chuyển đi khắp cơ thể nhờ hệ nào?",
+       "luaChon": [
+        "Hệ bài tiết",
+        "Hệ vận động",
+        "Hệ tuần hoàn",
+        "Hệ hô hấp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nước được thải ra khỏi cơ thể người qua những con đường nào?",
+       "luaChon": [
+        "Nước tiểu, mồ hôi và hơi thở",
+        "Chỉ qua mồ hôi",
+        "Chỉ qua nước tiểu",
+        "Chỉ qua hơi thở"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ quan nào lọc máu để tạo thành nước tiểu?",
+       "luaChon": [
+        "Gan",
+        "Phổi",
+        "Tim",
+        "Thận"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Khi cơ thể mất nhiều nước do vận động mạnh, ta nên làm gì?",
+       "luaChon": [
+        "Uống thật nhiều một lúc rồi thôi",
+        "Chỉ ăn đồ khô",
+        "Uống nước từ từ, chia nhiều lần",
+        "Nhịn uống cho đỡ mệt"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao khi bị tiêu chảy cần bù nước và chất điện giải?",
+       "luaChon": [
+        "Vì cơ thể thừa nước",
+        "Vì cần giảm thân nhiệt",
+        "Vì cơ thể mất nhiều nước và muối khoáng",
+        "Vì cần tăng cân nhanh"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Uống đủ nước giúp cơ thể điều hòa thân nhiệt và vận chuyển chất tốt hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nhu cầu nước của cơ thể tăng lên khi trời nóng hoặc khi vận động nhiều.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể thay hoàn toàn nước lọc bằng nước ngọt có ga trong sinh hoạt hằng ngày.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 32. Thực hành: Chứng minh thân vận chuyển nước và lá thoát hơi nước",
+     "cau": [
+      {
+       "noiDung": "Để chứng minh thân vận chuyển nước, người ta thường cắm cành hoa vào cốc nước có pha gì?",
+       "luaChon": [
+        "Dầu ăn",
+        "Cát mịn",
+        "Muối hạt",
+        "Mực màu hoặc phẩm màu"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Sau một thời gian cắm cành hoa trắng vào nước màu, hiện tượng quan sát được là gì?",
+       "luaChon": [
+        "Cánh hoa rụng hết",
+        "Cánh hoa và gân lá nhuốm màu của nước",
+        "Cành hoa nặng thêm gấp đôi",
+        "Nước trong cốc đổi màu trắng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Khi cắt ngang thân cành hoa đã cắm nước màu, phần bắt màu rõ nhất là bộ phận nào?",
+       "luaChon": [
+        "Vỏ ngoài",
+        "Mạch gỗ",
+        "Mạch rây",
+        "Lõi rỗng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thí nghiệm chứng minh lá thoát hơi nước thường dùng cách nào?",
+       "luaChon": [
+        "Ngâm lá trong nước muối",
+        "Phơi lá dưới nắng cho khô",
+        "Đốt lá trên lửa",
+        "Trùm túi nylon trong suốt lên cành lá và quan sát hơi nước đọng lại"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong thí nghiệm trùm túi nylon, vì sao cần có cành đã ngắt hết lá để đối chứng?",
+       "luaChon": [
+        "Để cành nặng hơn",
+        "Để khẳng định hơi nước thoát ra là từ lá",
+        "Để túi khỏi bị rách",
+        "Để cây ra hoa"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao nên đặt thí nghiệm thoát hơi nước ở nơi có nắng nhẹ?",
+       "luaChon": [
+        "Vì nắng giữ nước lại trong lá",
+        "Vì nắng làm túi trong hơn",
+        "Vì nhiệt độ và ánh sáng làm tăng thoát hơi nước, dễ quan sát",
+        "Vì nắng làm lá xanh hơn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Khi dùng dao cắt cành hoa cần lưu ý điều gì?",
+       "luaChon": [
+        "Cẩn thận tránh đứt tay và cắt theo hướng dẫn",
+        "Dùng dao cùn cho an toàn tuyệt đối",
+        "Cắt càng nhanh càng tốt",
+        "Cắt khi tay ướt"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nên cắt vát gốc cành hoa dưới nước để tránh bọt khí làm tắc mạch dẫn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Kết quả thí nghiệm cần được vẽ hoặc chụp lại kèm nhận xét.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nếu để cành hoa ở nơi tối và mát thì hiện tượng thoát hơi nước diễn ra mạnh hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương VIII. Cảm ứng ở sinh vật",
+   "bai": [
+    {
+     "ten": "Bài 33. Cảm ứng ở sinh vật và tập tính ở động vật",
+     "cau": [
+      {
+       "noiDung": "Cảm ứng ở sinh vật là gì?",
+       "luaChon": [
+        "Quá trình trao đổi khí",
+        "Sự lớn lên của cơ thể",
+        "Phản ứng của sinh vật đối với kích thích từ môi trường",
+        "Quá trình sinh sản"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ngọn cây luôn vươn về phía có ánh sáng. Đó là hiện tượng gì?",
+       "luaChon": [
+        "Tính hướng tiếp xúc",
+        "Tính hướng sáng",
+        "Tính hướng trọng lực",
+        "Tính hướng nước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Rễ cây mọc dài về phía có nguồn nước là biểu hiện của tính gì?",
+       "luaChon": [
+        "Tính hướng hóa ngược",
+        "Tính hướng tiếp xúc",
+        "Tính hướng nước",
+        "Tính hướng sáng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Rễ cây luôn mọc hướng xuống đất là biểu hiện của tính gì?",
+       "luaChon": [
+        "Tính hướng trọng lực",
+        "Tính hướng nước",
+        "Tính hướng tiếp xúc",
+        "Tính hướng sáng"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tua cuốn của cây mướp quấn vào giàn là biểu hiện của tính gì?",
+       "luaChon": [
+        "Tính hướng sáng",
+        "Tính hướng trọng lực",
+        "Tính hướng nước",
+        "Tính hướng tiếp xúc"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ở động vật, cảm ứng được thực hiện chủ yếu nhờ hệ cơ quan nào?",
+       "luaChon": [
+        "Hệ thần kinh",
+        "Hệ bài tiết",
+        "Hệ hô hấp",
+        "Hệ tiêu hóa"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tập tính ở động vật là gì?",
+       "luaChon": [
+        "Sự tăng kích thước cơ thể",
+        "Chuỗi phản ứng trả lời kích thích, giúp động vật thích nghi với môi trường",
+        "Sự thay đổi màu lông theo tuổi",
+        "Quá trình tiêu hóa thức ăn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tập tính nào sau đây là tập tính bẩm sinh?",
+       "luaChon": [
+        "Vẹt nói tiếng người",
+        "Nhện giăng lưới",
+        "Trâu kéo cày theo hiệu lệnh",
+        "Chó làm xiếc"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Tập tính nào sau đây là tập tính học được?",
+       "luaChon": [
+        "Chim én di cư theo mùa",
+        "Nhện giăng tơ",
+        "Chó nghe hiệu lệnh của chủ",
+        "Ve sầu kêu vào mùa hè"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cảm ứng giúp sinh vật thích nghi với sự thay đổi của môi trường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 34. Vận dụng hiện tượng cảm ứng vào thực tiễn",
+     "cau": [
+      {
+       "noiDung": "Việc làm giàn cho cây bầu, cây mướp leo là ứng dụng hiện tượng cảm ứng nào?",
+       "luaChon": [
+        "Tính hướng sáng",
+        "Tính hướng tiếp xúc",
+        "Tính hướng nước",
+        "Tính hướng trọng lực"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vì sao trong vườn ươm người ta thường che bớt nắng cho cây con?",
+       "luaChon": [
+        "Vì che nắng làm cây ra hoa",
+        "Vì che nắng làm cây cao nhanh",
+        "Vì cây con không cần ánh sáng",
+        "Vì cây con ưa bóng, ánh sáng mạnh dễ làm cây bị tổn thương"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trồng cây gần nguồn nước hoặc tưới nước hợp lí là vận dụng tính chất nào của rễ?",
+       "luaChon": [
+        "Tính hướng nước",
+        "Tính hướng sáng",
+        "Tính hướng gió",
+        "Tính hướng tiếp xúc"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dùng đèn chiếu sáng ban đêm cho cây thanh long ra hoa trái vụ là ứng dụng gì?",
+       "luaChon": [
+        "Ứng dụng cảm ứng của cây với ánh sáng",
+        "Ứng dụng cảm ứng với nước",
+        "Ứng dụng cảm ứng với tiếng động",
+        "Ứng dụng cảm ứng với trọng lực"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Người ta dùng bẫy đèn để bắt côn trùng vào ban đêm dựa trên tập tính nào?",
+       "luaChon": [
+        "Tập tính hướng về ánh sáng của côn trùng",
+        "Tập tính kiếm ăn ban ngày",
+        "Tập tính ngủ đông",
+        "Tập tính di cư"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Dạy chó nghiệp vụ tìm kiếm cứu nạn là ứng dụng loại tập tính nào?",
+       "luaChon": [
+        "Tập tính ngủ đông",
+        "Tập tính học được",
+        "Tập tính di cư",
+        "Tập tính bẩm sinh"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Vun gốc, xới đất cho cây trồng có tác dụng gì liên quan đến rễ?",
+       "luaChon": [
+        "Làm lá rụng bớt",
+        "Giúp đất thoáng, rễ phát triển và hướng tới nguồn dinh dưỡng",
+        "Làm cây thấp đi",
+        "Làm rễ ngừng phát triển"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Người nông dân dùng bù nhìn để xua đuổi chim là vận dụng hiện tượng cảm ứng ở động vật.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Việc đặt chậu cây gần cửa sổ và thỉnh thoảng xoay chậu giúp cây mọc cân đối.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mọi tập tính của động vật đều có thể huấn luyện để thay đổi hoàn toàn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 35. Thực hành: Cảm ứng ở sinh vật",
+     "cau": [
+      {
+       "noiDung": "Để chứng minh tính hướng sáng của cây, ta bố trí thí nghiệm thế nào?",
+       "luaChon": [
+        "Trồng cây trong hộp kín hoàn toàn",
+        "Trồng cây trong hộp có khoét một lỗ cho ánh sáng lọt vào một phía",
+        "Trồng cây dưới nước",
+        "Trồng cây ngoài nắng gắt cả ngày"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Kết quả mong đợi của thí nghiệm chứng minh tính hướng sáng là gì?",
+       "luaChon": [
+        "Cây chết khô",
+        "Ngọn cây mọc thẳng đứng lên",
+        "Rễ cây mọc ngược lên",
+        "Ngọn cây mọc cong về phía có ánh sáng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Để chứng minh tính hướng nước của rễ, cần bố trí thế nào?",
+       "luaChon": [
+        "Tưới đều khắp chậu",
+        "Không tưới nước",
+        "Ngâm cả chậu trong nước",
+        "Tưới nước lệch về một phía của chậu và quan sát hướng mọc của rễ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Trong thí nghiệm về cảm ứng, vì sao cần có mẫu đối chứng?",
+       "luaChon": [
+        "Để tiết kiệm thời gian",
+        "Để có nhiều cây hơn",
+        "Để so sánh và khẳng định kết quả do yếu tố nghiên cứu gây ra",
+        "Để cây mọc nhanh hơn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thí nghiệm quan sát tính hướng tiếp xúc thường dùng loại cây nào?",
+       "luaChon": [
+        "Cây rêu",
+        "Cây họ bầu bí có tua cuốn",
+        "Cây lúa",
+        "Cây thông"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thời gian theo dõi thí nghiệm về cảm ứng ở thực vật thường kéo dài bao lâu?",
+       "luaChon": [
+        "Vài giây",
+        "Vài ngày đến một, hai tuần",
+        "Vài giờ",
+        "Vài phút"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Trong quá trình thí nghiệm, cần ghi chép điều gì?",
+       "luaChon": [
+        "Thời gian theo dõi và hiện tượng quan sát được ở từng mẫu",
+        "Chỉ ghi tên nhóm",
+        "Không cần ghi gì",
+        "Chỉ ghi ngày bắt đầu"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể quan sát cảm ứng ở động vật bằng cách theo dõi phản ứng của giun đất với ánh sáng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi làm thí nghiệm với động vật, cần đối xử nhẹ nhàng, không gây tổn thương cho chúng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Nếu kết quả thí nghiệm khác dự đoán thì nên sửa lại số liệu cho phù hợp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương IX. Sinh trưởng và phát triển ở sinh vật",
+   "bai": [
+    {
+     "ten": "Bài 36. Khái quát về sinh trưởng và phát triển ở sinh vật",
+     "cau": [
+      {
+       "noiDung": "Sinh trưởng ở sinh vật là gì?",
+       "luaChon": [
+        "Sự thay đổi màu sắc cơ thể",
+        "Sự trao đổi khí",
+        "Sự di chuyển của cơ thể",
+        "Sự tăng về kích thước và khối lượng cơ thể"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Phát triển ở sinh vật bao gồm những quá trình nào?",
+       "luaChon": [
+        "Chỉ tăng khối lượng",
+        "Chỉ thay đổi màu sắc",
+        "Chỉ có sinh sản",
+        "Sinh trưởng, phân hóa tế bào và phát sinh hình thái cơ quan"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Bộ phận nào giúp cây thân gỗ dài ra và to ra?",
+       "luaChon": [
+        "Lông hút",
+        "Mô phân sinh",
+        "Khí khổng",
+        "Gân lá"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nhân tố nào sau đây ảnh hưởng đến sinh trưởng và phát triển của sinh vật?",
+       "luaChon": [
+        "Chỉ có âm thanh",
+        "Chỉ có màu sắc môi trường",
+        "Chỉ có độ cao so với mặt biển",
+        "Nhiệt độ, ánh sáng, nước và chất dinh dưỡng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vòng đời của bướm trải qua các giai đoạn nào theo đúng thứ tự?",
+       "luaChon": [
+        "Trứng, sâu, nhộng, bướm trưởng thành",
+        "Nhộng, trứng, sâu, bướm",
+        "Sâu, trứng, nhộng, bướm",
+        "Trứng, nhộng, sâu, bướm"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ếch phát triển qua giai đoạn nòng nọc nên gọi là phát triển qua biến thái.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sinh trưởng và phát triển là hai quá trình liên quan mật thiết với nhau.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ở động vật, giai đoạn nào cơ thể sinh trưởng nhanh nhất?",
+       "luaChon": [
+        "Giai đoạn còn non đang lớn",
+        "Giai đoạn trưởng thành ổn định",
+        "Giai đoạn sau khi chết",
+        "Giai đoạn già"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Con non của loài phát triển không qua biến thái có đặc điểm gì?",
+       "luaChon": [
+        "Khác hoàn toàn con trưởng thành",
+        "Giống con trưởng thành về hình thái",
+        "Không có khả năng di chuyển",
+        "Không cần thức ăn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Ở thực vật, mô phân sinh đỉnh giúp cây thực hiện điều gì?",
+       "luaChon": [
+        "Tăng chiều dài của thân và rễ",
+        "Tạo ra hoa ngay lập tức",
+        "Tạo ra hạt",
+        "Tăng độ dày của vỏ"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 37. Ứng dụng sinh trưởng và phát triển vào thực tiễn",
+     "cau": [
+      {
+       "noiDung": "Bấm ngọn cây mướp, cây đậu nhằm mục đích gì?",
+       "luaChon": [
+        "Kích thích cây ra nhiều cành, nhiều quả",
+        "Làm cây ra ít quả",
+        "Làm cây ngừng phát triển",
+        "Làm cây cao nhanh hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Tỉa cành cho cây lấy gỗ nhằm mục đích gì?",
+       "luaChon": [
+        "Giúp cây tập trung dinh dưỡng cho thân chính cao thẳng",
+        "Làm cây ra hoa sớm",
+        "Giúp cây ra nhiều nhánh",
+        "Làm cây thấp lại"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao cần cho vật nuôi ăn đủ chất và đúng giai đoạn?",
+       "luaChon": [
+        "Để vật nuôi ngủ nhiều hơn",
+        "Để vật nuôi chậm lớn",
+        "Để tiết kiệm hoàn toàn chi phí",
+        "Để vật nuôi sinh trưởng và phát triển tốt, cho năng suất cao"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chiếu sáng bổ sung cho gà đẻ vào ban đêm nhằm mục đích gì?",
+       "luaChon": [
+        "Kích thích gà đẻ nhiều trứng hơn",
+        "Giúp gà ngủ ngon",
+        "Làm gà giảm ăn",
+        "Làm gà nhẹ cân"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Việc dùng chất kích thích sinh trưởng không đúng quy định gây hậu quả gì?",
+       "luaChon": [
+        "Không có hậu quả gì",
+        "Làm tăng chất lượng dinh dưỡng",
+        "Làm nông sản an toàn hơn",
+        "Ảnh hưởng xấu tới sức khỏe người tiêu dùng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao gieo trồng đúng thời vụ lại cho năng suất cao?",
+       "luaChon": [
+        "Vì đất tự nhiên tốt hơn",
+        "Vì hạt giống rẻ hơn",
+        "Vì cây gặp điều kiện nhiệt độ, ánh sáng, độ ẩm thuận lợi",
+        "Vì ít phải làm cỏ"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Diệt muỗi ở giai đoạn ấu trùng (loăng quăng) là biện pháp hiệu quả để phòng bệnh sốt xuất huyết.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hiểu vòng đời của sâu hại giúp chọn đúng thời điểm phòng trừ hiệu quả.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ủ ấm cho gia súc non vào mùa đông giúp chúng sinh trưởng tốt hơn.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Bón thật nhiều phân đạm luôn giúp cây trồng cho năng suất cao nhất.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    },
+    {
+     "ten": "Bài 38. Thực hành: Quan sát sự sinh trưởng và phát triển ở sinh vật",
+     "cau": [
+      {
+       "noiDung": "Để quan sát sự sinh trưởng của cây, ta cần đo đại lượng nào theo thời gian?",
+       "luaChon": [
+        "Khối lượng đất",
+        "Nhiệt độ phòng",
+        "Chiều cao thân, số lá của cây",
+        "Màu sắc của chậu"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Dụng cụ nào dùng để đo chiều cao cây trong bài thực hành?",
+       "luaChon": [
+        "Lực kế",
+        "Nhiệt kế",
+        "Thước",
+        "Cân điện tử"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nên đo chiều cao cây vào thời điểm nào để số liệu đáng tin cậy?",
+       "luaChon": [
+        "Bất cứ lúc nào nhớ ra",
+        "Chỉ đo vào ngày cuối",
+        "Vào cùng một thời điểm trong ngày, đều đặn mỗi ngày",
+        "Chỉ đo một lần duy nhất"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Để quan sát vòng đời của bướm, mẫu vật nên chuẩn bị là gì?",
+       "luaChon": [
+        "Trứng hoặc sâu non nuôi trong hộp có lá tươi",
+        "Chỉ có nhộng khô",
+        "Chỉ có cánh bướm",
+        "Bướm trưởng thành đã chết"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi nuôi sâu để quan sát, cần lưu ý điều gì?",
+       "luaChon": [
+        "Đậy kín hoàn toàn không cho không khí vào",
+        "Thay lá tươi thường xuyên và giữ hộp thoáng khí",
+        "Không cho ăn để sâu nhanh hóa nhộng",
+        "Ngâm hộp trong nước"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Bảng theo dõi sinh trưởng nên có những cột nào?",
+       "luaChon": [
+        "Chỉ có ngày tháng",
+        "Chỉ có tên người theo dõi",
+        "Ngày theo dõi, số đo và nhận xét",
+        "Chỉ có ảnh chụp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Vì sao nên gieo nhiều hạt trong cùng một thí nghiệm?",
+       "luaChon": [
+        "Để tốn nhiều hạt giống hơn",
+        "Để cây mọc chậm hơn",
+        "Để dễ nhổ bỏ",
+        "Để lấy giá trị trung bình, kết quả tin cậy hơn"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Đồ thị chiều cao cây theo thời gian giúp thấy rõ tốc độ sinh trưởng của cây.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sau khi quan sát xong vòng đời của côn trùng, nên thả chúng về môi trường tự nhiên phù hợp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Trong quá trình theo dõi, chỉ cần ghi lại kết quả của ngày cuối cùng là đủ.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương X. Sinh sản ở sinh vật",
+   "bai": [
+    {
+     "ten": "Bài 39. Sinh sản vô tính ở sinh vật",
+     "cau": [
+      {
+       "noiDung": "Sinh sản vô tính có đặc điểm gì?",
+       "luaChon": [
+        "Không có sự kết hợp của giao tử đực và giao tử cái",
+        "Luôn cần hai cơ thể bố mẹ",
+        "Luôn tạo ra cơ thể khác bố mẹ",
+        "Chỉ xảy ra ở động vật"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ thể con sinh ra từ sinh sản vô tính có đặc điểm gì?",
+       "luaChon": [
+        "Khác hoàn toàn cơ thể mẹ",
+        "Giống hệt cơ thể mẹ về đặc điểm di truyền",
+        "Luôn khỏe hơn cơ thể mẹ",
+        "Không có vật chất di truyền"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Giâm cành, chiết cành là hình thức nhân giống thuộc kiểu sinh sản nào?",
+       "luaChon": [
+        "Thụ tinh nhân tạo",
+        "Sinh sản bằng hạt",
+        "Sinh sản vô tính",
+        "Sinh sản hữu tính"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Cây nào sau đây có thể sinh sản bằng thân rễ?",
+       "luaChon": [
+        "Cây gừng",
+        "Cây thông",
+        "Cây xoài",
+        "Cây bưởi"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cây khoai lang thường được nhân giống bằng bộ phận nào?",
+       "luaChon": [
+        "Thân (dây khoai)",
+        "Quả",
+        "Hạt",
+        "Hoa"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hình thức sinh sản nào sau đây là của trùng biến hình?",
+       "luaChon": [
+        "Thụ tinh trong",
+        "Sinh sản hữu tính",
+        "Nảy chồi",
+        "Phân đôi"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Thủy tức sinh sản vô tính bằng hình thức nào?",
+       "luaChon": [
+        "Nảy chồi",
+        "Thụ tinh ngoài",
+        "Phân đôi",
+        "Đẻ trứng có thụ tinh"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ưu điểm của sinh sản vô tính trong trồng trọt là gì?",
+       "luaChon": [
+        "Tạo ra nhiều biến dị hơn",
+        "Không cần chăm sóc",
+        "Cây con luôn khác cây mẹ",
+        "Giữ được đặc tính tốt của cây mẹ và cho thu hoạch sớm"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Nhược điểm của sinh sản vô tính là gì?",
+       "luaChon": [
+        "Không thể nhân giống nhanh",
+        "Cây con không giống cây mẹ",
+        "Cây con kém đa dạng di truyền nên khó thích nghi khi môi trường thay đổi",
+        "Luôn cho năng suất thấp"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nuôi cấy mô tế bào thực vật là một ứng dụng của sinh sản vô tính.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 40. Sinh sản hữu tính ở sinh vật",
+     "cau": [
+      {
+       "noiDung": "Sinh sản hữu tính có đặc điểm gì?",
+       "luaChon": [
+        "Cơ thể con giống hệt mẹ",
+        "Có sự kết hợp giữa giao tử đực và giao tử cái",
+        "Không cần giao tử",
+        "Chỉ có ở thực vật"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thụ tinh là quá trình gì?",
+       "luaChon": [
+        "Sự lớn lên của hạt",
+        "Sự nảy mầm của hạt",
+        "Sự kết hợp giữa giao tử đực và giao tử cái tạo thành hợp tử",
+        "Sự rụng lá"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Thụ phấn ở thực vật có hoa là hiện tượng gì?",
+       "luaChon": [
+        "Hoa nở ra",
+        "Hạt nảy mầm thành cây",
+        "Hạt phấn được chuyển từ nhị đến đầu nhụy",
+        "Quả chín và rụng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Hoa của cây ngô, cây lúa chủ yếu được thụ phấn nhờ tác nhân nào?",
+       "luaChon": [
+        "Ong bướm",
+        "Nước",
+        "Gió",
+        "Chim"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Sau khi thụ tinh, bầu nhụy phát triển thành bộ phận nào?",
+       "luaChon": [
+        "Quả",
+        "Đài hoa",
+        "Hạt phấn",
+        "Cánh hoa"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sau khi thụ tinh, noãn phát triển thành bộ phận nào?",
+       "luaChon": [
+        "Hạt",
+        "Rễ",
+        "Lá",
+        "Quả"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Ưu điểm nổi bật của sinh sản hữu tính là gì?",
+       "luaChon": [
+        "Không cần hai cá thể",
+        "Con luôn giống hệt bố mẹ",
+        "Tạo ra thế hệ con đa dạng, thích nghi tốt hơn với môi trường thay đổi",
+        "Luôn nhanh hơn sinh sản vô tính"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ở người, sự thụ tinh diễn ra ở cơ quan nào?",
+       "luaChon": [
+        "Gan",
+        "Ống dẫn trứng",
+        "Dạ dày",
+        "Phổi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Động vật đẻ trứng và động vật đẻ con đều có thể sinh sản hữu tính.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Hoa lưỡng tính là hoa có cả nhị và nhụy trên cùng một hoa.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      }
+     ]
+    },
+    {
+     "ten": "Bài 41. Một số yếu tố ảnh hưởng và điều khiển sinh sản ở sinh vật",
+     "cau": [
+      {
+       "noiDung": "Yếu tố nào sau đây ảnh hưởng đến sinh sản của sinh vật?",
+       "luaChon": [
+        "Nhiệt độ, ánh sáng, thức ăn và hormone",
+        "Chỉ có độ cao nơi sống",
+        "Chỉ có tiếng động",
+        "Chỉ có màu sắc cơ thể"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Vì sao nhiều loài chim sinh sản chủ yếu vào mùa xuân?",
+       "luaChon": [
+        "Vì mùa xuân trời lạnh nhất",
+        "Vì thời tiết ấm áp và nguồn thức ăn dồi dào",
+        "Vì mùa xuân ít ánh sáng",
+        "Vì mùa xuân khan hiếm thức ăn"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Thụ phấn nhân tạo cho cây trồng nhằm mục đích gì?",
+       "luaChon": [
+        "Tăng tỉ lệ đậu quả và tạo giống theo ý muốn",
+        "Làm cây nhanh chết",
+        "Giảm năng suất",
+        "Làm hoa nở lâu hơn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Biện pháp nào giúp điều khiển sinh sản ở vật nuôi?",
+       "luaChon": [
+        "Không chăm sóc gì",
+        "Nhốt chật chội",
+        "Bỏ đói vật nuôi",
+        "Thụ tinh nhân tạo và điều chỉnh chế độ dinh dưỡng, chiếu sáng"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Chiếu sáng bổ sung cho cây thanh long vào ban đêm nhằm mục đích gì?",
+       "luaChon": [
+        "Làm rụng lá",
+        "Làm quả nhỏ đi",
+        "Làm cây ngừng ra hoa",
+        "Kích thích cây ra hoa trái vụ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Vì sao cần điều khiển sinh sản ở sinh vật trong sản xuất?",
+       "luaChon": [
+        "Để giảm sản lượng",
+        "Để cây con luôn yếu",
+        "Để chủ động về thời điểm, số lượng và chất lượng sản phẩm",
+        "Để sản phẩm kém chất lượng hơn"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Nuôi ong trong vườn cây ăn quả có tác dụng gì?",
+       "luaChon": [
+        "Làm hoa rụng nhanh",
+        "Làm cây kém phát triển",
+        "Làm sâu bệnh tăng lên",
+        "Giúp thụ phấn, tăng tỉ lệ đậu quả"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Hormone có vai trò quan trọng trong điều hòa sinh sản ở động vật.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Việc sử dụng thuốc và hormone trong chăn nuôi cần tuân thủ quy định để bảo đảm an toàn thực phẩm.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Có thể tăng số lứa đẻ của vật nuôi vô hạn mà không ảnh hưởng đến sức khỏe của chúng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ten": "Chương XI. Cơ thể sinh vật là một thể thống nhất",
+   "bai": [
+    {
+     "ten": "Bài 42. Cơ thể sinh vật là một thể thống nhất",
+     "cau": [
+      {
+       "noiDung": "Vì sao nói cơ thể sinh vật là một thể thống nhất?",
+       "luaChon": [
+        "Vì cơ thể chỉ có một cơ quan",
+        "Vì các hoạt động sống và các cơ quan có liên quan, tác động qua lại với nhau",
+        "Vì các cơ quan hoạt động độc lập",
+        "Vì cơ thể không thay đổi"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Các hoạt động sống cơ bản của cơ thể gồm những gì?",
+       "luaChon": [
+        "Trao đổi chất, sinh trưởng, phát triển, cảm ứng và sinh sản",
+        "Chỉ có ăn và ngủ",
+        "Chỉ có di chuyển",
+        "Chỉ có sinh sản"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mối quan hệ giữa trao đổi chất và sinh trưởng là gì?",
+       "luaChon": [
+        "Sinh trưởng làm ngừng trao đổi chất",
+        "Trao đổi chất cung cấp nguyên liệu và năng lượng cho sinh trưởng",
+        "Hai quá trình không liên quan",
+        "Trao đổi chất chỉ xảy ra sau sinh trưởng"
+       ],
+       "dapAn": 1
+      },
+      {
+       "noiDung": "Nếu cây bị hạn hán, hoạt động nào sau đây sẽ bị ảnh hưởng?",
+       "luaChon": [
+        "Chỉ có màu sắc hoa thay đổi",
+        "Chỉ có rễ bị ảnh hưởng",
+        "Cả quang hợp, sinh trưởng và sinh sản đều bị ảnh hưởng",
+        "Không hoạt động nào bị ảnh hưởng"
+       ],
+       "dapAn": 2
+      },
+      {
+       "noiDung": "Ở cây xanh, quan hệ giữa rễ và lá thể hiện tính thống nhất như thế nào?",
+       "luaChon": [
+        "Lá cung cấp nước cho rễ",
+        "Rễ quang hợp thay lá",
+        "Rễ và lá hoạt động hoàn toàn riêng rẽ",
+        "Rễ hút nước và khoáng cho lá quang hợp, lá tạo chất hữu cơ nuôi rễ"
+       ],
+       "dapAn": 3
+      },
+      {
+       "noiDung": "Ở người, hệ tiêu hóa và hệ tuần hoàn phối hợp với nhau như thế nào?",
+       "luaChon": [
+        "Hệ tiêu hóa hấp thụ chất dinh dưỡng, hệ tuần hoàn vận chuyển đi nuôi cơ thể",
+        "Hệ tiêu hóa bơm máu",
+        "Hai hệ không liên quan",
+        "Hệ tuần hoàn tiêu hóa thức ăn"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Khi một cơ quan bị tổn thương, hoạt động của cả cơ thể có thể bị ảnh hưởng.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Cơ thể sinh vật cũng thống nhất với môi trường sống của nó.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Sinh vật muốn tồn tại cần thường xuyên trao đổi chất và năng lượng với môi trường.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 0
+      },
+      {
+       "noiDung": "Mỗi cơ quan trong cơ thể hoạt động hoàn toàn độc lập, không cần phối hợp.",
+       "luaChon": [
+        "Đúng",
+        "Sai"
+       ],
+       "dapAn": 1
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
