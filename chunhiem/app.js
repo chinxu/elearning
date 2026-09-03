@@ -948,6 +948,84 @@ async function createOfficerAccount(email, password, yearId, className, displayN
 }
 
 // ---------------------------------------------------------------
+// Học sinh vi phạm theo tháng (tổng quan cho giáo viên)
+// ---------------------------------------------------------------
+state.violationsOverviewMonth = null;
+
+$("openViolationsOverviewBtn").addEventListener("click", () => {
+  if (!state.yearId) { toast("Chọn một năm học trước."); return; }
+  state.violationsOverviewMonth = state.violationsOverviewMonth || MONTHS[0].key;
+  renderViolationsOverviewMonthRow();
+  loadViolationsOverview(state.violationsOverviewMonth);
+  $("violationsOverviewModal").classList.add("active");
+});
+$("closeViolationsOverviewBtn").addEventListener("click", () => $("violationsOverviewModal").classList.remove("active"));
+
+function renderViolationsOverviewMonthRow() {
+  $("violationsOverviewMonthRow").innerHTML = MONTHS.map(m => `
+    <button class="month-chip ${m.key === state.violationsOverviewMonth ? "active" : ""}" data-ovmonth="${m.key}">${m.label}</button>
+  `).join("");
+  $("violationsOverviewMonthRow").querySelectorAll("[data-ovmonth]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.violationsOverviewMonth = btn.dataset.ovmonth;
+      renderViolationsOverviewMonthRow();
+      loadViolationsOverview(state.violationsOverviewMonth);
+    });
+  });
+}
+
+async function loadViolationsOverview(monthKey) {
+  $("violationsOverviewList").innerHTML = `<div class="export-hint">Đang tải…</div>`;
+  try {
+    const results = await Promise.all(state.students.map(async (s) => {
+      try {
+        const snap = await getDoc(doc(db, "schoolYears", state.yearId, "students", s.id, "violations", monthKey));
+        const entries = snap.exists() ? (snap.data().entries || []) : [];
+        return { student: s, entries };
+      } catch (err) {
+        console.error(err);
+        return { student: s, entries: [] };
+      }
+    }));
+    const withViolations = results.filter(r => r.entries.length > 0);
+    withViolations.sort((a, b) => (a.student.fields?.name || "").localeCompare(b.student.fields?.name || "", "vi"));
+    renderViolationsOverview(withViolations, monthKey);
+  } catch (err) {
+    console.error(err);
+    $("violationsOverviewList").innerHTML = `<div class="export-hint">Không tải được dữ liệu vi phạm.</div>`;
+  }
+}
+
+function renderViolationsOverview(results, monthKey) {
+  if (!results.length) {
+    $("violationsOverviewList").innerHTML = `<div class="export-hint">Không có học sinh nào bị ghi nhận vi phạm trong tháng này.</div>`;
+    return;
+  }
+  $("violationsOverviewList").innerHTML = results.map(r => `
+    <div class="overview-student-block">
+      <div class="overview-student-header">
+        <span>${escapeHtml(r.student.fields?.name || "(chưa có tên)")} <span class="muted-inline">(${r.entries.length} vi phạm)</span></span>
+        <button class="btn btn-ghost btn-sm" data-jump-student="${r.student.id}">Xem trong Nhận xét</button>
+      </div>
+      ${r.entries.map(e => `
+        <div class="violation-entry">
+          <div>${escapeHtml(e.text)}</div>
+          <div class="violation-meta">${escapeHtml(e.createdByName || e.createdByEmail || "")}${e.createdAt ? " · " + new Date(e.createdAt).toLocaleString("vi-VN") : ""}</div>
+        </div>`).join("")}
+    </div>`).join("");
+  $("violationsOverviewList").querySelectorAll("[data-jump-student]").forEach(btn => {
+    btn.addEventListener("click", () => jumpToStudentViolations(btn.dataset.jumpStudent, monthKey));
+  });
+}
+
+function jumpToStudentViolations(studentId, monthKey) {
+  $("violationsOverviewModal").classList.remove("active");
+  selectStudent(studentId);
+  state.selectedMonth = monthKey;
+  showTab("nhanxet");
+}
+
+// ---------------------------------------------------------------
 // Giao diện Cán bộ lớp (tài khoản nhỏ nhập vi phạm)
 // ---------------------------------------------------------------
 async function bootstrapOfficerView() {
