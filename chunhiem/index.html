@@ -598,7 +598,20 @@
   /* mobile */
   @media (max-width:820px){
     #app.active{display:block;}
-    #sidebar{position:relative;min-height:auto;max-height:60vh;}
+    #sidebar{
+      position:relative;
+      min-height:auto;
+      max-height:none;
+      display:block;
+    }
+    #studentList{
+      flex:none;
+      max-height:38vh;
+      min-height:120px;
+      overflow-y:auto;
+      border-top:1px solid rgba(255,255,255,.12);
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
     #main{padding:24px 18px;max-width:100%;}
     .field-row{grid-template-columns:1fr;gap:4px;}
     .field-row .rm-field{justify-self:end;}
