@@ -155,6 +155,19 @@ function stripDiacritics(str) {
 function slugify(str) {
   return stripDiacritics(str).replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
+function getGivenName(fullName) {
+  const parts = String(fullName || "").trim().split(/\s+/).filter(Boolean);
+  return parts.length ? parts[parts.length - 1] : "";
+}
+// Xếp theo Tên (từ cuối cùng của họ tên) theo đúng cách gọi tên phổ biến ở
+// Việt Nam, thay vì xếp theo Họ (chữ đầu tiên).
+function compareStudentsByGivenName(a, b) {
+  const nameA = a.fields?.name || "";
+  const nameB = b.fields?.name || "";
+  const cmp = getGivenName(nameA).localeCompare(getGivenName(nameB), "vi");
+  if (cmp !== 0) return cmp;
+  return nameA.localeCompare(nameB, "vi");
+}
 
 // ---------------------------------------------------------------
 // Auth
@@ -512,7 +525,7 @@ function subscribeStudents() {
   state.unsubStudents = onSnapshot(col, (snap) => {
     state.students = snap.docs
       .map(d => ({ id: d.id, ...d.data() }))
-      .sort((a, b) => (a.fields?.name || "").localeCompare(b.fields?.name || "", "vi"));
+      .sort(compareStudentsByGivenName);
     renderStudentList();
     $("statCount").textContent = state.students.length;
     if (state.selectedStudentId && !state.students.find(s => s.id === state.selectedStudentId)) {
@@ -988,7 +1001,7 @@ async function loadViolationsOverview(monthKey) {
       }
     }));
     const withViolations = results.filter(r => r.entries.length > 0);
-    withViolations.sort((a, b) => (a.student.fields?.name || "").localeCompare(b.student.fields?.name || "", "vi"));
+    withViolations.sort((a, b) => compareStudentsByGivenName(a.student, b.student));
     renderViolationsOverview(withViolations, monthKey);
   } catch (err) {
     console.error(err);
@@ -1059,7 +1072,7 @@ async function bootstrapOfficerView() {
         return effectiveClassName === info.className;
       });
     }
-    students.sort((a, b) => (a.fields?.name || "").localeCompare(b.fields?.name || "", "vi"));
+    students.sort(compareStudentsByGivenName);
   } catch (err) {
     console.error(err);
     toast("Không tải được danh sách học sinh.");
