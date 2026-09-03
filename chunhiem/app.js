@@ -1,23 +1,24 @@
 // ============================================================
 // Sổ chủ nhiệm — app.js
 // ============================================================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import { initializeApp, deleteApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import {
-  getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 import {
   getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc,
-  onSnapshot, query, orderBy, serverTimestamp, writeBatch, updateDoc
+  onSnapshot, query, where, orderBy, serverTimestamp, writeBatch, updateDoc,
+  arrayUnion, arrayRemove
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA7h62vrcLkQ8jOBI6hSRNip8ZisEPtGYw",
-  authDomain: "webthongtin-5bc35.firebaseapp.com",
-  projectId: "webthongtin-5bc35",
-  storageBucket: "webthongtin-5bc35.firebasestorage.app",
-  messagingSenderId: "800829738212",
-  appId: "1:800829738212:web:9a89244c87c3abf7a170f1",
-  measurementId: "G-2QT70CLDZY"
+  apiKey: "AIzaSyDS8i3-drJQ36vg3RBeb23j-rvW9sSwC3A",
+  authDomain: "sochunhiem-1491a.firebaseapp.com",
+  projectId: "sochunhiem-1491a",
+  storageBucket: "sochunhiem-1491a.firebasestorage.app",
+  messagingSenderId: "222899544669",
+  appId: "1:222899544669:web:751c2f7eb70620eee0a3b4",
+  measurementId: "G-LDFC5DC3DW"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -108,6 +109,11 @@ const CORE_ORDER = ["name", "className", "phone", "dob", "gender", "ethnicity",
 // ---------------------------------------------------------------
 const state = {
   user: null,
+  role: null, // 'teacher' | 'officer'
+  officerInfo: null,
+  officerStudents: [],
+  officerSelectedMonth: MONTHS[0].key,
+  officers: [],
   yearId: null,
   years: [],
   students: [],
@@ -118,9 +124,13 @@ const state = {
   selectedMonth: MONTHS[0].key,
   editingLyLich: false,
   comments: {},
+  violations: {},
   unsubStudents: null,
   unsubComments: null,
   unsubClasses: null,
+  unsubViolationsTeacher: null,
+  unsubViolationsOfficer: null,
+  unsubOfficers: null,
   parsedRows: null,
   workbook: null,
 };
@@ -182,20 +192,51 @@ function describeAuthError(err) {
 }
 
 $("logoutBtn").addEventListener("click", () => signOut(auth));
+$("officerLogoutBtn").addEventListener("click", () => signOut(auth));
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   state.user = user;
   if (user) {
-    $("loginScreen").style.display = "none";
-    $("app").classList.add("active");
-    $("userEmailLabel").textContent = user.email || "";
-    bootstrapYears();
+    let officerSnap;
+    try {
+      officerSnap = await getDoc(doc(db, "officerAccounts", user.uid));
+    } catch (err) {
+      console.error(err);
+      officerSnap = null;
+    }
+    if (officerSnap && officerSnap.exists()) {
+      const info = officerSnap.data();
+      if (info.status === "revoked") {
+        toast("Tài khoản này đã bị khoá. Liên hệ giáo viên chủ nhiệm.");
+        await signOut(auth);
+        return;
+      }
+      state.role = "officer";
+      state.officerInfo = { id: user.uid, ...info };
+      $("loginScreen").style.display = "none";
+      $("app").classList.remove("active");
+      $("officerApp").style.display = "block";
+      bootstrapOfficerView();
+    } else {
+      state.role = "teacher";
+      $("loginScreen").style.display = "none";
+      $("officerApp").style.display = "none";
+      $("app").classList.add("active");
+      $("userEmailLabel").textContent = user.email || "";
+      bootstrapYears();
+    }
   } else {
+    state.role = null;
+    state.officerInfo = null;
     $("app").classList.remove("active");
+    $("officerApp").style.display = "none";
     $("loginScreen").style.display = "flex";
     if (state.unsubStudents) state.unsubStudents();
     if (state.unsubComments) state.unsubComments();
     if (state.unsubClasses) state.unsubClasses();
+    if (state.unsubViolationsTeacher) state.unsubViolationsTeacher();
+    if (state.unsubViolationsOfficer) state.unsubViolationsOfficer();
+    if (state.unsubOfficers) state.unsubOfficers();
   }
 });
 
@@ -310,6 +351,7 @@ async function performDeleteYear(yearId) {
     studentsSnap.docs.forEach(sDoc => {
       MONTHS.forEach(m => {
         refsToDelete.push(doc(db, "schoolYears", yearId, "students", sDoc.id, "comments", m.key));
+        refsToDelete.push(doc(db, "schoolYears", yearId, "students", sDoc.id, "violations", m.key));
       });
       refsToDelete.push(doc(db, "schoolYears", yearId, "students", sDoc.id));
     });
@@ -317,9 +359,18 @@ async function performDeleteYear(yearId) {
     classesSnap.docs.forEach(cDoc => refsToDelete.push(doc(db, "schoolYears", yearId, "classes", cDoc.id)));
     refsToDelete.push(doc(db, "schoolYears", yearId));
 
+    // Tài khoản cán bộ lớp: KHOÁ (không xoá hẳn) — nếu xoá bản ghi này,
+    // tài khoản đó sẽ bị hiểu nhầm thành tài khoản giáo viên ở lần đăng nhập sau.
+    const officersSnap = await getDocs(query(collection(db, "officerAccounts"), where("yearId", "==", yearId)));
+
     for (let i = 0; i < refsToDelete.length; i += 400) {
       const batch = writeBatch(db);
       refsToDelete.slice(i, i + 400).forEach(ref => batch.delete(ref));
+      await batch.commit();
+    }
+    for (let i = 0; i < officersSnap.docs.length; i += 400) {
+      const batch = writeBatch(db);
+      officersSnap.docs.slice(i, i + 400).forEach(oDoc => batch.update(doc(db, "officerAccounts", oDoc.id), { status: "revoked" }));
       await batch.commit();
     }
 
@@ -500,6 +551,7 @@ function deselectStudent() {
   state.selectedStudentId = null;
   state.editingLyLich = false;
   if (state.unsubComments) state.unsubComments();
+  if (state.unsubViolationsTeacher) state.unsubViolationsTeacher();
   renderEmptyStudentUI();
   renderStudentList();
 }
@@ -520,6 +572,7 @@ function selectStudent(id) {
   renderStudentDetail();
   showTab("lylich");
   subscribeComments();
+  subscribeViolationsTeacher();
 }
 
 function currentStudent() {
@@ -629,10 +682,11 @@ $("saveLyLichBtn").addEventListener("click", async () => {
 $("deleteStudentBtn").addEventListener("click", async () => {
   const s = currentStudent();
   if (!s) return;
-  if (!confirm(`Xoá học sinh "${s.fields?.name || ""}" khỏi năm học này? Nhận xét của học sinh cũng sẽ bị xoá.`)) return;
+  if (!confirm(`Xoá học sinh "${s.fields?.name || ""}" khỏi năm học này? Nhận xét và vi phạm của học sinh cũng sẽ bị xoá.`)) return;
   try {
     for (const m of MONTHS) {
       await deleteDoc(doc(db, "schoolYears", state.yearId, "students", s.id, "comments", m.key)).catch(() => {});
+      await deleteDoc(doc(db, "schoolYears", state.yearId, "students", s.id, "violations", m.key)).catch(() => {});
     }
     await deleteDoc(doc(db, "schoolYears", state.yearId, "students", s.id));
     toast("Đã xoá học sinh.");
@@ -675,7 +729,7 @@ function subscribeComments() {
 
 function renderMonthRow() {
   $("monthRow").innerHTML = MONTHS.map(m => `
-    <button class="month-chip ${m.key === state.selectedMonth ? "active" : ""} ${state.comments[m.key]?.text ? "has-note" : ""}" data-month="${m.key}">${m.label}</button>
+    <button class="month-chip ${m.key === state.selectedMonth ? "active" : ""} ${state.comments[m.key]?.text ? "has-note" : ""} ${(state.violations[m.key]?.entries || []).length ? "has-violation" : ""}" data-month="${m.key}">${m.label}</button>
   `).join("");
   $("monthRow").querySelectorAll("[data-month]").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -686,6 +740,7 @@ function renderMonthRow() {
   });
   renderCommentBox();
   renderExportMonths();
+  renderViolationsBox();
 }
 
 function renderCommentBox() {
@@ -697,6 +752,47 @@ function renderCommentBox() {
     $("commentUpdatedAt").textContent = "";
   }
 }
+
+// ---------------------------------------------------------------
+// Vi phạm do cán bộ lớp báo cáo (xem & chuyển vào nhận xét)
+// ---------------------------------------------------------------
+function subscribeViolationsTeacher() {
+  if (state.unsubViolationsTeacher) state.unsubViolationsTeacher();
+  state.violations = {};
+  const s = currentStudent();
+  if (!s) return;
+  const col = collection(db, "schoolYears", state.yearId, "students", s.id, "violations");
+  state.unsubViolationsTeacher = onSnapshot(col, (snap) => {
+    state.violations = {};
+    snap.docs.forEach(d => { state.violations[d.id] = d.data(); });
+    if (state.tab === "nhanxet") {
+      renderMonthRow();
+    }
+  });
+}
+
+function renderViolationsBox() {
+  const entries = (state.violations[state.selectedMonth]?.entries) || [];
+  if (!entries.length) {
+    $("violationsBox").style.display = "none";
+    return;
+  }
+  $("violationsBox").style.display = "block";
+  $("violationEntries").innerHTML = entries.map(e => `
+    <div class="violation-entry">
+      <div>${escapeHtml(e.text)}</div>
+      <div class="violation-meta">${escapeHtml(e.createdByName || e.createdByEmail || "")}${e.createdAt ? " · " + new Date(e.createdAt).toLocaleString("vi-VN") : ""}</div>
+    </div>`).join("");
+}
+
+$("mergeViolationsBtn").addEventListener("click", () => {
+  const entries = (state.violations[state.selectedMonth]?.entries) || [];
+  if (!entries.length) return;
+  const text = entries.map(e => e.text).join(", ");
+  const existing = $("commentText").value.trim();
+  $("commentText").value = existing ? existing + ", " + text : text;
+  toast("Đã chuyển vi phạm vào ô nhận xét — nhớ bấm Lưu nhận xét.");
+});
 
 $("saveCommentBtn").addEventListener("click", async () => {
   const s = currentStudent();
@@ -713,6 +809,233 @@ $("saveCommentBtn").addEventListener("click", async () => {
     toast("Không lưu được nhận xét. Thử lại.");
   } finally {
     $("saveCommentBtn").disabled = false;
+  }
+});
+
+// ---------------------------------------------------------------
+// Quản lý tài khoản cán bộ lớp (dành cho giáo viên)
+// ---------------------------------------------------------------
+$("manageOfficersBtn").addEventListener("click", () => openOfficersModal());
+$("closeOfficersBtn").addEventListener("click", () => $("officersModal").classList.remove("active"));
+
+function openOfficersModal() {
+  if (!state.yearId) { toast("Chọn một năm học trước."); return; }
+  const year = state.years.find(y => y.id === state.yearId);
+  $("officersModalYearLabel").textContent = year ? year.label : "";
+  $("newOfficerClass").innerHTML = state.classes.length
+    ? state.classes.map(c => `<option value="${escapeAttr(c.name)}">${escapeHtml(c.name)}</option>`).join("")
+    : `<option value="">(chưa có lớp)</option>`;
+  $("newOfficerName").value = "";
+  $("newOfficerEmail").value = "";
+  $("newOfficerPassword").value = "";
+  subscribeOfficersForYear();
+  $("officersModal").classList.add("active");
+}
+
+function subscribeOfficersForYear() {
+  if (state.unsubOfficers) state.unsubOfficers();
+  if (!state.yearId) return;
+  const q = query(collection(db, "officerAccounts"), where("yearId", "==", state.yearId));
+  state.unsubOfficers = onSnapshot(q, (snap) => {
+    state.officers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    state.officers.sort((a, b) => (a.name || a.email || "").localeCompare(b.name || b.email || "", "vi"));
+    renderOfficersList();
+  }, (err) => {
+    console.error(err);
+    toast("Không tải được danh sách cán bộ lớp.");
+  });
+}
+
+function renderOfficersList() {
+  if (!state.officers.length) {
+    $("officersList").innerHTML = `<div class="export-hint">Chưa có tài khoản cán bộ lớp nào trong năm học này.</div>`;
+    return;
+  }
+  $("officersList").innerHTML = state.officers.map(o => `
+    <div class="officer-row">
+      <div>
+        <div>${escapeHtml(o.name || o.email)} <span class="muted-inline">(${escapeHtml(o.email)})</span></div>
+        <div class="officer-sub">Lớp ${escapeHtml(o.className || "—")} · ${o.status === "revoked" ? "Đã khoá" : "Đang hoạt động"}</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-toggle-officer="${o.id}">${o.status === "revoked" ? "Mở khoá" : "Khoá"}</button>
+    </div>`).join("");
+  $("officersList").querySelectorAll("[data-toggle-officer]").forEach(btn => {
+    btn.addEventListener("click", () => toggleOfficerStatus(btn.dataset.toggleOfficer));
+  });
+}
+
+async function toggleOfficerStatus(uid) {
+  const o = state.officers.find(x => x.id === uid);
+  if (!o) return;
+  const newStatus = o.status === "revoked" ? "active" : "revoked";
+  try {
+    await updateDoc(doc(db, "officerAccounts", uid), { status: newStatus });
+    toast(newStatus === "revoked" ? "Đã khoá tài khoản." : "Đã mở khoá tài khoản.");
+  } catch (err) {
+    console.error(err);
+    toast("Không cập nhật được trạng thái tài khoản.");
+  }
+}
+
+$("createOfficerBtn").addEventListener("click", async () => {
+  const name = $("newOfficerName").value.trim();
+  const className = $("newOfficerClass").value;
+  const email = $("newOfficerEmail").value.trim();
+  const password = $("newOfficerPassword").value;
+  if (!email || !password) { toast("Nhập email và mật khẩu."); return; }
+  if (password.length < 6) { toast("Mật khẩu cần ít nhất 6 ký tự."); return; }
+  $("createOfficerBtn").disabled = true;
+  $("createOfficerBtn").textContent = "Đang tạo…";
+  try {
+    await createOfficerAccount(email, password, state.yearId, className, name);
+    toast("Đã tạo tài khoản cán bộ lớp.");
+    $("newOfficerName").value = "";
+    $("newOfficerEmail").value = "";
+    $("newOfficerPassword").value = "";
+  } catch (err) {
+    console.error(err);
+    toast("Không tạo được tài khoản: " + describeAuthError(err));
+  } finally {
+    $("createOfficerBtn").disabled = false;
+    $("createOfficerBtn").textContent = "Cấp tài khoản";
+  }
+});
+
+async function createOfficerAccount(email, password, yearId, className, displayName) {
+  // Dùng một Firebase app phụ để tạo tài khoản mới mà KHÔNG làm mất phiên
+  // đăng nhập hiện tại của giáo viên (client SDK tự đăng nhập vào tài khoản
+  // vừa tạo trên app đó, nên phải tạo trên một app riêng rồi huỷ đi).
+  const secondaryApp = initializeApp(firebaseConfig, "officer-creator-" + Date.now());
+  const secondaryAuth = getAuth(secondaryApp);
+  try {
+    const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+    const uid = cred.user.uid;
+    await setDoc(doc(db, "officerAccounts", uid), {
+      email, name: displayName || "", yearId, className: className || "",
+      status: "active", createdAt: serverTimestamp(), createdBy: state.user?.email || "",
+    });
+    await signOut(secondaryAuth);
+    await deleteApp(secondaryApp);
+    return uid;
+  } catch (err) {
+    try { await deleteApp(secondaryApp); } catch (e) { /* ignore */ }
+    throw err;
+  }
+}
+
+// ---------------------------------------------------------------
+// Giao diện Cán bộ lớp (tài khoản nhỏ nhập vi phạm)
+// ---------------------------------------------------------------
+async function bootstrapOfficerView() {
+  const info = state.officerInfo;
+  let yearLabel = "";
+  try {
+    const yearSnap = await getDoc(doc(db, "schoolYears", info.yearId));
+    yearLabel = yearSnap.exists() ? yearSnap.data().label : "";
+  } catch (err) { console.error(err); }
+  $("officerMeta").textContent =
+    `${info.name ? info.name + " · " : ""}${info.email} · Lớp ${info.className || "—"} · Năm học ${yearLabel}`;
+
+  let students = [];
+  try {
+    const studentsSnap = await getDocs(collection(db, "schoolYears", info.yearId, "students"));
+    students = studentsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (info.className) students = students.filter(s => (s.fields?.className || "") === info.className);
+    students.sort((a, b) => (a.fields?.name || "").localeCompare(b.fields?.name || "", "vi"));
+  } catch (err) {
+    console.error(err);
+    toast("Không tải được danh sách học sinh.");
+  }
+  state.officerStudents = students;
+  $("officerStudentSelect").innerHTML = students.length
+    ? students.map(s => `<option value="${s.id}">${escapeHtml(s.fields?.name || "(chưa có tên)")}</option>`).join("")
+    : `<option value="">Không có học sinh trong lớp này</option>`;
+
+  state.officerSelectedMonth = MONTHS[0].key;
+  renderOfficerMonthRow();
+  subscribeOfficerViolations();
+}
+
+$("officerStudentSelect").addEventListener("change", subscribeOfficerViolations);
+
+function renderOfficerMonthRow() {
+  $("officerMonthRow").innerHTML = MONTHS.map(m => `
+    <button class="month-chip ${m.key === state.officerSelectedMonth ? "active" : ""}" data-omonth="${m.key}">${m.label}</button>
+  `).join("");
+  $("officerMonthRow").querySelectorAll("[data-omonth]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.officerSelectedMonth = btn.dataset.omonth;
+      renderOfficerMonthRow();
+      subscribeOfficerViolations();
+    });
+  });
+}
+
+function subscribeOfficerViolations() {
+  if (state.unsubViolationsOfficer) state.unsubViolationsOfficer();
+  const studentId = $("officerStudentSelect").value;
+  if (!studentId) { $("officerViolationList").innerHTML = ""; return; }
+  const ref = doc(db, "schoolYears", state.officerInfo.yearId, "students", studentId, "violations", state.officerSelectedMonth);
+  state.unsubViolationsOfficer = onSnapshot(ref, (snap) => {
+    const entries = snap.exists() ? (snap.data().entries || []) : [];
+    renderOfficerViolationList(entries, studentId);
+  }, (err) => {
+    console.error(err);
+    $("officerViolationList").innerHTML = `<div class="export-hint">Không tải được vi phạm.</div>`;
+  });
+}
+
+function renderOfficerViolationList(entries, studentId) {
+  if (!entries.length) {
+    $("officerViolationList").innerHTML = `<div class="export-hint">Chưa có vi phạm nào được gửi cho học sinh này trong tháng.</div>`;
+    return;
+  }
+  $("officerViolationList").innerHTML = entries.map((e, idx) => `
+    <div class="violation-entry">
+      <div>${escapeHtml(e.text)}</div>
+      <div class="violation-meta" style="display:flex;justify-content:space-between;">
+        <span>${escapeHtml(e.createdByName || e.createdByEmail || "")}${e.createdAt ? " · " + new Date(e.createdAt).toLocaleString("vi-VN") : ""}</span>
+        ${e.createdByUid === state.user.uid ? `<button data-rm-violation="${idx}" class="violation-rm">Xoá</button>` : ""}
+      </div>
+    </div>`).join("");
+  $("officerViolationList").querySelectorAll("[data-rm-violation]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const idx = Number(btn.dataset.rmViolation);
+      const entry = entries[idx];
+      const ref = doc(db, "schoolYears", state.officerInfo.yearId, "students", studentId, "violations", state.officerSelectedMonth);
+      try {
+        await updateDoc(ref, { entries: arrayRemove(entry) });
+      } catch (err) {
+        console.error(err);
+        toast("Không xoá được.");
+      }
+    });
+  });
+}
+
+$("officerSubmitBtn").addEventListener("click", async () => {
+  const studentId = $("officerStudentSelect").value;
+  const text = $("officerViolationText").value.trim();
+  if (!studentId) { toast("Không có học sinh để chọn."); return; }
+  if (!text) { toast("Nhập nội dung vi phạm."); return; }
+  $("officerSubmitBtn").disabled = true;
+  try {
+    const ref = doc(db, "schoolYears", state.officerInfo.yearId, "students", studentId, "violations", state.officerSelectedMonth);
+    const entry = {
+      text,
+      createdAt: Date.now(),
+      createdByUid: state.user.uid,
+      createdByEmail: state.user.email || "",
+      createdByName: state.officerInfo.name || "",
+    };
+    await setDoc(ref, { entries: arrayUnion(entry), updatedAt: serverTimestamp() }, { merge: true });
+    $("officerViolationText").value = "";
+    toast("Đã gửi vi phạm.");
+  } catch (err) {
+    console.error(err);
+    toast("Không gửi được. Thử lại.");
+  } finally {
+    $("officerSubmitBtn").disabled = false;
   }
 });
 
