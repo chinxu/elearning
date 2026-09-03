@@ -778,11 +778,35 @@ function renderViolationsBox() {
     return;
   }
   $("violationsBox").style.display = "block";
-  $("violationEntries").innerHTML = entries.map(e => `
+  $("violationEntries").innerHTML = entries.map((e, idx) => `
     <div class="violation-entry">
       <div>${escapeHtml(e.text)}</div>
-      <div class="violation-meta">${escapeHtml(e.createdByName || e.createdByEmail || "")}${e.createdAt ? " · " + new Date(e.createdAt).toLocaleString("vi-VN") : ""}</div>
+      <div class="violation-meta" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>${escapeHtml(e.createdByName || e.createdByEmail || "")}${e.createdAt ? " · " + new Date(e.createdAt).toLocaleString("vi-VN") : ""}</span>
+        <button type="button" class="violation-rm" data-rm-teacher-violation="${idx}" title="Xoá vi phạm này">Xoá</button>
+      </div>
     </div>`).join("");
+  $("violationEntries").querySelectorAll("[data-rm-teacher-violation]").forEach(btn => {
+    btn.addEventListener("click", () => deleteViolationEntry(Number(btn.dataset.rmTeacherViolation)));
+  });
+}
+
+async function deleteViolationEntry(idx) {
+  const s = currentStudent();
+  if (!s) return;
+  const entries = (state.violations[state.selectedMonth]?.entries) || [];
+  const entry = entries[idx];
+  if (!entry) return;
+  try {
+    await updateDoc(
+      doc(db, "schoolYears", state.yearId, "students", s.id, "violations", state.selectedMonth),
+      { entries: arrayRemove(entry) }
+    );
+    toast("Đã xoá vi phạm.");
+  } catch (err) {
+    console.error(err);
+    toast("Không xoá được. Thử lại.");
+  }
 }
 
 $("mergeViolationsBtn").addEventListener("click", () => {
