@@ -929,9 +929,17 @@ async function createOfficerAccount(email, password, yearId, className, displayN
 async function bootstrapOfficerView() {
   const info = state.officerInfo;
   let yearLabel = "";
+  let yearDefaultClassName = "";
   try {
     const yearSnap = await getDoc(doc(db, "schoolYears", info.yearId));
-    yearLabel = yearSnap.exists() ? yearSnap.data().label : "";
+    if (yearSnap.exists()) {
+      const yearData = yearSnap.data();
+      yearLabel = yearData.label || "";
+      if (yearData.defaultClassId) {
+        const classSnap = await getDoc(doc(db, "schoolYears", info.yearId, "classes", yearData.defaultClassId));
+        if (classSnap.exists()) yearDefaultClassName = classSnap.data().name || "";
+      }
+    }
   } catch (err) { console.error(err); }
   $("officerMeta").textContent =
     `${info.name ? info.name + " · " : ""}${info.email} · Lớp ${info.className || "—"} · Năm học ${yearLabel}`;
@@ -940,7 +948,15 @@ async function bootstrapOfficerView() {
   try {
     const studentsSnap = await getDocs(collection(db, "schoolYears", info.yearId, "students"));
     students = studentsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-    if (info.className) students = students.filter(s => (s.fields?.className || "") === info.className);
+    if (info.className) {
+      // Học sinh có thể chưa có trường "Lớp" riêng trong lý lịch (ví dụ Excel
+      // gốc không có cột Lớp) — khi đó dùng lớp mặc định của năm học để so
+      // khớp, giống hệt cách web hiển thị "Lớp" ở các nơi khác.
+      students = students.filter(s => {
+        const effectiveClassName = s.fields?.className || yearDefaultClassName || "";
+        return effectiveClassName === info.className;
+      });
+    }
     students.sort((a, b) => (a.fields?.name || "").localeCompare(b.fields?.name || "", "vi"));
   } catch (err) {
     console.error(err);
