@@ -400,6 +400,22 @@
   .officer-row:last-child{border-bottom:none;}
   .officer-sub{color:var(--muted);font-size:12px;margin-top:2px;}
   .muted-inline{color:var(--muted);font-weight:normal;}
+  .overview-student-block{
+    margin-bottom:16px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .overview-student-block:last-child{border-bottom:none;margin-bottom:0;}
+  .overview-student-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:6px;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink);
+  }
   .comment-box textarea{
     width:100%;
     min-height:220px;
@@ -643,6 +659,7 @@
 
     <div class="sidebar-footer">
       <button class="import-btn" id="openImportBtn">Nhập danh sách từ Excel</button>
+      <button class="import-btn secondary" id="openViolationsOverviewBtn">Vi phạm theo tháng</button>
       <button class="import-btn secondary" id="manageOfficersBtn">Quản lý cán bộ lớp</button>
       <div class="userline">
         <span id="userEmailLabel"></span>
@@ -790,6 +807,17 @@
       <button class="btn btn-ghost" id="cancelDeleteYearBtn">Huỷ</button>
       <button class="btn" id="confirmDeleteYearBtn" style="border-color:var(--red);color:var(--red);" disabled>Xoá vĩnh viễn</button>
     </div>
+  </div>
+</div>
+
+<!-- ============ VIOLATIONS OVERVIEW MODAL ============ -->
+<div class="modal-overlay" id="violationsOverviewModal">
+  <div class="modal" style="max-width:640px;">
+    <button class="modal-close" id="closeViolationsOverviewBtn">&times;</button>
+    <h3>Học sinh vi phạm theo tháng</h3>
+    <div class="sub">Danh sách học sinh có vi phạm được cán bộ lớp báo cáo trong tháng đã chọn.</div>
+    <div class="month-row" id="violationsOverviewMonthRow" style="margin-bottom:18px;"></div>
+    <div id="violationsOverviewList" style="max-height:52vh;overflow-y:auto;"></div>
   </div>
 </div>
 
