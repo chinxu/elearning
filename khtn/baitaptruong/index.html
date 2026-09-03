@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Đấu trường nhóm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --nen:#101A33; --tang:#18234420; --the:#1B2748; --vien:#2E3D66;
+  --chu:#E8ECF5; --mo:#93A0BF; --vang:#F2B33D;
+  --a:#3E8FD6; --b:#E0603A; --c:#35A46E; --d:#8A6BE0;
+  --dung:#35A46E; --sai:#C0392B;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--nen); color:var(--chu);
+  font-family:"Be Vietnam Pro",system-ui,sans-serif;
+  font-size:16px; line-height:1.5;
+  padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom));
+  -webkit-text-size-adjust:100%;
+}
+.man{display:none; max-width:1100px; margin:0 auto}
+.man.hien{display:block}
+h1{font-size:1.55rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+h2{font-size:1.1rem;font-weight:800;margin-bottom:10px}
+p.phu{color:var(--mo);font-size:.92rem}
+.the{background:var(--the);border:1px solid var(--vien);border-radius:var(--r);padding:16px;margin-bottom:14px}
+label{display:block;font-size:.86rem;color:var(--mo);margin:12px 0 5px}
+input,select,textarea{
+  width:100%;background:#0E1730;border:1px solid var(--vien);color:var(--chu);
+  border-radius:10px;padding:11px 12px;font:inherit;font-size:1rem
+}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input:focus,select,textarea:focus,button:focus-visible{outline:2px solid var(--vang);outline-offset:2px}
+button{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:10px;padding:12px 16px;background:var(--vien);color:var(--chu)}
+button:disabled{opacity:.4;cursor:not-allowed}
+.chinh{background:var(--vang);color:#141414;font-weight:800}
+.vien{background:transparent;border:1px solid var(--vien)}
+.hang{display:flex;gap:10px;flex-wrap:wrap}
+.hang>*{flex:1 1 140px}
+.doi{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ma{font-size:clamp(2.6rem,13vw,4.6rem);font-weight:800;letter-spacing:.12em;color:var(--vang);line-height:1}
+.canh{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nhan{display:inline-block;font-size:.78rem;color:var(--mo);border:1px solid var(--vien);border-radius:99px;padding:3px 10px}
+
+/* bảng chiếu */
+.cauhoi{font-size:clamp(1.3rem,3.4vw,2.3rem);font-weight:800;line-height:1.28;margin:6px 0 14px}
+.lc{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.lc.mot{grid-template-columns:1fr}
+.o{display:flex;gap:12px;align-items:flex-start;border-radius:12px;padding:14px;background:#0E1730;border:2px solid transparent;font-size:1.05rem;text-align:left;width:100%;color:var(--chu)}
+.o .k{width:32px;height:32px;flex:0 0 32px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#0B1020}
+.o[data-k="0"] .k{background:var(--a)} .o[data-k="1"] .k{background:var(--b)}
+.o[data-k="2"] .k{background:var(--c)} .o[data-k="3"] .k{background:var(--d)}
+.o.chon{border-color:var(--vang)}
+.o.dung{border-color:var(--dung);background:#132C21}
+.o.saichon{border-color:var(--sai);background:#2B1616}
+.luoi{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.n{background:#0E1730;border:1px solid var(--vien);border-radius:12px;padding:12px;position:relative;min-height:78px}
+.n b{display:block;font-size:.95rem;font-weight:600;margin-bottom:4px}
+.n .tt{font-size:.82rem;color:var(--mo)}
+.n.xong{border-color:var(--vang)}
+.n.xong .tt{color:var(--vang)}
+.n.dung{border-color:var(--dung);background:#122A20}
+.n.sai{border-color:var(--sai);background:#251515}
+.hang-so{position:absolute;top:-9px;right:-6px;background:var(--vang);color:#141414;font-weight:800;font-size:.78rem;border-radius:99px;padding:2px 9px}
+.dong{height:6px;background:#0E1730;border-radius:99px;overflow:hidden;margin:10px 0}
+.dong i{display:block;height:100%;background:var(--vang);width:100%}
+.dsq{border:1px solid var(--vien);border-radius:10px;padding:10px;margin-bottom:8px;font-size:.9rem}
+.dsq .canh b{font-weight:600}
+.bang{width:100%;border-collapse:collapse;font-size:.95rem}
+.bang td,.bang th{border-bottom:1px solid var(--vien);padding:8px 6px;text-align:left}
+.bang th{color:var(--mo);font-weight:600;font-size:.82rem}
+.loi{background:#2B1616;border:1px solid var(--sai);color:#FFD9D4;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:.92rem}
+.ok{background:#132C21;border:1px solid var(--dung);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:.92rem}
+.giua{text-align:center;padding:30px 0}
+.nhc{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--vien);border-radius:10px;margin-bottom:7px;cursor:pointer}
+.nhc input{width:20px;height:20px;flex:0 0 20px;margin-top:2px;accent-color:var(--vang)}
+.nhc span{font-size:.93rem}
+.nhc em{display:block;color:var(--mo);font-style:normal;font-size:.83rem;margin-top:2px}
+.nhc.tick{border-color:var(--vang);background:#141F3C}
+@media(max-width:560px){ .lc{grid-template-columns:1fr} .doi{grid-template-columns:1fr} }
+@media print{ body{background:#fff;color:#000} .khongin{display:none!important} .the{border:1px solid #999} }
+</style>
+</head>
+<body>
+
+<!-- ================= TRANG ĐẦU ================= -->
+<div id="manHome" class="man">
+  <div class="giua">
+    <h1>Đấu trường nhóm</h1>
+    <p class="phu" style="margin-top:8px">Trả lời nhanh, giành điểm cho nhóm mình.</p>
+  </div>
+  <div class="the">
+    <h2>Học sinh</h2>
+    <label for="maVao">Mã phòng</label>
+    <input id="maVao" maxlength="6" autocapitalize="characters" placeholder="VD: K7X2M9">
+    <div style="height:12px"></div>
+    <button class="chinh" style="width:100%" id="btnVao">Vào phòng</button>
+  </div>
+  <div class="the">
+    <h2>Giáo viên</h2>
+    <p class="phu">Tạo phòng, nhập câu hỏi và điều khiển vòng thi.</p>
+    <div style="height:12px"></div>
+    <button class="vien" style="width:100%" id="btnGV">Mở bảng điều khiển</button>
+  </div>
+</div>
+
+<!-- ================= TẠO PHÒNG ================= -->
+<div id="manTao" class="man">
+  <div class="canh" style="margin-bottom:14px">
+    <h1>Tạo phòng mới</h1>
+    <button class="vien khongin" id="btnVeHome">Thoát</button>
+  </div>
+
+  <div class="the">
+    <h2>Thiết lập</h2>
+    <div class="doi">
+      <div>
+        <label for="tenPhong">Tên buổi học</label>
+        <input id="tenPhong" placeholder="Ôn tập chương II">
+      </div>
+      <div>
+        <label for="soNhom">Số nhóm</label>
+        <input id="soNhom" type="number" min="2" max="20" value="10">
+      </div>
+      <div>
+        <label for="giay">Thời gian mỗi câu (giây, 0 = không đếm)</label>
+        <input id="giay" type="number" min="0" max="600" value="30">
+      </div>
+      <div>
+        <label for="diemDung">Điểm cho câu trả lời đúng</label>
+        <input id="diemDung" type="number" min="0" value="10">
+      </div>
+      <div>
+        <label for="thuong1">Thưởng nhóm đúng &amp; nhanh nhất</label>
+        <input id="thuong1" type="number" min="0" value="5">
+      </div>
+      <div>
+        <label for="thuong2">Thưởng nhóm đúng &amp; nhanh nhì</label>
+        <input id="thuong2" type="number" min="0" value="3">
+      </div>
+    </div>
+  </div>
+
+  <div class="the">
+    <h2>Lấy từ ngân hàng câu hỏi</h2>
+    <div class="doi">
+      <div>
+        <label for="nhLop">Khối lớp</label>
+        <select id="nhLop"></select>
+      </div>
+      <div>
+        <label for="nhChuong">Chương</label>
+        <select id="nhChuong"></select>
+      </div>
+    </div>
+    <label for="nhBai">Bài</label>
+    <select id="nhBai"></select>
+    <div id="nhDs" style="margin-top:14px"></div>
+    <div class="hang" style="margin-top:12px">
+      <button class="vien" id="btnNhTatCa">Chọn tất cả</button>
+      <button class="vien" id="btnNhNgauNhien">Ngẫu nhiên 5 câu</button>
+      <button class="chinh" id="btnNhThem">Thêm câu đã chọn</button>
+    </div>
+    <div id="nhTB"></div>
+  </div>
+
+  <div class="the">
+    <h2>Tự nhập câu hỏi</h2>
+    <p class="phu">Mỗi dòng một câu, các phần cách nhau bằng dấu <b>|</b><br>
+      4 lựa chọn → trắc nghiệm A/B/C/D · 2 lựa chọn → dạng đúng/sai</p>
+    <label for="oDan">Dán danh sách câu hỏi</label>
+    <textarea id="oDan" placeholder="Thủ đô nước ta là gì? | Hà Nội | Huế | Đà Nẵng | Cần Thơ | A
+Sông Hồng chảy qua Hà Nội. | Đúng | Sai | A"></textarea>
+    <div class="hang" style="margin-top:12px">
+      <button class="vien" id="btnNapDan">Thêm vào danh sách</button>
+      <button class="vien" id="btnChonFile">Nhập từ Excel / CSV</button>
+      <input type="file" id="oFile" accept=".xlsx,.xls,.csv" hidden>
+    </div>
+    <p class="phu" style="margin-top:8px">File Excel: cột 1 là câu hỏi, các cột tiếp theo là lựa chọn, cột cuối là đáp án đúng (A/B/C/D).</p>
+    <div id="loiNhap"></div>
+    <div style="height:16px"></div>
+    <div class="canh"><h2 style="margin:0">Đã có <span id="demCau">0</span> câu</h2>
+      <button class="vien" id="btnXoaHet" style="flex:0">Xóa hết</button></div>
+    <div id="dsCau" style="margin-top:10px"></div>
+  </div>
+
+  <button class="chinh" style="width:100%;padding:16px" id="btnTao">Tạo phòng</button>
+  <div style="height:24px"></div>
+</div>
+
+<!-- ================= GIÁO VIÊN: ĐIỀU KHIỂN + BẢNG ================= -->
+<div id="manGV" class="man">
+  <div class="the khongin">
+    <div class="canh">
+      <div>
+        <span class="nhan">Mã phòng</span>
+        <div class="ma" id="maHien">------</div>
+        <p class="phu" id="tenHien"></p>
+      </div>
+      <div style="text-align:right">
+        <div class="nhan" id="tt">Đang chờ</div>
+        <div style="height:8px"></div>
+        <button class="vien" id="btnDsNhom">Mật khẩu nhóm</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="the khongin">
+    <div class="hang">
+      <button class="chinh" id="btnBatDau">Bắt đầu</button>
+      <button class="vien" id="btnKhoa">Khóa câu trả lời</button>
+      <button class="vien" id="btnMo">Mở đáp án</button>
+      <button class="vien" id="btnTiep">Câu tiếp theo</button>
+    </div>
+    <div class="hang" style="margin-top:10px">
+      <button class="vien" id="btnToanMH" style="flex:0 0 auto">Toàn màn hình</button>
+      <button class="vien" id="btnKetThuc" style="flex:0 0 auto">Kết thúc</button>
+      <button class="vien" id="btnThoatGV" style="flex:0 0 auto">Rời phòng</button>
+    </div>
+  </div>
+
+  <div class="the">
+    <div class="canh">
+      <span class="nhan" id="soCau">Câu 0/0</span>
+      <span class="nhan" id="dongHo"></span>
+    </div>
+    <div class="dong" id="thanhTG" hidden><i></i></div>
+    <div class="cauhoi" id="noiDungCau">Nhấn “Bắt đầu” để mở câu hỏi đầu tiên.</div>
+    <div class="lc" id="lcBang"></div>
+  </div>
+
+  <div class="the">
+    <h2>Các nhóm</h2>
+    <div class="luoi" id="luoiNhom"></div>
+  </div>
+
+  <div class="the" id="theBXH" hidden>
+    <h2>Bảng xếp hạng</h2>
+    <table class="bang"><tbody id="bxh"></tbody></table>
+  </div>
+  <div style="height:24px"></div>
+</div>
+
+<!-- ================= HỌC SINH ================= -->
+<div id="manHS" class="man">
+  <div id="hsDangNhap">
+    <div class="giua"><h1>Vào phòng</h1><p class="phu" id="hsTenPhong"></p></div>
+    <div class="the">
+      <label for="hsNhom">Nhóm của em</label>
+      <select id="hsNhom"></select>
+      <label for="hsMk">Mật khẩu nhóm</label>
+      <input id="hsMk" inputmode="numeric" autocomplete="off">
+      <div id="hsLoi"></div>
+      <div style="height:14px"></div>
+      <button class="chinh" style="width:100%" id="btnHsVao">Vào phòng</button>
+    </div>
+  </div>
+
+  <div id="hsChoi" hidden>
+    <div class="canh" style="margin-bottom:12px">
+      <div><b id="hsTenNhom"></b><span class="phu" id="hsDiem"></span></div>
+      <span class="nhan" id="hsSoCau"></span>
+    </div>
+    <div class="the">
+      <div class="dong" id="hsThanhTG" hidden><i></i></div>
+      <div class="cauhoi" id="hsCau" style="font-size:1.15rem">Chờ giáo viên bắt đầu…</div>
+      <div class="lc" id="hsLC"></div>
+      <div id="hsTB"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getDatabase, ref, get, set, update, onValue, off, serverTimestamp, remove }
+  from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+/* ============================================================
+   CẤU HÌNH FIREBASE — project web-baitap-trentruong
+   LƯU Ý: dòng databaseURL bên dưới phải khớp với đường dẫn
+   Firebase hiện ra sau khi bấm Create Database ở mục
+   Realtime Database. Nếu chọn vùng Singapore thì đuôi là
+   .asia-southeast1.firebasedatabase.app như dưới đây.
+   ============================================================ */
+const cauHinh = {
+  apiKey: "AIzaSyBzj_LInef9qXMioydpvI1GnFNOsCRpTE4",
+  authDomain: "web-baitap-trentruong.firebaseapp.com",
+  databaseURL: "https://web-baitap-trentruong-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "web-baitap-trentruong",
+  storageBucket: "web-baitap-trentruong.firebasestorage.app",
+  messagingSenderId: "751526592136",
+  appId: "1:751526592136:web:39a4a7ef13f7f10fa5293d"
+};
+
+const app = initializeApp(cauHinh);
+const db = getDatabase(app);
+const auth = getAuth(app);
+let uid = null;
+
+const $ = id => document.getElementById(id);
+const KY = ["A","B","C","D"];
+
+function man(id){
+  document.querySelectorAll(".man").forEach(m => m.classList.remove("hien"));
+  $(id).classList.add("hien");
+  window.scrollTo(0,0);
+}
+async function bam(s){
+  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2,"0")).join("");
+}
+function thoat(s){ const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; }
+function maNgauNhien(){
+  const kt = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let r = "";
+  for (let i=0;i<6;i++) r += kt[Math.floor(Math.random()*kt.length)];
+  return r;
+}
+
+/* ================= SOẠN CÂU HỎI ================= */
+let nganHang = [];
+
+function veDsCau(){
+  $("demCau").textContent = nganHang.length;
+  $("dsCau").innerHTML = nganHang.map((c,i) => `
+    <div class="dsq">
+      <div class="canh">
+        <b>${i+1}. ${thoat(c.noiDung)}</b>
+        <button class="vien xoaCau" data-i="${i}" style="flex:0 0 auto;padding:6px 10px;font-size:.85rem">Xóa</button>
+      </div>
+      <div class="phu">${c.luaChon.map((x,j) => `${KY[j]}. ${thoat(x)}`).join(" · ")} → đáp án ${KY[c.dapAn]}</div>
+    </div>`).join("") || `<p class="phu">Chưa có câu hỏi nào.</p>`;
+  document.querySelectorAll(".xoaCau").forEach(b => b.onclick = () => {
+    nganHang.splice(+b.dataset.i,1); veDsCau();
+  });
+}
+
+function docDapAn(v, soLc){
+  const t = String(v ?? "").trim().toUpperCase();
+  let i = KY.indexOf(t);
+  if (i < 0 && /^[1-4]$/.test(t)) i = +t - 1;
+  if (i < 0 && (t === "Đ" || t === "D" || t === "ĐÚNG" || t === "DUNG" || t === "TRUE")) i = 0;
+  if (i < 0 && (t === "S" || t === "SAI" || t === "FALSE")) i = 1;
+  return (i >= 0 && i < soLc) ? i : -1;
+}
+
+function themDong(phan, loi, stt){
+  const o = phan.map(x => String(x ?? "").trim()).filter(x => x !== "");
+  if (o.length < 4){ loi.push(`Dòng ${stt}: thiếu dữ liệu`); return; }
+  const noiDung = o[0], dapAnTho = o[o.length-1];
+  const luaChon = o.slice(1, o.length-1);
+  if (luaChon.length !== 2 && luaChon.length !== 4){
+    loi.push(`Dòng ${stt}: cần 2 hoặc 4 lựa chọn (đang có ${luaChon.length})`); return;
+  }
+  const dapAn = docDapAn(dapAnTho, luaChon.length);
+  if (dapAn < 0){ loi.push(`Dòng ${stt}: đáp án “${dapAnTho}” không hợp lệ`); return; }
+  nganHang.push({ noiDung, luaChon, dapAn });
+}
+
+$("btnNapDan").onclick = () => {
+  const dong = $("oDan").value.split("\n").filter(d => d.trim());
+  if (!dong.length){ $("loiNhap").innerHTML = `<div class="loi">Ô dán câu hỏi đang trống.</div>`; return; }
+  const loi = [];
+  dong.forEach((d,i) => themDong(d.split("|"), loi, i+1));
+  $("loiNhap").innerHTML = loi.length
+    ? `<div class="loi">${loi.map(thoat).join("<br>")}</div>`
+    : `<div class="ok">Đã thêm ${dong.length} câu.</div>`;
+  if (!loi.length) $("oDan").value = "";
+  veDsCau();
+};
+
+/* ---- Ngân hàng câu hỏi có sẵn ---- */
+const KHOI = [
+  { ma:"6", ten:"Lớp 6", file:"ngan-hang-6.json" },
+  { ma:"7", ten:"Lớp 7", file:"ngan-hang-7.json" },
+  { ma:"8", ten:"Lớp 8", file:"ngan-hang-8.json" }
+];
+const NH = {};
+
+async function napNganHang(){
+  if (!$("nhLop").options.length){
+    $("nhLop").innerHTML = KHOI.map(k => `<option value="${k.ma}">${k.ten}</option>`).join("");
+    $("nhLop").onchange = napLop;
+    $("nhChuong").onchange = veBaiNH;
+    $("nhBai").onchange = veCauNH;
+  }
+  await napLop();
+}
+
+async function napLop(){
+  const k = KHOI.find(x => x.ma === $("nhLop").value);
+  if (!NH[k.ma]){
+    $("nhDs").innerHTML = `<p class="phu">Đang tải câu hỏi ${k.ten}…</p>`;
+    try{
+      const r = await fetch(k.file);
+      if (!r.ok) throw new Error(r.status);
+      NH[k.ma] = await r.json();
+    }catch(e){
+      $("nhDs").innerHTML = `<div class="loi">Không đọc được file <b>${k.file}</b>. Hãy đặt file này cùng thư mục với trang web.</div>`;
+      $("nhChuong").innerHTML = ""; $("nhBai").innerHTML = "";
+      return;
+    }
+  }
+  veChuongNH();
+}
+
+function veChuongNH(){
+  const l = NH[$("nhLop").value];
+  $("nhChuong").innerHTML = l.chuong.map((c,i) =>
+    `<option value="${i}">${thoat(c.ten)}</option>`).join("");
+  veBaiNH();
+}
+
+function veBaiNH(){
+  const c = NH[$("nhLop").value].chuong[+$("nhChuong").value];
+  $("nhBai").innerHTML = c.bai.map((b,i) =>
+    `<option value="${i}">${thoat(b.ten)} — ${b.cau.length} câu</option>`).join("");
+  veCauNH();
+}
+
+function baiDangChon(){
+  return NH[$("nhLop").value].chuong[+$("nhChuong").value].bai[+$("nhBai").value];
+}
+
+function veCauNH(){
+  $("nhTB").innerHTML = "";
+  $("nhDs").innerHTML = baiDangChon().cau.map((c,i) => `
+    <label class="nhc"><input type="checkbox" data-i="${i}">
+      <span>${thoat(c.noiDung)}
+        <em>${c.luaChon.map((x,j) => `${KY[j]}. ${thoat(x)}`).join(" · ")}</em>
+      </span></label>`).join("");
+  $("nhDs").querySelectorAll("input").forEach(o => {
+    o.onchange = () => o.closest(".nhc").classList.toggle("tick", o.checked);
+  });
+}
+
+$("btnNhTatCa").onclick = () => {
+  const o = $("nhDs").querySelectorAll("input");
+  const bat = [...o].some(x => !x.checked);
+  o.forEach(x => { x.checked = bat; x.closest(".nhc").classList.toggle("tick", bat); });
+};
+
+$("btnNhNgauNhien").onclick = () => {
+  const o = [...$("nhDs").querySelectorAll("input")];
+  o.forEach(x => { x.checked = false; x.closest(".nhc").classList.remove("tick"); });
+  o.sort(() => Math.random() - .5).slice(0,5)
+   .forEach(x => { x.checked = true; x.closest(".nhc").classList.add("tick"); });
+};
+
+$("btnNhThem").onclick = () => {
+  const b = baiDangChon();
+  const chon = [...$("nhDs").querySelectorAll("input:checked")].map(x => +x.dataset.i);
+  if (!chon.length){ $("nhTB").innerHTML = `<div class="loi">Chưa chọn câu nào.</div>`; return; }
+  chon.forEach(i => nganHang.push(JSON.parse(JSON.stringify(b.cau[i]))));
+  $("nhTB").innerHTML = `<div class="ok">Đã thêm ${chon.length} câu từ “${thoat(b.ten)}”.</div>`;
+  $("nhDs").querySelectorAll("input").forEach(x => {
+    x.checked = false; x.closest(".nhc").classList.remove("tick");
+  });
+  veDsCau();
+};
+
+$("btnChonFile").onclick = () => $("oFile").click();
+$("oFile").onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const fr = new FileReader();
+  fr.onload = ev => {
+    try{
+      const wb = XLSX.read(ev.target.result, { type:"array" });
+      const hang = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header:1, blankrows:false });
+      const loi = [];
+      hang.forEach((h,i) => { if (h.some(x => String(x??"").trim())) themDong(h, loi, i+1); });
+      $("loiNhap").innerHTML = loi.length
+        ? `<div class="loi">${loi.map(thoat).join("<br>")}</div>`
+        : `<div class="ok">Đã nhập ${hang.length} dòng từ file.</div>`;
+      veDsCau();
+    }catch(err){
+      $("loiNhap").innerHTML = `<div class="loi">Không đọc được file. Hãy lưu lại dạng .xlsx hoặc .csv rồi thử lại.</div>`;
+    }
+  };
+  fr.readAsArrayBuffer(f);
+  e.target.value = "";
+};
+
+$("btnXoaHet").onclick = () => { if (confirm("Xóa toàn bộ câu hỏi?")){ nganHang = []; veDsCau(); } };
+
+/* ================= TẠO PHÒNG ================= */
+$("btnTao").onclick = async () => {
+  if (!nganHang.length){ alert("Chưa có câu hỏi nào."); return; }
+  const soNhom = Math.max(2, Math.min(20, +$("soNhom").value || 10));
+  const btn = $("btnTao"); btn.disabled = true; btn.textContent = "Đang tạo…";
+  try{
+    let ma;
+    for (let i=0;i<6;i++){ ma = maNgauNhien(); if (!(await get(ref(db,`phong/${ma}/thongTin`))).exists()) break; }
+
+    const nhom = {}, mkHien = [];
+    for (let i=1;i<=soNhom;i++){
+      const mk = String(Math.floor(1000 + Math.random()*9000));
+      nhom["n"+i] = { ten:"Nhóm "+i, mk: await bam(mk) };
+      mkHien.push({ ten:"Nhóm "+i, mk });
+    }
+
+    await set(ref(db,`phong/${ma}`), {
+      thongTin: {
+        ten: $("tenPhong").value.trim() || "Buổi ôn tập",
+        chuPhong: uid,
+        trangThai: "cho",
+        chiSo: -1,
+        tongCau: nganHang.length,
+        thoiGian: Math.max(0, +$("giay").value || 0),
+        diemDung: Math.max(0, +$("diemDung").value || 0),
+        thuong1: Math.max(0, +$("thuong1").value || 0),
+        thuong2: Math.max(0, +$("thuong2").value || 0)
+      },
+      nganHang, nhom
+    });
+
+    localStorage.setItem("gv_phong", ma);
+    localStorage.setItem("gv_mk_"+ma, JSON.stringify(mkHien));
+    location.hash = "#gv=" + ma;
+    moGV(ma);
+  }catch(e){
+    alert("Không tạo được phòng: " + e.message);
+  }finally{ btn.disabled = false; btn.textContent = "Tạo phòng"; }
+};
+
+/* ================= MÀN GIÁO VIÊN ================= */
+let P = null, bank = [], dsNhom = {}, traLoi = {}, diem = {}, huy = [], dem = null;
+
+function boNghe(){ huy.forEach(f => f()); huy = []; if (dem){ clearInterval(dem); dem = null; } }
+
+async function moGV(ma){
+  boNghe();
+  P = { ma };
+  man("manGV");
+  $("maHien").textContent = ma;
+
+  const bk = await get(ref(db,`phong/${ma}/nganHang`));
+  if (!bk.exists()){
+    alert("Không mở được phòng này. Có thể phòng đã bị xóa, hoặc thầy/cô đang dùng trình duyệt khác với lúc tạo phòng.");
+    location.hash = ""; man("manHome"); return;
+  }
+  bank = bk.val();
+
+  huy.push(onValue(ref(db,`phong/${ma}/thongTin`), s => { P.tt = s.val(); veBang(); }));
+  huy.push(onValue(ref(db,`phong/${ma}/nhom`), s => { dsNhom = s.val() || {}; veBang(); }));
+  huy.push(onValue(ref(db,`phong/${ma}/traLoi`), s => { traLoi = s.val() || {}; veBang(); }));
+  huy.push(onValue(ref(db,`phong/${ma}/diem`), s => { diem = s.val() || {}; veBang(); }));
+}
+
+const TEN_TT = { cho:"Đang chờ", hoi:"Đang trả lời", khoa:"Đã khóa", mo:"Đã mở đáp án", ket:"Kết thúc" };
+
+function veBang(){
+  if (!P?.tt) return;
+  const t = P.tt, i = t.chiSo, cau = i >= 0 ? bank[i] : null;
+  $("tenHien").textContent = t.ten;
+  $("tt").textContent = TEN_TT[t.trangThai] || "";
+  $("soCau").textContent = i >= 0 ? `Câu ${i+1}/${t.tongCau}` : `${t.tongCau} câu`;
+
+  if (cau){
+    $("noiDungCau").textContent = cau.noiDung;
+    $("lcBang").className = "lc" + (cau.luaChon.length === 2 ? " mot" : "");
+    $("lcBang").innerHTML = cau.luaChon.map((x,j) => {
+      const lo = t.trangThai === "mo" && j === cau.dapAn ? " dung" : "";
+      return `<div class="o${lo}" data-k="${j}"><span class="k">${KY[j]}</span><span>${thoat(x)}</span></div>`;
+    }).join("");
+  } else if (t.trangThai === "ket"){
+    $("noiDungCau").textContent = "Đã xong. Cảm ơn các nhóm!";
+    $("lcBang").innerHTML = "";
+  }
+
+  const tl = traLoi[i] || {};
+  const xh = Object.entries(tl).sort((a,b) => (a[1].t||0) - (b[1].t||0)).map(x => x[0]);
+  $("luoiNhom").innerHTML = Object.entries(dsNhom).map(([id,n]) => {
+    const r = tl[id], hang = xh.indexOf(id);
+    let lop = "", tt = "Chưa trả lời", huyHieu = "";
+    if (r){
+      lop = " xong"; tt = "Đã trả lời";
+      if (hang === 0) huyHieu = `<span class="hang-so">Nhanh nhất</span>`;
+      else if (hang === 1) huyHieu = `<span class="hang-so">Nhanh nhì</span>`;
+      if (t.trangThai === "mo"){
+        const d = r.chon === bank[i].dapAn;
+        lop = d ? " dung" : " sai";
+        tt = `${KY[r.chon]} — ${d ? "Đúng" : "Sai"}`;
+      }
+    }
+    return `<div class="n${lop}">${huyHieu}<b>${thoat(n.ten)}</b>
+      <span class="tt">${tt}</span><br><span class="tt">${diem[id] || 0} điểm</span></div>`;
+  }).join("");
+
+  if (t.trangThai === "ket"){
+    $("theBXH").hidden = false;
+    const sx = Object.entries(dsNhom).map(([id,n]) => [n.ten, diem[id] || 0]).sort((a,b) => b[1] - a[1]);
+    $("bxh").innerHTML = sx.map(([ten,d],k) =>
+      `<tr><td style="width:40px;color:var(--vang);font-weight:800">${k+1}</td><td>${thoat(ten)}</td><td style="text-align:right;font-weight:800">${d}</td></tr>`).join("");
+  }
+
+  chayDongHo();
+  const s = t.trangThai;
+  $("btnBatDau").disabled = !(s === "cho");
+  $("btnKhoa").disabled = s !== "hoi";
+  $("btnMo").disabled = !(s === "hoi" || s === "khoa");
+  $("btnTiep").disabled = s !== "mo";
+}
+
+function chayDongHo(){
+  if (dem){ clearInterval(dem); dem = null; }
+  const t = P.tt;
+  if (t.trangThai !== "hoi" || !t.thoiGian || !t.batDauLuc){
+    $("dongHo").textContent = ""; $("thanhTG").hidden = true; $("hsThanhTG").hidden = true; return;
+  }
+  $("thanhTG").hidden = false;
+  const nhip = () => {
+    const conLai = t.thoiGian - (Date.now() - t.batDauLuc)/1000;
+    const g = Math.max(0, Math.ceil(conLai));
+    $("dongHo").textContent = g + " giây";
+    $("thanhTG").firstElementChild.style.width = Math.max(0, conLai/t.thoiGian*100) + "%";
+    if (conLai <= 0){
+      clearInterval(dem); dem = null;
+      update(ref(db,`phong/${P.ma}/thongTin`), { trangThai:"khoa" });
+    }
+  };
+  nhip(); dem = setInterval(nhip, 200);
+}
+
+async function moCau(i){
+  if (i >= bank.length){ await update(ref(db,`phong/${P.ma}/thongTin`), { trangThai:"ket", chiSo:-1, cau:null }); return; }
+  const c = bank[i];
+  await update(ref(db,`phong/${P.ma}/thongTin`), {
+    chiSo: i, trangThai: "hoi", batDauLuc: Date.now(),
+    cau: { noiDung: c.noiDung, luaChon: c.luaChon },
+    dapAnDung: null
+  });
+}
+
+$("btnBatDau").onclick = () => moCau(0);
+$("btnTiep").onclick = () => moCau(P.tt.chiSo + 1);
+$("btnKhoa").onclick = () => update(ref(db,`phong/${P.ma}/thongTin`), { trangThai:"khoa" });
+
+$("btnMo").onclick = async () => {
+  const i = P.tt.chiSo, cau = bank[i];
+  if (P.tt.trangThai === "mo") return;
+  const s = await get(ref(db,`phong/${P.ma}/traLoi/${i}`));
+  const tl = s.val() || {};
+  const dungList = Object.entries(tl).filter(([,r]) => r.chon === cau.dapAn)
+    .sort((a,b) => (a[1].t||0) - (b[1].t||0)).map(x => x[0]);
+  const capNhat = {};
+  dungList.forEach((id,k) => {
+    let d = P.tt.diemDung;
+    if (k === 0) d += P.tt.thuong1;
+    else if (k === 1) d += P.tt.thuong2;
+    capNhat[id] = (diem[id] || 0) + d;
+  });
+  if (Object.keys(capNhat).length) await update(ref(db,`phong/${P.ma}/diem`), capNhat);
+  await update(ref(db,`phong/${P.ma}/thongTin`), { trangThai:"mo", dapAnDung: cau.dapAn });
+};
+
+$("btnKetThuc").onclick = () => {
+  if (confirm("Kết thúc buổi thi và hiện bảng xếp hạng?"))
+    update(ref(db,`phong/${P.ma}/thongTin`), { trangThai:"ket", chiSo:-1, cau:null, dapAnDung:null });
+};
+
+$("btnDsNhom").onclick = () => {
+  const ds = JSON.parse(localStorage.getItem("gv_mk_"+P.ma) || "[]");
+  if (!ds.length){ alert("Danh sách mật khẩu chỉ lưu trên máy đã tạo phòng."); return; }
+  const w = window.open("", "_blank");
+  w.document.write(`<meta charset="utf-8"><title>Mật khẩu nhóm</title>
+    <style>body{font-family:system-ui;padding:24px}h1{font-size:18px}
+    table{border-collapse:collapse;width:100%;max-width:420px;margin-top:12px}
+    td{border:1px solid #999;padding:10px 12px;font-size:16px}
+    b{font-size:22px;letter-spacing:.1em}</style>
+    <h1>Mã phòng: ${P.ma}</h1><table>` +
+    ds.map(x => `<tr><td>${x.ten}</td><td><b>${x.mk}</b></td></tr>`).join("") +
+    `</table><p style="margin-top:16px">Cắt rời và phát cho từng nhóm.</p>`);
+  w.document.close();
+};
+
+$("btnToanMH").onclick = () => {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen?.();
+};
+$("btnThoatGV").onclick = () => { boNghe(); location.hash = ""; man("manHome"); };
+$("btnVeHome").onclick = () => { location.hash = ""; man("manHome"); };
+
+/* ================= MÀN HỌC SINH ================= */
+let H = null;
+
+$("btnVao").onclick = () => {
+  const ma = $("maVao").value.trim().toUpperCase();
+  if (ma.length !== 6){ alert("Mã phòng gồm 6 ký tự."); return; }
+  location.hash = "#p=" + ma;
+  moHS(ma);
+};
+$("btnGV").onclick = () => { location.hash = "#gv"; man("manTao"); veDsCau(); napNganHang(); };
+
+async function moHS(ma){
+  boNghe();
+  H = { ma };
+  man("manHS");
+  $("hsDangNhap").hidden = false; $("hsChoi").hidden = true;
+
+  const s = await get(ref(db,`phong/${ma}/thongTin`));
+  if (!s.exists()){ alert("Không tìm thấy phòng " + ma + ". Hãy kiểm tra lại mã."); location.hash=""; man("manHome"); return; }
+  $("hsTenPhong").textContent = s.val().ten;
+
+  const n = await get(ref(db,`phong/${ma}/nhom`));
+  const nhom = n.val() || {};
+  $("hsNhom").innerHTML = Object.entries(nhom)
+    .map(([id,v]) => `<option value="${id}">${thoat(v.ten)}</option>`).join("");
+  H.nhom = nhom;
+
+  const luu = JSON.parse(localStorage.getItem("hs_"+ma) || "null");
+  if (luu && nhom[luu.id]){ H.id = luu.id; H.ten = nhom[luu.id].ten; vaoChoi(); }
+}
+
+$("btnHsVao").onclick = async () => {
+  const id = $("hsNhom").value;
+  const mk = $("hsMk").value.trim();
+  if (!id || !mk){ $("hsLoi").innerHTML = `<div class="loi">Hãy chọn nhóm và nhập mật khẩu.</div>`; return; }
+  if (await bam(mk) !== H.nhom[id].mk){
+    $("hsLoi").innerHTML = `<div class="loi">Mật khẩu chưa đúng. Hỏi lại giáo viên nhé.</div>`; return;
+  }
+  H.id = id; H.ten = H.nhom[id].ten;
+  localStorage.setItem("hs_"+H.ma, JSON.stringify({ id }));
+  vaoChoi();
+};
+
+function vaoChoi(){
+  $("hsDangNhap").hidden = true; $("hsChoi").hidden = false;
+  $("hsTenNhom").textContent = H.ten;
+  huy.push(onValue(ref(db,`phong/${H.ma}/thongTin`), s => { H.tt = s.val(); veHS(); }));
+  huy.push(onValue(ref(db,`phong/${H.ma}/diem`), s => {
+    const d = (s.val() || {})[H.id] || 0;
+    $("hsDiem").textContent = " · " + d + " điểm";
+  }));
+}
+
+function daChon(i){ return localStorage.getItem(`hs_${H.ma}_${i}`); }
+
+function veHS(){
+  const t = H.tt; if (!t) return;
+  const i = t.chiSo, s = t.trangThai;
+  $("hsSoCau").textContent = i >= 0 ? `Câu ${i+1}/${t.tongCau}` : "";
+  $("hsTB").innerHTML = "";
+
+  if (s === "cho" || i < 0){
+    $("hsCau").textContent = s === "ket" ? "Đã xong. Cảm ơn nhóm em!" : "Chờ giáo viên bắt đầu…";
+    $("hsLC").innerHTML = ""; $("hsThanhTG").hidden = true; return;
+  }
+
+  const c = t.cau; if (!c) return;
+  $("hsCau").textContent = c.noiDung;
+  $("hsLC").className = "lc" + (c.luaChon.length === 2 ? " mot" : "");
+  const chon = daChon(i);
+
+  $("hsLC").innerHTML = c.luaChon.map((x,j) => {
+    let lop = "";
+    if (chon !== null && +chon === j) lop = " chon";
+    if (s === "mo"){
+      if (j === t.dapAnDung) lop = " dung";
+      else if (chon !== null && +chon === j) lop = " saichon";
+    }
+    return `<button class="o${lop}" data-k="${j}" data-j="${j}"><span class="k">${KY[j]}</span><span>${thoat(x)}</span></button>`;
+  }).join("");
+
+  const khoa = s !== "hoi" || chon !== null;
+  $("hsLC").querySelectorAll("button").forEach(b => {
+    b.disabled = khoa;
+    b.onclick = () => guiTraLoi(+b.dataset.j);
+  });
+
+  if (s === "hoi" && chon !== null) $("hsTB").innerHTML = `<div class="ok">Đã gửi đáp án ${KY[+chon]}. Chờ các nhóm khác.</div>`;
+  if (s === "khoa") $("hsTB").innerHTML = `<div class="ok">Hết giờ. Chờ giáo viên mở đáp án.</div>`;
+  if (s === "mo"){
+    if (chon === null) $("hsTB").innerHTML = `<div class="loi">Nhóm em chưa kịp trả lời câu này.</div>`;
+    else $("hsTB").innerHTML = +chon === t.dapAnDung
+      ? `<div class="ok">Chính xác!</div>`
+      : `<div class="loi">Chưa đúng. Đáp án là ${KY[t.dapAnDung]}.</div>`;
+  }
+
+  if (s === "hoi" && t.thoiGian && t.batDauLuc){
+    $("hsThanhTG").hidden = false;
+    if (dem) clearInterval(dem);
+    dem = setInterval(() => {
+      const cl = t.thoiGian - (Date.now() - t.batDauLuc)/1000;
+      $("hsThanhTG").firstElementChild.style.width = Math.max(0, cl/t.thoiGian*100) + "%";
+      if (cl <= 0){ clearInterval(dem); dem = null; }
+    }, 200);
+  } else $("hsThanhTG").hidden = true;
+}
+
+async function guiTraLoi(j){
+  const i = H.tt.chiSo;
+  if (daChon(i) !== null || H.tt.trangThai !== "hoi") return;
+  localStorage.setItem(`hs_${H.ma}_${i}`, String(j));
+  veHS();
+  try{
+    await set(ref(db,`phong/${H.ma}/traLoi/${i}/${H.id}`), { chon:j, t: serverTimestamp() });
+  }catch(e){
+    localStorage.removeItem(`hs_${H.ma}_${i}`);
+    $("hsTB").innerHTML = `<div class="loi">Chưa gửi được. Kiểm tra mạng rồi chọn lại.</div>`;
+    veHS();
+  }
+}
+
+/* ================= KHỞI ĐỘNG ================= */
+function dinhTuyen(){
+  const h = location.hash;
+  if (h.startsWith("#gv=")) moGV(h.slice(4));
+  else if (h === "#gv"){ man("manTao"); veDsCau(); napNganHang(); }
+  else if (h.startsWith("#p=")){ $("maVao").value = h.slice(3).toUpperCase(); moHS(h.slice(3).toUpperCase()); }
+  else man("manHome");
+}
+
+onAuthStateChanged(auth, u => {
+  if (!u) return;
+  uid = u.uid;
+  dinhTuyen();
+});
+signInAnonymously(auth).catch(e => {
+  document.body.innerHTML = `<div class="the" style="max-width:520px;margin:40px auto">
+    <h2>Chưa kết nối được Firebase</h2>
+    <p class="phu">Hãy kiểm tra: đã dán đúng cấu hình trong file chưa, và đã bật <b>Authentication → Sign-in method → Anonymous</b> trong Firebase Console chưa.</p>
+    <p class="phu" style="margin-top:8px">Chi tiết: ${e.message}</p></div>`;
+});
+window.addEventListener("hashchange", dinhTuyen);
+</script>
+</body>
+</html>
