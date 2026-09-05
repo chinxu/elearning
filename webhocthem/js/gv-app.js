@@ -7,6 +7,7 @@ let namHocList = [];
 let lopList = [];
 let hsList = [];
 let cauHoiList = [];
+let baiHocList = [];
 let deList = [];
 
 // ============================================================
@@ -61,6 +62,7 @@ function dichLoi(err) {
 // ============================================================
 async function initApp() {
   await loadNamHoc();
+  await loadBaiHoc();
   await loadCauHoi();
   await loadDe();
 }
@@ -351,6 +353,12 @@ function openTaoTaiKhoan(hsId) {
       <button class="btn btn-primary" onclick="taoTaiKhoanHs('${hsId}')">Tạo tài khoản</button>
     </div>`);
 }
+// Ghi "bản đồ" uid -> (năm học, lớp, id học sinh) để trang học sinh tra cứu khi đăng nhập,
+// không cần collectionGroup query (thứ đòi hỏi phải tạo index riêng trong Firebase Console).
+async function ghiBanDoTaiKhoan(uid, namHocId, lopId, hsId) {
+  await db.collection('taiKhoanHocSinh').doc(uid).set({ namHocId, lopId, hsId });
+}
+
 async function taoTaiKhoanHs(hsId) {
   const maHS = document.getElementById('mMaHS').value.trim();
   const matKhau = document.getElementById('mMatKhau').value;
@@ -360,6 +368,7 @@ async function taoTaiKhoanHs(hsId) {
     await secondaryAuth.signOut();
     await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId)
       .collection('hocSinh').doc(hsId).update({ maHS, uid: cred.user.uid });
+    await ghiBanDoTaiKhoan(cred.user.uid, currentNamHocId, currentLopId, hsId);
     closeModal();
     await loadHocSinh();
   } catch (err) {
@@ -403,6 +412,7 @@ async function taoTaiKhoanHangLoat() {
       await secondaryAuth.signOut();
       await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId)
         .collection('hocSinh').doc(hs.id).update({ maHS: ma, uid: cred.user.uid });
+      await ghiBanDoTaiKhoan(cred.user.uid, currentNamHocId, currentLopId, hs.id);
       daDungMa.add(ma);
       thanhCong++;
     } catch (err) {
@@ -411,6 +421,29 @@ async function taoTaiKhoanHangLoat() {
   }
   await loadHocSinh();
   alert(`Đã tạo ${thanhCong}/${ungVien.length} tài khoản.` + (loi.length ? `\n\nLỗi:\n${loi.join('\n')}` : ''));
+}
+
+// Công cụ sửa lỗi 1 lần: quét lại TẤT CẢ học sinh đã có tài khoản (uid + maHS) trong mọi
+// năm học/lớp, ghi lại "bản đồ" uid -> vị trí học sinh. Dùng cho các tài khoản được tạo
+// trước khi có bản vá này, hoặc nếu học sinh báo không đăng nhập được.
+async function dongBoTaiKhoanHocSinh() {
+  if (!confirm('Quét lại toàn bộ tài khoản học sinh đã tạo (mọi năm học, mọi lớp) để sửa lỗi đăng nhập? Chỉ cần chạy 1 lần.')) return;
+  let soLuong = 0;
+  const namHocSnap = await db.collection('namHoc').get();
+  for (const nhDoc of namHocSnap.docs) {
+    const lopSnap = await db.collection('namHoc').doc(nhDoc.id).collection('lop').get();
+    for (const lopDoc of lopSnap.docs) {
+      const hsSnap = await db.collection('namHoc').doc(nhDoc.id).collection('lop').doc(lopDoc.id).collection('hocSinh').get();
+      for (const hsDoc of hsSnap.docs) {
+        const d = hsDoc.data();
+        if (d.uid && d.maHS) {
+          await ghiBanDoTaiKhoan(d.uid, nhDoc.id, lopDoc.id, hsDoc.id);
+          soLuong++;
+        }
+      }
+    }
+  }
+  alert(`Đã đồng bộ xong ${soLuong} tài khoản học sinh. Giờ học sinh có thể đăng nhập lại được.`);
 }
 
 // ============================================================
@@ -476,16 +509,100 @@ async function xuatExcelToanBo() {
 }
 
 // ============================================================
+// BÀI HỌC (tổ chức ngân hàng câu hỏi theo bài, khối 6/7/8/9)
+// ============================================================
+async function loadBaiHoc() {
+  const snap = await db.collection('baiHoc').orderBy('khoi').orderBy('ten').get();
+  baiHocList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderBaiHocList();
+  capNhatBaiHocSelects();
+}
+
+function renderBaiHocList() {
+  const el = document.getElementById('baiHocListEl');
+  if (!el) return;
+  if (!baiHocList.length) { el.innerHTML = '<p class="muted">Chưa có bài học nào.</p>'; return; }
+  const nhom = {};
+  baiHocList.forEach(b => { (nhom[b.khoi] = nhom[b.khoi] || []).push(b); });
+  el.innerHTML = Object.keys(nhom).sort().map(khoi => `
+    <div style="margin-bottom:8px;">
+      <div class="muted" style="font-weight:600; margin-bottom:4px;">Lớp ${khoi}</div>
+      <div class="row">
+        ${nhom[khoi].map(b => `
+          <span class="badge badge-pending" style="display:inline-flex; align-items:center; gap:6px;">
+            ${escapeHtml(b.ten)}
+            <button onclick="xoaBaiHoc('${b.id}')" style="border:none;background:none;cursor:pointer;color:inherit;font-weight:700;padding:0;">✕</button>
+          </span>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+async function themBaiHoc() {
+  const khoi = document.getElementById('baiHocKhoiMoi').value;
+  const ten = document.getElementById('baiHocTenMoi').value.trim();
+  if (!ten) { alert('Nhập tên bài.'); return; }
+  await db.collection('baiHoc').add({ khoi, ten, createdAt: Date.now() });
+  document.getElementById('baiHocTenMoi').value = '';
+  await loadBaiHoc();
+}
+async function xoaBaiHoc(id) {
+  if (!confirm('Xóa bài học này? Các câu hỏi đã gắn vào bài này sẽ chuyển về "Chưa phân loại" (không bị xóa).')) return;
+  await db.collection('baiHoc').doc(id).delete();
+  await loadBaiHoc();
+  renderCauHoiTable();
+}
+
+// Danh sách <option> để GÁN 1 bài cho câu hỏi (import / thêm thủ công)
+function optionsBaiHocAssign() {
+  return '<option value="">— Chưa phân loại —</option>' + [6, 7, 8, 9].map(khoiOptionsGroup).join('');
+}
+// Danh sách <option> để LỌC theo bài (ngân hàng câu hỏi / tạo đề)
+function optionsBaiHocFilter() {
+  return '<option value="">— Tất cả —</option><option value="_khong">— Chưa phân loại —</option>' +
+    [6, 7, 8, 9].map(khoiOptionsGroup).join('');
+}
+function khoiOptionsGroup(k) {
+  const items = baiHocList.filter(b => String(b.khoi) === String(k));
+  if (!items.length) return '';
+  return `<optgroup label="Lớp ${k}">${items.map(b => `<option value="${b.id}">${escapeHtml(b.ten)}</option>`).join('')}</optgroup>`;
+}
+function tenBaiHoc(id) {
+  if (!id) return '<span class="muted">—</span>';
+  const b = baiHocList.find(x => x.id === id);
+  return b ? escapeHtml(`Lớp ${b.khoi} · ${b.ten}`) : '<span class="muted">—</span>';
+}
+function capNhatBaiHocSelects() {
+  const giuGiaTri = (id, html) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const cur = el.value;
+    el.innerHTML = html;
+    if ([...el.options].some(o => o.value === cur)) el.value = cur;
+  };
+  giuGiaTri('importBaiHocSelect', optionsBaiHocAssign());
+  giuGiaTri('cauHoiBaiHocFilter', optionsBaiHocFilter());
+}
+
+// ============================================================
 // NGÂN HÀNG CÂU HỎI (Chức năng 3 + phần nhập tay của Chức năng 2)
 // ============================================================
 async function loadCauHoi() {
   const snap = await db.collection('cauHoi').orderBy('createdAt', 'desc').get();
   cauHoiList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderCauHoiTable();
+}
+function renderCauHoiTable() {
+  const filterEl = document.getElementById('cauHoiBaiHocFilter');
+  const filterVal = filterEl ? filterEl.value : '';
+  let list = cauHoiList;
+  if (filterVal === '_khong') list = cauHoiList.filter(c => !c.baiHocId);
+  else if (filterVal) list = cauHoiList.filter(c => c.baiHocId === filterVal);
   const tbody = document.getElementById('cauHoiTbody');
-  document.getElementById('cauHoiEmpty').style.display = cauHoiList.length ? 'none' : 'block';
-  tbody.innerHTML = cauHoiList.map(c => `
+  document.getElementById('cauHoiEmpty').style.display = list.length ? 'none' : 'block';
+  tbody.innerHTML = list.map(c => `
     <tr>
       <td>${formatCT(c.noiDung)}</td>
+      <td>${tenBaiHoc(c.baiHocId)}</td>
       <td>${['A','B','C','D'][c.dapAnDung]}</td>
       <td>${c.nguon === 'import' ? 'Import' : 'Nhập tay'}</td>
       <td><button class="btn btn-outline" onclick="deleteCauHoi('${c.id}')">Xóa</button></td>
@@ -495,6 +612,7 @@ async function loadCauHoi() {
 function openCauHoiModal() {
   showModal(`
     <h3>Thêm câu hỏi</h3>
+    <div class="field"><label>Xếp vào bài (tùy chọn)</label><select id="mCauBaiHoc">${optionsBaiHocAssign()}</select></div>
     <div class="field"><label>Nội dung câu hỏi</label><textarea id="mCauNoiDung" rows="2"></textarea></div>
     <div class="field"><label>Đáp án A</label><input type="text" id="mDapA"></div>
     <div class="field"><label>Đáp án B</label><input type="text" id="mDapB"></div>
@@ -509,11 +627,12 @@ function openCauHoiModal() {
     </div>`);
 }
 async function saveCauHoi() {
+  const baiHocId = document.getElementById('mCauBaiHoc').value || null;
   const noiDung = document.getElementById('mCauNoiDung').value.trim();
   const dapAn = ['mDapA','mDapB','mDapC','mDapD'].map(id => document.getElementById(id).value.trim());
   const dapAnDung = parseInt(document.getElementById('mDapDung').value);
   if (!noiDung || dapAn.some(d => !d)) { alert('Điền đầy đủ nội dung và 4 đáp án.'); return; }
-  await db.collection('cauHoi').add({ noiDung, dapAn, dapAnDung, nguon: 'nhap', createdAt: Date.now() });
+  await db.collection('cauHoi').add({ noiDung, dapAn, dapAnDung, baiHocId, nguon: 'nhap', createdAt: Date.now() });
   closeModal();
   await loadCauHoi();
 }
@@ -535,9 +654,11 @@ function boDauVN(str) {
 // Đọc file CSV/Excel, KHÔNG import ngay — mở cửa sổ cho GV chọn câu muốn nhập
 // (chọn tay từng câu, hoặc bấm "Chọn ngẫu nhiên" để lấy N câu bất kỳ).
 let importPreviewData = [];
+let importBaiHocIdChon = null;
 function importCauHoi(event) {
   const file = event.target.files[0];
   if (!file) return;
+  importBaiHocIdChon = document.getElementById('importBaiHocSelect').value || null;
   const reader = new FileReader();
   reader.onload = (e) => {
     try {
@@ -584,6 +705,7 @@ function moPreviewImport(parsed) {
   ).join('');
   showModal(`
     <h3>Chọn câu hỏi muốn nhập (${parsed.length} câu đọc được)</h3>
+    <p class="muted">Sẽ xếp vào: <b>${importBaiHocIdChon ? tenBaiHoc(importBaiHocIdChon).replace(/<[^>]+>/g, '') : 'Chưa phân loại'}</b></p>
     <div class="row" style="margin-bottom:10px;">
       <button class="btn btn-outline" onclick="chonTatCaImport(true)">Chọn tất cả</button>
       <button class="btn btn-outline" onclick="chonTatCaImport(false)">Bỏ chọn tất cả</button>
@@ -616,7 +738,7 @@ async function xacNhanImport() {
   checks.forEach(idx => {
     const c = importPreviewData[idx];
     const ref = db.collection('cauHoi').doc();
-    batch.set(ref, { ...c, nguon: 'import', createdAt: Date.now() });
+    batch.set(ref, { ...c, baiHocId: importBaiHocIdChon, nguon: 'import', createdAt: Date.now() });
   });
   await batch.commit();
   closeModal();
@@ -662,33 +784,56 @@ function renderBadgeTrangThai(t) {
   return '<span class="badge badge-pending">Chưa mở</span>';
 }
 
+let deSelectedCauHoiIds = new Set();
 function openDeModal() {
   if (!cauHoiList.length) { alert('Hãy thêm câu hỏi vào ngân hàng trước (tab Ngân hàng câu hỏi).'); return; }
+  deSelectedCauHoiIds = new Set();
   const lopOptions = lopList.map(l => `<label><input type="checkbox" class="mLopCheck" value="${l.id}" data-ten="${escapeHtml(l.ten)}"> ${escapeHtml(l.ten)}</label>`).join('');
-  const cauHoiOptions = cauHoiList.map(c => `<label><input type="checkbox" class="mCauCheck" value="${c.id}"> ${formatCT(c.noiDung)}</label>`).join('');
   showModal(`
     <h3>Tạo đề kiểm tra</h3>
     <div class="field"><label>Tên đề</label><input type="text" id="mDeTen"></div>
     <div class="field"><label>Thời gian làm bài (phút)</label><input type="number" id="mDeThoiLuong" value="15" min="1"></div>
     <div class="field"><label>Áp dụng cho lớp</label><div class="checkbox-list">${lopOptions || '<p class="muted">Chưa có lớp nào.</p>'}</div></div>
-    <div class="field"><label>Chọn câu hỏi (${cauHoiList.length} câu trong ngân hàng)</label><div class="checkbox-list">${cauHoiOptions}</div></div>
+    <div class="field">
+      <label>Lọc câu hỏi theo bài</label>
+      <select id="deCauHoiFilter" onchange="renderDeCauHoiList()">${optionsBaiHocFilter()}</select>
+    </div>
+    <div class="field">
+      <label>Chọn câu hỏi (<span id="deSoCauDaChon">0</span> câu đã chọn / ${cauHoiList.length} câu trong ngân hàng)</label>
+      <div class="checkbox-list" id="deCauHoiListEl"></div>
+    </div>
     <div class="row" style="justify-content:flex-end;">
       <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
       <button class="btn btn-primary" onclick="saveDe()">Tạo đề</button>
     </div>`);
+  renderDeCauHoiList();
+}
+function renderDeCauHoiList() {
+  const filterVal = document.getElementById('deCauHoiFilter').value;
+  let list = cauHoiList;
+  if (filterVal === '_khong') list = cauHoiList.filter(c => !c.baiHocId);
+  else if (filterVal) list = cauHoiList.filter(c => c.baiHocId === filterVal);
+  document.getElementById('deCauHoiListEl').innerHTML = list.length ? list.map(c => `
+    <label><input type="checkbox" class="mCauCheck" value="${c.id}" ${deSelectedCauHoiIds.has(c.id) ? 'checked' : ''} onchange="toggleDeCauHoi('${c.id}', this.checked)"> ${formatCT(c.noiDung)}</label>`).join('')
+    : '<p class="muted">Không có câu hỏi nào khớp bộ lọc này.</p>';
+  document.getElementById('deSoCauDaChon').textContent = deSelectedCauHoiIds.size;
+}
+function toggleDeCauHoi(id, checked) {
+  if (checked) deSelectedCauHoiIds.add(id); else deSelectedCauHoiIds.delete(id);
+  document.getElementById('deSoCauDaChon').textContent = deSelectedCauHoiIds.size;
 }
 async function saveDe() {
   const tieuDe = document.getElementById('mDeTen').value.trim();
   const thoiLuongPhut = parseInt(document.getElementById('mDeThoiLuong').value) || 15;
   const lopChecks = [...document.querySelectorAll('.mLopCheck:checked')];
-  const cauChecks = [...document.querySelectorAll('.mCauCheck:checked')];
+  const cauChecks = [...deSelectedCauHoiIds];
   if (!tieuDe || !lopChecks.length || !cauChecks.length) { alert('Điền tên đề, chọn ít nhất 1 lớp và 1 câu hỏi.'); return; }
   await db.collection('deKiemTra').add({
     tieuDe, thoiLuongPhut,
     lopIds: lopChecks.map(c => c.value),
     lopTenList: lopChecks.map(c => c.dataset.ten),
     namHocId: currentNamHocId,
-    cauHoiIds: cauChecks.map(c => c.value),
+    cauHoiIds: cauChecks,
     trangThai: 'chua_mo',
     createdAt: Date.now()
   });
