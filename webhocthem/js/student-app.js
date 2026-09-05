@@ -123,11 +123,11 @@ function renderCauHoi() {
   el.innerHTML = currentCauHoi.map((c, i) => `
     <div class="card question-card">
       <div class="qn">Câu ${i + 1}/${currentCauHoi.length}</div>
-      <div>${escapeHtml(c.noiDung)}</div>
+      <div>${formatCT(c.noiDung)}</div>
       <div class="options">
         ${c.dapAn.map((a, idx) => `
           <div class="opt ${dapAnDaChon[c.id] === idx ? 'selected' : ''}" onclick="chonDapAn('${c.id}', ${idx})">
-            <span class="letter">${['A','B','C','D'][idx]}</span><span>${escapeHtml(a)}</span>
+            <span class="letter">${['A','B','C','D'][idx]}</span><span>${formatCT(a)}</span>
           </div>`).join('')}
       </div>
     </div>`).join('');
@@ -174,4 +174,8 @@ async function nopBai(tuDong) {
 
 function escapeHtml(s) {
   return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+// Hiển thị công thức hóa học với chỉ số nhỏ, vd CO2 -> CO₂, H2O -> H₂O.
+function formatCT(s) {
+  return escapeHtml(s).replace(/([A-Za-zĐđ])(\d+)/g, '$1<sub>$2</sub>');
 }
