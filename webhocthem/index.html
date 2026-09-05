@@ -71,16 +71,27 @@
           <h3 id="hsCardTitle">Học sinh</h3>
           <div class="row">
             <button class="btn btn-outline" onclick="xuatExcelLopHienTai()">⬇ Xuất Excel lớp này</button>
-            <button class="btn btn-primary" onclick="openHsModal()">+ Thêm học sinh</button>
+            <label class="btn btn-outline" style="margin:0; cursor:pointer;">
+              ⬆ Cập nhật từ Excel
+              <input type="file" id="updateHsFile" accept=".xlsx,.xls,.csv" style="display:none" onchange="capNhatHsTuExcel(event)">
+            </label>
+            <button class="btn btn-amber" id="btnMoKhoaHs" onclick="moKhoaChinhSua()">✏️ Nhập</button>
+            <button class="btn btn-primary" id="btnKhoaHs" style="display:none" onclick="khoaVaLuu()">🔒 Khóa &amp; Lưu</button>
           </div>
         </div>
-        <table id="hsTable">
-          <thead><tr>
-            <th>Họ tên</th><th>SĐT phụ huynh</th><th>Lớp trên trường</th><th>Tài khoản</th><th></th>
-          </tr></thead>
-          <tbody></tbody>
-        </table>
+        <p class="muted" id="hsHint">Bấm "Nhập" để mở khóa chỉnh sửa — khi đó bạn có thể copy dữ liệu từ Excel rồi dán (Ctrl+V) trực tiếp vào bảng.</p>
+        <div style="overflow:auto;">
+          <table id="hsTable">
+            <thead><tr>
+              <th style="width:36px;">STT</th><th>Họ tên</th><th>SĐT phụ huynh</th><th>Lớp học trên trường</th><th>Tài khoản</th><th></th>
+            </tr></thead>
+            <tbody id="hsTbody"></tbody>
+          </table>
+        </div>
         <div class="empty" id="hsEmpty" style="display:none;">Chưa có học sinh trong lớp này.</div>
+        <div id="hsEditActions" style="display:none; margin-top:10px;">
+          <button class="btn btn-outline" onclick="themDongMoi()">+ Thêm dòng trống</button>
+        </div>
       </div>
     </div>
 
