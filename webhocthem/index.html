@@ -119,6 +119,11 @@
           <button class="btn btn-outline" onclick="napBaiMau()">📚 Thêm tất cả bài còn lại</button>
         </div>
         <div id="baiHocListEl" style="margin-top:12px;"></div>
+        <hr style="border:none; border-top:1px solid var(--rule); margin:14px 0;">
+        <div class="field" style="max-width:420px; margin-bottom:0;">
+          <label>📌 Đang thao tác với bài (áp dụng cho import CSV, thêm câu hỏi thủ công, và bộ lọc bên dưới)</label>
+          <select id="currentBaiHocSelect" onchange="chonBaiDangDung()"><option value="">— Chưa chọn bài —</option></select>
+        </div>
       </div>
 
       <div class="card">
@@ -126,10 +131,8 @@
           <h3>Nhập câu hỏi từ Excel / CSV</h3>
         </div>
         <p class="muted">File cần có các cột: <b>NoiDung, A, B, C, D, DapAnDung</b> (DapAnDung ghi A/B/C/D).</p>
-        <div class="field" style="max-width:320px;">
-          <label>Xếp các câu nhập lần này vào bài</label>
-          <select id="importBaiHocSelect"><option value="">— Chưa phân loại —</option></select>
-        </div>
+        <p class="muted">Sẽ xếp vào bài: <b id="importBaiHocLabel">— Chưa chọn bài —</b> <span style="font-size:.8em;">(đổi ở khung "Bài học" phía trên)</span></p>
+        <select id="importBaiHocSelect" style="display:none;"><option value="">— Chưa phân loại —</option></select>
         <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="importCauHoi(event)">
         <div id="importResult" class="muted" style="margin-top:8px;"></div>
       </div>
