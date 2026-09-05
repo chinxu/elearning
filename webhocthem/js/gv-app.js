@@ -169,57 +169,172 @@ async function deleteLop() {
 }
 
 // ============================================================
-// HỌC SINH
+// HỌC SINH — hiển thị kiểu trang tính, dán được từ Excel
 // ============================================================
+let dangChinhSuaHs = false;
+const HS_COLS = ['hoTen', 'sdtPhuHuynh', 'lopTruong'];
+
 async function loadHocSinh() {
-  const tbody = document.querySelector('#hsTable tbody');
   const empty = document.getElementById('hsEmpty');
   const lop = lopList.find(l => l.id === currentLopId);
   document.getElementById('hsCardTitle').textContent = lop ? `Học sinh — ${lop.ten}` : 'Học sinh';
-  if (!currentLopId) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+  dangChinhSuaHs = false;
+  capNhatGiaoDienKhoa();
+  if (!currentLopId) { document.getElementById('hsTbody').innerHTML = ''; empty.style.display = 'block'; return; }
   const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId)
     .collection('hocSinh').orderBy('hoTen').get();
   hsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  empty.style.display = hsList.length ? 'none' : 'block';
-  tbody.innerHTML = hsList.map(hs => `
-    <tr>
-      <td>${escapeHtml(hs.hoTen)}</td>
-      <td>${escapeHtml(hs.sdtPhuHuynh || '')}</td>
-      <td>${escapeHtml(hs.lopTruong || '')}</td>
+  renderHsTableGrid();
+}
+
+function renderHsTableGrid() {
+  const tbody = document.getElementById('hsTbody');
+  document.getElementById('hsEmpty').style.display = (hsList.length === 0 && !dangChinhSuaHs) ? 'block' : 'none';
+  tbody.innerHTML = hsList.map((hs, i) => `
+    <tr data-id="${hs.id}">
+      <td>${i + 1}</td>
+      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="hoTen">${escapeHtml(hs.hoTen || '')}</td>
+      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="sdtPhuHuynh">${escapeHtml(hs.sdtPhuHuynh || '')}</td>
+      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="lopTruong">${escapeHtml(hs.lopTruong || '')}</td>
       <td>${hs.maHS
         ? `<span class="badge badge-open">${escapeHtml(hs.maHS)}</span>`
-        : `<button class="btn btn-amber" onclick="openTaoTaiKhoan('${hs.id}')">+ Tạo tài khoản</button>`}</td>
-      <td><button class="btn btn-outline" onclick="deleteHs('${hs.id}')">Xóa</button></td>
+        : (dangChinhSuaHs ? '<span class="muted">—</span>' : `<button class="btn btn-amber" onclick="openTaoTaiKhoan('${hs.id}')">+ Tạo tài khoản</button>`)}</td>
+      <td>${dangChinhSuaHs
+        ? `<button class="btn btn-outline" onclick="xoaDongGrid(this)">✕</button>`
+        : `<button class="btn btn-outline" onclick="deleteHs('${hs.id}')">Xóa</button>`}</td>
     </tr>`).join('');
 }
 
-function openHsModal() {
-  if (!currentLopId) { alert('Hãy chọn hoặc tạo lớp trước.'); return; }
-  showModal(`
-    <h3>Thêm học sinh</h3>
-    <div class="field"><label>Họ tên</label><input type="text" id="mHsTen"></div>
-    <div class="field"><label>SĐT phụ huynh</label><input type="text" id="mHsSdt"></div>
-    <div class="field"><label>Lớp học trên trường</label><input type="text" id="mHsLopTruong" placeholder="vd: 9A2"></div>
-    <div class="row" style="justify-content:flex-end;">
-      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
-      <button class="btn btn-primary" onclick="saveHs()">Lưu</button>
-    </div>`);
+function capNhatGiaoDienKhoa() {
+  document.getElementById('btnMoKhoaHs').style.display = dangChinhSuaHs ? 'none' : 'inline-block';
+  document.getElementById('btnKhoaHs').style.display = dangChinhSuaHs ? 'inline-block' : 'none';
+  document.getElementById('hsEditActions').style.display = dangChinhSuaHs ? 'block' : 'none';
+  document.getElementById('hsHint').textContent = dangChinhSuaHs
+    ? 'Đang ở chế độ chỉnh sửa — dán (Ctrl+V) dữ liệu copy từ Excel, hoặc gõ trực tiếp vào ô. Bấm "Khóa & Lưu" khi xong.'
+    : 'Bấm "Nhập" để mở khóa chỉnh sửa — khi đó bạn có thể copy dữ liệu từ Excel rồi dán (Ctrl+V) trực tiếp vào bảng.';
 }
-async function saveHs() {
-  const hoTen = document.getElementById('mHsTen').value.trim();
-  if (!hoTen) return;
-  const sdtPhuHuynh = document.getElementById('mHsSdt').value.trim();
-  const lopTruong = document.getElementById('mHsLopTruong').value.trim();
-  await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId)
-    .collection('hocSinh').add({ hoTen, sdtPhuHuynh, lopTruong });
-  closeModal();
+
+function moKhoaChinhSua() {
+  if (!currentLopId) { alert('Hãy chọn hoặc tạo lớp trước.'); return; }
+  dangChinhSuaHs = true;
+  capNhatGiaoDienKhoa();
+  renderHsTableGrid();
+}
+
+function themDongMoi() {
+  const tbody = document.getElementById('hsTbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${tbody.children.length + 1}</td>
+    <td class="editable-cell" contenteditable="true" data-field="hoTen"></td>
+    <td class="editable-cell" contenteditable="true" data-field="sdtPhuHuynh"></td>
+    <td class="editable-cell" contenteditable="true" data-field="lopTruong"></td>
+    <td><span class="muted">—</span></td>
+    <td><button class="btn btn-outline" onclick="xoaDongGrid(this)">✕</button></td>`;
+  tbody.appendChild(tr);
+  tr.querySelector('[data-field="hoTen"]').focus();
+}
+
+function xoaDongGrid(btn) {
+  btn.closest('tr').remove();
+  [...document.querySelectorAll('#hsTbody tr')].forEach((tr, i) => tr.children[0].textContent = i + 1);
+}
+
+// Dán dữ liệu copy từ Excel (tab-separated) vào bảng, bắt đầu từ ô đang bấm dán
+document.addEventListener('DOMContentLoaded', () => {
+  const tbody = document.getElementById('hsTbody');
+  if (!tbody) return;
+  tbody.addEventListener('paste', function (e) {
+    const target = e.target.closest('td.editable-cell');
+    if (!target || !dangChinhSuaHs) return;
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+    if (!text) return;
+    const rows = text.replace(/\r/g, '').split('\n').filter((r, idx, arr) => !(idx === arr.length - 1 && r === ''));
+    const startTr = target.closest('tr');
+    let trArr = [...document.querySelectorAll('#hsTbody tr')];
+    const startRowIdx = trArr.indexOf(startTr);
+    const startColIdx = HS_COLS.indexOf(target.dataset.field);
+
+    rows.forEach((rowText, ri) => {
+      const cells = rowText.split('\t');
+      const rowIdx = startRowIdx + ri;
+      let tr = trArr[rowIdx];
+      if (!tr) { themDongMoi(); trArr = [...document.querySelectorAll('#hsTbody tr')]; tr = trArr[rowIdx]; }
+      cells.forEach((val, ci) => {
+        const colIdx = startColIdx + ci;
+        if (colIdx > 2) return; // bỏ qua nếu dán dư cột
+        const td = tr.querySelector(`td[data-field="${HS_COLS[colIdx]}"]`);
+        if (td) td.textContent = val.trim();
+      });
+    });
+  });
+});
+
+async function khoaVaLuu() {
+  if (!confirm('Lưu các thay đổi và khóa bảng lại?')) return;
+  const trs = [...document.querySelectorAll('#hsTbody tr')];
+  const colRef = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId).collection('hocSinh');
+  const batch = db.batch();
+  trs.forEach(tr => {
+    const id = tr.dataset.id || null;
+    const hoTen = tr.querySelector('[data-field="hoTen"]').textContent.trim();
+    const sdtPhuHuynh = tr.querySelector('[data-field="sdtPhuHuynh"]').textContent.trim();
+    const lopTruong = tr.querySelector('[data-field="lopTruong"]').textContent.trim();
+    const rong = !hoTen && !sdtPhuHuynh && !lopTruong;
+    if (id) {
+      if (rong) batch.delete(colRef.doc(id));
+      else batch.update(colRef.doc(id), { hoTen, sdtPhuHuynh, lopTruong });
+    } else if (!rong) {
+      batch.set(colRef.doc(), { hoTen, sdtPhuHuynh, lopTruong });
+    }
+  });
+  await batch.commit();
+  dangChinhSuaHs = false;
+  capNhatGiaoDienKhoa();
   await loadHocSinh();
 }
+
 async function deleteHs(id) {
   if (!confirm('Xóa học sinh này khỏi lớp?')) return;
   await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId)
     .collection('hocSinh').doc(id).delete();
   await loadHocSinh();
+}
+
+// Cập nhật danh sách bằng file Excel/CSV — khớp học sinh theo Họ tên,
+// học sinh trùng tên sẽ được cập nhật SĐT/lớp trường; tên mới sẽ được thêm.
+function capNhatHsTuExcel(event) {
+  if (!currentLopId) { alert('Hãy chọn lớp trước.'); event.target.value = ''; return; }
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+      const colRef = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId).collection('hocSinh');
+      const batch = db.batch();
+      let capNhat = 0, themMoi = 0;
+      rows.forEach(r => {
+        const hoTen = String(r.HoTen || r.hoten || r['Họ tên'] || r['Họ và tên'] || '').trim();
+        if (!hoTen) return;
+        const sdtPhuHuynh = String(r.SdtPhuHuynh || r.SDT || r['SĐT phụ huynh'] || '').trim();
+        const lopTruong = String(r.LopTruong || r['Lớp học trên trường'] || '').trim();
+        const match = hsList.find(hs => (hs.hoTen || '').trim().toLowerCase() === hoTen.toLowerCase());
+        if (match) { batch.update(colRef.doc(match.id), { sdtPhuHuynh, lopTruong }); capNhat++; }
+        else { batch.set(colRef.doc(), { hoTen, sdtPhuHuynh, lopTruong }); themMoi++; }
+      });
+      await batch.commit();
+      alert(`Đã cập nhật ${capNhat} học sinh, thêm mới ${themMoi} học sinh.`);
+      event.target.value = '';
+      await loadHocSinh();
+    } catch (err) {
+      alert('Lỗi khi đọc file: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
 }
 
 function openTaoTaiKhoan(hsId) {
