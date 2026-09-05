@@ -123,6 +123,7 @@ async function loadLop() {
   const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').orderBy('ten').get();
   lopList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   renderLopChips();
+  capNhatBdLopSelect();
   if (lopList.length && !currentLopId) currentLopId = lopList[0].id;
   await loadHocSinh();
 }
@@ -366,6 +367,52 @@ async function taoTaiKhoanHs(hsId) {
   }
 }
 
+// Tạo tài khoản hàng loạt cho cả lớp: mã đăng nhập = SĐT phụ huynh, mật khẩu mặc định 123456.
+// Chỉ áp dụng cho học sinh CHƯA có tài khoản và CÓ SĐT phụ huynh.
+function moTaoHangLoatModal() {
+  if (!currentLopId) { alert('Hãy chọn lớp trước.'); return; }
+  const ungVien = hsList.filter(hs => !hs.maHS && (hs.sdtPhuHuynh || '').trim());
+  const soDaCo = hsList.filter(hs => hs.maHS).length;
+  const soThieuSdt = hsList.filter(hs => !hs.maHS && !(hs.sdtPhuHuynh || '').trim()).length;
+  showModal(`
+    <h3>Tạo tài khoản hàng loạt</h3>
+    <p>Sẽ tạo tài khoản cho <b>${ungVien.length}</b> học sinh trong lớp này chưa có tài khoản (và có SĐT phụ huynh).</p>
+    <p class="muted">Mã đăng nhập = SĐT phụ huynh (đã lược bỏ ký tự không phải số). Mật khẩu mặc định cho tất cả: <b>123456</b>.</p>
+    ${soDaCo ? `<p class="muted">${soDaCo} học sinh đã có tài khoản từ trước sẽ được giữ nguyên.</p>` : ''}
+    ${soThieuSdt ? `<p class="muted">${soThieuSdt} học sinh chưa có SĐT phụ huynh nên sẽ bị bỏ qua — điền SĐT trước rồi tạo lại.</p>` : ''}
+    <p class="muted">Nếu 2 học sinh trùng SĐT phụ huynh (anh chị em), mã đăng nhập của em sau sẽ tự thêm số thứ tự để không trùng.</p>
+    <div class="row" style="justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
+      <button class="btn btn-primary" onclick="taoTaiKhoanHangLoat()" ${ungVien.length ? '' : 'disabled'}>Tạo ngay</button>
+    </div>`);
+}
+async function taoTaiKhoanHangLoat() {
+  const ungVien = hsList.filter(hs => !hs.maHS && (hs.sdtPhuHuynh || '').trim());
+  closeModal();
+  if (!ungVien.length) return;
+  const daDungMa = new Set(hsList.filter(hs => hs.maHS).map(hs => hs.maHS));
+  let thanhCong = 0;
+  const loi = [];
+  for (const hs of ungVien) {
+    const goc = String(hs.sdtPhuHuynh).replace(/[^0-9]/g, '');
+    if (!goc) { loi.push(`${hs.hoTen}: SĐT không hợp lệ`); continue; }
+    let ma = goc, i = 2;
+    while (daDungMa.has(ma)) { ma = `${goc}-${i}`; i++; }
+    try {
+      const cred = await secondaryAuth.createUserWithEmailAndPassword(emailFromMaHS(ma), '123456');
+      await secondaryAuth.signOut();
+      await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId)
+        .collection('hocSinh').doc(hs.id).update({ maHS: ma, uid: cred.user.uid });
+      daDungMa.add(ma);
+      thanhCong++;
+    } catch (err) {
+      loi.push(`${hs.hoTen}: ${dichLoi(err)}`);
+    }
+  }
+  await loadHocSinh();
+  alert(`Đã tạo ${thanhCong}/${ungVien.length} tài khoản.` + (loi.length ? `\n\nLỗi:\n${loi.join('\n')}` : ''));
+}
+
 // ============================================================
 // XUẤT EXCEL DANH SÁCH HỌC SINH (gửi trung tâm điểm danh)
 // ============================================================
@@ -485,11 +532,14 @@ function boDauVN(str) {
   return String(str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/đ/g, 'd').replace(/Đ/g, 'D');
 }
+// Đọc file CSV/Excel, KHÔNG import ngay — mở cửa sổ cho GV chọn câu muốn nhập
+// (chọn tay từng câu, hoặc bấm "Chọn ngẫu nhiên" để lấy N câu bất kỳ).
+let importPreviewData = [];
 function importCauHoi(event) {
   const file = event.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = async (e) => {
+  reader.onload = (e) => {
     try {
       const wb = XLSX.read(e.target.result, { type: 'array' });
       const sheet = wb.Sheets[wb.SheetNames[0]];
@@ -503,30 +553,75 @@ function importCauHoi(event) {
       }
 
       const map = { A: 0, B: 1, C: 2, D: 3 };
-      let count = 0;
-      const batch = db.batch();
+      const parsed = [];
+      let boQua = 0;
       rows.forEach(r => {
         const noiDung = String(r[0] || '').trim();
         const A = String(r[1] || '').trim(), B = String(r[2] || '').trim();
         const C = String(r[3] || '').trim(), D = String(r[4] || '').trim();
         const dungRaw = String(r[5] || '').trim().toUpperCase();
-        if (!noiDung || !A || !B || !C || !D || !(dungRaw in map)) return;
-        const ref = db.collection('cauHoi').doc();
-        batch.set(ref, {
-          noiDung, dapAn: [A, B, C, D], dapAnDung: map[dungRaw],
-          nguon: 'import', createdAt: Date.now()
-        });
-        count++;
+        if (!noiDung || !A || !B || !C || !D || !(dungRaw in map)) { boQua++; return; }
+        parsed.push({ noiDung, dapAn: [A, B, C, D], dapAnDung: map[dungRaw] });
       });
-      await batch.commit();
-      document.getElementById('importResult').textContent = `Đã nhập ${count} câu hỏi thành công (${rows.length - count} dòng bị bỏ qua do thiếu dữ liệu).`;
       event.target.value = '';
-      await loadCauHoi();
+      if (!parsed.length) {
+        document.getElementById('importResult').textContent = `Không đọc được câu hỏi hợp lệ nào (${boQua} dòng bị bỏ qua do thiếu dữ liệu).`;
+        return;
+      }
+      document.getElementById('importResult').textContent = `Đọc được ${parsed.length} câu hỏi hợp lệ từ file (${boQua} dòng bị bỏ qua) — chọn câu muốn nhập ở cửa sổ vừa mở.`;
+      moPreviewImport(parsed);
     } catch (err) {
       document.getElementById('importResult').textContent = 'Lỗi khi đọc file: ' + err.message;
     }
   };
   reader.readAsArrayBuffer(file);
+}
+
+function moPreviewImport(parsed) {
+  importPreviewData = parsed;
+  const items = parsed.map((c, idx) =>
+    `<label><input type="checkbox" class="mImportCheck" value="${idx}" checked> ${formatCT(c.noiDung)}</label>`
+  ).join('');
+  showModal(`
+    <h3>Chọn câu hỏi muốn nhập (${parsed.length} câu đọc được)</h3>
+    <div class="row" style="margin-bottom:10px;">
+      <button class="btn btn-outline" onclick="chonTatCaImport(true)">Chọn tất cả</button>
+      <button class="btn btn-outline" onclick="chonTatCaImport(false)">Bỏ chọn tất cả</button>
+      <input type="number" id="mSoCauRandom" min="1" max="${parsed.length}" value="${Math.min(10, parsed.length)}" style="width:80px;">
+      <button class="btn btn-outline" onclick="chonNgauNhienImport()">🎲 Chọn ngẫu nhiên</button>
+    </div>
+    <div class="checkbox-list">${items}</div>
+    <div class="row" style="justify-content:flex-end; margin-top:14px;">
+      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
+      <button class="btn btn-primary" onclick="xacNhanImport()">Nhập câu đã chọn</button>
+    </div>`);
+}
+function chonTatCaImport(checked) {
+  document.querySelectorAll('.mImportCheck').forEach(cb => cb.checked = checked);
+}
+function chonNgauNhienImport() {
+  const n = Math.max(1, Math.min(importPreviewData.length, parseInt(document.getElementById('mSoCauRandom').value) || 1));
+  const idxAll = importPreviewData.map((_, i) => i);
+  for (let i = idxAll.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [idxAll[i], idxAll[j]] = [idxAll[j], idxAll[i]];
+  }
+  const chon = new Set(idxAll.slice(0, n));
+  document.querySelectorAll('.mImportCheck').forEach(cb => { cb.checked = chon.has(parseInt(cb.value)); });
+}
+async function xacNhanImport() {
+  const checks = [...document.querySelectorAll('.mImportCheck:checked')].map(cb => parseInt(cb.value));
+  if (!checks.length) { alert('Chưa chọn câu nào.'); return; }
+  const batch = db.batch();
+  checks.forEach(idx => {
+    const c = importPreviewData[idx];
+    const ref = db.collection('cauHoi').doc();
+    batch.set(ref, { ...c, nguon: 'import', createdAt: Date.now() });
+  });
+  await batch.commit();
+  closeModal();
+  document.getElementById('importResult').textContent = `Đã nhập ${checks.length}/${importPreviewData.length} câu hỏi đã chọn vào ngân hàng.`;
+  await loadCauHoi();
 }
 
 // ============================================================
@@ -624,6 +719,106 @@ async function xemKetQua(deId) {
     <h3>Kết quả — ${escapeHtml(de.tieuDe)}</h3>
     <table><thead><tr><th>Học sinh</th><th>Điểm</th><th>Trạng thái</th></tr></thead><tbody>${rows}</tbody></table>
     <div class="row" style="justify-content:flex-end; margin-top:14px;"><button class="btn btn-outline" onclick="closeModal()">Đóng</button></div>`);
+}
+
+// ============================================================
+// BẢNG ĐIỂM HÀNG THÁNG & BÁO CÁO CHO PHỤ HUYNH
+// ============================================================
+let bangDiemData = null;
+
+function capNhatBdLopSelect() {
+  const sel = document.getElementById('bdLopSelect');
+  if (!sel) return;
+  const giaTriCu = sel.value;
+  sel.innerHTML = lopList.map(l => `<option value="${l.id}">${escapeHtml(l.ten)}</option>`).join('');
+  if (lopList.some(l => l.id === giaTriCu)) sel.value = giaTriCu;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const thangInput = document.getElementById('bdThangSelect');
+  if (thangInput) thangInput.value = new Date().toISOString().slice(0, 7);
+});
+
+async function xemBangDiem() {
+  const lopId = document.getElementById('bdLopSelect').value;
+  const thang = document.getElementById('bdThangSelect').value; // "YYYY-MM"
+  if (!lopId || !thang) { alert('Chọn lớp và tháng.'); return; }
+  const [nam, thangSo] = thang.split('-').map(Number);
+  const batDauThang = new Date(nam, thangSo - 1, 1).getTime();
+  const ketThucThang = new Date(nam, thangSo, 1).getTime();
+
+  const snapDe = await db.collection('deKiemTra').where('lopIds', 'array-contains', lopId).get();
+  const deTrongThang = snapDe.docs.map(d => ({ id: d.id, ...d.data() }))
+    .filter(de => de.thoiGianMo && de.thoiGianMo >= batDauThang && de.thoiGianMo < ketThucThang)
+    .sort((a, b) => a.thoiGianMo - b.thoiGianMo);
+
+  const snapHs = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('hocSinh').orderBy('hoTen').get();
+  const dsHs = snapHs.docs.map(d => ({ id: d.id, ...d.data() }));
+
+  const diemTheoDe = {};
+  for (const de of deTrongThang) {
+    const snapBai = await db.collection('deKiemTra').doc(de.id).collection('baiLam').get();
+    diemTheoDe[de.id] = {};
+    snapBai.docs.forEach(b => { diemTheoDe[de.id][b.id] = b.data(); });
+  }
+
+  const rows = dsHs.map(hs => {
+    const diems = deTrongThang.map(de => {
+      const bai = hs.uid ? diemTheoDe[de.id][hs.uid] : null;
+      if (!bai || !bai.daNop) return null;
+      return { diem: bai.diem, tong: de.cauHoiIds.length };
+    });
+    const hopLe = diems.filter(Boolean);
+    const tbPhanTram = hopLe.length ? (hopLe.reduce((s, d) => s + d.diem / d.tong, 0) / hopLe.length * 100) : null;
+    return { hs, diems, tbPhanTram };
+  });
+
+  bangDiemData = { lop: lopList.find(l => l.id === lopId) || { ten: lopId }, thang, deTrongThang, rows };
+  renderBangDiem();
+}
+
+function renderBangDiem() {
+  const empty = document.getElementById('bdEmpty');
+  const table = document.getElementById('bdTable');
+  if (!bangDiemData || !bangDiemData.deTrongThang.length) {
+    table.querySelector('thead').innerHTML = '';
+    table.querySelector('tbody').innerHTML = '';
+    empty.style.display = 'block';
+    empty.textContent = bangDiemData
+      ? 'Không có bài kiểm tra nào được mở trong tháng này ở lớp đã chọn.'
+      : 'Chọn lớp và tháng rồi bấm "Xem bảng điểm".';
+    return;
+  }
+  empty.style.display = 'none';
+  const { deTrongThang, rows } = bangDiemData;
+  table.querySelector('thead').innerHTML =
+    `<tr><th>Họ tên</th>${deTrongThang.map(de => `<th>${escapeHtml(de.tieuDe)}</th>`).join('')}<th>Trung bình</th></tr>`;
+  table.querySelector('tbody').innerHTML = rows.map(r => `
+    <tr>
+      <td>${escapeHtml(r.hs.hoTen)}</td>
+      ${r.diems.map(d => `<td>${d ? `${d.diem}/${d.tong}` : '—'}</td>`).join('')}
+      <td>${r.tbPhanTram != null ? r.tbPhanTram.toFixed(0) + '%' : '—'}</td>
+    </tr>`).join('');
+}
+
+function xuatBaoCaoDiem() {
+  if (!bangDiemData || !bangDiemData.deTrongThang.length) {
+    alert('Chưa có dữ liệu — hãy bấm "Xem bảng điểm" trước.');
+    return;
+  }
+  const { lop, thang, deTrongThang, rows } = bangDiemData;
+  const header = ['Họ tên', 'SĐT phụ huynh', ...deTrongThang.map(de => de.tieuDe), 'Trung bình (%)'];
+  const data = rows.map(r => [
+    r.hs.hoTen, r.hs.sdtPhuHuynh || '',
+    ...r.diems.map(d => d ? `${d.diem}/${d.tong}` : ''),
+    r.tbPhanTram != null ? r.tbPhanTram.toFixed(0) : ''
+  ]);
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet([header, ...data]);
+  ws['!cols'] = [{ wch: 22 }, { wch: 16 }, ...deTrongThang.map(() => ({ wch: 16 })), { wch: 14 }];
+  XLSX.utils.book_append_sheet(wb, ws, sanitizeSheetName(`${lop.ten}_${thang}`, new Set()));
+  XLSX.writeFile(wb, `BaoCaoDiem_${lop.ten}_${thang}.xlsx`.replace(/\s+/g, '_'));
 }
 
 // ============================================================
