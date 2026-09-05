@@ -39,6 +39,7 @@
     <div class="sidebar-foot">
       <div id="gvEmailLabel"></div>
       <button onclick="logoutGV()">Đăng xuất</button>
+      <button onclick="dongBoTaiKhoanHocSinh()" title="Chạy nếu học sinh báo không đăng nhập được">🔧 Sửa lỗi đăng nhập HS</button>
     </div>
   </div>
 
@@ -99,10 +100,34 @@
     <!-- ===== TAB 3: NGÂN HÀNG CÂU HỎI ===== -->
     <div class="tab-panel" id="tab-cauhoi">
       <div class="card">
+        <h3>Bài học (KHTN 6/7/8/9 — Kết nối tri thức)</h3>
+        <p class="muted">Tạo danh sách bài theo đúng tiến độ dạy của bạn, rồi gắn câu hỏi vào từng bài để sau này tạo đề chỉ cần lọc ra.</p>
+        <div class="row">
+          <div class="field" style="min-width:110px; margin-bottom:0;">
+            <label>Khối</label>
+            <select id="baiHocKhoiMoi">
+              <option value="6">Lớp 6</option><option value="7">Lớp 7</option>
+              <option value="8">Lớp 8</option><option value="9">Lớp 9</option>
+            </select>
+          </div>
+          <div class="field" style="flex:1; min-width:220px; margin-bottom:0;">
+            <label>Tên bài</label>
+            <input type="text" id="baiHocTenMoi" placeholder="vd: Bài 3: Mol và tỉ khối chất khí">
+          </div>
+          <button class="btn btn-primary" onclick="themBaiHoc()">+ Thêm bài</button>
+        </div>
+        <div id="baiHocListEl" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="card">
         <div class="row between">
           <h3>Nhập câu hỏi từ Excel / CSV</h3>
         </div>
         <p class="muted">File cần có các cột: <b>NoiDung, A, B, C, D, DapAnDung</b> (DapAnDung ghi A/B/C/D).</p>
+        <div class="field" style="max-width:320px;">
+          <label>Xếp các câu nhập lần này vào bài</label>
+          <select id="importBaiHocSelect"><option value="">— Chưa phân loại —</option></select>
+        </div>
         <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="importCauHoi(event)">
         <div id="importResult" class="muted" style="margin-top:8px;"></div>
       </div>
@@ -112,8 +137,12 @@
           <h3>Nhập câu hỏi thủ công</h3>
           <button class="btn btn-primary" onclick="openCauHoiModal()">+ Thêm câu hỏi</button>
         </div>
+        <div class="field" style="max-width:320px;">
+          <label>Lọc theo bài</label>
+          <select id="cauHoiBaiHocFilter" onchange="renderCauHoiTable()"><option value="">— Tất cả —</option></select>
+        </div>
         <table>
-          <thead><tr><th>Câu hỏi</th><th>Đáp án đúng</th><th>Nguồn</th><th></th></tr></thead>
+          <thead><tr><th>Câu hỏi</th><th>Bài học</th><th>Đáp án đúng</th><th>Nguồn</th><th></th></tr></thead>
           <tbody id="cauHoiTbody"></tbody>
         </table>
         <div class="empty" id="cauHoiEmpty" style="display:none;">Chưa có câu hỏi nào trong ngân hàng.</div>
