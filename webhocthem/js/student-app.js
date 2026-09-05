@@ -20,7 +20,13 @@ function logoutHS() { auth.signOut(); location.reload(); }
 
 auth.onAuthStateChanged(async user => {
   if (user && user.email.endsWith('@hocthem.local')) {
-    await timHocSinhTheoUid(user.uid);
+    try {
+      await timHocSinhTheoUid(user.uid);
+    } catch (err) {
+      document.getElementById('loginError').textContent = 'Lỗi khi tải hồ sơ: ' + (err.message || err);
+      auth.signOut();
+      return;
+    }
     if (!hsDoc) {
       document.getElementById('loginError').textContent = 'Không tìm thấy hồ sơ học sinh gắn với tài khoản này.';
       auth.signOut();
@@ -30,7 +36,11 @@ auth.onAuthStateChanged(async user => {
     document.getElementById('listScreen').style.display = 'flex';
     document.getElementById('hsTenLabel').textContent = hsDoc.hoTen;
     document.getElementById('hsLopLabel').textContent = lopTen;
-    await loadDanhSachDe();
+    try {
+      await loadDanhSachDe();
+    } catch (err) {
+      document.getElementById('deList').innerHTML = `<div class="card empty">Lỗi khi tải danh sách đề: ${err.message || err}</div>`;
+    }
   } else if (!user) {
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('listScreen').style.display = 'none';
