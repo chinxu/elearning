@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học sinh — Làm bài kiểm tra</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ---------- ĐĂNG NHẬP HS ---------- -->
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <h1>Làm bài kiểm tra</h1>
+    <p class="muted">Đăng nhập bằng mã học sinh giáo viên đã cấp</p>
+    <div class="field">
+      <label>Mã học sinh</label>
+      <input type="text" id="hsMa" placeholder="vd: hs8x2k1a" autocapitalize="off">
+    </div>
+    <div class="field">
+      <label>Mật khẩu</label>
+      <input type="password" id="hsPass" placeholder="••••••••">
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="loginHS()">Đăng nhập</button>
+    <div class="error-msg" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ---------- DANH SÁCH ĐỀ ---------- -->
+<div id="listScreen" class="app-shell" style="display:none;">
+  <div class="main" style="max-width:720px; margin:0 auto; width:100%;">
+    <div class="topbar">
+      <div>
+        <h1 style="font-size:1.15rem;">Xin chào, <span id="hsTenLabel"></span></h1>
+        <p class="muted" id="hsLopLabel"></p>
+      </div>
+      <button class="btn btn-outline" onclick="logoutHS()">Đăng xuất</button>
+    </div>
+    <div id="deList"></div>
+  </div>
+</div>
+
+<!-- ---------- LÀM BÀI ---------- -->
+<div id="examScreen" class="main" style="display:none; max-width:720px; margin:0 auto; width:100%;">
+  <div class="exam-header">
+    <h2 id="examTitle" style="font-size:1.05rem; margin:0;"></h2>
+    <div class="timer" id="examTimer">--:--</div>
+  </div>
+  <div id="examQuestions"></div>
+  <div class="row" style="justify-content:flex-end; margin:18px 0 40px;">
+    <button class="btn btn-primary" onclick="nopBai(false)">Nộp bài</button>
+  </div>
+</div>
+
+<!-- ---------- KẾT QUẢ ---------- -->
+<div id="resultScreen" class="login-wrap" style="display:none;">
+  <div class="login-card" style="text-align:center;">
+    <h1>Đã nộp bài</h1>
+    <p style="font-size:2rem; font-weight:800; color:var(--pine); margin:10px 0;" id="resultDiem"></p>
+    <button class="btn btn-primary" style="width:100%" onclick="veDanhSach()">Về danh sách đề</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/student-app.js"></script>
+</body>
+</html>
