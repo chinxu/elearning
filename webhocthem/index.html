@@ -77,6 +77,7 @@
             </label>
             <button class="btn btn-amber" id="btnMoKhoaHs" onclick="moKhoaChinhSua()">✏️ Nhập</button>
             <button class="btn btn-primary" id="btnKhoaHs" style="display:none" onclick="khoaVaLuu()">🔒 Khóa &amp; Lưu</button>
+            <button class="btn btn-outline" onclick="moTaoHangLoatModal()">👥 Tạo TK hàng loạt</button>
           </div>
         </div>
         <p class="muted" id="hsHint">Bấm "Nhập" để mở khóa chỉnh sửa — khi đó bạn có thể copy dữ liệu từ Excel rồi dán (Ctrl+V) trực tiếp vào bảng.</p>
@@ -131,6 +132,26 @@
           <tbody id="deTbody"></tbody>
         </table>
         <div class="empty" id="deEmpty" style="display:none;">Chưa có đề kiểm tra nào.</div>
+      </div>
+
+      <div class="card">
+        <h3>Bảng điểm hàng tháng &amp; báo cáo cho phụ huynh</h3>
+        <div class="row">
+          <div class="field" style="min-width:180px;">
+            <label>Lớp</label>
+            <select id="bdLopSelect"></select>
+          </div>
+          <div class="field" style="min-width:160px;">
+            <label>Tháng</label>
+            <input type="month" id="bdThangSelect">
+          </div>
+          <button class="btn btn-primary" onclick="xemBangDiem()">Xem bảng điểm</button>
+          <button class="btn btn-outline" onclick="xuatBaoCaoDiem()">⬇ Xuất báo cáo Excel</button>
+        </div>
+        <div style="overflow:auto; margin-top:10px;">
+          <table id="bdTable"><thead></thead><tbody></tbody></table>
+        </div>
+        <div class="empty" id="bdEmpty">Chọn lớp và tháng rồi bấm "Xem bảng điểm".</div>
       </div>
     </div>
   </div>
