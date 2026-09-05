@@ -39,14 +39,19 @@ auth.onAuthStateChanged(async user => {
   }
 });
 
+// Tra thẳng bản đồ uid -> (năm học, lớp, id học sinh) được ghi sẵn lúc GV tạo tài khoản.
+// (Không dùng collectionGroup query vì cần Firestore index riêng mới chạy được.)
 async function timHocSinhTheoUid(uid) {
-  const snap = await db.collectionGroup('hocSinh').where('uid', '==', uid).limit(1).get();
-  if (snap.empty) { hsDoc = null; return; }
-  const doc = snap.docs[0];
-  hsDoc = { id: doc.id, ...doc.data() };
-  lopId = doc.ref.parent.parent.id;
-  namHocId = doc.ref.parent.parent.parent.parent.id;
-  const lopSnap = await doc.ref.parent.parent.get();
+  const mapSnap = await db.collection('taiKhoanHocSinh').doc(uid).get();
+  if (!mapSnap.exists) { hsDoc = null; return; }
+  const map = mapSnap.data();
+  namHocId = map.namHocId;
+  lopId = map.lopId;
+  const hsSnap = await db.collection('namHoc').doc(namHocId).collection('lop').doc(lopId)
+    .collection('hocSinh').doc(map.hsId).get();
+  if (!hsSnap.exists) { hsDoc = null; return; }
+  hsDoc = { id: hsSnap.id, ...hsSnap.data() };
+  const lopSnap = await db.collection('namHoc').doc(namHocId).collection('lop').doc(lopId).get();
   lopTen = lopSnap.data().ten;
 }
 
