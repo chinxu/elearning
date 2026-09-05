@@ -318,6 +318,15 @@ async function bam(s){
   return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2,"0")).join("");
 }
 function thoat(s){ const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; }
+
+/* Chuyển chữ số trong công thức hóa học thành chỉ số dưới: H2SO4 → H₂SO₄
+   Chỉ áp dụng cho các cụm bắt đầu bằng chữ in hoa không dấu và có chứa chữ số,
+   nên các số thường trong câu như “Bài 12”, “37 độ C”, “10 mũ 23” không bị đổi. */
+const CHI_SO = { "0":"₀","1":"₁","2":"₂","3":"₃","4":"₄","5":"₅","6":"₆","7":"₇","8":"₈","9":"₉" };
+function hoaHoc(s){
+  return String(s ?? "").replace(/\b[A-Z][A-Za-z()]*\d[A-Za-z0-9()]*\b/g,
+    t => t.replace(/\d/g, d => CHI_SO[d]));
+}
 function maNgauNhien(){
   const kt = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let r = "";
   for (let i=0;i<6;i++) r += kt[Math.floor(Math.random()*kt.length)];
@@ -332,10 +341,10 @@ function veDsCau(){
   $("dsCau").innerHTML = nganHang.map((c,i) => `
     <div class="dsq">
       <div class="canh">
-        <b>${i+1}. ${thoat(c.noiDung)}</b>
+        <b>${i+1}. ${thoat(hoaHoc(c.noiDung))}</b>
         <button class="vien xoaCau" data-i="${i}" style="flex:0 0 auto;padding:6px 10px;font-size:.85rem">Xóa</button>
       </div>
-      <div class="phu">${c.luaChon.map((x,j) => `${KY[j]}. ${thoat(x)}`).join(" · ")} → đáp án ${KY[c.dapAn]}</div>
+      <div class="phu">${c.luaChon.map((x,j) => `${KY[j]}. ${thoat(hoaHoc(x))}`).join(" · ")} → đáp án ${KY[c.dapAn]}</div>
     </div>`).join("") || `<p class="phu">Chưa có câu hỏi nào.</p>`;
   document.querySelectorAll(".xoaCau").forEach(b => b.onclick = () => {
     nganHang.splice(+b.dataset.i,1); veDsCau();
@@ -433,8 +442,8 @@ function veCauNH(){
   $("nhTB").innerHTML = "";
   $("nhDs").innerHTML = baiDangChon().cau.map((c,i) => `
     <label class="nhc"><input type="checkbox" data-i="${i}">
-      <span>${thoat(c.noiDung)}
-        <em>${c.luaChon.map((x,j) => `${KY[j]}. ${thoat(x)}`).join(" · ")}</em>
+      <span>${thoat(hoaHoc(c.noiDung))}
+        <em>${c.luaChon.map((x,j) => `${KY[j]}. ${thoat(hoaHoc(x))}`).join(" · ")}</em>
       </span></label>`).join("");
   $("nhDs").querySelectorAll("input").forEach(o => {
     o.onchange = () => o.closest(".nhc").classList.toggle("tick", o.checked);
@@ -564,11 +573,11 @@ function veBang(){
   $("soCau").textContent = i >= 0 ? `Câu ${i+1}/${t.tongCau}` : `${t.tongCau} câu`;
 
   if (cau){
-    $("noiDungCau").textContent = cau.noiDung;
+    $("noiDungCau").textContent = hoaHoc(cau.noiDung);
     $("lcBang").className = "lc" + (cau.luaChon.length === 2 ? " mot" : "");
     $("lcBang").innerHTML = cau.luaChon.map((x,j) => {
       const lo = t.trangThai === "mo" && j === cau.dapAn ? " dung" : "";
-      return `<div class="o${lo}" data-k="${j}"><span class="k">${KY[j]}</span><span>${thoat(x)}</span></div>`;
+      return `<div class="o${lo}" data-k="${j}"><span class="k">${KY[j]}</span><span>${thoat(hoaHoc(x))}</span></div>`;
     }).join("");
   } else if (t.trangThai === "ket"){
     $("noiDungCau").textContent = "Đã xong. Cảm ơn các nhóm!";
@@ -755,7 +764,7 @@ function veHS(){
   }
 
   const c = t.cau; if (!c) return;
-  $("hsCau").textContent = c.noiDung;
+  $("hsCau").textContent = hoaHoc(c.noiDung);
   $("hsLC").className = "lc" + (c.luaChon.length === 2 ? " mot" : "");
   const chon = daChon(i);
 
@@ -766,7 +775,7 @@ function veHS(){
       if (j === t.dapAnDung) lop = " dung";
       else if (chon !== null && +chon === j) lop = " saichon";
     }
-    return `<button class="o${lop}" data-k="${j}" data-j="${j}"><span class="k">${KY[j]}</span><span>${thoat(x)}</span></button>`;
+    return `<button class="o${lop}" data-k="${j}" data-j="${j}"><span class="k">${KY[j]}</span><span>${thoat(hoaHoc(x))}</span></button>`;
   }).join("");
 
   const khoa = s !== "hoi" || chon !== null;
