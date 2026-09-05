@@ -68,6 +68,9 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .n.xong .tt{color:var(--vang)}
 .n.dung{border-color:var(--dung);background:#122A20}
 .n.sai{border-color:var(--sai);background:#251515}
+.xoaNhom{position:absolute;top:4px;right:4px;width:24px;height:24px;padding:0;line-height:1;
+  background:transparent;border:1px solid var(--vien);color:var(--mo);border-radius:6px;font-size:1rem}
+.xoaNhom:hover{border-color:var(--sai);color:#FFD9D4}
 .hang-so{position:absolute;top:-9px;right:-6px;background:var(--vang);color:#141414;font-weight:800;font-size:.78rem;border-radius:99px;padding:2px 9px}
 .dong{height:6px;background:#0E1730;border-radius:99px;overflow:hidden;margin:10px 0}
 .dong i{display:block;height:100%;background:var(--vang);width:100%}
@@ -124,10 +127,6 @@ button:disabled{opacity:.4;cursor:not-allowed}
       <div>
         <label for="tenPhong">Tên buổi học</label>
         <input id="tenPhong" placeholder="Ôn tập chương II">
-      </div>
-      <div>
-        <label for="soNhom">Số nhóm</label>
-        <input id="soNhom" type="number" min="2" max="20" value="10">
       </div>
       <div>
         <label for="giay">Thời gian mỗi câu (giây, 0 = không đếm)</label>
@@ -207,7 +206,7 @@ Sông Hồng chảy qua Hà Nội. | Đúng | Sai | A"></textarea>
       <div style="text-align:right">
         <div class="nhan" id="tt">Đang chờ</div>
         <div style="height:8px"></div>
-        <button class="vien" id="btnDsNhom">Mật khẩu nhóm</button>
+        <div class="nhan" id="demNhom">0 nhóm đã vào</div>
       </div>
     </div>
   </div>
@@ -253,10 +252,10 @@ Sông Hồng chảy qua Hà Nội. | Đúng | Sai | A"></textarea>
   <div id="hsDangNhap">
     <div class="giua"><h1>Vào phòng</h1><p class="phu" id="hsTenPhong"></p></div>
     <div class="the">
-      <label for="hsNhom">Nhóm của em</label>
-      <select id="hsNhom"></select>
-      <label for="hsMk">Mật khẩu nhóm</label>
-      <input id="hsMk" inputmode="numeric" autocomplete="off">
+      <label for="hsTenNhomMoi">Tên nhóm của em</label>
+      <input id="hsTenNhomMoi" maxlength="30" autocomplete="off" placeholder="VD: Nhóm 1, Tổ Sao Mai…">
+      <p class="phu" style="margin-top:6px">Tên này sẽ hiện trên màn hình lớn, cả lớp đều thấy.</p>
+      <div id="hsDsNhom"></div>
       <div id="hsLoi"></div>
       <div style="height:14px"></div>
       <button class="chinh" style="width:100%" id="btnHsVao">Vào phòng</button>
@@ -312,10 +311,6 @@ function man(id){
   document.querySelectorAll(".man").forEach(m => m.classList.remove("hien"));
   $(id).classList.add("hien");
   window.scrollTo(0,0);
-}
-async function bam(s){
-  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
-  return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2,"0")).join("");
 }
 function thoat(s){ const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; }
 
@@ -502,18 +497,10 @@ $("btnXoaHet").onclick = () => { if (confirm("Xóa toàn bộ câu hỏi?")){ ng
 /* ================= TẠO PHÒNG ================= */
 $("btnTao").onclick = async () => {
   if (!nganHang.length){ alert("Chưa có câu hỏi nào."); return; }
-  const soNhom = Math.max(2, Math.min(20, +$("soNhom").value || 10));
   const btn = $("btnTao"); btn.disabled = true; btn.textContent = "Đang tạo…";
   try{
     let ma;
     for (let i=0;i<6;i++){ ma = maNgauNhien(); if (!(await get(ref(db,`phong/${ma}/thongTin`))).exists()) break; }
-
-    const nhom = {}, mkHien = [];
-    for (let i=1;i<=soNhom;i++){
-      const mk = String(Math.floor(1000 + Math.random()*9000));
-      nhom["n"+i] = { ten:"Nhóm "+i, mk: await bam(mk) };
-      mkHien.push({ ten:"Nhóm "+i, mk });
-    }
 
     await set(ref(db,`phong/${ma}`), {
       thongTin: {
@@ -527,11 +514,10 @@ $("btnTao").onclick = async () => {
         thuong1: Math.max(0, +$("thuong1").value || 0),
         thuong2: Math.max(0, +$("thuong2").value || 0)
       },
-      nganHang, nhom
+      nganHang
     });
 
     localStorage.setItem("gv_phong", ma);
-    localStorage.setItem("gv_mk_"+ma, JSON.stringify(mkHien));
     location.hash = "#gv=" + ma;
     moGV(ma);
   }catch(e){
@@ -584,6 +570,10 @@ function veBang(){
     $("lcBang").innerHTML = "";
   }
 
+  const soNhomVao = Object.keys(dsNhom).length;
+  $("demNhom").textContent = soNhomVao + " nhóm đã vào";
+  const choPhepXoa = t.trangThai === "cho";
+
   const tl = traLoi[i] || {};
   const xh = Object.entries(tl).sort((a,b) => (a[1].t||0) - (b[1].t||0)).map(x => x[0]);
   $("luoiNhom").innerHTML = Object.entries(dsNhom).map(([id,n]) => {
@@ -599,9 +589,17 @@ function veBang(){
         tt = `${KY[r.chon]} — ${d ? "Đúng" : "Sai"}`;
       }
     }
-    return `<div class="n${lop}">${huyHieu}<b>${thoat(n.ten)}</b>
+    const nutXoa = choPhepXoa
+      ? `<button class="xoaNhom" data-id="${id}" title="Xóa nhóm này">×</button>` : "";
+    return `<div class="n${lop}">${huyHieu}${nutXoa}<b>${thoat(n.ten)}</b>
       <span class="tt">${tt}</span><br><span class="tt">${diem[id] || 0} điểm</span></div>`;
-  }).join("");
+  }).join("") || `<p class="phu">Chưa có nhóm nào vào phòng. Đọc mã phòng cho học sinh nhé.</p>`;
+
+  document.querySelectorAll(".xoaNhom").forEach(b => b.onclick = () => {
+    const n = dsNhom[b.dataset.id];
+    if (n && confirm(`Xóa “${n.ten}” khỏi phòng?`))
+      remove(ref(db,`phong/${P.ma}/nhom/${b.dataset.id}`));
+  });
 
   if (t.trangThai === "ket"){
     $("theBXH").hidden = false;
@@ -675,21 +673,6 @@ $("btnKetThuc").onclick = () => {
     update(ref(db,`phong/${P.ma}/thongTin`), { trangThai:"ket", chiSo:-1, cau:null, dapAnDung:null });
 };
 
-$("btnDsNhom").onclick = () => {
-  const ds = JSON.parse(localStorage.getItem("gv_mk_"+P.ma) || "[]");
-  if (!ds.length){ alert("Danh sách mật khẩu chỉ lưu trên máy đã tạo phòng."); return; }
-  const w = window.open("", "_blank");
-  w.document.write(`<meta charset="utf-8"><title>Mật khẩu nhóm</title>
-    <style>body{font-family:system-ui;padding:24px}h1{font-size:18px}
-    table{border-collapse:collapse;width:100%;max-width:420px;margin-top:12px}
-    td{border:1px solid #999;padding:10px 12px;font-size:16px}
-    b{font-size:22px;letter-spacing:.1em}</style>
-    <h1>Mã phòng: ${P.ma}</h1><table>` +
-    ds.map(x => `<tr><td>${x.ten}</td><td><b>${x.mk}</b></td></tr>`).join("") +
-    `</table><p style="margin-top:16px">Cắt rời và phát cho từng nhóm.</p>`);
-  w.document.close();
-};
-
 $("btnToanMH").onclick = () => {
   if (document.fullscreenElement) document.exitFullscreen();
   else document.documentElement.requestFullscreen?.();
@@ -718,26 +701,49 @@ async function moHS(ma){
   if (!s.exists()){ alert("Không tìm thấy phòng " + ma + ". Hãy kiểm tra lại mã."); location.hash=""; man("manHome"); return; }
   $("hsTenPhong").textContent = s.val().ten;
 
-  const n = await get(ref(db,`phong/${ma}/nhom`));
-  const nhom = n.val() || {};
-  $("hsNhom").innerHTML = Object.entries(nhom)
-    .map(([id,v]) => `<option value="${id}">${thoat(v.ten)}</option>`).join("");
-  H.nhom = nhom;
+  huy.push(onValue(ref(db,`phong/${ma}/nhom`), sn => {
+    const nhom = sn.val() || {};
+    H.nhom = nhom;
+    const ds = Object.values(nhom).map(v => v.ten);
+    $("hsDsNhom").innerHTML = ds.length
+      ? `<p class="phu" style="margin-top:10px">Đã vào phòng: ${ds.map(thoat).join(" · ")}</p>` : "";
+    if (H.id && !nhom[H.id]){
+      localStorage.removeItem("hs_"+ma);
+      H.id = null;
+      $("hsDangNhap").hidden = false; $("hsChoi").hidden = true;
+      $("hsLoi").innerHTML = `<div class="loi">Giáo viên đã xóa nhóm của em. Hãy vào lại.</div>`;
+    }
+  }));
 
   const luu = JSON.parse(localStorage.getItem("hs_"+ma) || "null");
-  if (luu && nhom[luu.id]){ H.id = luu.id; H.ten = nhom[luu.id].ten; vaoChoi(); }
+  if (luu?.id){
+    const kt = await get(ref(db,`phong/${ma}/nhom/${luu.id}`));
+    if (kt.exists()){ H.id = luu.id; H.ten = kt.val().ten; vaoChoi(); }
+    else localStorage.removeItem("hs_"+ma);
+  }
 }
 
 $("btnHsVao").onclick = async () => {
-  const id = $("hsNhom").value;
-  const mk = $("hsMk").value.trim();
-  if (!id || !mk){ $("hsLoi").innerHTML = `<div class="loi">Hãy chọn nhóm và nhập mật khẩu.</div>`; return; }
-  if (await bam(mk) !== H.nhom[id].mk){
-    $("hsLoi").innerHTML = `<div class="loi">Mật khẩu chưa đúng. Hỏi lại giáo viên nhé.</div>`; return;
+  const ten = $("hsTenNhomMoi").value.trim().replace(/\s+/g, " ");
+  if (ten.length < 2){
+    $("hsLoi").innerHTML = `<div class="loi">Hãy đặt tên nhóm (ít nhất 2 kí tự).</div>`; return;
   }
-  H.id = id; H.ten = H.nhom[id].ten;
-  localStorage.setItem("hs_"+H.ma, JSON.stringify({ id }));
-  vaoChoi();
+  const btn = $("btnHsVao"); btn.disabled = true;
+  try{
+    const sn = await get(ref(db,`phong/${H.ma}/nhom`));
+    const nhom = sn.val() || {};
+    if (Object.values(nhom).some(v => v.ten.toLowerCase() === ten.toLowerCase())){
+      $("hsLoi").innerHTML = `<div class="loi">Tên này đã có nhóm khác dùng. Đặt tên khác nhé.</div>`;
+      return;
+    }
+    const id = "n" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+    await set(ref(db,`phong/${H.ma}/nhom/${id}`), { ten });
+    H.id = id; H.ten = ten;
+    localStorage.setItem("hs_"+H.ma, JSON.stringify({ id }));
+    vaoChoi();
+  }catch(e){
+    $("hsLoi").innerHTML = `<div class="loi">Chưa vào được phòng. Kiểm tra mạng rồi thử lại.</div>`;
+  }finally{ btn.disabled = false; }
 };
 
 function vaoChoi(){
