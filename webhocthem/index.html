@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý Học tập — Học thêm</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ---------- MÀN HÌNH ĐĂNG NHẬP GV ---------- -->
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <h1>Quản lý học tập</h1>
+    <p class="muted">Đăng nhập tài khoản giáo viên</p>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="gvEmail" placeholder="ban@email.com">
+    </div>
+    <div class="field">
+      <label>Mật khẩu</label>
+      <input type="password" id="gvPass" placeholder="••••••••">
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="loginGV()">Đăng nhập</button>
+    <div class="error-msg" id="loginError"></div>
+    <p class="muted" style="margin-top:14px; font-size:.78rem;">
+      Chưa có tài khoản? <a href="#" onclick="registerGV(); return false;">Tạo tài khoản GV</a>
+    </p>
+  </div>
+</div>
+
+<!-- ---------- APP CHÍNH ---------- -->
+<div id="appShell" class="app-shell" style="display:none;">
+  <div class="sidebar">
+    <div class="brand">Quản lý học tập<small>Học thêm</small></div>
+    <button class="nav-item active" data-tab="tab-hs" onclick="switchTab('tab-hs')">1 · Học sinh &amp; Lớp</button>
+    <button class="nav-item" data-tab="tab-cauhoi" onclick="switchTab('tab-cauhoi')">3 · Ngân hàng câu hỏi</button>
+    <button class="nav-item" data-tab="tab-dekt" onclick="switchTab('tab-dekt')">2 · Đề kiểm tra</button>
+    <div class="sidebar-foot">
+      <div id="gvEmailLabel"></div>
+      <button onclick="logoutGV()">Đăng xuất</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="row">
+        <div class="field" style="min-width:200px; margin-bottom:0;">
+          <label>Năm học</label>
+          <select id="namHocSelect" onchange="onNamHocChange()"></select>
+        </div>
+        <button class="btn btn-outline" onclick="openNamHocModal()">+ Năm học mới</button>
+      </div>
+    </div>
+
+    <!-- ===== TAB 1: HỌC SINH & LỚP ===== -->
+    <div class="tab-panel active" id="tab-hs">
+      <div class="card">
+        <div class="row between">
+          <h3>Lớp học</h3>
+          <div class="row">
+            <button class="btn btn-outline" onclick="xuatExcelToanBo()">⬇ Xuất Excel toàn bộ</button>
+            <button class="btn btn-outline" onclick="openLopModal()">+ Tạo lớp</button>
+          </div>
+        </div>
+        <div id="lopChips" class="row" style="margin-top:8px;"></div>
+      </div>
+
+      <div class="card">
+        <div class="row between">
+          <h3 id="hsCardTitle">Học sinh</h3>
+          <div class="row">
+            <button class="btn btn-outline" onclick="xuatExcelLopHienTai()">⬇ Xuất Excel lớp này</button>
+            <button class="btn btn-primary" onclick="openHsModal()">+ Thêm học sinh</button>
+          </div>
+        </div>
+        <table id="hsTable">
+          <thead><tr>
+            <th>Họ tên</th><th>SĐT phụ huynh</th><th>Lớp trên trường</th><th>Tài khoản</th><th></th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="empty" id="hsEmpty" style="display:none;">Chưa có học sinh trong lớp này.</div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 3: NGÂN HÀNG CÂU HỎI ===== -->
+    <div class="tab-panel" id="tab-cauhoi">
+      <div class="card">
+        <div class="row between">
+          <h3>Nhập câu hỏi từ Excel / CSV</h3>
+        </div>
+        <p class="muted">File cần có các cột: <b>NoiDung, A, B, C, D, DapAnDung</b> (DapAnDung ghi A/B/C/D).</p>
+        <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="importCauHoi(event)">
+        <div id="importResult" class="muted" style="margin-top:8px;"></div>
+      </div>
+
+      <div class="card">
+        <div class="row between">
+          <h3>Nhập câu hỏi thủ công</h3>
+          <button class="btn btn-primary" onclick="openCauHoiModal()">+ Thêm câu hỏi</button>
+        </div>
+        <table>
+          <thead><tr><th>Câu hỏi</th><th>Đáp án đúng</th><th>Nguồn</th><th></th></tr></thead>
+          <tbody id="cauHoiTbody"></tbody>
+        </table>
+        <div class="empty" id="cauHoiEmpty" style="display:none;">Chưa có câu hỏi nào trong ngân hàng.</div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 2: ĐỀ KIỂM TRA ===== -->
+    <div class="tab-panel" id="tab-dekt">
+      <div class="card">
+        <div class="row between">
+          <h3>Đề kiểm tra</h3>
+          <button class="btn btn-primary" onclick="openDeModal()">+ Tạo đề mới</button>
+        </div>
+        <table>
+          <thead><tr><th>Tên đề</th><th>Lớp áp dụng</th><th>Thời lượng</th><th>Trạng thái</th><th></th></tr></thead>
+          <tbody id="deTbody"></tbody>
+        </table>
+        <div class="empty" id="deEmpty" style="display:none;">Chưa có đề kiểm tra nào.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- MODALS ---------- -->
+<div id="modalRoot"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/gv-app.js"></script>
+</body>
+</html>
