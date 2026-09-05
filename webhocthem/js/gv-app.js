@@ -438,7 +438,7 @@ async function loadCauHoi() {
   document.getElementById('cauHoiEmpty').style.display = cauHoiList.length ? 'none' : 'block';
   tbody.innerHTML = cauHoiList.map(c => `
     <tr>
-      <td>${escapeHtml(c.noiDung)}</td>
+      <td>${formatCT(c.noiDung)}</td>
       <td>${['A','B','C','D'][c.dapAnDung]}</td>
       <td>${c.nguon === 'import' ? 'Import' : 'Nhập tay'}</td>
       <td><button class="btn btn-outline" onclick="deleteCauHoi('${c.id}')">Xóa</button></td>
@@ -476,6 +476,15 @@ async function deleteCauHoi(id) {
   await loadCauHoi();
 }
 
+// Nhập câu hỏi từ Excel/CSV.
+// Chấp nhận CẢ 2 kiểu file:
+//  (1) Có dòng tiêu đề: NoiDung, A, B, C, D, DapAnDung
+//  (2) KHÔNG có dòng tiêu đề: mỗi dòng là 1 câu hỏi, đúng thứ tự
+//      cột: câu hỏi, đáp án A, B, C, D, chữ cái đáp án đúng.
+function boDauVN(str) {
+  return String(str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+}
 function importCauHoi(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -484,15 +493,23 @@ function importCauHoi(event) {
     try {
       const wb = XLSX.read(e.target.result, { type: 'array' });
       const sheet = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+      // Đọc thô theo mảng dòng/cột, không dựa vào tên cột
+      let rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '', blankrows: false });
+
+      // Nếu dòng đầu là dòng tiêu đề (chứa chữ "NoiDung"/"Câu hỏi"...) thì bỏ qua dòng đó
+      const dongDau = boDauVN(rows[0] && rows[0][0]).toLowerCase().replace(/\s+/g, '');
+      if (dongDau.includes('noidung') || dongDau.includes('cauhoi') || dongDau.includes('question')) {
+        rows = rows.slice(1);
+      }
+
       const map = { A: 0, B: 1, C: 2, D: 3 };
       let count = 0;
       const batch = db.batch();
       rows.forEach(r => {
-        const noiDung = String(r.NoiDung || r.noidung || '').trim();
-        const A = String(r.A || '').trim(), B = String(r.B || '').trim();
-        const C = String(r.C || '').trim(), D = String(r.D || '').trim();
-        const dungRaw = String(r.DapAnDung || r.dapandung || '').trim().toUpperCase();
+        const noiDung = String(r[0] || '').trim();
+        const A = String(r[1] || '').trim(), B = String(r[2] || '').trim();
+        const C = String(r[3] || '').trim(), D = String(r[4] || '').trim();
+        const dungRaw = String(r[5] || '').trim().toUpperCase();
         if (!noiDung || !A || !B || !C || !D || !(dungRaw in map)) return;
         const ref = db.collection('cauHoi').doc();
         batch.set(ref, {
@@ -553,7 +570,7 @@ function renderBadgeTrangThai(t) {
 function openDeModal() {
   if (!cauHoiList.length) { alert('Hãy thêm câu hỏi vào ngân hàng trước (tab Ngân hàng câu hỏi).'); return; }
   const lopOptions = lopList.map(l => `<label><input type="checkbox" class="mLopCheck" value="${l.id}" data-ten="${escapeHtml(l.ten)}"> ${escapeHtml(l.ten)}</label>`).join('');
-  const cauHoiOptions = cauHoiList.map(c => `<label><input type="checkbox" class="mCauCheck" value="${c.id}"> ${escapeHtml(c.noiDung)}</label>`).join('');
+  const cauHoiOptions = cauHoiList.map(c => `<label><input type="checkbox" class="mCauCheck" value="${c.id}"> ${formatCT(c.noiDung)}</label>`).join('');
   showModal(`
     <h3>Tạo đề kiểm tra</h3>
     <div class="field"><label>Tên đề</label><input type="text" id="mDeTen"></div>
@@ -618,4 +635,10 @@ function showModal(html) {
 function closeModal() { document.getElementById('modalRoot').innerHTML = ''; }
 function escapeHtml(s) {
   return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+// Hiển thị công thức hóa học với chỉ số nhỏ, vd CO2 -> CO₂, H2O -> H₂O, CH4 -> CH₄.
+// Chỉ số hạ xuống áp dụng cho số đứng ngay sau một chữ cái (không có khoảng trắng),
+// nên số liệu bình thường như "1,5 mol" hay "25 oC" không bị ảnh hưởng.
+function formatCT(s) {
+  return escapeHtml(s).replace(/([A-Za-zĐđ])(\d+)/g, '$1<sub>$2</sub>');
 }
