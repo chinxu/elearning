@@ -509,6 +509,123 @@ async function xuatExcelToanBo() {
 }
 
 // ============================================================
+// DANH SÁCH BÀI MẪU — SGK Khoa học tự nhiên, bộ Kết nối tri thức
+// (tham khảo mục lục chính thức; nếu có bài lệch so với sách của bạn,
+// cứ xóa/sửa/thêm trực tiếp trong phần "Bài học" bên dưới)
+// ============================================================
+const DANH_SACH_BAI_MAU = {
+  6: [
+    'Giới thiệu về Khoa học tự nhiên','An toàn trong phòng thực hành','Sử dụng kính lúp',
+    'Sử dụng kính hiển vi quang học','Đo chiều dài','Đo khối lượng','Đo thời gian','Đo nhiệt độ',
+    'Sự đa dạng của chất','Các thể của chất và sự chuyển thể','Oxygen. Không khí',
+    'Một số vật liệu','Một số nguyên liệu','Một số nhiên liệu','Một số lương thực, thực phẩm',
+    'Hỗn hợp các chất','Tách chất khỏi hỗn hợp',
+    'Tế bào - Đơn vị cơ bản của sự sống','Cấu tạo và chức năng các thành phần của tế bào',
+    'Sự lớn lên và sinh sản của tế bào','Thực hành: Quan sát và phân biệt một số loại tế bào',
+    'Cơ thể sinh vật','Tổ chức cơ thể đơn bào và cơ thể đa bào',
+    'Thực hành: Quan sát và mô tả cơ thể đơn bào, cơ thể đa bào',
+    'Hệ thống phân loại sinh vật','Khóa lưỡng phân','Vi khuẩn',
+    'Thực hành: Làm sữa chua và quan sát vi khuẩn','Virus','Nguyên sinh vật',
+    'Thực hành: Quan sát nguyên sinh vật','Nấm','Thực hành: Quan sát các loại nấm',
+    'Thực vật','Thực hành: Quan sát và phân biệt một số nhóm thực vật','Động vật',
+    'Thực hành: Quan sát và nhận biết một số nhóm động vật ngoài thiên nhiên',
+    'Đa dạng sinh học','Tìm hiểu sinh vật ngoài thiên nhiên',
+    'Lực là gì?','Biểu diễn lực','Biến dạng của lò xo','Trọng lượng, lực hấp dẫn',
+    'Lực ma sát','Lực cản của nước',
+    'Năng lượng và sự truyền năng lượng','Một số dạng năng lượng','Sự chuyển hoá năng lượng',
+    'Năng lượng hao phí','Năng lượng tái tạo','Tiết kiệm năng lượng',
+    'Chuyển động nhìn thấy của Mặt Trời. Thiên thể','Mặt Trăng','Hệ Mặt Trời','Ngân Hà'
+  ],
+  7: [
+    'Phương pháp và kĩ năng học tập môn Khoa học tự nhiên','Nguyên tử','Nguyên tố hóa học',
+    'Sơ lược về bảng tuần hoàn các nguyên tố hóa học','Phân tử - Đơn chất - Hợp chất',
+    'Giới thiệu về liên kết hóa học','Hóa trị và công thức hóa học',
+    'Tốc độ chuyển động','Đo tốc độ','Đồ thị quãng đường - thời gian',
+    'Thảo luận về ảnh hưởng của tốc độ trong an toàn giao thông',
+    'Sóng âm','Độ to và độ cao của âm','Phản xạ âm, chống ô nhiễm tiếng ồn',
+    'Năng lượng ánh sáng. Tia sáng, vùng tối','Sự phản xạ ánh sáng','Ảnh của vật qua gương phẳng',
+    'Nam châm','Từ trường','Chế tạo nam châm điện đơn giản',
+    'Khái quát về trao đổi chất và chuyển hóa năng lượng','Quang hợp ở thực vật',
+    'Một số yếu tố ảnh hưởng đến quang hợp','Thực hành: Chứng minh quang hợp ở cây xanh',
+    'Hô hấp tế bào','Một số yếu tố ảnh hưởng hô hấp tế bào','Thực hành: Hô hấp tế bào ở thực vật',
+    'Trao đổi khí ở sinh vật','Vai trò của nước và các chất dinh dưỡng đối với cơ thể sinh vật',
+    'Trao đổi nước và chất dinh dưỡng ở thực vật','Trao đổi nước và chất dinh dưỡng ở động vật',
+    'Thực hành: Thân vận chuyển nước và lá thoát hơi nước',
+    'Cảm ứng ở sinh vật và tập tính ở động vật','Vận dụng hiện tượng cảm ứng ở sinh vật vào thực tiễn',
+    'Thực hành: Cảm ứng ở sinh vật','Khái quát về sinh trưởng và phát triển ở sinh vật',
+    'Ứng dụng sinh trưởng và phát triển ở sinh vật vào thực tiễn',
+    'Thực hành: Quan sát, mô tả sự sinh trưởng và phát triển ở một số loài sinh vật',
+    'Sinh sản vô tính ở sinh vật','Sinh sản hữu tính ở sinh vật',
+    'Một số yếu tố ảnh hưởng và điều hòa, điều khiển sinh sản ở sinh vật',
+    'Cơ thể sinh vật là một thể thống nhất'
+  ],
+  8: [
+    'Mở đầu (dụng cụ, hoá chất và an toàn thí nghiệm)','Phản ứng hóa học','Mol và tỉ khối chất khí',
+    'Dung dịch và nồng độ','Định luật bảo toàn khối lượng và phương trình hóa học',
+    'Tính theo phương trình hóa học','Tốc độ phản ứng và chất xúc tác',
+    'Acid','Base - thang pH','Oxide','Muối','Phân bón hóa học',
+    'Khối lượng riêng','Thực hành xác định khối lượng riêng','Áp suất trên một bề mặt',
+    'Áp suất chất lỏng. Áp suất khí quyển','Lực đẩy Archimedes',
+    'Tác dụng làm quay của lực. Moment lực','Đòn bẩy và ứng dụng',
+    'Hiện tượng nhiễm điện do cọ xát','Dòng điện, nguồn điện','Mạch điện đơn giản',
+    'Tác dụng của dòng điện','Cường độ dòng điện và hiệu điện thế',
+    'Thực hành đo cường độ dòng điện và hiệu điện thế',
+    'Năng lượng nhiệt và nhiệt năng','Thực hành đo năng lượng nhiệt bằng Joulemeter',
+    'Sự truyền nhiệt','Sự nở vì nhiệt',
+    'Khái quát về cơ thể người','Hệ vận động ở người','Dinh dưỡng và tiêu hóa ở người',
+    'Máu và hệ tuần hoàn của cơ thể người','Hệ hô hấp ở người','Hệ bài tiết ở người',
+    'Điều hòa môi trường trong của cơ thể người','Hệ thần kinh và các giác quan ở người',
+    'Hệ nội tiết ở người','Da và điều hòa thân nhiệt ở người','Sinh sản ở người',
+    'Môi trường và các nhân tố sinh thái','Quần thể sinh vật','Quần xã sinh vật',
+    'Hệ sinh thái','Sinh quyển','Cân bằng tự nhiên','Bảo vệ môi trường'
+  ],
+  9: [
+    'Mở đầu (nhận biết một số dụng cụ và hoá chất. Thuyết trình một vấn đề khoa học)',
+    'Động năng. Thế năng','Cơ năng','Công và công suất',
+    'Khúc xạ ánh sáng','Phản xạ toàn phần','Lăng kính','Thấu kính',
+    'Thực hành đo tiêu cự của thấu kính hội tụ','Kính lúp. Bài tập thấu kính',
+    'Điện trở. Định luật Ohm','Đoạn mạch nối tiếp, song song',
+    'Năng lượng của dòng điện và công suất điện',
+    'Cảm ứng điện từ. Nguyên tắc tạo ra dòng điện xoay chiều','Tác dụng của dòng điện xoay chiều',
+    'Vòng năng lượng trên Trái Đất. Năng lượng hóa thạch','Một số dạng năng lượng tái tạo',
+    'Tính chất chung của kim loại','Dãy hoạt động hóa học','Tách kim loại và việc sử dụng hợp kim',
+    'Sự khác nhau cơ bản giữa phi kim và kim loại',
+    'Giới thiệu về hợp chất hữu cơ','Alkane','Alkene','Nguồn nhiên liệu',
+    'Ethylic alcohol','Acetic acid',
+    'Lipid','Carbohydrate glucose và saccharose','Tinh bột và cellulose','Protein','Polymer',
+    'Sơ lược về hóa học vỏ Trái Đất và khai thác tài nguyên từ vỏ Trái Đất',
+    'Khai thác đá vôi. Công nghiệp silicate',
+    'Khai thác nhiên liệu hóa thạch. Nguồn carbon. Chu trình carbon và sự ấm lên toàn cầu',
+    'Khái quát về di truyền học','Các quy luật di truyền của Mendel','Nucleic acid và gene',
+    'Tái bản DNA và phiên mã tạo ra RNA','Dịch mã và mối quan hệ từ gene đến tính trạng',
+    'Đột biến gene','Di truyền nhiễm sắc thể','Nguyên phân và giảm phân',
+    'Nhiễm sắc thể giới tính và cơ chế xác định giới tính','Di truyền liên kết',
+    'Đột biến nhiễm sắc thể','Di truyền học với con người',
+    'Ứng dụng công nghệ di truyền vào đời sống',
+    'Khái niệm tiến hóa và các hình thức chọn lọc','Cơ chế tiến hóa',
+    'Sự phát sinh và phát triển của sự sống trên Trái Đất'
+  ]
+};
+
+async function napBaiMau() {
+  const khoi = document.getElementById('baiHocKhoiMoi').value;
+  const danhSach = DANH_SACH_BAI_MAU[khoi] || [];
+  if (!danhSach.length) { alert('Chưa có danh sách mẫu cho khối này.'); return; }
+  const daCo = new Set(baiHocList.filter(b => String(b.khoi) === String(khoi)).map(b => b.ten));
+  const canThem = danhSach.filter(ten => !daCo.has(ten));
+  if (!canThem.length) { alert('Khối này đã có đủ danh sách bài mẫu rồi.'); return; }
+  if (!confirm(`Thêm ${canThem.length} bài học mẫu (Khối ${khoi}, SGK Kết nối tri thức) vào ngân hàng?`)) return;
+  const batch = db.batch();
+  canThem.forEach(ten => {
+    const ref = db.collection('baiHoc').doc();
+    batch.set(ref, { khoi, ten, createdAt: Date.now() });
+  });
+  await batch.commit();
+  await loadBaiHoc();
+  alert(`Đã thêm ${canThem.length} bài học.`);
+}
+
+// ============================================================
 // BÀI HỌC (tổ chức ngân hàng câu hỏi theo bài, khối 6/7/8/9)
 // ============================================================
 async function loadBaiHoc() {
