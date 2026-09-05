@@ -628,12 +628,15 @@ async function napBaiMau() {
 // ============================================================
 // BÀI HỌC (tổ chức ngân hàng câu hỏi theo bài, khối 6/7/8/9)
 // ============================================================
+let currentBaiHocId = null; // "Bài đang thao tác" — dùng chung cho import, thêm câu hỏi, lọc danh sách
+
 async function loadBaiHoc() {
   const snap = await db.collection('baiHoc').orderBy('khoi').orderBy('ten').get();
   baiHocList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   renderBaiHocList();
   capNhatBaiHocSelects();
   capNhatDanhSachBaiGoiY();
+  capNhatCurrentBaiHocSelect();
 }
 
 function renderBaiHocList() {
@@ -683,15 +686,47 @@ async function themBaiHoc() {
   const selVal = document.getElementById('baiHocTenMoi').value;
   const ten = selVal === '_custom' ? document.getElementById('baiHocTenTuNhap').value.trim() : selVal;
   if (!ten) { alert('Chọn hoặc nhập tên bài.'); return; }
-  await db.collection('baiHoc').add({ khoi, ten, createdAt: Date.now() });
+  const ref = await db.collection('baiHoc').add({ khoi, ten, createdAt: Date.now() });
   document.getElementById('baiHocTenTuNhap').value = '';
   await loadBaiHoc();
+  // Tự động chọn luôn bài vừa thêm làm "bài đang thao tác" — mọi việc bên dưới
+  // (import CSV, thêm câu hỏi thủ công, lọc danh sách) sẽ tự bám theo bài này.
+  const curSel = document.getElementById('currentBaiHocSelect');
+  if (curSel) {
+    curSel.value = ref.id;
+    chonBaiDangDung();
+    document.getElementById('importResult').textContent =
+      `Đã thêm bài "${ten}" và chọn làm bài đang thao tác — giờ import CSV hoặc thêm câu hỏi sẽ tự xếp vào bài này.`;
+  }
 }
 async function xoaBaiHoc(id) {
   if (!confirm('Xóa bài học này? Các câu hỏi đã gắn vào bài này sẽ chuyển về "Chưa phân loại" (không bị xóa).')) return;
   await db.collection('baiHoc').doc(id).delete();
+  if (currentBaiHocId === id) currentBaiHocId = null;
   await loadBaiHoc();
   renderCauHoiTable();
+}
+
+// "Bài đang thao tác" — chọn 1 lần, áp dụng cho cả import CSV, thêm câu hỏi thủ công,
+// và bộ lọc hiển thị danh sách câu hỏi.
+function capNhatCurrentBaiHocSelect() {
+  const sel = document.getElementById('currentBaiHocSelect');
+  if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Chưa chọn bài —</option>' + [6, 7, 8, 9].map(khoiOptionsGroup).join('');
+  if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
+  else if (currentBaiHocId && [...sel.options].some(o => o.value === currentBaiHocId)) sel.value = currentBaiHocId;
+  const label = document.getElementById('importBaiHocLabel');
+  if (label) label.textContent = sel.value ? tenBaiHoc(sel.value).replace(/<[^>]+>/g, '') : '— Chưa chọn bài —';
+}
+function chonBaiDangDung() {
+  currentBaiHocId = document.getElementById('currentBaiHocSelect').value || null;
+  const importSel = document.getElementById('importBaiHocSelect');
+  if (importSel) importSel.value = currentBaiHocId || '';
+  const label = document.getElementById('importBaiHocLabel');
+  if (label) label.textContent = currentBaiHocId ? tenBaiHoc(currentBaiHocId).replace(/<[^>]+>/g, '') : '— Chưa chọn bài —';
+  const filterSel = document.getElementById('cauHoiBaiHocFilter');
+  if (filterSel) { filterSel.value = currentBaiHocId || ''; renderCauHoiTable(); }
 }
 
 // Danh sách <option> để GÁN 1 bài cho câu hỏi (import / thêm thủ công)
@@ -767,6 +802,7 @@ function openCauHoiModal() {
       <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
       <button class="btn btn-primary" onclick="saveCauHoi()">Lưu</button>
     </div>`);
+  if (currentBaiHocId) document.getElementById('mCauBaiHoc').value = currentBaiHocId;
 }
 async function saveCauHoi() {
   const baiHocId = document.getElementById('mCauBaiHoc').value || null;
@@ -938,7 +974,11 @@ function openDeModal() {
     <div class="field"><label>Áp dụng cho lớp</label><div class="checkbox-list">${lopOptions || '<p class="muted">Chưa có lớp nào.</p>'}</div></div>
     <div class="field">
       <label>Lọc câu hỏi theo bài</label>
-      <select id="deCauHoiFilter" onchange="renderDeCauHoiList()">${optionsBaiHocFilter()}</select>
+      <div class="row">
+        <select id="deCauHoiFilter" onchange="renderDeCauHoiList()" style="flex:1; min-width:160px;">${optionsBaiHocFilter()}</select>
+        <input type="number" id="deSoCauRandom" min="1" value="5" style="width:70px;">
+        <button class="btn btn-outline" onclick="deChonNgauNhien()">🎲 Bốc ngẫu nhiên</button>
+      </div>
     </div>
     <div class="field">
       <label>Chọn câu hỏi (<span id="deSoCauDaChon">0</span> câu đã chọn / ${cauHoiList.length} câu trong ngân hàng)</label>
@@ -948,13 +988,17 @@ function openDeModal() {
       <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
       <button class="btn btn-primary" onclick="saveDe()">Tạo đề</button>
     </div>`);
+  if (currentBaiHocId) document.getElementById('deCauHoiFilter').value = currentBaiHocId;
   renderDeCauHoiList();
 }
-function renderDeCauHoiList() {
+function layDsCauHoiTheoBoLoc() {
   const filterVal = document.getElementById('deCauHoiFilter').value;
-  let list = cauHoiList;
-  if (filterVal === '_khong') list = cauHoiList.filter(c => !c.baiHocId);
-  else if (filterVal) list = cauHoiList.filter(c => c.baiHocId === filterVal);
+  if (filterVal === '_khong') return cauHoiList.filter(c => !c.baiHocId);
+  if (filterVal) return cauHoiList.filter(c => c.baiHocId === filterVal);
+  return cauHoiList;
+}
+function renderDeCauHoiList() {
+  const list = layDsCauHoiTheoBoLoc();
   document.getElementById('deCauHoiListEl').innerHTML = list.length ? list.map(c => `
     <label><input type="checkbox" class="mCauCheck" value="${c.id}" ${deSelectedCauHoiIds.has(c.id) ? 'checked' : ''} onchange="toggleDeCauHoi('${c.id}', this.checked)"> ${formatCT(c.noiDung)}</label>`).join('')
     : '<p class="muted">Không có câu hỏi nào khớp bộ lọc này.</p>';
@@ -963,6 +1007,22 @@ function renderDeCauHoiList() {
 function toggleDeCauHoi(id, checked) {
   if (checked) deSelectedCauHoiIds.add(id); else deSelectedCauHoiIds.delete(id);
   document.getElementById('deSoCauDaChon').textContent = deSelectedCauHoiIds.size;
+}
+// Bốc ngẫu nhiên N câu trong đúng bài đang lọc, cộng dồn vào danh sách đã chọn
+// (lọc bài khác rồi bốc tiếp vẫn giữ nguyên các câu đã chọn trước đó).
+function deChonNgauNhien() {
+  const filterVal = document.getElementById('deCauHoiFilter').value;
+  if (!filterVal) { alert('Hãy chọn 1 bài cụ thể ở bộ lọc trước khi bốc ngẫu nhiên (không áp dụng khi đang để "Tất cả").'); return; }
+  const list = layDsCauHoiTheoBoLoc();
+  if (!list.length) { alert('Bài này chưa có câu hỏi nào.'); return; }
+  const n = Math.max(1, Math.min(list.length, parseInt(document.getElementById('deSoCauRandom').value) || 1));
+  const idxAll = list.map((_, i) => i);
+  for (let i = idxAll.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [idxAll[i], idxAll[j]] = [idxAll[j], idxAll[i]];
+  }
+  idxAll.slice(0, n).forEach(i => deSelectedCauHoiIds.add(list[i].id));
+  renderDeCauHoiList();
 }
 async function saveDe() {
   const tieuDe = document.getElementById('mDeTen').value.trim();
@@ -1024,6 +1084,9 @@ function capNhatBdLopSelect() {
 document.addEventListener('DOMContentLoaded', () => {
   const thangInput = document.getElementById('bdThangSelect');
   if (thangInput) thangInput.value = new Date().toISOString().slice(0, 7);
+  // Lớp phòng hộ: đảm bảo dropdown "Tên bài" luôn có dữ liệu ngay khi trang tải xong,
+  // không phụ thuộc việc người dùng phải bấm đổi khối trước.
+  capNhatDanhSachBaiGoiY();
 });
 
 async function xemBangDiem() {
