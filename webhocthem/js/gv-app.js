@@ -633,6 +633,7 @@ async function loadBaiHoc() {
   baiHocList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   renderBaiHocList();
   capNhatBaiHocSelects();
+  capNhatDanhSachBaiGoiY();
 }
 
 function renderBaiHocList() {
@@ -654,12 +655,36 @@ function renderBaiHocList() {
     </div>`).join('');
 }
 
+// Đổ danh sách bài (đánh số theo đúng SGK) vào dropdown "Tên bài", ứng với khối đang chọn.
+// Bài nào đã có trong ngân hàng rồi thì không hiện lại nữa.
+function capNhatDanhSachBaiGoiY() {
+  const selKhoi = document.getElementById('baiHocKhoiMoi');
+  const selTen = document.getElementById('baiHocTenMoi');
+  if (!selKhoi || !selTen) return;
+  const khoi = selKhoi.value;
+  const danhSach = DANH_SACH_BAI_MAU[khoi] || [];
+  const daCo = new Set(baiHocList.filter(b => String(b.khoi) === String(khoi)).map(b => b.ten));
+  const conLai = danhSach.map((ten, i) => ({ ten, stt: i + 1 })).filter(b => !daCo.has(b.ten));
+  const optionsBaiCoSan = conLai.map(b => `<option value="${escapeHtml(b.ten)}">Bài ${b.stt}. ${escapeHtml(b.ten)}</option>`).join('');
+  selTen.innerHTML = `<option value="">— Chọn bài —</option>` +
+    `<option value="_custom">— Tự nhập tên khác —</option>` +
+    (optionsBaiCoSan || '<option value="" disabled>(Đã thêm hết bài mẫu của khối này)</option>');
+  toggleTuNhapBai();
+}
+function toggleTuNhapBai() {
+  const selTen = document.getElementById('baiHocTenMoi');
+  const oTuNhap = document.getElementById('baiHocTenTuNhap');
+  if (!selTen || !oTuNhap) return;
+  oTuNhap.style.display = selTen.value === '_custom' ? 'block' : 'none';
+}
+
 async function themBaiHoc() {
   const khoi = document.getElementById('baiHocKhoiMoi').value;
-  const ten = document.getElementById('baiHocTenMoi').value.trim();
-  if (!ten) { alert('Nhập tên bài.'); return; }
+  const selVal = document.getElementById('baiHocTenMoi').value;
+  const ten = selVal === '_custom' ? document.getElementById('baiHocTenTuNhap').value.trim() : selVal;
+  if (!ten) { alert('Chọn hoặc nhập tên bài.'); return; }
   await db.collection('baiHoc').add({ khoi, ten, createdAt: Date.now() });
-  document.getElementById('baiHocTenMoi').value = '';
+  document.getElementById('baiHocTenTuNhap').value = '';
   await loadBaiHoc();
 }
 async function xoaBaiHoc(id) {
