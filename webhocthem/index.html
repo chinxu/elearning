@@ -101,21 +101,22 @@
     <div class="tab-panel" id="tab-cauhoi">
       <div class="card">
         <h3>Bài học (KHTN 6/7/8/9 — Kết nối tri thức)</h3>
-        <p class="muted">Tạo danh sách bài theo đúng tiến độ dạy của bạn, rồi gắn câu hỏi vào từng bài để sau này tạo đề chỉ cần lọc ra.</p>
+        <p class="muted">Chọn khối rồi chọn đúng bài trong danh sách sách giáo khoa — hoặc chọn "Tự nhập tên khác" nếu muốn đặt tên riêng.</p>
         <div class="row">
           <div class="field" style="min-width:110px; margin-bottom:0;">
             <label>Khối</label>
-            <select id="baiHocKhoiMoi">
+            <select id="baiHocKhoiMoi" onchange="capNhatDanhSachBaiGoiY()">
               <option value="6">Lớp 6</option><option value="7">Lớp 7</option>
               <option value="8">Lớp 8</option><option value="9">Lớp 9</option>
             </select>
           </div>
-          <div class="field" style="flex:1; min-width:220px; margin-bottom:0;">
+          <div class="field" style="flex:1; min-width:260px; margin-bottom:0;">
             <label>Tên bài</label>
-            <input type="text" id="baiHocTenMoi" placeholder="vd: Bài 3: Mol và tỉ khối chất khí">
+            <select id="baiHocTenMoi" onchange="toggleTuNhapBai()"></select>
+            <input type="text" id="baiHocTenTuNhap" placeholder="Nhập tên bài tùy ý" style="display:none; margin-top:6px;">
           </div>
           <button class="btn btn-primary" onclick="themBaiHoc()">+ Thêm bài</button>
-          <button class="btn btn-outline" onclick="napBaiMau()">📚 Nạp bài mẫu KNTT</button>
+          <button class="btn btn-outline" onclick="napBaiMau()">📚 Thêm tất cả bài còn lại</button>
         </div>
         <div id="baiHocListEl" style="margin-top:12px;"></div>
       </div>
