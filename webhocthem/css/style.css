@@ -161,6 +161,16 @@ tr:hover td{background:var(--paper);}
 }
 .opt.selected .letter{background:var(--pine); color:#fff; border-color:var(--pine);}
 
+/* ---------- Bảng học sinh kiểu trang tính ---------- */
+td.editable-cell[contenteditable="true"]{
+  background:var(--amber-soft); outline:1px dashed var(--amber);
+  cursor:text; min-width:110px;
+}
+td.editable-cell[contenteditable="true"]:focus{
+  outline:2px solid var(--pine); background:#fff;
+}
+td.editable-cell[contenteditable="false"]{color:var(--ink);}
+
 .checkbox-list{max-height:320px; overflow:auto; border:1px solid var(--rule); border-radius:var(--radius-s); padding:8px;}
 .checkbox-list label{display:flex; gap:8px; align-items:flex-start; font-size:.85rem; color:var(--ink); padding:6px 4px; margin:0; cursor:pointer;}
 .checkbox-list label:hover{background:var(--paper);}
