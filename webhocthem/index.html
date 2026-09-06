@@ -101,53 +101,29 @@
     <div class="tab-panel" id="tab-cauhoi">
       <div class="card">
         <h3>Bài học (KHTN 6/7/8/9 — Kết nối tri thức)</h3>
-        <p class="muted">Chọn khối rồi chọn đúng bài trong danh sách sách giáo khoa — hoặc chọn "Tự nhập tên khác" nếu muốn đặt tên riêng.</p>
-        <div class="row">
-          <div class="field" style="min-width:110px; margin-bottom:0;">
-            <label>Khối</label>
-            <select id="baiHocKhoiMoi" onchange="capNhatDanhSachBaiGoiY()">
-              <option value="6">Lớp 6</option><option value="7">Lớp 7</option>
-              <option value="8">Lớp 8</option><option value="9">Lớp 9</option>
-            </select>
-          </div>
-          <div class="field" style="flex:1; min-width:260px; margin-bottom:0;">
-            <label>Tên bài</label>
-            <select id="baiHocTenMoi" onchange="toggleTuNhapBai()"></select>
-            <input type="text" id="baiHocTenTuNhap" placeholder="Nhập tên bài tùy ý" style="display:none; margin-top:6px;">
-          </div>
-          <button class="btn btn-primary" onclick="themBaiHoc()">+ Thêm bài</button>
-          <button class="btn btn-outline" onclick="napBaiMau()">📚 Thêm tất cả bài còn lại</button>
-        </div>
-        <div id="baiHocListEl" style="margin-top:12px;"></div>
+        <p class="muted">Chọn khối, chọn bài — câu hỏi nhập ở khung bên dưới sẽ tự vào đúng thư viện của bài đó.</p>
+        <div id="baiHocPickerEl"></div>
       </div>
 
-      <div class="card">
-        <div class="row between">
-          <h3>Nhập câu hỏi từ Excel / CSV</h3>
+      <div class="card" id="baiCauHoiPanel" style="display:none;">
+        <h3>Câu hỏi — <span id="baiDangChonTen"></span></h3>
+        <div class="row" style="align-items:flex-start; gap:28px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:260px;">
+            <div style="font-weight:600; margin-bottom:6px;">Nhập từ Excel / CSV</div>
+            <p class="muted" style="font-size:.8rem; margin-bottom:8px;">Cột: <b>NoiDung, A, B, C, D, DapAnDung</b> (DapAnDung ghi A/B/C/D).</p>
+            <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="importCauHoi(event)">
+            <div id="importResult" class="muted" style="margin-top:6px;"></div>
+          </div>
+          <div style="flex:1; min-width:200px;">
+            <div style="font-weight:600; margin-bottom:6px;">Nhập thủ công</div>
+            <button class="btn btn-primary" onclick="openCauHoiModal()">+ Thêm câu hỏi</button>
+          </div>
         </div>
-        <p class="muted">File cần có các cột: <b>NoiDung, A, B, C, D, DapAnDung</b> (DapAnDung ghi A/B/C/D).</p>
-        <div class="field" style="max-width:320px;">
-          <label>Xếp các câu nhập lần này vào bài</label>
-          <select id="importBaiHocSelect"><option value="">— Chưa phân loại —</option></select>
-        </div>
-        <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="importCauHoi(event)">
-        <div id="importResult" class="muted" style="margin-top:8px;"></div>
-      </div>
-
-      <div class="card">
-        <div class="row between">
-          <h3>Nhập câu hỏi thủ công</h3>
-          <button class="btn btn-primary" onclick="openCauHoiModal()">+ Thêm câu hỏi</button>
-        </div>
-        <div class="field" style="max-width:320px;">
-          <label>Lọc theo bài</label>
-          <select id="cauHoiBaiHocFilter" onchange="renderCauHoiTable()"><option value="">— Tất cả —</option></select>
-        </div>
-        <table>
-          <thead><tr><th>Câu hỏi</th><th>Bài học</th><th>Đáp án đúng</th><th>Nguồn</th><th></th></tr></thead>
-          <tbody id="cauHoiTbody"></tbody>
+        <table style="margin-top:18px;">
+          <thead><tr><th>Câu hỏi</th><th>Đáp án đúng</th><th>Nguồn</th><th></th></tr></thead>
+          <tbody id="baiCauHoiTbody"></tbody>
         </table>
-        <div class="empty" id="cauHoiEmpty" style="display:none;">Chưa có câu hỏi nào trong ngân hàng.</div>
+        <div class="empty" id="baiCauHoiEmpty" style="display:none;">Bài này chưa có câu hỏi nào.</div>
       </div>
     </div>
 
