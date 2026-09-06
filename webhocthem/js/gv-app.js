@@ -656,18 +656,39 @@ function renderBaiHocPicker() {
   if (!el) return;
   const khoiTabs = [6, 7, 8, 9].map(k => `
     <button class="btn ${String(k) === khoiDangXem ? 'btn-primary' : 'btn-outline'}" onclick="doiKhoiXem('${k}')">Lớp ${k}</button>`).join('');
-  const baiCuaKhoi = baiHocList.filter(b => String(b.khoi) === khoiDangXem);
+
+  const danhSachCurr = DANH_SACH_BAI_MAU[khoiDangXem] || [];
+  const baiCuaKhoi = baiHocList
+    .filter(b => String(b.khoi) === khoiDangXem)
+    .map(b => ({ ...b, stt: danhSachCurr.indexOf(b.ten) + 1 })) // 0 = không khớp đúng tên SGK (bài tự đặt tên / trùng cũ)
+    .sort((a, b) => {
+      if (a.stt && b.stt) return a.stt - b.stt;
+      if (a.stt) return -1;
+      if (b.stt) return 1;
+      return a.ten.localeCompare(b.ten);
+    });
+
   const baiChips = baiCuaKhoi.map(b => `
-    <button class="btn ${b.id === baiDangChonId ? 'btn-primary' : 'btn-outline'}" onclick="chonBai('${b.id}')">${escapeHtml(b.ten)}</button>`).join('');
+    <span style="display:inline-flex; margin:0 4px 4px 0;">
+      <button class="btn ${b.id === baiDangChonId ? 'btn-primary' : 'btn-outline'}" style="border-radius:6px 0 0 6px;" onclick="chonBai('${b.id}')">${b.stt ? `Bài ${b.stt}. ` : ''}${escapeHtml(b.ten)}</button>
+      <button class="btn btn-outline" style="border-radius:0 6px 6px 0; border-left:none; padding:8px 10px; color:var(--red-pen); font-weight:700;" title="Xóa bài này" onclick="xoaBaiHoc('${b.id}')">✕</button>
+    </span>`).join('');
+
   el.innerHTML = `
     <div class="row" style="margin-bottom:10px;">${khoiTabs}</div>
-    <div class="row" style="flex-wrap:wrap;">${baiChips || '<p class="muted">Đang tải danh sách bài...</p>'}</div>`;
+    <div style="display:flex; flex-wrap:wrap;">${baiChips || '<p class="muted">Đang tải danh sách bài...</p>'}</div>`;
 }
 function doiKhoiXem(k) { khoiDangXem = k; renderBaiHocPicker(); }
 function chonBai(id) {
   baiDangChonId = id;
   renderBaiHocPicker();
   renderKhungCauHoiTheoBai();
+}
+async function xoaBaiHoc(id) {
+  if (!confirm('Xóa bài học này? Câu hỏi đã gắn vào bài này sẽ chuyển về "Chưa phân loại" (không bị xóa).')) return;
+  await db.collection('baiHoc').doc(id).delete();
+  if (baiDangChonId === id) { baiDangChonId = null; renderKhungCauHoiTheoBai(); }
+  await loadBaiHoc();
 }
 function tenBaiHoc(id) {
   if (!id) return '<span class="muted">—</span>';
