@@ -40,6 +40,16 @@ const MONTHS = [
   { key: "05", label: "Tháng 5" },
 ];
 
+const DUTY_DAYS = [
+  { key: "T2", label: "Thứ 2" },
+  { key: "T3", label: "Thứ 3" },
+  { key: "T4", label: "Thứ 4" },
+  { key: "T5", label: "Thứ 5" },
+  { key: "T6", label: "Thứ 6" },
+  { key: "T7", label: "Thứ 7" },
+];
+const DUTY_SLOTS_PER_DAY = 4;
+
 const FIELD_LABELS = {
   name: "Họ và tên",
   phone: "SĐT phụ huynh",
@@ -119,6 +129,10 @@ const state = {
   students: [],
   classes: [],
   defaultClassId: null,
+  teacherDutyWeekStart: null,
+  officerDutyWeekStart: null,
+  officerDutySelectedDay: DUTY_DAYS[0].key,
+  officerDutyWeekData: null,
   selectedStudentId: null,
   tab: "lylich",
   selectedMonth: MONTHS[0].key,
@@ -167,6 +181,36 @@ function compareStudentsByGivenName(a, b) {
   const cmp = getGivenName(nameA).localeCompare(getGivenName(nameB), "vi");
   if (cmp !== 0) return cmp;
   return nameA.localeCompare(nameB, "vi");
+}
+
+// ---- Tiện ích tính tuần (Thứ 2 -> Thứ 7) cho tính năng Trực nhật ----
+function isoDateStr(d) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+function getMondayOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay(); // 0=CN, 1=T2, ... 6=T7
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+function formatVNShortDate(d) {
+  return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
+}
+function dutyWeekLabel(weekStartISO) {
+  const monday = new Date(weekStartISO + "T00:00:00");
+  const saturday = new Date(monday);
+  saturday.setDate(monday.getDate() + 5);
+  return `Tuần ${formatVNShortDate(monday)} - ${formatVNShortDate(saturday)}/${saturday.getFullYear()}`;
+}
+function shiftWeekISO(weekStartISO, deltaWeeks) {
+  const d = new Date(weekStartISO + "T00:00:00");
+  d.setDate(d.getDate() + deltaWeeks * 7);
+  return isoDateStr(d);
 }
 
 // ---------------------------------------------------------------
@@ -370,6 +414,8 @@ async function performDeleteYear(yearId) {
     });
     const classesSnap = await getDocs(collection(db, "schoolYears", yearId, "classes"));
     classesSnap.docs.forEach(cDoc => refsToDelete.push(doc(db, "schoolYears", yearId, "classes", cDoc.id)));
+    const dutySnap = await getDocs(collection(db, "schoolYears", yearId, "duty"));
+    dutySnap.docs.forEach(wDoc => refsToDelete.push(doc(db, "schoolYears", yearId, "duty", wDoc.id)));
     refsToDelete.push(doc(db, "schoolYears", yearId));
 
     // Tài khoản cán bộ lớp: KHOÁ (không xoá hẳn) — nếu xoá bản ghi này,
@@ -1039,6 +1085,55 @@ function jumpToStudentViolations(studentId, monthKey) {
 }
 
 // ---------------------------------------------------------------
+// Trực nhật trong tuần (xem, dành cho giáo viên)
+// ---------------------------------------------------------------
+$("openDutyBtn").addEventListener("click", () => {
+  if (!state.yearId) { toast("Chọn một năm học trước."); return; }
+  if (!state.teacherDutyWeekStart) state.teacherDutyWeekStart = isoDateStr(getMondayOfWeek(new Date()));
+  loadTeacherDutyWeek();
+  $("dutyModal").classList.add("active");
+});
+$("closeDutyBtn").addEventListener("click", () => $("dutyModal").classList.remove("active"));
+$("dutyPrevWeekBtn").addEventListener("click", () => {
+  state.teacherDutyWeekStart = shiftWeekISO(state.teacherDutyWeekStart, -1);
+  loadTeacherDutyWeek();
+});
+$("dutyNextWeekBtn").addEventListener("click", () => {
+  state.teacherDutyWeekStart = shiftWeekISO(state.teacherDutyWeekStart, 1);
+  loadTeacherDutyWeek();
+});
+
+function studentNameById(id) {
+  const s = state.students.find(x => x.id === id);
+  return s ? (s.fields?.name || "(chưa có tên)") : null;
+}
+
+async function loadTeacherDutyWeek() {
+  $("dutyWeekLabel").textContent = dutyWeekLabel(state.teacherDutyWeekStart);
+  $("dutyList").innerHTML = `<div class="export-hint">Đang tải…</div>`;
+  try {
+    const snap = await getDoc(doc(db, "schoolYears", state.yearId, "duty", state.teacherDutyWeekStart));
+    const data = snap.exists() ? snap.data() : { days: {} };
+    renderTeacherDutyList(data);
+  } catch (err) {
+    console.error(err);
+    $("dutyList").innerHTML = `<div class="export-hint">Không tải được dữ liệu trực nhật.</div>`;
+  }
+}
+
+function renderTeacherDutyList(data) {
+  $("dutyList").innerHTML = DUTY_DAYS.map(d => {
+    const ids = (data.days && data.days[d.key]) || [];
+    const names = ids.map(studentNameById).filter(Boolean);
+    return `
+      <div class="duty-day-row">
+        <div class="duty-day-label">${d.label}</div>
+        <div class="duty-day-names">${names.length ? escapeHtml(names.join(", ")) : `<span class="muted-inline">Chưa phân công</span>`}</div>
+      </div>`;
+  }).join("");
+}
+
+// ---------------------------------------------------------------
 // Giao diện Cán bộ lớp (tài khoản nhỏ nhập vi phạm)
 // ---------------------------------------------------------------
 async function bootstrapOfficerView() {
@@ -1085,6 +1180,9 @@ async function bootstrapOfficerView() {
   state.officerSelectedMonth = MONTHS[0].key;
   renderOfficerMonthRow();
   subscribeOfficerViolations();
+
+  if (!state.officerDutyWeekStart) state.officerDutyWeekStart = isoDateStr(getMondayOfWeek(new Date()));
+  loadOfficerDutyWeek();
 }
 
 $("officerStudentSelect").addEventListener("change", subscribeOfficerViolations);
@@ -1167,6 +1265,89 @@ $("officerSubmitBtn").addEventListener("click", async () => {
     toast("Không gửi được. Thử lại.");
   } finally {
     $("officerSubmitBtn").disabled = false;
+  }
+});
+
+// ---------------------------------------------------------------
+// Trực nhật trong tuần (phân công, dành cho cán bộ lớp)
+// ---------------------------------------------------------------
+$("officerDutyPrevWeekBtn").addEventListener("click", () => {
+  state.officerDutyWeekStart = shiftWeekISO(state.officerDutyWeekStart, -1);
+  loadOfficerDutyWeek();
+});
+$("officerDutyNextWeekBtn").addEventListener("click", () => {
+  state.officerDutyWeekStart = shiftWeekISO(state.officerDutyWeekStart, 1);
+  loadOfficerDutyWeek();
+});
+
+async function loadOfficerDutyWeek() {
+  $("officerDutyWeekLabel").textContent = dutyWeekLabel(state.officerDutyWeekStart);
+  renderOfficerDutyDayTabs();
+  try {
+    const snap = await getDoc(doc(db, "schoolYears", state.officerInfo.yearId, "duty", state.officerDutyWeekStart));
+    state.officerDutyWeekData = snap.exists() ? snap.data() : { days: {} };
+  } catch (err) {
+    console.error(err);
+    state.officerDutyWeekData = { days: {} };
+    toast("Không tải được dữ liệu trực nhật tuần này.");
+  }
+  renderOfficerDutyDaySlots();
+}
+
+function renderOfficerDutyDayTabs() {
+  $("officerDutyDayTabs").innerHTML = DUTY_DAYS.map(d => `
+    <button class="month-chip ${d.key === state.officerDutySelectedDay ? "active" : ""}" data-dday="${d.key}">${d.label}</button>
+  `).join("");
+  $("officerDutyDayTabs").querySelectorAll("[data-dday]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.officerDutySelectedDay = btn.dataset.dday;
+      renderOfficerDutyDayTabs();
+      renderOfficerDutyDaySlots();
+    });
+  });
+}
+
+function renderOfficerDutyDaySlots() {
+  const dayKey = state.officerDutySelectedDay;
+  const currentIds = (state.officerDutyWeekData?.days?.[dayKey]) || [];
+  const options = state.officerStudents.map(s => `<option value="${s.id}">${escapeHtml(s.fields?.name || "(chưa có tên)")}</option>`).join("");
+  $("officerDutySlots").innerHTML = Array.from({ length: DUTY_SLOTS_PER_DAY }).map((_, i) => `
+    <select class="duty-slot-select" data-slot="${i}">
+      <option value="">— Chọn học sinh —</option>
+      ${options}
+    </select>`).join("");
+  $("officerDutySlots").querySelectorAll(".duty-slot-select").forEach((sel, i) => {
+    sel.value = currentIds[i] || "";
+  });
+}
+
+$("saveDutyDayBtn").addEventListener("click", async () => {
+  if (!state.officerStudents.length) { toast("Không có học sinh trong lớp này."); return; }
+  const dayKey = state.officerDutySelectedDay;
+  const selects = [...document.querySelectorAll("#officerDutySlots .duty-slot-select")];
+  const ids = selects.map(s => s.value).filter(Boolean);
+  if (new Set(ids).size !== ids.length) {
+    toast("Một học sinh không thể được xếp 2 vị trí trong cùng một ngày.");
+    return;
+  }
+  $("saveDutyDayBtn").disabled = true;
+  try {
+    const ref = doc(db, "schoolYears", state.officerInfo.yearId, "duty", state.officerDutyWeekStart);
+    await setDoc(ref, {
+      weekStart: state.officerDutyWeekStart,
+      [`days.${dayKey}`]: ids,
+      updatedAt: serverTimestamp(),
+      updatedBy: state.officerInfo.email || "",
+    }, { merge: true });
+    if (!state.officerDutyWeekData) state.officerDutyWeekData = { days: {} };
+    if (!state.officerDutyWeekData.days) state.officerDutyWeekData.days = {};
+    state.officerDutyWeekData.days[dayKey] = ids;
+    toast(`Đã lưu phân công trực nhật ${DUTY_DAYS.find(d => d.key === dayKey)?.label || ""}.`);
+  } catch (err) {
+    console.error(err);
+    toast("Không lưu được. Thử lại.");
+  } finally {
+    $("saveDutyDayBtn").disabled = false;
   }
 });
 
