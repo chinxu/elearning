@@ -61,10 +61,19 @@ function dichLoi(err) {
 // KHỞI TẠO
 // ============================================================
 async function initApp() {
-  await loadNamHoc();
-  await loadBaiHoc();
-  await loadCauHoi();
-  await loadDe();
+  try {
+    await loadNamHoc();
+    await loadBaiHoc();
+    await loadCauHoi();
+    await loadDe();
+  } catch (err) {
+    console.error('Lỗi khi tải dữ liệu:', err);
+    document.querySelector('.main').insertAdjacentHTML('afterbegin',
+      `<div class="card" style="border-color:var(--red-pen); background:var(--red-pen-soft);">
+         <b>Có lỗi khi tải dữ liệu:</b> ${escapeHtml(err.message || String(err))}
+         <div class="muted" style="margin-top:4px;">Mở DevTools (F12) → tab Console để xem chi tiết đầy đủ, hoặc chụp lại dòng này gửi để kiểm tra tiếp.</div>
+       </div>`);
+  }
 }
 
 function switchTab(tabId) {
@@ -614,8 +623,11 @@ let baiDangChonId = null;
 let khoiDangXem = '6';
 
 async function loadBaiHoc() {
-  const snap = await db.collection('baiHoc').orderBy('khoi').orderBy('ten').get();
-  baiHocList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  // Không dùng orderBy 2 trường (cần composite index riêng trong Firebase) —
+  // lấy toàn bộ rồi sắp xếp ở phía trình duyệt, không cần index gì cả.
+  const snap = await db.collection('baiHoc').get();
+  baiHocList = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+    .sort((a, b) => String(a.khoi).localeCompare(String(b.khoi)) || String(a.ten).localeCompare(String(b.ten)));
   await damBaoDuBaiMau(); // tự thêm các bài SGK còn thiếu (không xóa/đụng bài đã có)
   renderBaiHocPicker();
 }
