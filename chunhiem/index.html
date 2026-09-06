@@ -416,6 +416,49 @@
     font-weight:600;
     color:var(--ink);
   }
+  .duty-week-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+    gap:8px;
+  }
+  .duty-week-label{
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink);
+    text-align:center;
+    flex:1;
+  }
+  .duty-slots{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:8px;
+  }
+  .duty-slot-select{
+    width:100%;
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+    border-radius:var(--radius);
+    padding:8px 10px;
+    font-size:14px;
+  }
+  .duty-day-row{
+    display:flex;
+    gap:14px;
+    padding:9px 0;
+    border-bottom:1px solid var(--line-soft);
+    font-size:13.5px;
+  }
+  .duty-day-row:last-child{border-bottom:none;}
+  .duty-day-label{
+    width:70px;
+    flex-shrink:0;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .duty-day-names{color:var(--ink-soft);}
   .comment-box textarea{
     width:100%;
     min-height:220px;
@@ -672,6 +715,7 @@
 
     <div class="sidebar-footer">
       <button class="import-btn" id="openImportBtn">Nhập danh sách từ Excel</button>
+      <button class="import-btn secondary" id="openDutyBtn">Trực nhật trong tuần</button>
       <button class="import-btn secondary" id="openViolationsOverviewBtn">Vi phạm theo tháng</button>
       <button class="import-btn secondary" id="manageOfficersBtn">Quản lý cán bộ lớp</button>
       <div class="userline">
@@ -823,6 +867,21 @@
   </div>
 </div>
 
+<!-- ============ DUTY (TRỰC NHẬT) MODAL — xem, dành cho giáo viên ============ -->
+<div class="modal-overlay" id="dutyModal">
+  <div class="modal" style="max-width:520px;">
+    <button class="modal-close" id="closeDutyBtn">&times;</button>
+    <h3>Trực nhật trong tuần</h3>
+    <div class="sub">Phân công do cán bộ lớp sắp xếp — Thứ 2 đến Thứ 7, mỗi ngày 4 bạn.</div>
+    <div class="duty-week-nav">
+      <button class="btn btn-ghost btn-sm" id="dutyPrevWeekBtn">&larr; Tuần trước</button>
+      <div class="duty-week-label" id="dutyWeekLabel"></div>
+      <button class="btn btn-ghost btn-sm" id="dutyNextWeekBtn">Tuần sau &rarr;</button>
+    </div>
+    <div id="dutyList"></div>
+  </div>
+</div>
+
 <!-- ============ VIOLATIONS OVERVIEW MODAL ============ -->
 <div class="modal-overlay" id="violationsOverviewModal">
   <div class="modal" style="max-width:640px;">
@@ -890,6 +949,19 @@
     <div style="margin-top:30px;padding-top:20px;border-top:1px solid var(--line);">
       <div class="export-title" style="font-size:15px;">Vi phạm đã gửi trong tháng này</div>
       <div id="officerViolationList" style="margin-top:8px;"></div>
+    </div>
+
+    <div style="margin-top:30px;padding-top:20px;border-top:1px solid var(--line);">
+      <div class="export-title" style="font-size:15px;">Trực nhật trong tuần</div>
+      <div class="export-hint">Phân công 4 bạn trực nhật cho từng ngày (Thứ 2 → Thứ 7).</div>
+      <div class="duty-week-nav">
+        <button class="btn btn-ghost btn-sm" id="officerDutyPrevWeekBtn">&larr;</button>
+        <div class="duty-week-label" id="officerDutyWeekLabel"></div>
+        <button class="btn btn-ghost btn-sm" id="officerDutyNextWeekBtn">&rarr;</button>
+      </div>
+      <div class="month-row" id="officerDutyDayTabs" style="margin-top:12px;"></div>
+      <div id="officerDutySlots" class="duty-slots"></div>
+      <button class="btn btn-primary btn-sm" id="saveDutyDayBtn" style="margin-top:12px;">Lưu phân công ngày này</button>
     </div>
   </div>
 </div>
