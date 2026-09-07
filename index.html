@@ -9,163 +9,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --board: #2F4B3C;
-    --board-2: #35543F;
-    --card: #FBF6EC;
-    --card-edge: #EDE4D0;
-    --ink: #23301F;
-    --ink-soft: #5B6B54;
-    --pin: #C1442E;
-    --pin-dark: #8C2E1D;
-    --tape: #E9E0C9;
+    --ink: #111111;
+    --ink-soft: #666666;
+    --line: #DDDDDD;
+    --line-soft: #EEEEEE;
+    --accent: #1A1A1A;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  [hidden]{display:none !important;}
   body{
     font-family:'Be Vietnam Pro', sans-serif;
-    background:
-      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0) 0 0/22px 22px,
-      linear-gradient(180deg, var(--board), var(--board-2));
-    min-height:100vh;
+    background:#FFFFFF;
     color:var(--ink);
+    min-height:100vh;
   }
   #board{
-    max-width:1100px;
+    max-width:1000px;
     margin:0 auto;
-    padding:56px 40px 120px;
+    padding:56px 32px 120px;
     position:relative;
   }
   #board.drag-active::before{
     content:"Thả để ghim dự án";
     position:fixed;
     inset:0;
-    background:rgba(20,30,20,0.55);
-    color:#FBF6EC;
-    font-size:28px;
+    background:rgba(255,255,255,0.92);
+    color:var(--ink);
+    font-size:24px;
     font-weight:600;
     display:flex;
     align-items:center;
     justify-content:center;
     z-index:50;
     pointer-events:none;
-    border:4px dashed rgba(251,246,236,0.5);
-    margin:20px;
+    border:2px dashed var(--ink);
+    margin:16px;
   }
   #topbar{
     position:fixed;
     top:0; left:0; right:0;
     display:flex;
     justify-content:flex-end;
-    padding:16px 24px;
+    padding:20px 32px;
     z-index:45;
+    background:#FFFFFF;
+    border-bottom:1px solid var(--line-soft);
   }
   #auth-status{
     display:flex;
     align-items:center;
-    gap:10px;
-    background:rgba(20,30,20,0.5);
-    padding:6px 12px;
-    border-radius:20px;
+    gap:12px;
     font-size:13px;
-    color:#EFE9D8;
+    color:var(--ink-soft);
   }
   #auth-status .email{opacity:0.85; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   #auth-status button{
-    background:none;
-    border:1px solid rgba(239,233,216,0.4);
-    color:#EFE9D8;
-    padding:4px 10px;
-    border-radius:14px;
-    font-size:12px;
+    background:#FFFFFF;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    padding:6px 14px;
+    border-radius:2px;
+    font-size:13px;
+    font-weight:500;
     cursor:pointer;
     font-family:inherit;
   }
-  #auth-status button:hover{background:rgba(239,233,216,0.15);}
+  #auth-status button:hover{background:var(--ink); color:#fff;}
 
   header{
-    display:inline-block;
-    position:relative;
-    margin-bottom:44px;
-  }
-  header::before{
-    content:"";
-    position:absolute;
-    top:-10px;
-    left:30px;
-    width:90px;
-    height:26px;
-    background:var(--tape);
-    transform:rotate(-3deg);
-    opacity:0.85;
-    box-shadow:0 1px 3px rgba(0,0,0,0.2);
+    margin:64px 0 40px;
   }
   h1{
-    font-size:34px;
-    font-weight:800;
-    color:#F4EFDF;
-    margin:0 0 6px;
+    font-size:28px;
+    font-weight:700;
+    color:var(--ink);
+    margin:0 0 8px;
     letter-spacing:-0.01em;
   }
   header p{
-    font-size:15px;
-    color:#C9D4C1;
+    font-size:14px;
+    color:var(--ink-soft);
     margin:0;
-    max-width:440px;
-    line-height:1.5;
+    max-width:520px;
+    line-height:1.6;
   }
   #cards-container{
-    display:flex;
-    flex-wrap:wrap;
-    gap:34px 30px;
-    align-items:flex-start;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+    gap:14px;
   }
   .card{
     position:relative;
-    width:190px;
-    min-height:130px;
-    background:var(--card);
-    border:1px solid var(--card-edge);
-    border-radius:3px;
-    padding:34px 16px 16px;
-    box-shadow:0 6px 14px rgba(0,0,0,0.28);
+    background:#FFFFFF;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:20px 18px;
     cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease;
+    transition:border-color .1s ease, box-shadow .1s ease;
     user-select:none;
+    min-height:96px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
   }
   .card:hover{
-    transform:rotate(0deg) translateY(-4px) scale(1.02) !important;
-    box-shadow:0 12px 22px rgba(0,0,0,0.35);
-  }
-  .card .pin{
-    position:absolute;
-    top:-9px;
-    left:50%;
-    transform:translateX(-50%);
-    width:18px;
-    height:18px;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #E8735A, var(--pin) 55%, var(--pin-dark) 100%);
-    box-shadow:0 3px 4px rgba(0,0,0,0.35);
+    border-color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,0.08);
   }
   .card .favicon{
-    width:26px;
-    height:26px;
-    border-radius:6px;
+    width:22px;
+    height:22px;
+    border-radius:3px;
     background:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
     margin-bottom:10px;
-    border:1px solid var(--card-edge);
+    border:1px solid var(--line);
   }
-  .card .favicon img{width:16px;height:16px;}
+  .card .favicon img{width:14px;height:14px;}
   .card .name{
-    font-weight:700;
-    font-size:15px;
+    font-weight:600;
+    font-size:14px;
     line-height:1.3;
     color:var(--ink);
-    margin:0 0 4px;
+    margin:0 0 3px;
     word-break:break-word;
   }
   .card .domain{
@@ -181,15 +151,15 @@
     display:flex;
     gap:4px;
     opacity:0;
-    transition:opacity .15s;
+    transition:opacity .1s;
   }
   .card:hover .actions{opacity:1;}
   .card .actions button{
     width:22px;
     height:22px;
-    border:none;
-    border-radius:50%;
-    background:rgba(35,48,31,0.08);
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:#fff;
     color:var(--ink-soft);
     font-size:12px;
     cursor:pointer;
@@ -198,41 +168,43 @@
     justify-content:center;
     line-height:1;
   }
-  .card .actions button:hover{background:rgba(35,48,31,0.18); color:var(--ink);}
+  .card .actions button:hover{background:var(--ink); color:#fff; border-color:var(--ink);}
 
   #empty-state{
-    color:#D9E2D2;
-    font-size:15px;
-    max-width:360px;
-    padding:30px 0;
+    color:var(--ink-soft);
+    font-size:14px;
+    max-width:400px;
+    padding:24px 0;
     line-height:1.6;
+    border:1px dashed var(--line);
+    text-align:center;
+    margin-top:8px;
   }
 
   #add-btn{
     position:fixed;
-    right:34px;
-    bottom:34px;
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    border:none;
-    background:radial-gradient(circle at 35% 30%, #E8735A, var(--pin) 55%, var(--pin-dark) 100%);
-    color:#fff;
-    font-size:28px;
-    font-weight:400;
+    right:32px;
+    bottom:32px;
+    width:52px;
+    height:52px;
+    border-radius:2px;
+    border:1px solid var(--ink);
+    background:#FFFFFF;
+    color:var(--ink);
+    font-size:26px;
+    font-weight:300;
     cursor:pointer;
-    box-shadow:0 6px 16px rgba(0,0,0,0.4);
     display:flex;
     align-items:center;
     justify-content:center;
     z-index:40;
   }
-  #add-btn:hover{filter:brightness(1.08);}
+  #add-btn:hover{background:var(--ink); color:#fff;}
 
   .modal-overlay{
     position:fixed;
     inset:0;
-    background:rgba(20,30,20,0.55);
+    background:rgba(0,0,0,0.35);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -240,41 +212,41 @@
     padding:20px;
   }
   .modal-card{
-    background:var(--card);
+    background:#FFFFFF;
     width:100%;
     max-width:360px;
-    border-radius:4px;
+    border:1px solid var(--line);
+    border-radius:2px;
     padding:26px 24px 22px;
-    box-shadow:0 18px 40px rgba(0,0,0,0.4);
   }
   .modal-card h2{
-    font-size:18px;
+    font-size:16px;
     font-weight:700;
     margin:0 0 18px;
     color:var(--ink);
   }
   .modal-card label{
     display:block;
-    font-size:13px;
+    font-size:12px;
     font-weight:500;
     color:var(--ink-soft);
     margin-bottom:6px;
   }
   .modal-card input{
     width:100%;
-    padding:10px 12px;
+    padding:9px 11px;
     font-size:14px;
     font-family:inherit;
-    border:1px solid var(--card-edge);
-    border-radius:4px;
+    border:1px solid var(--line);
+    border-radius:2px;
     margin-bottom:16px;
     background:#fff;
     color:var(--ink);
   }
-  .modal-card input:focus{outline:2px solid var(--pin); outline-offset:1px;}
+  .modal-card input:focus{outline:1px solid var(--ink); outline-offset:0;}
   .form-error{
     font-size:12px;
-    color:var(--pin-dark);
+    color:#B3261E;
     margin:-10px 0 14px;
     display:none;
   }
@@ -285,34 +257,32 @@
     margin-top:4px;
   }
   .form-actions button{
-    padding:9px 16px;
-    font-size:14px;
+    padding:8px 16px;
+    font-size:13px;
     font-family:inherit;
     font-weight:500;
-    border-radius:4px;
-    border:1px solid var(--card-edge);
+    border-radius:2px;
+    border:1px solid var(--ink);
     cursor:pointer;
     background:#fff;
     color:var(--ink);
   }
   .form-actions button[type="submit"]{
-    background:var(--pin);
-    border-color:var(--pin);
+    background:var(--ink);
     color:#fff;
   }
-  .form-actions button[type="submit"]:hover{background:var(--pin-dark);}
-  .form-actions button[type="button"]:hover{background:#f2ede0;}
+  .form-actions button[type="submit"]:hover{opacity:0.85;}
+  .form-actions button[type="button"]:hover{background:#f2f2f2;}
 
   #loading{
-    color:#D9E2D2;
+    color:var(--ink-soft);
     font-size:14px;
     padding:20px 0;
   }
 
   @media (max-width:600px){
     #board{padding:80px 20px 100px;}
-    h1{font-size:26px;}
-    .card{width:150px;}
+    h1{font-size:22px;}
   }
 </style>
 </head>
@@ -422,12 +392,6 @@ const linkError = document.getElementById('link-error');
 const linkCancel = document.getElementById('link-cancel');
 const linkSubmit = document.getElementById('link-submit');
 
-function hashRotation(id){
-  let h = 0;
-  for(let i=0;i<id.length;i++){ h = (h*31 + id.charCodeAt(i)) % 1000; }
-  return ((h % 9) - 4);
-}
-
 function normalizeUrl(raw){
   let u = (raw || '').trim();
   if(!u) return null;
@@ -499,13 +463,10 @@ function render(){
     card.className = 'card';
     card.draggable = isAdmin;
     card.dataset.id = link.id;
-    const rot = hashRotation(link.id);
-    card.style.transform = `rotate(${rot}deg)`;
 
     const domain = domainOf(link.url);
 
     card.innerHTML = `
-      <div class="pin"></div>
       ${isAdmin ? `<div class="actions">
         <button type="button" class="edit-btn" aria-label="Sửa dự án">&#9998;</button>
         <button type="button" class="del-btn" aria-label="Xóa dự án">&times;</button>
