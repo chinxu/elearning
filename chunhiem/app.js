@@ -201,8 +201,16 @@ function getMondayOfWeek(date) {
 function formatVNShortDate(d) {
   return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
+function currentWeekISO() {
+  return isoDateStr(getMondayOfWeek(new Date()));
+}
 function dutyWeekLabel(weekStartISO) {
-  const monday = new Date(weekStartISO + "T00:00:00");
+  let monday = new Date(weekStartISO + "T00:00:00");
+  if (isNaN(monday.getTime())) {
+    // Phòng trường hợp chưa có/lỗi ngày bắt đầu tuần — tự dùng tuần hiện tại
+    // thay vì hiển thị "NaN".
+    monday = getMondayOfWeek(new Date());
+  }
   const saturday = new Date(monday);
   saturday.setDate(monday.getDate() + 5);
   return `Tuần ${formatVNShortDate(monday)} - ${formatVNShortDate(saturday)}/${saturday.getFullYear()}`;
@@ -1089,7 +1097,7 @@ function jumpToStudentViolations(studentId, monthKey) {
 // ---------------------------------------------------------------
 $("openDutyBtn").addEventListener("click", () => {
   if (!state.yearId) { toast("Chọn một năm học trước."); return; }
-  if (!state.teacherDutyWeekStart) state.teacherDutyWeekStart = isoDateStr(getMondayOfWeek(new Date()));
+  if (!state.teacherDutyWeekStart) state.teacherDutyWeekStart = currentWeekISO();
   loadTeacherDutyWeek();
   $("dutyModal").classList.add("active");
 });
@@ -1109,6 +1117,7 @@ function studentNameById(id) {
 }
 
 async function loadTeacherDutyWeek() {
+  if (!state.teacherDutyWeekStart) state.teacherDutyWeekStart = currentWeekISO();
   $("dutyWeekLabel").textContent = dutyWeekLabel(state.teacherDutyWeekStart);
   $("dutyList").innerHTML = `<div class="export-hint">Đang tải…</div>`;
   try {
@@ -1181,7 +1190,7 @@ async function bootstrapOfficerView() {
   renderOfficerMonthRow();
   subscribeOfficerViolations();
 
-  if (!state.officerDutyWeekStart) state.officerDutyWeekStart = isoDateStr(getMondayOfWeek(new Date()));
+  if (!state.officerDutyWeekStart) state.officerDutyWeekStart = currentWeekISO();
   loadOfficerDutyWeek();
 }
 
@@ -1281,6 +1290,7 @@ $("officerDutyNextWeekBtn").addEventListener("click", () => {
 });
 
 async function loadOfficerDutyWeek() {
+  if (!state.officerDutyWeekStart) state.officerDutyWeekStart = currentWeekISO();
   $("officerDutyWeekLabel").textContent = dutyWeekLabel(state.officerDutyWeekStart);
   renderOfficerDutyDayTabs();
   try {
