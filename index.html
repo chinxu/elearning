@@ -3,38 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bàn ghim dự án</title>
+<title>Việc của Sơn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #111111;
-    --ink-soft: #666666;
-    --line: #DDDDDD;
-    --line-soft: #EEEEEE;
-    --accent: #1A1A1A;
+    --bg: #F2EEE3;
+    --ink: #17140F;
+    --ink-soft: #6E6A5D;
+    --line: #D9D3C2;
+    --pill: #17140F;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   [hidden]{display:none !important;}
   body{
     font-family:'Be Vietnam Pro', sans-serif;
-    background:#FFFFFF;
+    background:var(--bg);
     color:var(--ink);
     min-height:100vh;
   }
   #board{
-    max-width:1000px;
+    max-width:1040px;
     margin:0 auto;
-    padding:56px 32px 120px;
+    padding:0 32px 120px;
     position:relative;
   }
   #board.drag-active::before{
     content:"Thả để ghim dự án";
     position:fixed;
     inset:0;
-    background:rgba(255,255,255,0.92);
+    background:rgba(242,238,227,0.94);
     color:var(--ink);
     font-size:24px;
     font-weight:600;
@@ -47,92 +47,107 @@
     margin:16px;
   }
   #topbar{
-    position:fixed;
-    top:0; left:0; right:0;
+    max-width:1040px;
+    margin:0 auto;
     display:flex;
-    justify-content:flex-end;
-    padding:20px 32px;
-    z-index:45;
-    background:#FFFFFF;
-    border-bottom:1px solid var(--line-soft);
+    align-items:center;
+    justify-content:space-between;
+    padding:26px 32px;
+    border-bottom:1px solid var(--line);
+  }
+  #brand{
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.02em;
   }
   #auth-status{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:10px;
     font-size:13px;
     color:var(--ink-soft);
   }
   #auth-status .email{opacity:0.85; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   #auth-status button{
-    background:#FFFFFF;
+    background:transparent;
     border:1px solid var(--ink);
     color:var(--ink);
-    padding:6px 14px;
-    border-radius:2px;
+    padding:7px 16px;
+    border-radius:999px;
     font-size:13px;
-    font-weight:500;
+    font-weight:600;
     cursor:pointer;
     font-family:inherit;
   }
-  #auth-status button:hover{background:var(--ink); color:#fff;}
+  #auth-status button:hover{background:var(--ink); color:var(--bg);}
 
   header{
-    margin:64px 0 40px;
+    padding:56px 0 44px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:40px;
   }
   h1{
-    font-size:28px;
-    font-weight:700;
+    font-size:56px;
+    font-weight:800;
     color:var(--ink);
-    margin:0 0 8px;
-    letter-spacing:-0.01em;
+    margin:0 0 14px;
+    letter-spacing:-0.02em;
+    line-height:1.05;
   }
   header p{
-    font-size:14px;
+    font-size:15px;
     color:var(--ink-soft);
     margin:0;
-    max-width:520px;
+    max-width:480px;
     line-height:1.6;
+  }
+  .section-label{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    margin:0;
+    text-transform:uppercase;
   }
   #cards-container{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
-    gap:14px;
+    grid-template-columns:repeat(auto-fill, minmax(210px, 1fr));
+    gap:16px;
   }
   .card{
     position:relative;
-    background:#FFFFFF;
+    background:transparent;
     border:1px solid var(--line);
-    border-radius:4px;
-    padding:20px 18px;
+    border-radius:10px;
+    padding:22px 20px;
     cursor:pointer;
-    transition:border-color .1s ease, box-shadow .1s ease;
+    transition:border-color .12s ease, transform .12s ease;
     user-select:none;
-    min-height:96px;
+    min-height:104px;
     display:flex;
     flex-direction:column;
     justify-content:center;
   }
   .card:hover{
     border-color:var(--ink);
-    box-shadow:0 2px 6px rgba(0,0,0,0.08);
+    transform:translateY(-2px);
   }
   .card .favicon{
-    width:22px;
-    height:22px;
-    border-radius:3px;
-    background:#fff;
+    width:24px;
+    height:24px;
+    border-radius:6px;
+    background:var(--bg);
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
-    margin-bottom:10px;
+    margin-bottom:12px;
     border:1px solid var(--line);
   }
   .card .favicon img{width:14px;height:14px;}
   .card .name{
-    font-weight:600;
-    font-size:14px;
+    font-weight:700;
+    font-size:15px;
     line-height:1.3;
     color:var(--ink);
     margin:0 0 3px;
@@ -146,20 +161,20 @@
   }
   .card .actions{
     position:absolute;
-    top:8px;
-    right:8px;
+    top:10px;
+    right:10px;
     display:flex;
     gap:4px;
     opacity:0;
-    transition:opacity .1s;
+    transition:opacity .12s;
   }
   .card:hover .actions{opacity:1;}
   .card .actions button{
     width:22px;
     height:22px;
     border:1px solid var(--line);
-    border-radius:2px;
-    background:#fff;
+    border-radius:50%;
+    background:var(--bg);
     color:var(--ink-soft);
     font-size:12px;
     cursor:pointer;
@@ -168,15 +183,16 @@
     justify-content:center;
     line-height:1;
   }
-  .card .actions button:hover{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .card .actions button:hover{background:var(--ink); color:var(--bg); border-color:var(--ink);}
 
   #empty-state{
     color:var(--ink-soft);
     font-size:14px;
-    max-width:400px;
-    padding:24px 0;
+    max-width:420px;
+    padding:32px 0;
     line-height:1.6;
     border:1px dashed var(--line);
+    border-radius:10px;
     text-align:center;
     margin-top:8px;
   }
@@ -185,12 +201,12 @@
     position:fixed;
     right:32px;
     bottom:32px;
-    width:52px;
-    height:52px;
-    border-radius:2px;
-    border:1px solid var(--ink);
-    background:#FFFFFF;
-    color:var(--ink);
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    border:none;
+    background:var(--pill);
+    color:var(--bg);
     font-size:26px;
     font-weight:300;
     cursor:pointer;
@@ -198,13 +214,14 @@
     align-items:center;
     justify-content:center;
     z-index:40;
+    box-shadow:0 6px 16px rgba(23,20,15,0.25);
   }
-  #add-btn:hover{background:var(--ink); color:#fff;}
+  #add-btn:hover{opacity:0.85;}
 
   .modal-overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.35);
+    background:rgba(23,20,15,0.35);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -212,33 +229,33 @@
     padding:20px;
   }
   .modal-card{
-    background:#FFFFFF;
+    background:var(--bg);
     width:100%;
     max-width:360px;
     border:1px solid var(--line);
-    border-radius:2px;
-    padding:26px 24px 22px;
+    border-radius:12px;
+    padding:28px 26px 24px;
   }
   .modal-card h2{
-    font-size:16px;
-    font-weight:700;
+    font-size:18px;
+    font-weight:800;
     margin:0 0 18px;
     color:var(--ink);
   }
   .modal-card label{
     display:block;
     font-size:12px;
-    font-weight:500;
+    font-weight:600;
     color:var(--ink-soft);
     margin-bottom:6px;
   }
   .modal-card input{
     width:100%;
-    padding:9px 11px;
+    padding:10px 13px;
     font-size:14px;
     font-family:inherit;
     border:1px solid var(--line);
-    border-radius:2px;
+    border-radius:8px;
     margin-bottom:16px;
     background:#fff;
     color:var(--ink);
@@ -257,22 +274,22 @@
     margin-top:4px;
   }
   .form-actions button{
-    padding:8px 16px;
+    padding:9px 18px;
     font-size:13px;
     font-family:inherit;
-    font-weight:500;
-    border-radius:2px;
+    font-weight:600;
+    border-radius:999px;
     border:1px solid var(--ink);
     cursor:pointer;
-    background:#fff;
+    background:transparent;
     color:var(--ink);
   }
   .form-actions button[type="submit"]{
     background:var(--ink);
-    color:#fff;
+    color:var(--bg);
   }
   .form-actions button[type="submit"]:hover{opacity:0.85;}
-  .form-actions button[type="button"]:hover{background:#f2f2f2;}
+  .form-actions button[type="button"]:hover{background:rgba(23,20,15,0.06);}
 
   #loading{
     color:var(--ink-soft);
@@ -281,14 +298,17 @@
   }
 
   @media (max-width:600px){
-    #board{padding:80px 20px 100px;}
-    h1{font-size:22px;}
+    #board{padding:0 20px 100px;}
+    #topbar{padding:20px;}
+    h1{font-size:38px;}
+    header{padding:40px 0 32px;}
   }
 </style>
 </head>
 <body>
 
 <div id="topbar">
+  <div id="brand">VIỆC CỦA SƠN</div>
   <div id="auth-status">
     <span id="auth-text">Chỉ xem</span>
     <button id="login-btn">Đăng nhập</button>
@@ -298,12 +318,11 @@
 
 <div id="board">
   <header>
-    <h1>Bàn ghim dự án</h1>
-    <p>Nơi lưu các link dự án đang làm. Đăng nhập để kéo-thả hoặc thêm link mới; người xem thường chỉ mở link xem được thôi.</p>
+    <p class="section-label">DỰ ÁN HOẠT ĐỘNG</p>
   </header>
-  <div id="loading">Đang tải bàn ghim…</div>
+  <div id="loading">Đang tải…</div>
   <div id="cards-container" hidden></div>
-  <div id="empty-state" hidden>Bàn ghim còn trống. Đăng nhập rồi kéo một đường link vào đây, hoặc bấm dấu cộng để ghim dự án đầu tiên.</div>
+  <div id="empty-state" hidden>Chưa có dự án nào. Đăng nhập rồi kéo một đường link vào đây, hoặc bấm dấu cộng để thêm dự án đầu tiên.</div>
 </div>
 
 <button id="add-btn" aria-label="Thêm dự án" hidden>+</button>
@@ -444,7 +463,7 @@ onSnapshot(q, (snapshot) => {
   loadingEl.hidden = true;
   render();
 }, (err) => {
-  loadingEl.textContent = 'Không tải được bàn ghim (kiểm tra lại quyền truy cập Firestore).';
+  loadingEl.textContent = 'Không tải được dữ liệu (kiểm tra lại quyền truy cập Firestore).';
   console.error(err);
 });
 
