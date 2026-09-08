@@ -1288,14 +1288,24 @@ function seatKey(to, ban, cho) {
   return `T${to}-B${ban}-C${cho}`;
 }
 
+// Thứ tự hiển thị các tổ trên sơ đồ (trái -> phải). Đây là thứ tự VỊ TRÍ NGỒI
+// vật lý; tên "Tổ N" luôn gắn với đúng nhóm học sinh đó (giữ nguyên seats
+// theo Tổ N), chỉ có VỊ TRÍ hiển thị của tổ đó trên sơ đồ là thay đổi khi đổi
+// dãy — để dễ theo dõi phân trực lần lượt theo từng tổ cố định.
+function getSeatingColumnOrder() {
+  const order = state.seatingData && state.seatingData.columnOrder;
+  if (Array.isArray(order) && order.length === SEATING_TO_COUNT) return order.slice();
+  return Array.from({ length: SEATING_TO_COUNT }, (_, i) => i + 1);
+}
+
 async function loadSeatingChart() {
   $("seatingBoard").innerHTML = `<div class="export-hint">Đang tải…</div>`;
   try {
     const snap = await getDoc(doc(db, "schoolYears", state.yearId, "seatingChart", "current"));
-    state.seatingData = snap.exists() ? snap.data() : { seats: {} };
+    state.seatingData = snap.exists() ? snap.data() : { seats: {}, columnOrder: getSeatingColumnOrder() };
   } catch (err) {
     console.error(err);
-    state.seatingData = { seats: {} };
+    state.seatingData = { seats: {}, columnOrder: getSeatingColumnOrder() };
     toast("Không tải được sơ đồ chỗ ngồi.");
   }
   renderSeatingBoard();
@@ -1303,13 +1313,14 @@ async function loadSeatingChart() {
 
 function renderSeatingBoard() {
   const seats = (state.seatingData && state.seatingData.seats) || {};
+  const columnOrder = getSeatingColumnOrder();
   const optionsHtml = state.students.map(s =>
     `<option value="${s.id}">${escapeHtml(s.fields?.name || "(chưa có tên)")}</option>`
   ).join("");
 
   let html = "";
-  for (let to = 1; to <= SEATING_TO_COUNT; to++) {
-    const swapOptions = Array.from({ length: SEATING_TO_COUNT }, (_, i) => i + 1)
+  columnOrder.forEach(to => {
+    const swapOptions = columnOrder
       .filter(n => n !== to)
       .map(n => `<option value="${n}">Tổ ${n}</option>`).join("");
     html += `<div class="seating-to" draggable="true" data-to="${to}">
@@ -1332,7 +1343,7 @@ function renderSeatingBoard() {
       html += `</div>`;
     }
     html += `</div>`;
-  }
+  });
   $("seatingBoard").innerHTML = html;
   $("seatingBoard").querySelectorAll(".seating-seat-select").forEach(sel => {
     const key = sel.dataset.seatKey;
@@ -1347,7 +1358,8 @@ function renderSeatingBoard() {
       sel.value = "";
     });
   });
-  // Kéo-thả để đổi chỗ cả tổ (dành cho máy tính; điện thoại dùng ô chọn ở trên).
+  // Kéo-thả để đổi VỊ TRÍ NGỒI cả tổ (dành cho máy tính; điện thoại dùng ô
+  // chọn ở trên). Tên tổ vẫn giữ nguyên theo đúng nhóm học sinh.
   let dragSrcTo = null;
   $("seatingBoard").querySelectorAll(".seating-to").forEach(el => {
     el.addEventListener("dragstart", (e) => {
@@ -1379,22 +1391,17 @@ function renderSeatingBoard() {
 
 function swapToGroups(toA, toB) {
   if (!state.seatingData) state.seatingData = { seats: {} };
-  if (!state.seatingData.seats) state.seatingData.seats = {};
-  const seats = state.seatingData.seats;
-  const newSeats = { ...seats };
-  for (let ban = 1; ban <= SEATING_BAN_COUNT; ban++) {
-    for (let cho = 1; cho <= SEATING_CHO_COUNT; cho++) {
-      const keyA = seatKey(toA, ban, cho);
-      const keyB = seatKey(toB, ban, cho);
-      const valA = seats[keyA];
-      const valB = seats[keyB];
-      if (valB) newSeats[keyA] = valB; else delete newSeats[keyA];
-      if (valA) newSeats[keyB] = valA; else delete newSeats[keyB];
-    }
-  }
-  state.seatingData.seats = newSeats;
+  // Chỉ đổi VỊ TRÍ HIỂN THỊ (dãy bàn) của 2 tổ cho nhau — KHÔNG đụng tới
+  // seats, nên tên "Tổ N" luôn đi cùng đúng nhóm học sinh cũ, dễ theo dõi
+  // phân trực lần lượt theo tổ dù đã đổi dãy nhiều lần.
+  const order = getSeatingColumnOrder();
+  const idxA = order.indexOf(toA);
+  const idxB = order.indexOf(toB);
+  if (idxA === -1 || idxB === -1) return;
+  [order[idxA], order[idxB]] = [order[idxB], order[idxA]];
+  state.seatingData.columnOrder = order;
   renderSeatingBoard();
-  toast(`Đã đổi chỗ Tổ ${toA} và Tổ ${toB} — nhớ bấm Lưu sơ đồ.`);
+  toast(`Đã đổi vị trí ngồi giữa Tổ ${toA} và Tổ ${toB} — tên tổ vẫn giữ nguyên. Nhớ bấm Lưu sơ đồ.`);
 }
 
 function handleSeatChange(key, studentId) {
@@ -1416,8 +1423,8 @@ function handleSeatChange(key, studentId) {
 }
 
 $("clearSeatingBtn").addEventListener("click", () => {
-  if (!confirm("Xoá toàn bộ sơ đồ chỗ ngồi đang chỉnh? (Cần bấm Lưu sơ đồ thì mới ghi lại vĩnh viễn.)")) return;
-  state.seatingData = { seats: {} };
+  if (!confirm("Xoá toàn bộ sơ đồ chỗ ngồi đang chỉnh (kể cả vị trí các dãy)? (Cần bấm Lưu sơ đồ thì mới ghi lại vĩnh viễn.)")) return;
+  state.seatingData = { seats: {}, columnOrder: Array.from({ length: SEATING_TO_COUNT }, (_, i) => i + 1) };
   renderSeatingBoard();
 });
 
@@ -1428,6 +1435,7 @@ $("saveSeatingBtn").addEventListener("click", async () => {
   try {
     await setDoc(doc(db, "schoolYears", state.yearId, "seatingChart", "current"), {
       seats: (state.seatingData && state.seatingData.seats) || {},
+      columnOrder: getSeatingColumnOrder(),
       updatedAt: serverTimestamp(),
       updatedBy: state.user?.email || "",
     });
@@ -1538,9 +1546,10 @@ $("exportSeatingImageBtn").addEventListener("click", () => {
     const seatWidth = (toWidth - seatGap) / 2;
 
     const seats = (state.seatingData && state.seatingData.seats) || {};
+    const columnOrder = getSeatingColumnOrder();
 
-    for (let to = 1; to <= SEATING_TO_COUNT; to++) {
-      const toX = margin + (to - 1) * (toWidth + gapBetweenTo);
+    columnOrder.forEach((to, idx) => {
+      const toX = margin + idx * (toWidth + gapBetweenTo);
       ctx.fillStyle = "#20303D";
       ctx.font = "700 28px Georgia, serif";
       ctx.textAlign = "center";
@@ -1557,7 +1566,7 @@ $("exportSeatingImageBtn").addEventListener("click", () => {
           drawSeatingBox(ctx, seatX, rowY, seatWidth, rowHeight, name);
         }
       }
-    }
+    });
 
     ctx.fillStyle = "#7A7566";
     ctx.font = "italic 18px Arial, sans-serif";
