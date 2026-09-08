@@ -117,40 +117,26 @@
   .card{
     position:relative;
     background:transparent;
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:22px 20px;
+    border:2px solid var(--ink);
+    border-radius:16px;
+    padding:28px 24px;
     cursor:pointer;
-    transition:border-color .12s ease, transform .12s ease;
+    transition:transform .12s ease;
     user-select:none;
-    min-height:104px;
+    min-height:128px;
     display:flex;
     flex-direction:column;
     justify-content:center;
   }
   .card:hover{
-    border-color:var(--ink);
     transform:translateY(-2px);
   }
-  .card .favicon{
-    width:24px;
-    height:24px;
-    border-radius:6px;
-    background:var(--bg);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    margin-bottom:12px;
-    border:1px solid var(--line);
-  }
-  .card .favicon img{width:14px;height:14px;}
   .card .name{
     font-weight:700;
-    font-size:15px;
+    font-size:16px;
     line-height:1.3;
     color:var(--ink);
-    margin:0 0 3px;
+    margin:0 0 4px;
     word-break:break-word;
   }
   .card .domain{
@@ -170,12 +156,12 @@
   }
   .card:hover .actions{opacity:1;}
   .card .actions button{
-    width:22px;
-    height:22px;
-    border:1px solid var(--line);
+    width:24px;
+    height:24px;
+    border:2px solid var(--ink);
     border-radius:50%;
     background:var(--bg);
-    color:var(--ink-soft);
+    color:var(--ink);
     font-size:12px;
     cursor:pointer;
     display:flex;
@@ -183,7 +169,7 @@
     justify-content:center;
     line-height:1;
   }
-  .card .actions button:hover{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+  .card .actions button:hover{background:var(--ink); color:var(--bg);}
 
   #empty-state{
     color:var(--ink-soft);
@@ -490,7 +476,6 @@ function render(){
         <button type="button" class="edit-btn" aria-label="Sửa dự án">&#9998;</button>
         <button type="button" class="del-btn" aria-label="Xóa dự án">&times;</button>
       </div>` : ''}
-      <div class="favicon"><img src="https://www.google.com/s2/favicons?sz=32&domain=${encodeURIComponent(domain)}" alt=""></div>
       <p class="name"></p>
       <p class="domain"></p>
     `;
