@@ -294,6 +294,17 @@
     resize:vertical;
   }
   .modal-card input:focus, .modal-card textarea:focus{outline:1px solid var(--ink); outline-offset:0;}
+  .preset-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin:-8px 0 16px;
+  }
+  .preset-tags .tag-pill.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--bg);
+  }
   .form-error{
     font-size:12px;
     color:#B3261E;
@@ -538,6 +549,11 @@
     <textarea id="note-content" rows="4" placeholder="Việc cần làm trong tuần..."></textarea>
     <label for="note-tags">Tag (cách nhau bằng dấu phẩy)</label>
     <input id="note-tags" type="text" placeholder="Ví dụ: họp, lớp 6a1, giấy tờ">
+    <div class="preset-tags">
+      <button type="button" class="tag-pill preset-tag" data-tag="viectruong">#viectruong</button>
+      <button type="button" class="tag-pill preset-tag" data-tag="viecnha">#viecnha</button>
+      <button type="button" class="tag-pill preset-tag" data-tag="vieclop">#vieclop</button>
+    </div>
     <div class="form-error" id="note-error">Vui lòng nhập nội dung ghi chú.</div>
     <div class="form-actions">
       <button type="button" id="note-cancel">Hủy</button>
@@ -626,6 +642,7 @@ const noteContentInput = document.getElementById('note-content');
 const noteTagsInput = document.getElementById('note-tags');
 const noteError = document.getElementById('note-error');
 const noteCancel = document.getElementById('note-cancel');
+const presetTagButtons = document.querySelectorAll('.preset-tag');
 
 function normalizeUrl(raw){
   let u = (raw || '').trim();
@@ -941,13 +958,18 @@ function renderTagFilter(){
 }
 
 function getVisibleNotes(){
+  const millisOf = (ts) => (ts && typeof ts.toMillis === 'function') ? ts.toMillis() : 0;
   if(viewMode === 'tag' && activeTag){
     return notes
       .filter(n => (n.tags || []).includes(activeTag))
-      .sort((a, b) => (b.weekStart || '').localeCompare(a.weekStart || ''));
+      .slice()
+      .sort((a, b) => (b.weekStart || '').localeCompare(a.weekStart || '') || (millisOf(b.createdAt) - millisOf(a.createdAt)));
   }
   const key = toKey(currentMonday);
-  return notes.filter(n => n.weekStart === key);
+  return notes
+    .filter(n => n.weekStart === key)
+    .slice()
+    .sort((a, b) => millisOf(b.createdAt) - millisOf(a.createdAt));
 }
 
 function renderNotes(){
@@ -1024,13 +1046,39 @@ function openNoteForm(note){
   noteTagsInput.value = note && note.tags ? note.tags.join(', ') : '';
   noteError.style.display = 'none';
   noteOverlay.hidden = false;
+  syncPresetButtons();
   noteContentInput.focus();
 }
 function closeNoteForm(){
   noteOverlay.hidden = true;
   noteForm.reset();
   editingNoteId = null;
+  syncPresetButtons();
 }
+
+function getTagsFromInput(){
+  return noteTagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
+}
+function setTagsToInput(tags){
+  noteTagsInput.value = tags.join(', ');
+}
+function syncPresetButtons(){
+  const current = getTagsFromInput().map(t => t.toLowerCase());
+  presetTagButtons.forEach(btn => {
+    btn.classList.toggle('active', current.includes(btn.dataset.tag.toLowerCase()));
+  });
+}
+presetTagButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tag = btn.dataset.tag;
+    const tags = getTagsFromInput();
+    const idx = tags.findIndex(t => t.toLowerCase() === tag.toLowerCase());
+    if(idx > -1) tags.splice(idx, 1); else tags.push(tag);
+    setTagsToInput(tags);
+    syncPresetButtons();
+  });
+});
+noteTagsInput.addEventListener('input', syncPresetButtons);
 
 noteCancel.addEventListener('click', closeNoteForm);
 noteOverlay.addEventListener('click', (e) => { if(e.target === noteOverlay) closeNoteForm(); });
