@@ -459,9 +459,17 @@
     color:var(--ink);
   }
   .duty-day-names{color:var(--ink-soft);}
+  .duty-export-row{
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:flex-end;
+  }
   .seating-actions{
     display:flex;
     justify-content:flex-end;
+    flex-wrap:wrap;
     gap:10px;
     margin-bottom:16px;
   }
@@ -478,13 +486,32 @@
     border:1px solid var(--line);
     border-radius:6px;
     padding:12px;
+    cursor:grab;
+    transition:opacity .15s, border-color .15s;
+  }
+  .seating-to.dragging{opacity:.4;}
+  .seating-to.drag-over{border-color:var(--red);border-width:2px;}
+  .seating-to-header{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    margin-bottom:10px;
+  }
+  .seating-swap-select{
+    font-size:11px;
+    padding:3px 6px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:#fff;
+    color:var(--ink-soft);
+    max-width:140px;
   }
   .seating-to-title{
     font-family:'Fraunces',serif;
     font-weight:600;
     font-size:15px;
     text-align:center;
-    margin-bottom:10px;
     color:var(--ink);
   }
   .seating-desk{
@@ -923,9 +950,10 @@
   <div class="modal" style="max-width:960px;">
     <button class="modal-close" id="closeSeatingBtn">&times;</button>
     <h3>Sơ đồ chỗ ngồi</h3>
-    <div class="sub">4 tổ, mỗi tổ 7 bàn, mỗi bàn 2 chỗ. Chọn học sinh cho từng chỗ — chọn 1 học sinh vào chỗ khác sẽ tự dời khỏi chỗ cũ.</div>
+    <div class="sub">4 tổ, mỗi tổ 7 bàn, mỗi bàn 2 chỗ. Chọn học sinh cho từng chỗ — chọn 1 học sinh vào chỗ khác sẽ tự dời khỏi chỗ cũ. Kéo tiêu đề "Tổ" thả sang tổ khác để đổi chỗ cả tổ (hoặc dùng ô "Đổi chỗ với…" nếu dùng điện thoại).</div>
     <div class="seating-actions">
       <button class="btn btn-ghost btn-sm" id="clearSeatingBtn">Xoá toàn bộ sơ đồ</button>
+      <button class="btn btn-ghost btn-sm" id="exportSeatingImageBtn">Xuất file hình (A4 ngang)</button>
       <button class="btn btn-primary btn-sm" id="saveSeatingBtn">Lưu sơ đồ</button>
     </div>
     <div class="seating-board" id="seatingBoard"></div>
@@ -944,6 +972,9 @@
       <button class="btn btn-ghost btn-sm" id="dutyNextWeekBtn">Tuần sau &rarr;</button>
     </div>
     <div id="dutyList"></div>
+    <div class="duty-export-row">
+      <button class="btn btn-ghost btn-sm" id="exportDutyNoticeBtn">Xuất thông báo (gửi phụ huynh)</button>
+    </div>
   </div>
 </div>
 
