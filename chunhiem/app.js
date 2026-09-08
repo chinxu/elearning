@@ -41,12 +41,12 @@ const MONTHS = [
 ];
 
 const DUTY_DAYS = [
-  { key: "T2", label: "Thứ 2" },
-  { key: "T3", label: "Thứ 3" },
-  { key: "T4", label: "Thứ 4" },
-  { key: "T5", label: "Thứ 5" },
-  { key: "T6", label: "Thứ 6" },
-  { key: "T7", label: "Thứ 7" },
+  { key: "T2", label: "Thứ 2", offset: 0 },
+  { key: "T3", label: "Thứ 3", offset: 1 },
+  { key: "T4", label: "Thứ 4", offset: 2 },
+  { key: "T5", label: "Thứ 5", offset: 3 },
+  { key: "T6", label: "Thứ 6", offset: 4 },
+  { key: "T7", label: "Thứ 7", offset: 5 },
 ];
 const DUTY_SLOTS_PER_DAY = 4;
 
@@ -134,6 +134,7 @@ const state = {
   classes: [],
   defaultClassId: null,
   teacherDutyWeekStart: null,
+  teacherDutyWeekData: null,
   officerDutyWeekStart: null,
   officerDutySelectedDay: DUTY_DAYS[0].key,
   officerDutyWeekData: null,
@@ -224,6 +225,11 @@ function shiftWeekISO(weekStartISO, deltaWeeks) {
   const d = new Date(weekStartISO + "T00:00:00");
   d.setDate(d.getDate() + deltaWeeks * 7);
   return isoDateStr(d);
+}
+function dateForOffset(weekStartISO, offset) {
+  const d = new Date(weekStartISO + "T00:00:00");
+  d.setDate(d.getDate() + offset);
+  return d;
 }
 
 // ---------------------------------------------------------------
@@ -1129,9 +1135,11 @@ async function loadTeacherDutyWeek() {
   try {
     const snap = await getDoc(doc(db, "schoolYears", state.yearId, "duty", state.teacherDutyWeekStart));
     const data = snap.exists() ? snap.data() : { days: {} };
+    state.teacherDutyWeekData = data;
     renderTeacherDutyList(data);
   } catch (err) {
     console.error(err);
+    state.teacherDutyWeekData = { days: {} };
     $("dutyList").innerHTML = `<div class="export-hint">Không tải được dữ liệu trực nhật.</div>`;
   }
 }
@@ -1147,6 +1155,124 @@ function renderTeacherDutyList(data) {
       </div>`;
   }).join("");
 }
+
+// Xuất thông báo trực nhật trong tuần ra file hình, để gửi phụ huynh xem trước.
+function wrapCanvasTextLinesGeneric(ctx, text, maxWidth, maxLines) {
+  return wrapCanvasTextLines(ctx, text, maxWidth, maxLines || 99);
+}
+
+$("exportDutyNoticeBtn").addEventListener("click", () => {
+  if (!state.yearId) { toast("Chọn một năm học trước."); return; }
+  const data = state.teacherDutyWeekData || { days: {} };
+  $("exportDutyNoticeBtn").disabled = true;
+  try {
+    const className = (state.classes.find(c => c.id === state.defaultClassId) || {}).name || "";
+    const monday = dateForOffset(state.teacherDutyWeekStart, 0);
+    const saturday = dateForOffset(state.teacherDutyWeekStart, 5);
+    const fmtFull = (d) => `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+
+    // Chuẩn bị nội dung từng dòng trước để đo và tính chiều cao ảnh cho vừa.
+    const dayLines = DUTY_DAYS.map(d => {
+      const ids = (data.days && data.days[d.key]) || [];
+      const names = ids.map(studentNameById).filter(Boolean);
+      const dateStr = fmtFull(dateForOffset(state.teacherDutyWeekStart, d.offset));
+      const namesText = names.length ? names.join(", ") : "Chưa phân công";
+      return { label: `${d.label} (${dateStr}):`, namesText };
+    });
+
+    const W = 1240; // khổ A4 dọc, tỉ lệ 210x297mm
+    const margin = 80;
+    const contentWidth = W - margin * 2;
+
+    // Đo trước chiều cao cần thiết bằng canvas tạm.
+    const measureCanvas = document.createElement("canvas");
+    const mctx = measureCanvas.getContext("2d");
+    let estHeight = margin + 60 /*title*/ + 50 /*class line*/ + 50 /*time line*/ + 40 /*gap*/;
+    mctx.font = "600 26px Arial, sans-serif";
+    dayLines.forEach(dl => {
+      mctx.font = "700 26px Arial, sans-serif";
+      const labelLines = wrapCanvasTextLinesGeneric(mctx, dl.label, contentWidth, 2);
+      mctx.font = "400 26px Arial, sans-serif";
+      const nameLines = wrapCanvasTextLinesGeneric(mctx, dl.namesText, contentWidth - 20, 6);
+      estHeight += labelLines.length * 32 + nameLines.length * 32 + 26;
+    });
+    estHeight += margin;
+
+    const H = Math.max(1600, estHeight);
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, W, H);
+
+    let y = margin;
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#20303D";
+    ctx.font = "700 42px Georgia, serif";
+    ctx.fillText("THÔNG BÁO TRỰC NHẬT", W / 2, y);
+    y += 46;
+
+    if (className) {
+      ctx.font = "400 24px Arial, sans-serif";
+      ctx.fillStyle = "#4A5A63";
+      ctx.fillText(`Lớp ${className}`, W / 2, y);
+      y += 40;
+    }
+
+    ctx.font = "600 26px Arial, sans-serif";
+    ctx.fillStyle = "#20303D";
+    ctx.fillText(`Thời gian: từ ngày ${fmtFull(monday)} đến ngày ${fmtFull(saturday)}`, W / 2, y);
+    y += 50;
+
+    ctx.strokeStyle = "#D6CFBB";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(margin, y);
+    ctx.lineTo(W - margin, y);
+    ctx.stroke();
+    y += 44;
+
+    ctx.textAlign = "left";
+    dayLines.forEach(dl => {
+      ctx.font = "700 26px Arial, sans-serif";
+      ctx.fillStyle = "#20303D";
+      const labelLines = wrapCanvasTextLinesGeneric(ctx, dl.label, contentWidth, 2);
+      labelLines.forEach(line => { ctx.fillText(line, margin, y); y += 32; });
+
+      ctx.font = "400 26px Arial, sans-serif";
+      ctx.fillStyle = "#4A5A63";
+      const nameLines = wrapCanvasTextLinesGeneric(ctx, dl.namesText, contentWidth - 20, 6);
+      nameLines.forEach(line => { ctx.fillText(line, margin + 20, y); y += 32; });
+
+      y += 26;
+    });
+
+    ctx.textAlign = "right";
+    ctx.font = "italic 18px Arial, sans-serif";
+    ctx.fillStyle = "#7A7566";
+    ctx.fillText("Xuất ngày " + new Date().toLocaleDateString("vi-VN"), W - margin, H - 30);
+
+    canvas.toBlob((blob) => {
+      if (!blob) { toast("Không tạo được file hình."); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `ThongBaoTrucNhat_${state.teacherDutyWeekStart}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast("Đã tạo file thông báo trực nhật.");
+    }, "image/png");
+  } catch (err) {
+    console.error(err);
+    toast("Không tạo được file hình. Thử lại.");
+  } finally {
+    $("exportDutyNoticeBtn").disabled = false;
+  }
+});
 
 // ---------------------------------------------------------------
 // Sơ đồ chỗ ngồi (4 tổ x 7 bàn x 2 chỗ)
@@ -1183,7 +1309,17 @@ function renderSeatingBoard() {
 
   let html = "";
   for (let to = 1; to <= SEATING_TO_COUNT; to++) {
-    html += `<div class="seating-to"><div class="seating-to-title">Tổ ${to}</div>`;
+    const swapOptions = Array.from({ length: SEATING_TO_COUNT }, (_, i) => i + 1)
+      .filter(n => n !== to)
+      .map(n => `<option value="${n}">Tổ ${n}</option>`).join("");
+    html += `<div class="seating-to" draggable="true" data-to="${to}">
+      <div class="seating-to-header">
+        <div class="seating-to-title">Tổ ${to}</div>
+        <select class="seating-swap-select" data-to="${to}">
+          <option value="">Đổi chỗ với…</option>
+          ${swapOptions}
+        </select>
+      </div>`;
     for (let ban = 1; ban <= SEATING_BAN_COUNT; ban++) {
       html += `<div class="seating-desk"><span class="seating-desk-label">${ban}</span>`;
       for (let cho = 1; cho <= SEATING_CHO_COUNT; cho++) {
@@ -1203,6 +1339,62 @@ function renderSeatingBoard() {
     sel.value = seats[key] || "";
     sel.addEventListener("change", () => handleSeatChange(key, sel.value));
   });
+  $("seatingBoard").querySelectorAll(".seating-swap-select").forEach(sel => {
+    sel.addEventListener("change", () => {
+      const fromTo = Number(sel.dataset.to);
+      const toTo = Number(sel.value);
+      if (toTo && toTo !== fromTo) swapToGroups(fromTo, toTo);
+      sel.value = "";
+    });
+  });
+  // Kéo-thả để đổi chỗ cả tổ (dành cho máy tính; điện thoại dùng ô chọn ở trên).
+  let dragSrcTo = null;
+  $("seatingBoard").querySelectorAll(".seating-to").forEach(el => {
+    el.addEventListener("dragstart", (e) => {
+      dragSrcTo = Number(el.dataset.to);
+      el.classList.add("dragging");
+      try { e.dataTransfer.setData("text/plain", String(dragSrcTo)); } catch (err) { /* ignore */ }
+      e.dataTransfer.effectAllowed = "move";
+    });
+    el.addEventListener("dragend", () => {
+      el.classList.remove("dragging");
+      $("seatingBoard").querySelectorAll(".seating-to.drag-over").forEach(x => x.classList.remove("drag-over"));
+      dragSrcTo = null;
+    });
+    el.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      el.classList.add("drag-over");
+    });
+    el.addEventListener("dragleave", () => el.classList.remove("drag-over"));
+    el.addEventListener("drop", (e) => {
+      e.preventDefault();
+      el.classList.remove("drag-over");
+      const targetTo = Number(el.dataset.to);
+      if (dragSrcTo && targetTo && dragSrcTo !== targetTo) swapToGroups(dragSrcTo, targetTo);
+      dragSrcTo = null;
+    });
+  });
+}
+
+function swapToGroups(toA, toB) {
+  if (!state.seatingData) state.seatingData = { seats: {} };
+  if (!state.seatingData.seats) state.seatingData.seats = {};
+  const seats = state.seatingData.seats;
+  const newSeats = { ...seats };
+  for (let ban = 1; ban <= SEATING_BAN_COUNT; ban++) {
+    for (let cho = 1; cho <= SEATING_CHO_COUNT; cho++) {
+      const keyA = seatKey(toA, ban, cho);
+      const keyB = seatKey(toB, ban, cho);
+      const valA = seats[keyA];
+      const valB = seats[keyB];
+      if (valB) newSeats[keyA] = valB; else delete newSeats[keyA];
+      if (valA) newSeats[keyB] = valA; else delete newSeats[keyB];
+    }
+  }
+  state.seatingData.seats = newSeats;
+  renderSeatingBoard();
+  toast(`Đã đổi chỗ Tổ ${toA} và Tổ ${toB} — nhớ bấm Lưu sơ đồ.`);
 }
 
 function handleSeatChange(key, studentId) {
@@ -1246,6 +1438,150 @@ $("saveSeatingBtn").addEventListener("click", async () => {
   } finally {
     $("saveSeatingBtn").disabled = false;
     $("saveSeatingBtn").textContent = "Lưu sơ đồ";
+  }
+});
+
+// Xuất sơ đồ chỗ ngồi ra file hình PNG, khổ A4 nằm ngang, để in.
+function wrapCanvasTextLines(ctx, text, maxWidth, maxLines) {
+  const words = String(text || "").split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+  const lines = [];
+  let current = "";
+  for (const w of words) {
+    const test = current ? current + " " + w : w;
+    if (current && ctx.measureText(test).width > maxWidth) {
+      lines.push(current);
+      current = w;
+      if (lines.length === maxLines) break;
+    } else {
+      current = test;
+    }
+  }
+  if (current && lines.length < maxLines) lines.push(current);
+  if (lines.length > maxLines) lines.length = maxLines;
+  return lines;
+}
+
+function drawSeatingBox(ctx, x, y, w, h, name) {
+  ctx.fillStyle = "#FBFAF5";
+  ctx.fillRect(x, y, w, h);
+  ctx.strokeStyle = "#20303D";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x, y, w, h);
+  if (!name) return;
+  ctx.fillStyle = "#20303D";
+  ctx.font = "600 22px Arial, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  const lines = wrapCanvasTextLines(ctx, name, w - 18, 2);
+  const lineHeight = 26;
+  const startY = y + h / 2 - ((lines.length - 1) * lineHeight) / 2;
+  lines.forEach((line, i) => ctx.fillText(line, x + w / 2, startY + i * lineHeight));
+}
+
+$("exportSeatingImageBtn").addEventListener("click", () => {
+  if (!state.yearId) { toast("Chọn một năm học trước."); return; }
+  $("exportSeatingImageBtn").disabled = true;
+  try {
+    // Khổ A4 nằm ngang (297 x 210mm), vẽ ở độ phân giải cao để in nét.
+    const W = 2000;
+    const H = Math.round(W * 210 / 297);
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, W, H);
+
+    const yearLabelText = (state.years.find(y => y.id === state.yearId) || {}).label || "";
+    const className = (state.classes.find(c => c.id === state.defaultClassId) || {}).name || "";
+    const margin = 60;
+
+    ctx.fillStyle = "#20303D";
+    ctx.textAlign = "center";
+    ctx.font = "700 46px Georgia, serif";
+    ctx.fillText("SƠ ĐỒ CHỖ NGỒI", W / 2, margin + 20);
+
+    const subLine = [className ? `Lớp ${className}` : null, yearLabelText ? `Năm học ${yearLabelText}` : null]
+      .filter(Boolean).join("  ·  ");
+    if (subLine) {
+      ctx.fillStyle = "#4A5A63";
+      ctx.font = "400 26px Arial, sans-serif";
+      ctx.fillText(subLine, W / 2, margin + 62);
+    }
+
+    // Thanh "BẢNG" tượng trưng cho phía đầu lớp.
+    const boardTop = margin + 96;
+    const boardHeight = 46;
+    const boardWidth = W * 0.46;
+    const boardX = (W - boardWidth) / 2;
+    ctx.fillStyle = "#2F4B3C";
+    ctx.fillRect(boardX, boardTop, boardWidth, boardHeight);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "700 22px Arial, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("BẢNG", W / 2, boardTop + boardHeight / 2 + 1);
+
+    // Khu vực 4 tổ x 7 bàn x 2 chỗ.
+    const gridTop = boardTop + boardHeight + 55;
+    const gridBottom = H - 60;
+    const gridHeight = gridBottom - gridTop;
+    const usableWidth = W - margin * 2;
+    const gapBetweenTo = 30;
+    const toWidth = (usableWidth - gapBetweenTo * (SEATING_TO_COUNT - 1)) / SEATING_TO_COUNT;
+    const toLabelHeight = 42;
+    const rowGap = 8;
+    const rowHeight = (gridHeight - toLabelHeight - (SEATING_BAN_COUNT - 1) * rowGap) / SEATING_BAN_COUNT;
+    const seatGap = 6;
+    const seatWidth = (toWidth - seatGap) / 2;
+
+    const seats = (state.seatingData && state.seatingData.seats) || {};
+
+    for (let to = 1; to <= SEATING_TO_COUNT; to++) {
+      const toX = margin + (to - 1) * (toWidth + gapBetweenTo);
+      ctx.fillStyle = "#20303D";
+      ctx.font = "700 28px Georgia, serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "alphabetic";
+      ctx.fillText(`Tổ ${to}`, toX + toWidth / 2, gridTop + 26);
+
+      for (let ban = 1; ban <= SEATING_BAN_COUNT; ban++) {
+        const rowY = gridTop + toLabelHeight + (ban - 1) * (rowHeight + rowGap);
+        for (let cho = 1; cho <= SEATING_CHO_COUNT; cho++) {
+          const key = seatKey(to, ban, cho);
+          const studentId = seats[key];
+          const name = studentId ? studentNameById(studentId) : "";
+          const seatX = toX + (cho - 1) * (seatWidth + seatGap);
+          drawSeatingBox(ctx, seatX, rowY, seatWidth, rowHeight, name);
+        }
+      }
+    }
+
+    ctx.fillStyle = "#7A7566";
+    ctx.font = "italic 18px Arial, sans-serif";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillText("Xuất ngày " + new Date().toLocaleDateString("vi-VN"), W - margin, H - 18);
+
+    canvas.toBlob((blob) => {
+      if (!blob) { toast("Không tạo được file hình."); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `SoDoChoNgoi_${slugify(className || "lop")}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast("Đã tạo file hình sơ đồ chỗ ngồi.");
+    }, "image/png");
+  } catch (err) {
+    console.error(err);
+    toast("Không tạo được file hình. Thử lại.");
+  } finally {
+    $("exportSeatingImageBtn").disabled = false;
   }
 });
 
