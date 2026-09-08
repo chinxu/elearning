@@ -50,6 +50,10 @@ const DUTY_DAYS = [
 ];
 const DUTY_SLOTS_PER_DAY = 4;
 
+const SEATING_TO_COUNT = 4;   // 4 tổ
+const SEATING_BAN_COUNT = 7;  // mỗi tổ 7 bàn
+const SEATING_CHO_COUNT = 2;  // mỗi bàn 2 chỗ
+
 const FIELD_LABELS = {
   name: "Họ và tên",
   phone: "SĐT phụ huynh",
@@ -133,6 +137,7 @@ const state = {
   officerDutyWeekStart: null,
   officerDutySelectedDay: DUTY_DAYS[0].key,
   officerDutyWeekData: null,
+  seatingData: null,
   selectedStudentId: null,
   tab: "lylich",
   selectedMonth: MONTHS[0].key,
@@ -424,6 +429,7 @@ async function performDeleteYear(yearId) {
     classesSnap.docs.forEach(cDoc => refsToDelete.push(doc(db, "schoolYears", yearId, "classes", cDoc.id)));
     const dutySnap = await getDocs(collection(db, "schoolYears", yearId, "duty"));
     dutySnap.docs.forEach(wDoc => refsToDelete.push(doc(db, "schoolYears", yearId, "duty", wDoc.id)));
+    refsToDelete.push(doc(db, "schoolYears", yearId, "seatingChart", "current"));
     refsToDelete.push(doc(db, "schoolYears", yearId));
 
     // Tài khoản cán bộ lớp: KHOÁ (không xoá hẳn) — nếu xoá bản ghi này,
@@ -1141,6 +1147,107 @@ function renderTeacherDutyList(data) {
       </div>`;
   }).join("");
 }
+
+// ---------------------------------------------------------------
+// Sơ đồ chỗ ngồi (4 tổ x 7 bàn x 2 chỗ)
+// ---------------------------------------------------------------
+$("openSeatingBtn").addEventListener("click", () => {
+  if (!state.yearId) { toast("Chọn một năm học trước."); return; }
+  loadSeatingChart();
+  $("seatingModal").classList.add("active");
+});
+$("closeSeatingBtn").addEventListener("click", () => $("seatingModal").classList.remove("active"));
+
+function seatKey(to, ban, cho) {
+  return `T${to}-B${ban}-C${cho}`;
+}
+
+async function loadSeatingChart() {
+  $("seatingBoard").innerHTML = `<div class="export-hint">Đang tải…</div>`;
+  try {
+    const snap = await getDoc(doc(db, "schoolYears", state.yearId, "seatingChart", "current"));
+    state.seatingData = snap.exists() ? snap.data() : { seats: {} };
+  } catch (err) {
+    console.error(err);
+    state.seatingData = { seats: {} };
+    toast("Không tải được sơ đồ chỗ ngồi.");
+  }
+  renderSeatingBoard();
+}
+
+function renderSeatingBoard() {
+  const seats = (state.seatingData && state.seatingData.seats) || {};
+  const optionsHtml = state.students.map(s =>
+    `<option value="${s.id}">${escapeHtml(s.fields?.name || "(chưa có tên)")}</option>`
+  ).join("");
+
+  let html = "";
+  for (let to = 1; to <= SEATING_TO_COUNT; to++) {
+    html += `<div class="seating-to"><div class="seating-to-title">Tổ ${to}</div>`;
+    for (let ban = 1; ban <= SEATING_BAN_COUNT; ban++) {
+      html += `<div class="seating-desk"><span class="seating-desk-label">${ban}</span>`;
+      for (let cho = 1; cho <= SEATING_CHO_COUNT; cho++) {
+        const key = seatKey(to, ban, cho);
+        html += `<select class="seating-seat-select" data-seat-key="${key}">
+          <option value="">—</option>
+          ${optionsHtml}
+        </select>`;
+      }
+      html += `</div>`;
+    }
+    html += `</div>`;
+  }
+  $("seatingBoard").innerHTML = html;
+  $("seatingBoard").querySelectorAll(".seating-seat-select").forEach(sel => {
+    const key = sel.dataset.seatKey;
+    sel.value = seats[key] || "";
+    sel.addEventListener("change", () => handleSeatChange(key, sel.value));
+  });
+}
+
+function handleSeatChange(key, studentId) {
+  if (!state.seatingData) state.seatingData = { seats: {} };
+  if (!state.seatingData.seats) state.seatingData.seats = {};
+  if (studentId) {
+    // Nếu học sinh này đang ngồi ở chỗ khác, tự gỡ khỏi chỗ cũ để tránh
+    // 1 học sinh bị gán ngồi 2 chỗ cùng lúc.
+    Object.keys(state.seatingData.seats).forEach(k => {
+      if (k !== key && state.seatingData.seats[k] === studentId) {
+        delete state.seatingData.seats[k];
+      }
+    });
+    state.seatingData.seats[key] = studentId;
+  } else {
+    delete state.seatingData.seats[key];
+  }
+  renderSeatingBoard();
+}
+
+$("clearSeatingBtn").addEventListener("click", () => {
+  if (!confirm("Xoá toàn bộ sơ đồ chỗ ngồi đang chỉnh? (Cần bấm Lưu sơ đồ thì mới ghi lại vĩnh viễn.)")) return;
+  state.seatingData = { seats: {} };
+  renderSeatingBoard();
+});
+
+$("saveSeatingBtn").addEventListener("click", async () => {
+  if (!state.yearId) return;
+  $("saveSeatingBtn").disabled = true;
+  $("saveSeatingBtn").textContent = "Đang lưu…";
+  try {
+    await setDoc(doc(db, "schoolYears", state.yearId, "seatingChart", "current"), {
+      seats: (state.seatingData && state.seatingData.seats) || {},
+      updatedAt: serverTimestamp(),
+      updatedBy: state.user?.email || "",
+    });
+    toast("Đã lưu sơ đồ chỗ ngồi.");
+  } catch (err) {
+    console.error(err);
+    toast("Không lưu được. Thử lại.");
+  } finally {
+    $("saveSeatingBtn").disabled = false;
+    $("saveSeatingBtn").textContent = "Lưu sơ đồ";
+  }
+});
 
 // ---------------------------------------------------------------
 // Giao diện Cán bộ lớp (tài khoản nhỏ nhập vi phạm)
