@@ -255,10 +255,11 @@
     inset:0;
     background:rgba(23,20,15,0.35);
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
     z-index:60;
     padding:20px;
+    overflow-y:auto;
   }
   .modal-card{
     background:var(--bg);
@@ -267,6 +268,7 @@
     border:1px solid var(--line);
     border-radius:12px;
     padding:28px 26px 24px;
+    margin:auto;
   }
   .modal-card h2{
     font-size:18px;
@@ -284,7 +286,7 @@
   .modal-card input, .modal-card textarea{
     width:100%;
     padding:10px 13px;
-    font-size:14px;
+    font-size:16px;
     font-family:inherit;
     border:1px solid var(--line);
     border-radius:8px;
