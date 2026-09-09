@@ -135,6 +135,7 @@ async function loadLop() {
   lopList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   renderLopChips();
   capNhatBdLopSelect();
+  capNhatHtLopSelect();
   if (lopList.length && !currentLopId) currentLopId = lopList[0].id;
   await loadHocSinh();
 }
@@ -1200,6 +1201,150 @@ function xuatBaoCaoDiem() {
   ws['!cols'] = [{ wch: 22 }, { wch: 16 }, ...deTrongThang.map(() => ({ wch: 16 })), { wch: 14 }, { wch: 14 }, { wch: 34 }];
   XLSX.utils.book_append_sheet(wb, ws, sanitizeSheetName(`${lop.ten}_${thang}`, new Set()));
   XLSX.writeFile(wb, `BaoCaoDiem_${lop.ten}_${thang}.xlsx`.replace(/\s+/g, '_'));
+}
+
+// ============================================================
+// HỌC TẬP TỪNG EM — điểm/nhận xét theo tháng + lịch sử đề kiểm tra
+// ============================================================
+function capNhatHtLopSelect() {
+  const sel = document.getElementById('htLopSelect');
+  if (!sel) return;
+  const giaTriCu = sel.value;
+  sel.innerHTML = lopList.map(l => `<option value="${l.id}">${escapeHtml(l.ten)}</option>`).join('');
+  if (lopList.some(l => l.id === giaTriCu)) sel.value = giaTriCu;
+  capNhatHtHsSelect();
+}
+async function capNhatHtHsSelect() {
+  const lopId = document.getElementById('htLopSelect').value;
+  const sel = document.getElementById('htHsSelect');
+  if (!sel || !lopId || !currentNamHocId) { if (sel) sel.innerHTML = ''; return; }
+  const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('hocSinh').orderBy('hoTen').get();
+  const hsOptions = snap.docs.map(d => `<option value="${d.id}">${escapeHtml(d.data().hoTen)}</option>`).join('');
+  sel.innerHTML = `<option value="">— Tất cả học sinh (xem chung cả lớp) —</option>` + hsOptions;
+}
+
+async function xemHocTapHocSinh() {
+  const lopId = document.getElementById('htLopSelect').value;
+  const hsId = document.getElementById('htHsSelect').value;
+  if (!lopId) { alert('Chọn lớp.'); return; }
+  document.getElementById('htChuaChonEmpty').style.display = 'none';
+
+  if (!hsId) {
+    document.getElementById('htDiemThangCard').style.display = 'none';
+    document.getElementById('htLichSuDeCard').style.display = 'none';
+    await xemHocTapCaLop(lopId);
+    return;
+  }
+  document.getElementById('htCaLopCard').style.display = 'none';
+
+  const hsDoc = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('hocSinh').doc(hsId).get();
+  if (!hsDoc.exists) return;
+  const hs = { id: hsDoc.id, ...hsDoc.data() };
+
+  // Điểm & nhận xét theo tháng
+  const snapThang = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('hocSinh').doc(hsId).collection('diemThang').get();
+  const dsThang = snapThang.docs.map(d => ({ thang: d.id, ...d.data() }))
+    .sort((a, b) => b.thang.localeCompare(a.thang));
+
+  // Lịch sử bài kiểm tra online (chỉ tính đề đã từng mở)
+  const snapDe = await db.collection('deKiemTra').where('lopIds', 'array-contains', lopId).get();
+  const deList = snapDe.docs.map(d => ({ id: d.id, ...d.data() }))
+    .filter(de => de.thoiGianMo)
+    .sort((a, b) => b.thoiGianMo - a.thoiGianMo);
+  const lichSuDe = [];
+  for (const de of deList) {
+    const bai = hs.uid ? (await db.collection('deKiemTra').doc(de.id).collection('baiLam').doc(hs.uid).get()) : null;
+    lichSuDe.push({ de, bai: bai && bai.exists ? bai.data() : null });
+  }
+
+  renderHtDiemThang(hs, dsThang);
+  renderHtLichSuDe(lichSuDe);
+}
+
+// Xem tổng quan học tập của CẢ LỚP cùng lúc — điểm TB các bài KT online (mọi thời gian)
+// và nhận xét của tháng gần nhất, cho từng học sinh.
+async function xemHocTapCaLop(lopId) {
+  const snapHs = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('hocSinh').orderBy('hoTen').get();
+  const dsHs = snapHs.docs.map(d => ({ id: d.id, ...d.data() }));
+
+  const snapDe = await db.collection('deKiemTra').where('lopIds', 'array-contains', lopId).get();
+  const deList = snapDe.docs.map(d => ({ id: d.id, ...d.data() })).filter(de => de.thoiGianMo);
+
+  const diemTheoDe = {};
+  for (const de of deList) {
+    const snapBai = await db.collection('deKiemTra').doc(de.id).collection('baiLam').get();
+    diemTheoDe[de.id] = {};
+    snapBai.docs.forEach(b => { diemTheoDe[de.id][b.id] = b.data(); });
+  }
+
+  const rows = [];
+  for (const hs of dsHs) {
+    let tongPhanTram = 0, soBaiDaLam = 0;
+    deList.forEach(de => {
+      const bai = hs.uid ? diemTheoDe[de.id][hs.uid] : null;
+      if (bai && bai.daNop) { tongPhanTram += bai.diem / de.cauHoiIds.length; soBaiDaLam++; }
+    });
+    const diemTbDe = soBaiDaLam ? (tongPhanTram / soBaiDaLam * 100) : null;
+
+    const snapThang = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+      .collection('hocSinh').doc(hs.id).collection('diemThang').get();
+    const dsThang = snapThang.docs.map(d => ({ thang: d.id, ...d.data() })).sort((a, b) => b.thang.localeCompare(a.thang));
+    const ganNhat = dsThang[0];
+
+    rows.push({ hs, soBaiDaLam, tongDe: deList.length, diemTbDe, ganNhat });
+  }
+
+  renderHocTapCaLop(rows);
+}
+function renderHocTapCaLop(rows) {
+  document.getElementById('htCaLopCard').style.display = 'block';
+  const tbody = document.getElementById('htCaLopTbody');
+  document.getElementById('htCaLopEmpty').style.display = rows.length ? 'none' : 'block';
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td>${escapeHtml(r.hs.hoTen)}</td>
+      <td>${r.soBaiDaLam}/${r.tongDe}</td>
+      <td>${r.diemTbDe != null ? r.diemTbDe.toFixed(0) + '%' : '—'}</td>
+      <td>${r.ganNhat
+        ? `<b>Th.${r.ganNhat.thang.split('-')[1]}:</b> ${escapeHtml(r.ganNhat.nhanXet || '(không có nhận xét)')}${r.ganNhat.diemThuCong ? ` — điểm ${escapeHtml(r.ganNhat.diemThuCong)}` : ''}`
+        : '—'}</td>
+    </tr>`).join('');
+}
+
+
+function renderHtDiemThang(hs, dsThang) {
+  document.getElementById('htDiemThangCard').style.display = 'block';
+  const tbody = document.getElementById('htDiemThangTbody');
+  document.getElementById('htDiemThangEmpty').style.display = dsThang.length ? 'none' : 'block';
+  tbody.innerHTML = dsThang.map(t => {
+    const [nam, thangSo] = t.thang.split('-');
+    return `<tr>
+      <td>Tháng ${thangSo}/${nam}</td>
+      <td>${escapeHtml(t.diemThuCong || '—')}</td>
+      <td>${escapeHtml(t.nhanXet || '—')}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderHtLichSuDe(lichSuDe) {
+  document.getElementById('htLichSuDeCard').style.display = 'block';
+  const tbody = document.getElementById('htLichSuDeTbody');
+  document.getElementById('htLichSuDeEmpty').style.display = lichSuDe.length ? 'none' : 'block';
+  tbody.innerHTML = lichSuDe.map(({ de, bai }) => {
+    const ngayMo = de.thoiGianMo ? new Date(de.thoiGianMo).toLocaleDateString('vi-VN') : '—';
+    const diem = bai && bai.daNop ? `${bai.diem}/${de.cauHoiIds.length}` : '—';
+    const trangThai = bai && bai.daNop ? '<span class="badge badge-open">Đã nộp</span>' : '<span class="badge badge-closed">Chưa làm</span>';
+    return `<tr>
+      <td>${escapeHtml(de.tieuDe)}</td>
+      <td>${ngayMo}</td>
+      <td>${diem}</td>
+      <td>${trangThai}</td>
+    </tr>`;
+  }).join('');
 }
 
 // ============================================================
