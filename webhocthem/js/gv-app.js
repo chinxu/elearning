@@ -1018,6 +1018,7 @@ async function xemKetQua(deId) {
 // BẢNG ĐIỂM HÀNG THÁNG & BÁO CÁO CHO PHỤ HUYNH
 // ============================================================
 let bangDiemData = null;
+let bdDangChinhSua = false;
 
 function capNhatBdLopSelect() {
   const sel = document.getElementById('bdLopSelect');
@@ -1056,7 +1057,8 @@ async function xemBangDiem() {
     snapBai.docs.forEach(b => { diemTheoDe[de.id][b.id] = b.data(); });
   }
 
-  const rows = dsHs.map(hs => {
+  const rows = [];
+  for (const hs of dsHs) {
     const diems = deTrongThang.map(de => {
       const bai = hs.uid ? diemTheoDe[de.id][hs.uid] : null;
       if (!bai || !bai.daNop) return null;
@@ -1064,52 +1066,138 @@ async function xemBangDiem() {
     });
     const hopLe = diems.filter(Boolean);
     const tbPhanTram = hopLe.length ? (hopLe.reduce((s, d) => s + d.diem / d.tong, 0) / hopLe.length * 100) : null;
-    return { hs, diems, tbPhanTram };
-  });
+    const ntDoc = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+      .collection('hocSinh').doc(hs.id).collection('diemThang').doc(thang).get();
+    const nt = ntDoc.exists ? ntDoc.data() : {};
+    rows.push({ hs, diems, tbPhanTram, diemThuCong: nt.diemThuCong || '', nhanXet: nt.nhanXet || '' });
+  }
 
-  bangDiemData = { lop: lopList.find(l => l.id === lopId) || { ten: lopId }, thang, deTrongThang, rows };
+  bangDiemData = { lopId, lop: lopList.find(l => l.id === lopId) || { ten: lopId }, thang, deTrongThang, rows };
+  bdDangChinhSua = false;
+  capNhatGiaoDienKhoaBd();
   renderBangDiem();
+}
+
+function capNhatGiaoDienKhoaBd() {
+  const co = !!bangDiemData && bangDiemData.rows.length > 0;
+  document.getElementById('btnMoKhoaBd').style.display = (co && !bdDangChinhSua) ? 'inline-block' : 'none';
+  document.getElementById('btnKhoaBd').style.display = (co && bdDangChinhSua) ? 'inline-block' : 'none';
+}
+function moKhoaBd() { bdDangChinhSua = true; capNhatGiaoDienKhoaBd(); renderBangDiem(); }
+async function khoaVaLuuBd() {
+  const rowsEl = [...document.querySelectorAll('#bdTable tbody tr')];
+  const batch = db.batch();
+  rowsEl.forEach(tr => {
+    const hsId = tr.dataset.hsid;
+    const diemThuCong = tr.querySelector('.bd-diem').value.trim();
+    const nhanXet = tr.querySelector('.bd-nhanxet').value.trim();
+    const ref = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(bangDiemData.lopId)
+      .collection('hocSinh').doc(hsId).collection('diemThang').doc(bangDiemData.thang);
+    if (!diemThuCong && !nhanXet) batch.delete(ref);
+    else batch.set(ref, { diemThuCong, nhanXet, capNhatLuc: Date.now() });
+    const row = bangDiemData.rows.find(r => r.hs.id === hsId);
+    if (row) { row.diemThuCong = diemThuCong; row.nhanXet = nhanXet; }
+  });
+  await batch.commit();
+  bdDangChinhSua = false;
+  capNhatGiaoDienKhoaBd();
+  renderBangDiem();
+}
+
+// Nhập điểm/nhận xét từ file Excel do hệ thống chấm điểm ngoài (vd AI chấm) xuất ra.
+// Khớp học sinh theo đúng Họ tên trong lớp đang xem — cần bấm "Xem bảng điểm" trước.
+function importDiemTuExcel(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (!bangDiemData || !bangDiemData.rows.length) {
+    alert('Hãy bấm "Xem bảng điểm" cho đúng lớp và tháng trước khi import.');
+    event.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+      const batch = db.batch();
+      let capNhat = 0;
+      const khongKhop = [];
+      rows.forEach(r => {
+        const hoTen = String(r.HoTen || r.hoten || r['Họ tên'] || r['Họ và tên'] || '').trim();
+        if (!hoTen) return;
+        const diem = String(r.Diem || r.diem || r['Điểm'] || r['Điểm KT'] || '').trim();
+        const nhanXet = String(r.NhanXet || r.nhanxet || r['Nhận xét'] || '').trim();
+        const match = bangDiemData.rows.find(row => (row.hs.hoTen || '').trim().toLowerCase() === hoTen.toLowerCase());
+        if (!match) { khongKhop.push(hoTen); return; }
+        const payload = { capNhatLuc: Date.now() };
+        if (diem) payload.diemThuCong = diem;
+        if (nhanXet) payload.nhanXet = nhanXet;
+        if (Object.keys(payload).length === 1) return; // file có tên nhưng không có điểm/nhận xét
+        const ref = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(bangDiemData.lopId)
+          .collection('hocSinh').doc(match.hs.id).collection('diemThang').doc(bangDiemData.thang);
+        batch.set(ref, payload, { merge: true });
+        if (diem) match.diemThuCong = diem;
+        if (nhanXet) match.nhanXet = nhanXet;
+        capNhat++;
+      });
+      await batch.commit();
+      renderBangDiem();
+      event.target.value = '';
+      alert(`Đã cập nhật điểm/nhận xét cho ${capNhat} học sinh.` +
+        (khongKhop.length ? `\n\nKhông khớp được tên nào trong lớp (${khongKhop.length}): ${khongKhop.join(', ')}` : ''));
+    } catch (err) {
+      alert('Lỗi khi đọc file: ' + err.message);
+      event.target.value = '';
+    }
+  };
+  reader.readAsArrayBuffer(file);
 }
 
 function renderBangDiem() {
   const empty = document.getElementById('bdEmpty');
   const table = document.getElementById('bdTable');
-  if (!bangDiemData || !bangDiemData.deTrongThang.length) {
+  if (!bangDiemData || !bangDiemData.rows.length) {
     table.querySelector('thead').innerHTML = '';
     table.querySelector('tbody').innerHTML = '';
     empty.style.display = 'block';
     empty.textContent = bangDiemData
-      ? 'Không có bài kiểm tra nào được mở trong tháng này ở lớp đã chọn.'
+      ? 'Lớp này chưa có học sinh nào.'
       : 'Chọn lớp và tháng rồi bấm "Xem bảng điểm".';
+    capNhatGiaoDienKhoaBd();
     return;
   }
   empty.style.display = 'none';
   const { deTrongThang, rows } = bangDiemData;
   table.querySelector('thead').innerHTML =
-    `<tr><th>Họ tên</th>${deTrongThang.map(de => `<th>${escapeHtml(de.tieuDe)}</th>`).join('')}<th>Trung bình</th></tr>`;
+    `<tr><th>Họ tên</th>${deTrongThang.map(de => `<th>${escapeHtml(de.tieuDe)}</th>`).join('')}<th>Trung bình</th><th style="min-width:110px;">Điểm KT (nhập tay)</th><th style="min-width:220px;">Nhận xét</th></tr>`;
   table.querySelector('tbody').innerHTML = rows.map(r => `
-    <tr>
+    <tr data-hsid="${r.hs.id}">
       <td>${escapeHtml(r.hs.hoTen)}</td>
       ${r.diems.map(d => `<td>${d ? `${d.diem}/${d.tong}` : '—'}</td>`).join('')}
       <td>${r.tbPhanTram != null ? r.tbPhanTram.toFixed(0) + '%' : '—'}</td>
+      <td><input type="text" class="bd-input bd-diem" value="${escapeHtml(r.diemThuCong)}" placeholder="vd: 8.5" ${bdDangChinhSua ? '' : 'disabled'}></td>
+      <td><input type="text" class="bd-input bd-nhanxet" value="${escapeHtml(r.nhanXet)}" placeholder="Nhận xét..." ${bdDangChinhSua ? '' : 'disabled'}></td>
     </tr>`).join('');
 }
 
 function xuatBaoCaoDiem() {
-  if (!bangDiemData || !bangDiemData.deTrongThang.length) {
+  if (!bangDiemData || !bangDiemData.rows.length) {
     alert('Chưa có dữ liệu — hãy bấm "Xem bảng điểm" trước.');
     return;
   }
   const { lop, thang, deTrongThang, rows } = bangDiemData;
-  const header = ['Họ tên', 'SĐT phụ huynh', ...deTrongThang.map(de => de.tieuDe), 'Trung bình (%)'];
+  const header = ['Họ tên', 'SĐT phụ huynh', ...deTrongThang.map(de => de.tieuDe), 'Trung bình (%)', 'Điểm KT (nhập tay)', 'Nhận xét'];
   const data = rows.map(r => [
     r.hs.hoTen, r.hs.sdtPhuHuynh || '',
     ...r.diems.map(d => d ? `${d.diem}/${d.tong}` : ''),
-    r.tbPhanTram != null ? r.tbPhanTram.toFixed(0) : ''
+    r.tbPhanTram != null ? r.tbPhanTram.toFixed(0) : '',
+    r.diemThuCong || '',
+    r.nhanXet || ''
   ]);
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet([header, ...data]);
-  ws['!cols'] = [{ wch: 22 }, { wch: 16 }, ...deTrongThang.map(() => ({ wch: 16 })), { wch: 14 }];
+  ws['!cols'] = [{ wch: 22 }, { wch: 16 }, ...deTrongThang.map(() => ({ wch: 16 })), { wch: 14 }, { wch: 14 }, { wch: 34 }];
   XLSX.utils.book_append_sheet(wb, ws, sanitizeSheetName(`${lop.ten}_${thang}`, new Set()));
   XLSX.writeFile(wb, `BaoCaoDiem_${lop.ten}_${thang}.xlsx`.replace(/\s+/g, '_'));
 }
