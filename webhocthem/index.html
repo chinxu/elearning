@@ -36,6 +36,7 @@
     <button class="nav-item active" data-tab="tab-hs" onclick="switchTab('tab-hs')">1 · Học sinh &amp; Lớp</button>
     <button class="nav-item" data-tab="tab-cauhoi" onclick="switchTab('tab-cauhoi')">3 · Ngân hàng câu hỏi</button>
     <button class="nav-item" data-tab="tab-dekt" onclick="switchTab('tab-dekt')">2 · Đề kiểm tra</button>
+    <button class="nav-item" data-tab="tab-hoctap" onclick="switchTab('tab-hoctap')">Học tập từng em</button>
     <div class="sidebar-foot">
       <div id="gvEmailLabel"></div>
       <button onclick="logoutGV()">Đăng xuất</button>
@@ -169,6 +170,54 @@
         </div>
         <div class="empty" id="bdEmpty">Chọn lớp và tháng rồi bấm "Xem bảng điểm".</div>
       </div>
+    </div>
+
+    <!-- ===== TAB: HỌC TẬP TỪNG EM ===== -->
+    <div class="tab-panel" id="tab-hoctap">
+      <div class="card">
+        <h3>Học tập từng em</h3>
+        <p class="muted">Chọn lớp, chọn học sinh — xem toàn bộ điểm/nhận xét theo tháng và lịch sử làm bài kiểm tra online của em đó.</p>
+        <div class="row">
+          <div class="field" style="min-width:180px;">
+            <label>Lớp</label>
+            <select id="htLopSelect" onchange="capNhatHtHsSelect()"></select>
+          </div>
+          <div class="field" style="min-width:200px;">
+            <label>Học sinh</label>
+            <select id="htHsSelect"></select>
+          </div>
+          <button class="btn btn-primary" onclick="xemHocTapHocSinh()">Xem</button>
+        </div>
+      </div>
+
+      <div class="card" id="htCaLopCard" style="display:none;">
+        <h3>Học tập chung cả lớp</h3>
+        <table>
+          <thead><tr><th>Họ tên</th><th>Bài KT đã làm</th><th>Điểm TB các bài KT</th><th>Nhận xét gần nhất</th></tr></thead>
+          <tbody id="htCaLopTbody"></tbody>
+        </table>
+        <div class="empty" id="htCaLopEmpty" style="display:none;">Lớp này chưa có học sinh nào.</div>
+      </div>
+
+      <div class="card" id="htDiemThangCard" style="display:none;">
+        <h3>Điểm &amp; nhận xét theo tháng</h3>
+        <table>
+          <thead><tr><th>Tháng</th><th>Điểm KT (nhập tay)</th><th>Nhận xét</th></tr></thead>
+          <tbody id="htDiemThangTbody"></tbody>
+        </table>
+        <div class="empty" id="htDiemThangEmpty" style="display:none;">Chưa có điểm/nhận xét tháng nào cho em này.</div>
+      </div>
+
+      <div class="card" id="htLichSuDeCard" style="display:none;">
+        <h3>Lịch sử bài kiểm tra online</h3>
+        <table>
+          <thead><tr><th>Tên đề</th><th>Ngày mở</th><th>Điểm</th><th>Trạng thái</th></tr></thead>
+          <tbody id="htLichSuDeTbody"></tbody>
+        </table>
+        <div class="empty" id="htLichSuDeEmpty" style="display:none;">Lớp này chưa từng mở bài kiểm tra nào.</div>
+      </div>
+
+      <div class="empty" id="htChuaChonEmpty">Chọn lớp và học sinh rồi bấm "Xem".</div>
     </div>
   </div>
 </div>
