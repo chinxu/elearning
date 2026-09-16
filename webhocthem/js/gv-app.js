@@ -185,7 +185,7 @@ async function deleteLop() {
 // HỌC SINH — hiển thị kiểu trang tính, dán được từ Excel
 // ============================================================
 let dangChinhSuaHs = false;
-const HS_COLS = ['hoTen', 'sdtPhuHuynh', 'lopTruong'];
+const HS_COLS = ['stt', 'hoTen', 'sdtPhuHuynh', 'ngayBatDau'];
 
 async function loadHocSinh() {
   const empty = document.getElementById('hsEmpty');
@@ -203,12 +203,12 @@ async function loadHocSinh() {
 function renderHsTableGrid() {
   const tbody = document.getElementById('hsTbody');
   document.getElementById('hsEmpty').style.display = (hsList.length === 0 && !dangChinhSuaHs) ? 'block' : 'none';
-  tbody.innerHTML = hsList.map((hs, i) => `
+  tbody.innerHTML = hsList.map((hs) => `
     <tr data-id="${hs.id}">
-      <td>${i + 1}</td>
+      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="stt" style="width:50px;">${escapeHtml(hs.stt || '')}</td>
       <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="hoTen">${escapeHtml(hs.hoTen || '')}</td>
       <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="sdtPhuHuynh">${escapeHtml(hs.sdtPhuHuynh || '')}</td>
-      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="lopTruong">${escapeHtml(hs.lopTruong || '')}</td>
+      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="ngayBatDau" style="width:110px;">${escapeHtml(hs.ngayBatDau || '')}</td>
       <td>${hs.maHS
         ? `<span class="badge badge-open">${escapeHtml(hs.maHS)}</span>`
         : (dangChinhSuaHs ? '<span class="muted">—</span>' : `<button class="btn btn-amber" onclick="openTaoTaiKhoan('${hs.id}')">+ Tạo tài khoản</button>`)}</td>
@@ -238,19 +238,18 @@ function themDongMoi() {
   const tbody = document.getElementById('hsTbody');
   const tr = document.createElement('tr');
   tr.innerHTML = `
-    <td>${tbody.children.length + 1}</td>
+    <td class="editable-cell" contenteditable="true" data-field="stt" style="width:50px;"></td>
     <td class="editable-cell" contenteditable="true" data-field="hoTen"></td>
     <td class="editable-cell" contenteditable="true" data-field="sdtPhuHuynh"></td>
-    <td class="editable-cell" contenteditable="true" data-field="lopTruong"></td>
+    <td class="editable-cell" contenteditable="true" data-field="ngayBatDau" style="width:110px;"></td>
     <td><span class="muted">—</span></td>
     <td><button class="btn btn-outline" onclick="xoaDongGrid(this)">✕</button></td>`;
   tbody.appendChild(tr);
-  tr.querySelector('[data-field="hoTen"]').focus();
+  tr.querySelector('[data-field="stt"]').focus();
 }
 
 function xoaDongGrid(btn) {
   btn.closest('tr').remove();
-  [...document.querySelectorAll('#hsTbody tr')].forEach((tr, i) => tr.children[0].textContent = i + 1);
 }
 
 // Dán dữ liệu copy từ Excel (tab-separated) vào bảng, bắt đầu từ ô đang bấm dán
@@ -276,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!tr) { themDongMoi(); trArr = [...document.querySelectorAll('#hsTbody tr')]; tr = trArr[rowIdx]; }
       cells.forEach((val, ci) => {
         const colIdx = startColIdx + ci;
-        if (colIdx > 2) return; // bỏ qua nếu dán dư cột
+        if (colIdx > HS_COLS.length - 1) return; // bỏ qua nếu dán dư cột
         const td = tr.querySelector(`td[data-field="${HS_COLS[colIdx]}"]`);
         if (td) td.textContent = val.trim();
       });
@@ -291,15 +290,16 @@ async function khoaVaLuu() {
   const batch = db.batch();
   trs.forEach(tr => {
     const id = tr.dataset.id || null;
+    const stt = tr.querySelector('[data-field="stt"]').textContent.trim();
     const hoTen = tr.querySelector('[data-field="hoTen"]').textContent.trim();
     const sdtPhuHuynh = tr.querySelector('[data-field="sdtPhuHuynh"]').textContent.trim();
-    const lopTruong = tr.querySelector('[data-field="lopTruong"]').textContent.trim();
-    const rong = !hoTen && !sdtPhuHuynh && !lopTruong;
+    const ngayBatDau = tr.querySelector('[data-field="ngayBatDau"]').textContent.trim();
+    const rong = !stt && !hoTen && !sdtPhuHuynh && !ngayBatDau;
     if (id) {
       if (rong) batch.delete(colRef.doc(id));
-      else batch.update(colRef.doc(id), { hoTen, sdtPhuHuynh, lopTruong });
+      else batch.update(colRef.doc(id), { stt, hoTen, sdtPhuHuynh, ngayBatDau });
     } else if (!rong) {
-      batch.set(colRef.doc(), { hoTen, sdtPhuHuynh, lopTruong });
+      batch.set(colRef.doc(), { stt, hoTen, sdtPhuHuynh, ngayBatDau });
     }
   });
   await batch.commit();
@@ -315,8 +315,8 @@ async function deleteHs(id) {
   await loadHocSinh();
 }
 
-// Cập nhật danh sách bằng file Excel/CSV — khớp học sinh theo Họ tên,
-// học sinh trùng tên sẽ được cập nhật SĐT/lớp trường; tên mới sẽ được thêm.
+// Cập nhật danh sách bằng file Excel/CSV (trong LỚP ĐANG CHỌN) — khớp học sinh theo Họ tên,
+// học sinh trùng tên sẽ được cập nhật STT/SĐT/ngày bắt đầu; tên mới sẽ được thêm.
 function capNhatHsTuExcel(event) {
   if (!currentLopId) { alert('Hãy chọn lớp trước.'); event.target.value = ''; return; }
   const file = event.target.files[0];
@@ -333,11 +333,12 @@ function capNhatHsTuExcel(event) {
       rows.forEach(r => {
         const hoTen = String(r.HoTen || r.hoten || r['Họ tên'] || r['Họ và tên'] || '').trim();
         if (!hoTen) return;
-        const sdtPhuHuynh = String(r.SdtPhuHuynh || r.SDT || r['SĐT phụ huynh'] || '').trim();
-        const lopTruong = String(r.LopTruong || r['Lớp học trên trường'] || '').trim();
+        const stt = String(r.STT || r.Stt || r.stt || '').trim();
+        const sdtPhuHuynh = String(r.SdtPhuHuynh || r.SDT || r['SĐT phụ huynh'] || r['Số điện thoại phụ huynh'] || '').trim();
+        const ngayBatDau = String(r.NgayBatDau || r['Học bắt đầu'] || r['Ngày bắt đầu'] || '').trim();
         const match = hsList.find(hs => (hs.hoTen || '').trim().toLowerCase() === hoTen.toLowerCase());
-        if (match) { batch.update(colRef.doc(match.id), { sdtPhuHuynh, lopTruong }); capNhat++; }
-        else { batch.set(colRef.doc(), { hoTen, sdtPhuHuynh, lopTruong }); themMoi++; }
+        if (match) { batch.update(colRef.doc(match.id), { stt, sdtPhuHuynh, ngayBatDau }); capNhat++; }
+        else { batch.set(colRef.doc(), { stt, hoTen, sdtPhuHuynh, ngayBatDau }); themMoi++; }
       });
       await batch.commit();
       alert(`Đã cập nhật ${capNhat} học sinh, thêm mới ${themMoi} học sinh.`);
@@ -460,8 +461,8 @@ async function dongBoTaiKhoanHocSinh() {
 // XUẤT EXCEL DANH SÁCH HỌC SINH (gửi trung tâm điểm danh)
 // ============================================================
 function taoHangDuLieu(list) {
-  const header = ['STT', 'Họ và tên', 'SĐT phụ huynh', 'Lớp học trên trường', 'Điểm danh'];
-  const rows = list.map((hs, i) => [i + 1, hs.hoTen, hs.sdtPhuHuynh || '', hs.lopTruong || '', '']);
+  const header = ['STT', 'Họ và tên', 'SĐT phụ huynh', 'Học bắt đầu', 'Điểm danh'];
+  const rows = list.map((hs, i) => [hs.stt || (i + 1), hs.hoTen, hs.sdtPhuHuynh || '', hs.ngayBatDau || '', '']);
   return [header, ...rows];
 }
 function sanitizeSheetName(ten, daDung) {
@@ -478,7 +479,7 @@ function xuatExcelLopHienTai() {
   if (!hsList.length) { alert('Lớp này chưa có học sinh.'); return; }
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(taoHangDuLieu(hsList));
-  ws['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 16 }, { wch: 18 }, { wch: 12 }];
+  ws['!cols'] = [{ wch: 6 }, { wch: 24 }, { wch: 16 }, { wch: 14 }, { wch: 12 }];
   XLSX.utils.book_append_sheet(wb, ws, sanitizeSheetName(lop.ten, new Set()));
   const namHoc = namHocList.find(n => n.id === currentNamHocId);
   XLSX.writeFile(wb, `DanhSach_${lop.ten}_${namHoc ? namHoc.ten : ''}.xlsx`.replace(/\s+/g, '_'));
@@ -500,22 +501,102 @@ async function xuatExcelToanBo() {
 
   const wb = XLSX.utils.book_new();
 
-  // Sheet tổng hợp tất cả lớp, đặt đầu tiên
-  const headerTong = ['STT', 'Họ và tên', 'Lớp học thêm', 'SĐT phụ huynh', 'Lớp học trên trường', 'Điểm danh'];
-  const rowsTong = tatCa.map((hs, i) => [i + 1, hs.hoTen, hs.tenLop, hs.sdtPhuHuynh || '', hs.lopTruong || '', '']);
+  // Sheet tổng hợp tất cả lớp, đặt đầu tiên — đúng cấu trúc STT | Lớp | Họ và tên | SĐT | Học bắt đầu
+  const headerTong = ['STT', 'Lớp', 'Họ và tên', 'SĐT phụ huynh', 'Học bắt đầu', 'Điểm danh'];
+  const rowsTong = tatCa.map((hs, i) => [hs.stt || (i + 1), hs.tenLop, hs.hoTen, hs.sdtPhuHuynh || '', hs.ngayBatDau || '', '']);
   const wsTong = XLSX.utils.aoa_to_sheet([headerTong, ...rowsTong]);
-  wsTong['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 20 }, { wch: 16 }, { wch: 18 }, { wch: 12 }];
+  wsTong['!cols'] = [{ wch: 6 }, { wch: 12 }, { wch: 24 }, { wch: 16 }, { wch: 14 }, { wch: 12 }];
   XLSX.utils.book_append_sheet(wb, wsTong, sanitizeSheetName('Tất cả', daDungTen));
 
   // Mỗi lớp một sheet riêng
   dsTheoLop.forEach(({ lop, list }) => {
     const ws = XLSX.utils.aoa_to_sheet(taoHangDuLieu(list));
-    ws['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 16 }, { wch: 18 }, { wch: 12 }];
+    ws['!cols'] = [{ wch: 6 }, { wch: 24 }, { wch: 16 }, { wch: 14 }, { wch: 12 }];
     XLSX.utils.book_append_sheet(wb, ws, sanitizeSheetName(lop.ten, daDungTen));
   });
 
   const namHoc = namHocList.find(n => n.id === currentNamHocId);
   XLSX.writeFile(wb, `DanhSachHocSinh_${namHoc ? namHoc.ten : ''}.xlsx`.replace(/\s+/g, '_'));
+}
+
+// Nhập DANH SÁCH TỔNG từ 1 file Excel chứa NHIỀU LỚP cùng lúc — đúng cấu trúc:
+// STT | Lớp | Họ và tên | SĐT phụ huynh | Học bắt đầu.
+// Cột "Lớp" quyết định học sinh đó thuộc lớp nào — lớp chưa có sẽ tự tạo (so khớp
+// không phân biệt hoa/thường và khoảng trắng, vd "Lớp 1" và "lop 1" là cùng 1 lớp).
+// Khớp học sinh đã có theo STT trước (nếu trùng), rồi tới Họ tên; không đụng tài khoản đã tạo.
+function importDanhSachNhieuLop(event) {
+  if (!currentNamHocId) { alert('Hãy chọn/tạo năm học trước.'); event.target.value = ''; return; }
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+
+      const boChuan = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+
+      // Gom theo tên lớp đã chuẩn hóa
+      const nhomTheoLop = new Map(); // key: tên chuẩn hóa -> { tenGoc, hocSinh: [...] }
+      rows.forEach(r => {
+        const tenLopGoc = String(r.Lop || r.lop || r['Lớp'] || '').trim();
+        const hoTen = String(r.HoTen || r.hoten || r['Họ tên'] || r['Họ và tên'] || '').trim();
+        if (!tenLopGoc || !hoTen) return;
+        const stt = String(r.STT || r.Stt || r.stt || '').trim();
+        const sdtPhuHuynh = String(r.SdtPhuHuynh || r.SDT || r['SĐT phụ huynh'] || r['Số điện thoại phụ huynh'] || '').trim();
+        const ngayBatDau = String(r.NgayBatDau || r['Học bắt đầu'] || r['Ngày bắt đầu'] || '').trim();
+        const key = boChuan(tenLopGoc);
+        if (!nhomTheoLop.has(key)) nhomTheoLop.set(key, { tenGoc: tenLopGoc, hocSinh: [] });
+        nhomTheoLop.get(key).hocSinh.push({ stt, hoTen, sdtPhuHuynh, ngayBatDau });
+      });
+      if (!nhomTheoLop.size) { alert('Không đọc được dòng nào hợp lệ (cần có cột Lớp và Họ tên).'); event.target.value = ''; return; }
+
+      const daCoTheoKey = new Map(lopList.map(l => [boChuan(l.ten), l]));
+      const batch = db.batch();
+      let soLopMoi = 0, soHsThem = 0, soHsCapNhat = 0;
+
+      for (const [key, nhom] of nhomTheoLop) {
+        let lop = daCoTheoKey.get(key);
+        let lopRef;
+        if (lop) {
+          lopRef = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lop.id);
+        } else {
+          lopRef = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc();
+          batch.set(lopRef, { ten: nhom.tenGoc });
+          daCoTheoKey.set(key, { id: lopRef.id, ten: nhom.tenGoc });
+          soLopMoi++;
+        }
+        const hsColRef = lopRef.collection('hocSinh');
+        // học sinh hiện có trong lớp này (để khớp STT/Họ tên) — lớp mới tạo thì rỗng
+        const hsHienCo = lop
+          ? (await hsColRef.get()).docs.map(d => ({ id: d.id, ...d.data() }))
+          : [];
+
+        nhom.hocSinh.forEach(row => {
+          let match = null;
+          if (row.stt) match = hsHienCo.find(hs => String(hs.stt || '').trim() === row.stt);
+          if (!match) match = hsHienCo.find(hs => (hs.hoTen || '').trim().toLowerCase() === row.hoTen.toLowerCase());
+          if (match) {
+            batch.update(hsColRef.doc(match.id), { stt: row.stt, sdtPhuHuynh: row.sdtPhuHuynh, ngayBatDau: row.ngayBatDau });
+            soHsCapNhat++;
+          } else {
+            batch.set(hsColRef.doc(), { stt: row.stt, hoTen: row.hoTen, sdtPhuHuynh: row.sdtPhuHuynh, ngayBatDau: row.ngayBatDau });
+            soHsThem++;
+          }
+        });
+      }
+
+      await batch.commit();
+      event.target.value = '';
+      alert(`Xong! Tạo mới ${soLopMoi} lớp, thêm ${soHsThem} học sinh, cập nhật ${soHsCapNhat} học sinh.`);
+      await loadLop();
+    } catch (err) {
+      alert('Lỗi khi đọc file: ' + err.message);
+      event.target.value = '';
+    }
+  };
+  reader.readAsArrayBuffer(file);
 }
 
 // ============================================================
@@ -1126,11 +1207,14 @@ function importDiemTuExcel(event) {
       const khongKhop = [];
       rows.forEach(r => {
         const hoTen = String(r.HoTen || r.hoten || r['Họ tên'] || r['Họ và tên'] || '').trim();
-        if (!hoTen) return;
+        const sbd = String(r.SBD || r.sbd || r['SBD'] || r.STT || r.Stt || r['STT'] || '').trim();
+        if (!hoTen && !sbd) return;
         const diem = String(r.Diem || r.diem || r['Điểm'] || r['Điểm KT'] || '').trim();
         const nhanXet = String(r.NhanXet || r.nhanxet || r['Nhận xét'] || '').trim();
-        const match = bangDiemData.rows.find(row => (row.hs.hoTen || '').trim().toLowerCase() === hoTen.toLowerCase());
-        if (!match) { khongKhop.push(hoTen); return; }
+        // Khớp theo Họ tên trước; nếu không khớp (tên thiếu/sai) thì dò theo SBD = STT của học sinh trong hệ thống.
+        let match = hoTen ? bangDiemData.rows.find(row => (row.hs.hoTen || '').trim().toLowerCase() === hoTen.toLowerCase()) : null;
+        if (!match && sbd) match = bangDiemData.rows.find(row => String(row.hs.stt || '').trim() === sbd);
+        if (!match) { khongKhop.push(hoTen || `SBD ${sbd}`); return; }
         const payload = { capNhatLuc: Date.now() };
         if (diem) payload.diemThuCong = diem;
         if (nhanXet) payload.nhanXet = nhanXet;
