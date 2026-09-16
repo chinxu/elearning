@@ -62,9 +62,14 @@
           <h3>Lớp học</h3>
           <div class="row">
             <button class="btn btn-outline" onclick="xuatExcelToanBo()">⬇ Xuất Excel toàn bộ</button>
+            <label class="btn btn-outline" style="margin:0; cursor:pointer;">
+              ⬆ Nhập danh sách từ Excel (nhiều lớp)
+              <input type="file" id="importNhieuLopFile" accept=".xlsx,.xls,.csv" style="display:none" onchange="importDanhSachNhieuLop(event)">
+            </label>
             <button class="btn btn-outline" onclick="openLopModal()">+ Tạo lớp</button>
           </div>
         </div>
+        <p class="muted" style="margin-top:6px;">File cần cột: <b>STT, Lớp, Họ và tên, SĐT phụ huynh, Học bắt đầu</b> — cột "Lớp" tự xếp đúng học sinh vào từng lớp, lớp chưa có sẽ tự tạo.</p>
         <div id="lopChips" class="row" style="margin-top:8px;"></div>
       </div>
 
@@ -86,7 +91,7 @@
         <div style="overflow:auto;">
           <table id="hsTable">
             <thead><tr>
-              <th style="width:36px;">STT</th><th>Họ tên</th><th>SĐT phụ huynh</th><th>Lớp học trên trường</th><th>Tài khoản</th><th></th>
+              <th style="width:50px;">STT</th><th>Họ tên</th><th>SĐT phụ huynh</th><th style="width:110px;">Học bắt đầu</th><th>Tài khoản</th><th></th>
             </tr></thead>
             <tbody id="hsTbody"></tbody>
           </table>
