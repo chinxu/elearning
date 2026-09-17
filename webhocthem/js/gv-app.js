@@ -147,7 +147,51 @@ function renderLopChips() {
     <button class="btn ${l.id === currentLopId ? 'btn-primary' : 'btn-outline'}" onclick="selectLop('${l.id}')">
       ${escapeHtml(l.ten)}
     </button>`).join('') +
+    `<button class="btn btn-outline" style="margin-left:8px;" onclick="moGopLopModal()">🔀 Gộp lớp hiện tại vào lớp khác</button>` +
     `<button class="btn btn-danger" style="margin-left:8px;" onclick="deleteLop()">Xóa lớp hiện tại</button>`;
+}
+
+// Gộp toàn bộ học sinh (tài khoản, lịch sử điểm hàng tháng) của lớp đang xem vào 1 lớp khác,
+// rồi xóa lớp đang xem — dùng để dọn các lớp bị trùng/tạo nhầm.
+function moGopLopModal() {
+  if (!currentLopId) { alert('Hãy chọn lớp trước.'); return; }
+  const lopHienTai = lopList.find(l => l.id === currentLopId);
+  const dsLopKhac = lopList.filter(l => l.id !== currentLopId);
+  if (!dsLopKhac.length) { alert('Chưa có lớp nào khác để gộp vào.'); return; }
+  showModal(`
+    <h3>Gộp lớp "${escapeHtml(lopHienTai.ten)}" vào lớp khác</h3>
+    <p class="muted">Toàn bộ học sinh của lớp này (kèm tài khoản đăng nhập, lịch sử điểm hàng tháng) sẽ được chuyển sang lớp bạn chọn bên dưới. Sau khi gộp xong, lớp "${escapeHtml(lopHienTai.ten)}" sẽ bị xóa. Không thể hoàn tác.</p>
+    <div class="field"><label>Gộp vào lớp</label>
+      <select id="mGopLopDich">${dsLopKhac.map(l => `<option value="${l.id}">${escapeHtml(l.ten)}</option>`).join('')}</select>
+    </div>
+    <div class="row" style="justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
+      <button class="btn btn-danger" onclick="gopLop()">Gộp ngay</button>
+    </div>`);
+}
+async function gopLop() {
+  const lopNguonId = currentLopId;
+  const lopDichId = document.getElementById('mGopLopDich').value;
+  if (!confirm('Gộp lớp này vào lớp đã chọn? Không thể hoàn tác.')) return;
+  const colNguon = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopNguonId).collection('hocSinh');
+  const colDich = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopDichId).collection('hocSinh');
+  const hsSnap = await colNguon.get();
+  const batch = db.batch();
+  for (const d of hsSnap.docs) {
+    const data = d.data();
+    const refMoi = colDich.doc();
+    batch.set(refMoi, data);
+    const diemSnap = await colNguon.doc(d.id).collection('diemThang').get();
+    diemSnap.docs.forEach(dd => batch.set(refMoi.collection('diemThang').doc(dd.id), dd.data()));
+    batch.delete(d.ref);
+    if (data.uid) batch.set(db.collection('taiKhoanHocSinh').doc(data.uid), { namHocId: currentNamHocId, lopId: lopDichId, hsId: refMoi.id });
+  }
+  batch.delete(db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopNguonId));
+  await batch.commit();
+  closeModal();
+  currentLopId = lopDichId;
+  await loadLop();
+  alert(`Đã gộp xong ${hsSnap.docs.length} học sinh.`);
 }
 function selectLop(id) { currentLopId = id; renderLopChips(); loadHocSinh(); }
 
@@ -210,13 +254,11 @@ async function loadHocSinh() {
 function renderHsTableGrid() {
   const tbody = document.getElementById('hsTbody');
   document.getElementById('hsEmpty').style.display = (hsList.length === 0 && !dangChinhSuaHs) ? 'block' : 'none';
-  const lopHienTai = lopList.find(l => l.id === currentLopId);
-  const tenLopHienTai = lopHienTai ? lopHienTai.ten : '';
   tbody.innerHTML = hsList.map((hs) => `
     <tr data-id="${hs.id}">
       <td style="width:28px;">${dangChinhSuaHs ? '' : `<input type="checkbox" class="hs-select" value="${hs.id}" onchange="capNhatNutXoaDaChonHs()">`}</td>
       <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="stt" style="width:50px;">${escapeHtml(hs.stt || '')}</td>
-      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="lop" style="width:90px;">${escapeHtml(tenLopHienTai)}</td>
+      <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="lop" style="width:90px;">${escapeHtml(hs.lop || '')}</td>
       <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="hoTen">${escapeHtml(hs.hoTen || '')}</td>
       <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="sdtPhuHuynh">${escapeHtml(hs.sdtPhuHuynh || '')}</td>
       <td class="editable-cell" contenteditable="${dangChinhSuaHs}" data-field="ngayBatDau" style="width:110px;">${escapeHtml(hs.ngayBatDau || '')}</td>
@@ -298,13 +340,11 @@ function moKhoaChinhSua() {
 
 function themDongMoi() {
   const tbody = document.getElementById('hsTbody');
-  const lopHienTai = lopList.find(l => l.id === currentLopId);
-  const tenLopHienTai = lopHienTai ? lopHienTai.ten : '';
   const tr = document.createElement('tr');
   tr.innerHTML = `
     <td style="width:28px;"></td>
     <td class="editable-cell" contenteditable="true" data-field="stt" style="width:50px;"></td>
-    <td class="editable-cell" contenteditable="true" data-field="lop" style="width:90px;">${escapeHtml(tenLopHienTai)}</td>
+    <td class="editable-cell" contenteditable="true" data-field="lop" style="width:90px;"></td>
     <td class="editable-cell" contenteditable="true" data-field="hoTen"></td>
     <td class="editable-cell" contenteditable="true" data-field="sdtPhuHuynh"></td>
     <td class="editable-cell" contenteditable="true" data-field="ngayBatDau" style="width:110px;"></td>
@@ -349,82 +389,33 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Lưu bảng học sinh. Nếu ô "Lớp" của một dòng bị đổi sang tên khác với lớp đang xem,
-// học sinh đó được CHUYỂN sang lớp đích (tự tạo lớp nếu chưa có), mang theo tài khoản
-// đăng nhập (maHS/uid, cập nhật lại "bản đồ" taiKhoanHocSinh) và lịch sử điểm hàng tháng
-// (diemThang) sang vị trí mới, rồi xóa bản ghi ở lớp cũ.
+// Lưu bảng học sinh. Cột "Lớp" chỉ là 1 ghi chú tự do của riêng học sinh đó (vd để quản lý
+// buổi học/nhóm) — KHÔNG dùng để chuyển học sinh sang lớp (tab) khác, không tạo lớp mới.
+// Muốn chuyển hẳn một lớp sang lớp khác, dùng nút "Gộp lớp" ở trên.
 async function khoaVaLuu() {
   if (!confirm('Lưu các thay đổi và khóa bảng lại?')) return;
   const trs = [...document.querySelectorAll('#hsTbody tr')];
-  const lopHienTai = lopList.find(l => l.id === currentLopId);
-  const tenLopHienTai = lopHienTai ? lopHienTai.ten : '';
-  const colRefHienTai = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId).collection('hocSinh');
-
-  const daCoTheoKey = new Map(lopList.map(l => [boChuan(l.ten), l]));
-  const lopMoiTao = new Map();
+  const colRef = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId).collection('hocSinh');
   const batch = db.batch();
-  let coChuyenLop = false;
-
-  function timHoacTaoLop(tenLopGoc) {
-    const key = boChuan(tenLopGoc);
-    if (daCoTheoKey.has(key)) return daCoTheoKey.get(key);
-    if (lopMoiTao.has(key)) return lopMoiTao.get(key);
-    const ref = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc();
-    batch.set(ref, { ten: tenLopGoc });
-    const obj = { id: ref.id, ten: tenLopGoc };
-    lopMoiTao.set(key, obj);
-    return obj;
-  }
-
-  for (const tr of trs) {
+  trs.forEach(tr => {
     const id = tr.dataset.id || null;
     const stt = tr.querySelector('[data-field="stt"]').textContent.trim();
-    const lopChoNhap = tr.querySelector('[data-field="lop"]').textContent.trim();
+    const lop = tr.querySelector('[data-field="lop"]').textContent.trim();
     const hoTen = tr.querySelector('[data-field="hoTen"]').textContent.trim();
     const sdtPhuHuynh = tr.querySelector('[data-field="sdtPhuHuynh"]').textContent.trim();
     const ngayBatDau = tr.querySelector('[data-field="ngayBatDau"]').textContent.trim();
     const rong = !stt && !hoTen && !sdtPhuHuynh && !ngayBatDau;
-
-    if (rong) { if (id) batch.delete(colRefHienTai.doc(id)); continue; }
-
-    const tenLopDich = lopChoNhap || tenLopHienTai;
-    const laLopKhac = boChuan(tenLopDich) !== boChuan(tenLopHienTai);
-
-    if (!laLopKhac) {
-      if (id) batch.update(colRefHienTai.doc(id), { stt, hoTen, sdtPhuHuynh, ngayBatDau });
-      else batch.set(colRefHienTai.doc(), { stt, hoTen, sdtPhuHuynh, ngayBatDau });
-      continue;
-    }
-
-    // Chuyển sang lớp khác (hoặc dòng mới nhập thẳng vào lớp khác lớp đang xem)
-    coChuyenLop = true;
-    const lopDich = timHoacTaoLop(tenLopDich);
-    const hsGoc = id ? (hsList.find(h => h.id === id) || {}) : {};
-    const duLieuMoi = { stt, hoTen, sdtPhuHuynh, ngayBatDau };
-    if (hsGoc.maHS) duLieuMoi.maHS = hsGoc.maHS;
-    if (hsGoc.uid) duLieuMoi.uid = hsGoc.uid;
-    const refMoi = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopDich.id).collection('hocSinh').doc();
-    batch.set(refMoi, duLieuMoi);
-
     if (id) {
-      // Mang theo lịch sử điểm hàng tháng sang vị trí mới trước khi xóa bản ghi cũ
-      const diemSnap = await colRefHienTai.doc(id).collection('diemThang').get();
-      diemSnap.docs.forEach(d => {
-        batch.set(refMoi.collection('diemThang').doc(d.id), d.data());
-        batch.delete(d.ref);
-      });
-      batch.delete(colRefHienTai.doc(id));
+      if (rong) batch.delete(colRef.doc(id));
+      else batch.update(colRef.doc(id), { stt, lop, hoTen, sdtPhuHuynh, ngayBatDau });
+    } else if (!rong) {
+      batch.set(colRef.doc(), { stt, lop, hoTen, sdtPhuHuynh, ngayBatDau });
     }
-    if (hsGoc.uid) {
-      batch.set(db.collection('taiKhoanHocSinh').doc(hsGoc.uid), { namHocId: currentNamHocId, lopId: lopDich.id, hsId: refMoi.id });
-    }
-  }
-
+  });
   await batch.commit();
   dangChinhSuaHs = false;
   capNhatGiaoDienKhoa();
-  if (coChuyenLop) { alert('Đã lưu. Một số học sinh đã được chuyển sang lớp khác.'); await loadLop(); }
-  else await loadHocSinh();
+  await loadHocSinh();
 }
 
 async function deleteHs(id) {
