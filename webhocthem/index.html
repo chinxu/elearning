@@ -85,13 +85,16 @@
             <button class="btn btn-amber" id="btnMoKhoaHs" onclick="moKhoaChinhSua()">✏️ Nhập</button>
             <button class="btn btn-primary" id="btnKhoaHs" style="display:none" onclick="khoaVaLuu()">🔒 Khóa &amp; Lưu</button>
             <button class="btn btn-outline" onclick="moTaoHangLoatModal()">👥 Tạo TK hàng loạt</button>
+            <button class="btn btn-danger" id="btnXoaDaChonHs" onclick="xoaDaChonHs()" disabled>🗑 Xóa đã chọn (0)</button>
           </div>
         </div>
         <p class="muted" id="hsHint">Bấm "Nhập" để mở khóa chỉnh sửa — khi đó bạn có thể copy dữ liệu từ Excel rồi dán (Ctrl+V) trực tiếp vào bảng.</p>
+        <p class="muted" style="margin-top:-4px;">Sửa ô <b>Lớp</b> của một học sinh thành tên lớp khác rồi "Khóa &amp; Lưu" để chuyển học sinh đó sang lớp đó (lớp chưa có sẽ tự tạo).</p>
+        <p class="muted" style="margin-top:-4px;">Tick chọn nhiều học sinh ở cột đầu rồi bấm "🗑 Xóa đã chọn" để xóa hàng loạt.</p>
         <div style="overflow:auto;">
           <table id="hsTable">
             <thead><tr>
-              <th style="width:50px;">STT</th><th>Họ tên</th><th>SĐT phụ huynh</th><th style="width:110px;">Học bắt đầu</th><th>Tài khoản</th><th></th>
+              <th id="hsChonTatCaTh" style="width:28px;"><input type="checkbox" id="hsChonTatCa" onchange="toggleChonTatCaHs(this)" title="Chọn tất cả"></th><th style="width:50px;">STT</th><th style="width:90px;">Lớp</th><th>Họ tên</th><th>SĐT phụ huynh</th><th style="width:110px;">Học bắt đầu</th><th>Tài khoản</th><th></th>
             </tr></thead>
             <tbody id="hsTbody"></tbody>
           </table>
