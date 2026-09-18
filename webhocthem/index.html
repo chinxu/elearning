@@ -34,7 +34,6 @@
   <div class="sidebar">
     <div class="brand">Quản lý học tập<small>Học thêm</small></div>
     <button class="nav-item active" data-tab="tab-hs" onclick="switchTab('tab-hs')">1 · Học sinh &amp; Lớp</button>
-    <button class="nav-item" data-tab="tab-cauhoi" onclick="switchTab('tab-cauhoi')">3 · Ngân hàng câu hỏi</button>
     <button class="nav-item" data-tab="tab-dekt" onclick="switchTab('tab-dekt')">2 · Đề kiểm tra</button>
     <button class="nav-item" data-tab="tab-hoctap" onclick="switchTab('tab-hoctap')">Học tập từng em</button>
     <div class="sidebar-foot">
@@ -106,36 +105,6 @@
       </div>
     </div>
 
-    <!-- ===== TAB 3: NGÂN HÀNG CÂU HỎI ===== -->
-    <div class="tab-panel" id="tab-cauhoi">
-      <div class="card">
-        <h3>Bài học (KHTN 6/7/8/9 — Kết nối tri thức)</h3>
-        <p class="muted">Chọn khối, chọn bài — câu hỏi nhập ở khung bên dưới sẽ tự vào đúng thư viện của bài đó.</p>
-        <div id="baiHocPickerEl"></div>
-      </div>
-
-      <div class="card" id="baiCauHoiPanel" style="display:none;">
-        <h3>Câu hỏi — <span id="baiDangChonTen"></span></h3>
-        <div class="row" style="align-items:flex-start; gap:28px; flex-wrap:wrap;">
-          <div style="flex:1; min-width:260px;">
-            <div style="font-weight:600; margin-bottom:6px;">Nhập từ Excel / CSV</div>
-            <p class="muted" style="font-size:.8rem; margin-bottom:8px;">Cột: <b>NoiDung, A, B, C, D, DapAnDung</b> (DapAnDung ghi A/B/C/D).</p>
-            <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="importCauHoi(event)">
-            <div id="importResult" class="muted" style="margin-top:6px;"></div>
-          </div>
-          <div style="flex:1; min-width:200px;">
-            <div style="font-weight:600; margin-bottom:6px;">Nhập thủ công</div>
-            <button class="btn btn-primary" onclick="openCauHoiModal()">+ Thêm câu hỏi</button>
-          </div>
-        </div>
-        <table style="margin-top:18px;">
-          <thead><tr><th>Câu hỏi</th><th>Đáp án đúng</th><th>Nguồn</th><th></th></tr></thead>
-          <tbody id="baiCauHoiTbody"></tbody>
-        </table>
-        <div class="empty" id="baiCauHoiEmpty" style="display:none;">Bài này chưa có câu hỏi nào.</div>
-      </div>
-    </div>
-
     <!-- ===== TAB 2: ĐỀ KIỂM TRA ===== -->
     <div class="tab-panel" id="tab-dekt">
       <div class="card">
@@ -152,31 +121,44 @@
 
       <div class="card">
         <h3>Bảng điểm hàng tháng &amp; báo cáo cho phụ huynh</h3>
+        <p class="muted">Mỗi tháng của mỗi lớp có thể có nhiều bài kiểm tra riêng (vd "lần 1", "lần 2") — mỗi bài có điểm + nhận xét riêng cho từng em.</p>
         <div class="row">
           <div class="field" style="min-width:180px;">
             <label>Lớp</label>
-            <select id="bdLopSelect"></select>
+            <select id="bdLopSelect" onchange="xemDsBaiKiemTraThang()"></select>
           </div>
           <div class="field" style="min-width:160px;">
             <label>Tháng</label>
-            <input type="month" id="bdThangSelect">
+            <input type="month" id="bdThangSelect" onchange="xemDsBaiKiemTraThang()">
           </div>
-          <button class="btn btn-primary" onclick="xemBangDiem()">Xem bảng điểm</button>
-          <button class="btn btn-outline" onclick="xuatBaoCaoDiem()">⬇ Xuất báo cáo Excel</button>
-          <label class="btn btn-outline" style="margin:0; cursor:pointer;">
-            ⬆ Nhập điểm từ Excel
-            <input type="file" id="bdImportFile" accept=".xlsx,.xls,.csv" style="display:none" onchange="importDiemTuExcel(event)">
-          </label>
+          <button class="btn btn-primary" onclick="moTaoBaiKiemTraThangModal()">+ Thêm bài kiểm tra</button>
         </div>
-        <p class="muted" id="bdHint" style="margin-top:8px;">Bấm "Nhập" để gõ tay 2 cột cuối, hoặc "⬆ Nhập điểm từ Excel" để tự điền theo file (cột: Họ tên, Điểm, Nhận xét).</p>
-        <div class="row" style="margin-bottom:6px;">
-          <button class="btn btn-amber" id="btnMoKhoaBd" onclick="moKhoaBd()" style="display:none;">✏️ Nhập</button>
-          <button class="btn btn-primary" id="btnKhoaBd" onclick="khoaVaLuuBd()" style="display:none;">🔒 Khóa &amp; Lưu</button>
+        <div id="bdDsBaiKiemTra" style="margin-top:10px;"><p class="muted">Chọn lớp và tháng.</p></div>
+
+        <div id="bdBangDiemWrap" style="display:none; margin-top:16px; border-top:1px solid var(--rule); padding-top:14px;">
+          <div class="row between">
+            <h4 id="bdBaiTenHienTai" style="margin:0;"></h4>
+            <div class="row">
+              <button class="btn btn-outline" onclick="xuatBaoCaoDiem()">⬇ Xuất báo cáo Excel</button>
+              <label class="btn btn-outline" style="margin:0; cursor:pointer;">
+                ⬆ Nhập điểm từ Excel
+                <input type="file" id="bdImportFile" accept=".xlsx,.xls,.csv" style="display:none" onchange="importDiemTuExcel(event)">
+              </label>
+              <button class="btn btn-outline" onclick="dongBangDiemThang()">✕ Đóng</button>
+            </div>
+          </div>
+          <p class="muted" id="bdHint" style="margin-top:8px;">Bấm "Nhập" để gõ tay, hoặc "⬆ Nhập điểm từ Excel" để tự điền theo file (cột: Họ tên, Điểm, Nhận xét).</p>
+          <div class="row" style="margin-bottom:6px;">
+            <button class="btn btn-amber" id="btnMoKhoaBd" onclick="moKhoaBd()">✏️ Nhập</button>
+            <button class="btn btn-primary" id="btnKhoaBd" style="display:none;" onclick="khoaVaLuuBd()">🔒 Khóa &amp; Lưu</button>
+          </div>
+          <div style="overflow:auto;">
+            <table id="bdTable">
+              <thead><tr><th>Họ tên</th><th style="min-width:110px;">Điểm</th><th style="min-width:220px;">Nhận xét</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
-        <div style="overflow:auto; margin-top:4px;">
-          <table id="bdTable"><thead></thead><tbody></tbody></table>
-        </div>
-        <div class="empty" id="bdEmpty">Chọn lớp và tháng rồi bấm "Xem bảng điểm".</div>
       </div>
     </div>
 
@@ -208,12 +190,12 @@
       </div>
 
       <div class="card" id="htDiemThangCard" style="display:none;">
-        <h3>Điểm &amp; nhận xét theo tháng</h3>
+        <h3>Điểm &amp; nhận xét các bài kiểm tra hàng tháng</h3>
         <table>
-          <thead><tr><th>Tháng</th><th>Điểm KT (nhập tay)</th><th>Nhận xét</th></tr></thead>
+          <thead><tr><th>Tháng</th><th>Bài kiểm tra</th><th>Điểm</th><th>Nhận xét</th></tr></thead>
           <tbody id="htDiemThangTbody"></tbody>
         </table>
-        <div class="empty" id="htDiemThangEmpty" style="display:none;">Chưa có điểm/nhận xét tháng nào cho em này.</div>
+        <div class="empty" id="htDiemThangEmpty" style="display:none;">Chưa có bài kiểm tra nào được nhập điểm cho em này.</div>
       </div>
 
       <div class="card" id="htLichSuDeCard" style="display:none;">
