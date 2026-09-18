@@ -4,6 +4,13 @@ let currentDe = null;   // đề đang làm {id, ...}
 let currentCauHoi = [];
 let dapAnDaChon = {};   // {cauHoiId: index}
 let timerInterval = null;
+let dangOnTap = false;  // true = đang làm lại để ôn tập, không tính vào kết quả chính thức
+
+// Số câu của 1 đề — đề mới lưu câu hỏi trực tiếp ở "cauHoi", đề cũ (tạo từ ngân hàng
+// câu hỏi trước đây) lưu id ở "cauHoiIds" — đọc cả 2 kiểu để không mất dữ liệu cũ.
+function soCauCuaDe(de) {
+  return (de.cauHoi || de.cauHoiIds || []).length;
+}
 
 // ============================================================
 // AUTH
@@ -87,20 +94,27 @@ async function loadDanhSachDe() {
     el.innerHTML = '<div class="card empty">Hiện chưa có bài kiểm tra nào để làm.</div>';
     return;
   }
-  el.innerHTML = items.map(({ de, daLam, dangMo }) => `
+  el.innerHTML = items.map(({ de, daLam, dangMo }) => {
+    const tongCau = soCauCuaDe(de);
+    return `
     <div class="card row between">
       <div>
         <h3 style="margin-bottom:2px;">${escapeHtml(de.tieuDe)}</h3>
-        <p class="muted">${de.thoiLuongPhut} phút · ${de.cauHoiIds.length} câu</p>
+        <p class="muted">${de.thoiLuongPhut} phút · ${tongCau} câu</p>
       </div>
-      ${daLam && daLam.daNop
-        ? `<span class="badge badge-closed">Đã nộp — ${daLam.diem}/${de.cauHoiIds.length} điểm</span>`
-        : dangMo
-          ? `<button class="btn btn-primary" onclick="batDauLam('${de.id}')">Vào làm bài</button>`
-          : `<span class="badge badge-closed">Đã đóng</span>`}
-    </div>`).join('');
+      <div class="row">
+        ${daLam && daLam.daNop
+          ? `<span class="badge badge-closed">Đã nộp — ${daLam.diem}/${tongCau} điểm</span>
+             <button class="btn btn-outline" onclick="batDauLam('${de.id}', true)">🔁 Làm lại để ôn tập</button>`
+          : dangMo
+            ? `<button class="btn btn-primary" onclick="batDauLam('${de.id}')">Vào làm bài</button>`
+            : `<span class="badge badge-closed">Đã đóng</span>`}
+      </div>
+    </div>`;
+  }).join('');
 }
 function veDanhSach() {
+  dangOnTap = false;
   document.getElementById('resultScreen').style.display = 'none';
   document.getElementById('listScreen').style.display = 'flex';
   loadDanhSachDe();
@@ -109,28 +123,44 @@ function veDanhSach() {
 // ============================================================
 // LÀM BÀI
 // ============================================================
-async function batDauLam(deId) {
+// onTap = true: làm lại để ôn tập — không tính điểm chính thức, không ghi đè bài đã nộp,
+// không đếm giờ, có thể làm lại nhiều lần tùy ý.
+async function batDauLam(deId, onTap) {
   const doc = await db.collection('deKiemTra').doc(deId).get();
   currentDe = { id: doc.id, ...doc.data() };
+  dangOnTap = !!onTap;
 
-  const baiLamRef = db.collection('deKiemTra').doc(deId).collection('baiLam').doc(auth.currentUser.uid);
-  const baiLamSnap = await baiLamRef.get();
-  if (!baiLamSnap.exists) {
-    await baiLamRef.set({ hoTenHS: hsDoc.hoTen, batDau: Date.now(), daNop: false, dapAn: {} });
-    dapAnDaChon = {};
+  if (!dangOnTap) {
+    const baiLamRef = db.collection('deKiemTra').doc(deId).collection('baiLam').doc(auth.currentUser.uid);
+    const baiLamSnap = await baiLamRef.get();
+    if (!baiLamSnap.exists) {
+      await baiLamRef.set({ hoTenHS: hsDoc.hoTen, batDau: Date.now(), daNop: false, dapAn: {} });
+      dapAnDaChon = {};
+    } else {
+      if (baiLamSnap.data().daNop) { alert('Bạn đã nộp bài này rồi. Bấm "Làm lại để ôn tập" nếu muốn luyện tập thêm.'); return; }
+      dapAnDaChon = baiLamSnap.data().dapAn || {};
+    }
   } else {
-    if (baiLamSnap.data().daNop) { alert('Bạn đã nộp bài này rồi.'); return; }
-    dapAnDaChon = baiLamSnap.data().dapAn || {};
+    dapAnDaChon = {}; // ôn tập luôn bắt đầu lại từ đầu
   }
 
-  const cauSnap = await db.getAll(...currentDe.cauHoiIds.map(id => db.collection('cauHoi').doc(id)));
-  currentCauHoi = cauSnap.map(d => ({ id: d.id, ...d.data() }));
+  // Đề mới: câu hỏi lưu trực tiếp ở "cauHoi". Đề cũ (tạo từ ngân hàng câu hỏi trước
+  // đây): vẫn đọc được qua "cauHoiIds" để không mất dữ liệu cũ.
+  if (Array.isArray(currentDe.cauHoi) && currentDe.cauHoi.length) {
+    currentCauHoi = currentDe.cauHoi.map((c, i) => ({ id: String(i), ...c }));
+  } else if (Array.isArray(currentDe.cauHoiIds) && currentDe.cauHoiIds.length) {
+    const cauSnap = await db.getAll(...currentDe.cauHoiIds.map(id => db.collection('cauHoi').doc(id)));
+    currentCauHoi = cauSnap.map(d => ({ id: d.id, ...d.data() }));
+  } else {
+    currentCauHoi = [];
+  }
 
   document.getElementById('listScreen').style.display = 'none';
   document.getElementById('examScreen').style.display = 'block';
-  document.getElementById('examTitle').textContent = currentDe.tieuDe;
+  document.getElementById('examTitle').textContent = currentDe.tieuDe + (dangOnTap ? ' (ôn tập)' : '');
+  document.getElementById('examTimer').style.display = dangOnTap ? 'none' : '';
   renderCauHoi();
-  batDauDemGio();
+  if (dangOnTap) clearInterval(timerInterval); else batDauDemGio();
 }
 
 function renderCauHoi() {
@@ -150,6 +180,7 @@ function renderCauHoi() {
 function chonDapAn(cauHoiId, idx) {
   dapAnDaChon[cauHoiId] = idx;
   renderCauHoi();
+  if (dangOnTap) return; // ôn tập không lưu lại đáp án, không ảnh hưởng bài đã nộp
   db.collection('deKiemTra').doc(currentDe.id).collection('baiLam').doc(auth.currentUser.uid)
     .update({ dapAn: dapAnDaChon }).catch(() => {});
 }
@@ -179,12 +210,15 @@ async function nopBai(tuDong) {
   clearInterval(timerInterval);
   let dung = 0;
   currentCauHoi.forEach(c => { if (dapAnDaChon[c.id] === c.dapAnDung) dung++; });
-  await db.collection('deKiemTra').doc(currentDe.id).collection('baiLam').doc(auth.currentUser.uid).update({
-    dapAn: dapAnDaChon, daNop: true, diem: dung, nopLuc: Date.now(), tuDongNop: !!tuDong
-  });
+  if (!dangOnTap) {
+    await db.collection('deKiemTra').doc(currentDe.id).collection('baiLam').doc(auth.currentUser.uid).update({
+      dapAn: dapAnDaChon, daNop: true, diem: dung, nopLuc: Date.now(), tuDongNop: !!tuDong
+    });
+  }
   document.getElementById('examScreen').style.display = 'none';
   document.getElementById('resultScreen').style.display = 'flex';
-  document.getElementById('resultDiem').textContent = `${dung}/${currentCauHoi.length} điểm`;
+  document.getElementById('resultDiem').textContent = `${dung}/${currentCauHoi.length} điểm`
+    + (dangOnTap ? ' (ôn tập — không tính vào kết quả chính thức)' : '');
 }
 
 function escapeHtml(s) {
