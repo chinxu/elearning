@@ -6,8 +6,6 @@ let currentLopId = null;
 let namHocList = [];
 let lopList = [];
 let hsList = [];
-let cauHoiList = [];
-let baiHocList = [];
 let deList = [];
 
 // ============================================================
@@ -63,8 +61,6 @@ function dichLoi(err) {
 async function initApp() {
   try {
     await loadNamHoc();
-    await loadBaiHoc();
-    await loadCauHoi();
     await loadDe();
   } catch (err) {
     console.error('Lỗi khi tải dữ liệu:', err);
@@ -710,360 +706,6 @@ function importDanhSachNhieuLop(event) {
 }
 
 // ============================================================
-// DANH SÁCH BÀI MẪU — SGK Khoa học tự nhiên, bộ Kết nối tri thức
-// (tham khảo mục lục chính thức; nếu có bài lệch so với sách của bạn,
-// cứ xóa/sửa/thêm trực tiếp trong phần "Bài học" bên dưới)
-// ============================================================
-const DANH_SACH_BAI_MAU = {
-  6: [
-    'Giới thiệu về Khoa học tự nhiên','An toàn trong phòng thực hành','Sử dụng kính lúp',
-    'Sử dụng kính hiển vi quang học','Đo chiều dài','Đo khối lượng','Đo thời gian','Đo nhiệt độ',
-    'Sự đa dạng của chất','Các thể của chất và sự chuyển thể','Oxygen. Không khí',
-    'Một số vật liệu','Một số nguyên liệu','Một số nhiên liệu','Một số lương thực, thực phẩm',
-    'Hỗn hợp các chất','Tách chất khỏi hỗn hợp',
-    'Tế bào - Đơn vị cơ bản của sự sống','Cấu tạo và chức năng các thành phần của tế bào',
-    'Sự lớn lên và sinh sản của tế bào','Thực hành: Quan sát và phân biệt một số loại tế bào',
-    'Cơ thể sinh vật','Tổ chức cơ thể đơn bào và cơ thể đa bào',
-    'Thực hành: Quan sát và mô tả cơ thể đơn bào, cơ thể đa bào',
-    'Hệ thống phân loại sinh vật','Khóa lưỡng phân','Vi khuẩn',
-    'Thực hành: Làm sữa chua và quan sát vi khuẩn','Virus','Nguyên sinh vật',
-    'Thực hành: Quan sát nguyên sinh vật','Nấm','Thực hành: Quan sát các loại nấm',
-    'Thực vật','Thực hành: Quan sát và phân biệt một số nhóm thực vật','Động vật',
-    'Thực hành: Quan sát và nhận biết một số nhóm động vật ngoài thiên nhiên',
-    'Đa dạng sinh học','Tìm hiểu sinh vật ngoài thiên nhiên',
-    'Lực là gì?','Biểu diễn lực','Biến dạng của lò xo','Trọng lượng, lực hấp dẫn',
-    'Lực ma sát','Lực cản của nước',
-    'Năng lượng và sự truyền năng lượng','Một số dạng năng lượng','Sự chuyển hoá năng lượng',
-    'Năng lượng hao phí','Năng lượng tái tạo','Tiết kiệm năng lượng',
-    'Chuyển động nhìn thấy của Mặt Trời. Thiên thể','Mặt Trăng','Hệ Mặt Trời','Ngân Hà'
-  ],
-  7: [
-    'Phương pháp và kĩ năng học tập môn Khoa học tự nhiên','Nguyên tử','Nguyên tố hóa học',
-    'Sơ lược về bảng tuần hoàn các nguyên tố hóa học','Phân tử - Đơn chất - Hợp chất',
-    'Giới thiệu về liên kết hóa học','Hóa trị và công thức hóa học',
-    'Tốc độ chuyển động','Đo tốc độ','Đồ thị quãng đường - thời gian',
-    'Thảo luận về ảnh hưởng của tốc độ trong an toàn giao thông',
-    'Sóng âm','Độ to và độ cao của âm','Phản xạ âm, chống ô nhiễm tiếng ồn',
-    'Năng lượng ánh sáng. Tia sáng, vùng tối','Sự phản xạ ánh sáng','Ảnh của vật qua gương phẳng',
-    'Nam châm','Từ trường','Chế tạo nam châm điện đơn giản',
-    'Khái quát về trao đổi chất và chuyển hóa năng lượng','Quang hợp ở thực vật',
-    'Một số yếu tố ảnh hưởng đến quang hợp','Thực hành: Chứng minh quang hợp ở cây xanh',
-    'Hô hấp tế bào','Một số yếu tố ảnh hưởng hô hấp tế bào','Thực hành: Hô hấp tế bào ở thực vật',
-    'Trao đổi khí ở sinh vật','Vai trò của nước và các chất dinh dưỡng đối với cơ thể sinh vật',
-    'Trao đổi nước và chất dinh dưỡng ở thực vật','Trao đổi nước và chất dinh dưỡng ở động vật',
-    'Thực hành: Thân vận chuyển nước và lá thoát hơi nước',
-    'Cảm ứng ở sinh vật và tập tính ở động vật','Vận dụng hiện tượng cảm ứng ở sinh vật vào thực tiễn',
-    'Thực hành: Cảm ứng ở sinh vật','Khái quát về sinh trưởng và phát triển ở sinh vật',
-    'Ứng dụng sinh trưởng và phát triển ở sinh vật vào thực tiễn',
-    'Thực hành: Quan sát, mô tả sự sinh trưởng và phát triển ở một số loài sinh vật',
-    'Sinh sản vô tính ở sinh vật','Sinh sản hữu tính ở sinh vật',
-    'Một số yếu tố ảnh hưởng và điều hòa, điều khiển sinh sản ở sinh vật',
-    'Cơ thể sinh vật là một thể thống nhất'
-  ],
-  8: [
-    'Mở đầu (dụng cụ, hoá chất và an toàn thí nghiệm)','Phản ứng hóa học','Mol và tỉ khối chất khí',
-    'Dung dịch và nồng độ','Định luật bảo toàn khối lượng và phương trình hóa học',
-    'Tính theo phương trình hóa học','Tốc độ phản ứng và chất xúc tác',
-    'Acid','Base - thang pH','Oxide','Muối','Phân bón hóa học',
-    'Khối lượng riêng','Thực hành xác định khối lượng riêng','Áp suất trên một bề mặt',
-    'Áp suất chất lỏng. Áp suất khí quyển','Lực đẩy Archimedes',
-    'Tác dụng làm quay của lực. Moment lực','Đòn bẩy và ứng dụng',
-    'Hiện tượng nhiễm điện do cọ xát','Dòng điện, nguồn điện','Mạch điện đơn giản',
-    'Tác dụng của dòng điện','Cường độ dòng điện và hiệu điện thế',
-    'Thực hành đo cường độ dòng điện và hiệu điện thế',
-    'Năng lượng nhiệt và nhiệt năng','Thực hành đo năng lượng nhiệt bằng Joulemeter',
-    'Sự truyền nhiệt','Sự nở vì nhiệt',
-    'Khái quát về cơ thể người','Hệ vận động ở người','Dinh dưỡng và tiêu hóa ở người',
-    'Máu và hệ tuần hoàn của cơ thể người','Hệ hô hấp ở người','Hệ bài tiết ở người',
-    'Điều hòa môi trường trong của cơ thể người','Hệ thần kinh và các giác quan ở người',
-    'Hệ nội tiết ở người','Da và điều hòa thân nhiệt ở người','Sinh sản ở người',
-    'Môi trường và các nhân tố sinh thái','Quần thể sinh vật','Quần xã sinh vật',
-    'Hệ sinh thái','Sinh quyển','Cân bằng tự nhiên','Bảo vệ môi trường'
-  ],
-  9: [
-    'Mở đầu (nhận biết một số dụng cụ và hoá chất. Thuyết trình một vấn đề khoa học)',
-    'Động năng. Thế năng','Cơ năng','Công và công suất',
-    'Khúc xạ ánh sáng','Phản xạ toàn phần','Lăng kính','Thấu kính',
-    'Thực hành đo tiêu cự của thấu kính hội tụ','Kính lúp. Bài tập thấu kính',
-    'Điện trở. Định luật Ohm','Đoạn mạch nối tiếp, song song',
-    'Năng lượng của dòng điện và công suất điện',
-    'Cảm ứng điện từ. Nguyên tắc tạo ra dòng điện xoay chiều','Tác dụng của dòng điện xoay chiều',
-    'Vòng năng lượng trên Trái Đất. Năng lượng hóa thạch','Một số dạng năng lượng tái tạo',
-    'Tính chất chung của kim loại','Dãy hoạt động hóa học','Tách kim loại và việc sử dụng hợp kim',
-    'Sự khác nhau cơ bản giữa phi kim và kim loại',
-    'Giới thiệu về hợp chất hữu cơ','Alkane','Alkene','Nguồn nhiên liệu',
-    'Ethylic alcohol','Acetic acid',
-    'Lipid','Carbohydrate glucose và saccharose','Tinh bột và cellulose','Protein','Polymer',
-    'Sơ lược về hóa học vỏ Trái Đất và khai thác tài nguyên từ vỏ Trái Đất',
-    'Khai thác đá vôi. Công nghiệp silicate',
-    'Khai thác nhiên liệu hóa thạch. Nguồn carbon. Chu trình carbon và sự ấm lên toàn cầu',
-    'Khái quát về di truyền học','Các quy luật di truyền của Mendel','Nucleic acid và gene',
-    'Tái bản DNA và phiên mã tạo ra RNA','Dịch mã và mối quan hệ từ gene đến tính trạng',
-    'Đột biến gene','Di truyền nhiễm sắc thể','Nguyên phân và giảm phân',
-    'Nhiễm sắc thể giới tính và cơ chế xác định giới tính','Di truyền liên kết',
-    'Đột biến nhiễm sắc thể','Di truyền học với con người',
-    'Ứng dụng công nghệ di truyền vào đời sống',
-    'Khái niệm tiến hóa và các hình thức chọn lọc','Cơ chế tiến hóa',
-    'Sự phát sinh và phát triển của sự sống trên Trái Đất'
-  ]
-};
-
-// ============================================================
-// BÀI HỌC (chọn bài để làm thư viện câu hỏi riêng, khối 6/7/8/9)
-// ============================================================
-let baiDangChonId = null;
-let khoiDangXem = '6';
-
-async function loadBaiHoc() {
-  // Không dùng orderBy 2 trường (cần composite index riêng trong Firebase) —
-  // lấy toàn bộ rồi sắp xếp ở phía trình duyệt, không cần index gì cả.
-  const snap = await db.collection('baiHoc').get();
-  baiHocList = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-    .sort((a, b) => String(a.khoi).localeCompare(String(b.khoi)) || String(a.ten).localeCompare(String(b.ten)));
-  await damBaoDuBaiMau(); // tự thêm các bài SGK còn thiếu (không xóa/đụng bài đã có)
-  renderBaiHocPicker();
-}
-
-// Đảm bảo ngân hàng luôn có đủ danh sách bài mẫu SGK cho cả 4 khối — chạy mỗi lần
-// tải trang, chỉ thêm bài nào còn thiếu, không tạo trùng, không cần bấm nút nào.
-async function damBaoDuBaiMau() {
-  const batch = db.batch();
-  let canThemTong = 0;
-  [6, 7, 8, 9].forEach(khoi => {
-    const daCo = new Set(baiHocList.filter(b => String(b.khoi) === String(khoi)).map(b => b.ten));
-    (DANH_SACH_BAI_MAU[khoi] || []).forEach(ten => {
-      if (!daCo.has(ten)) {
-        const ref = db.collection('baiHoc').doc();
-        batch.set(ref, { khoi: String(khoi), ten, createdAt: Date.now() });
-        baiHocList.push({ id: ref.id, khoi: String(khoi), ten });
-        canThemTong++;
-      }
-    });
-  });
-  if (canThemTong > 0) await batch.commit();
-}
-
-function renderBaiHocPicker() {
-  const el = document.getElementById('baiHocPickerEl');
-  if (!el) return;
-  const khoiTabs = [6, 7, 8, 9].map(k => `
-    <button class="btn ${String(k) === khoiDangXem ? 'btn-primary' : 'btn-outline'}" onclick="doiKhoiXem('${k}')">Lớp ${k}</button>`).join('');
-
-  const danhSachCurr = DANH_SACH_BAI_MAU[khoiDangXem] || [];
-  const baiCuaKhoi = baiHocList
-    .filter(b => String(b.khoi) === khoiDangXem)
-    .map(b => ({ ...b, stt: danhSachCurr.indexOf(b.ten) + 1 })) // 0 = không khớp đúng tên SGK (bài tự đặt tên / trùng cũ)
-    .sort((a, b) => {
-      if (a.stt && b.stt) return a.stt - b.stt;
-      if (a.stt) return -1;
-      if (b.stt) return 1;
-      return a.ten.localeCompare(b.ten);
-    });
-
-  const baiChips = baiCuaKhoi.map(b => `
-    <span style="display:inline-flex; margin:0 4px 4px 0;">
-      <button class="btn ${b.id === baiDangChonId ? 'btn-primary' : 'btn-outline'}" style="border-radius:6px 0 0 6px;" onclick="chonBai('${b.id}')">${b.stt ? `Bài ${b.stt}. ` : ''}${escapeHtml(b.ten)}</button>
-      <button class="btn btn-outline" style="border-radius:0 6px 6px 0; border-left:none; padding:8px 10px; color:var(--red-pen); font-weight:700;" title="Xóa bài này" onclick="xoaBaiHoc('${b.id}')">✕</button>
-    </span>`).join('');
-
-  el.innerHTML = `
-    <div class="row" style="margin-bottom:10px;">${khoiTabs}</div>
-    <div style="display:flex; flex-wrap:wrap;">${baiChips || '<p class="muted">Đang tải danh sách bài...</p>'}</div>`;
-}
-function doiKhoiXem(k) { khoiDangXem = k; renderBaiHocPicker(); }
-function chonBai(id) {
-  baiDangChonId = id;
-  renderBaiHocPicker();
-  renderKhungCauHoiTheoBai();
-}
-async function xoaBaiHoc(id) {
-  if (!confirm('Xóa bài học này? Câu hỏi đã gắn vào bài này sẽ chuyển về "Chưa phân loại" (không bị xóa).')) return;
-  await db.collection('baiHoc').doc(id).delete();
-  if (baiDangChonId === id) { baiDangChonId = null; renderKhungCauHoiTheoBai(); }
-  await loadBaiHoc();
-}
-function tenBaiHoc(id) {
-  if (!id) return '<span class="muted">—</span>';
-  const b = baiHocList.find(x => x.id === id);
-  return b ? escapeHtml(`Lớp ${b.khoi} · ${b.ten}`) : '<span class="muted">—</span>';
-}
-
-function renderKhungCauHoiTheoBai() {
-  const panel = document.getElementById('baiCauHoiPanel');
-  if (!baiDangChonId) { panel.style.display = 'none'; return; }
-  panel.style.display = 'block';
-  document.getElementById('baiDangChonTen').textContent = tenBaiHoc(baiDangChonId).replace(/<[^>]+>/g, '');
-  renderCauHoiTrongBai();
-}
-function renderCauHoiTrongBai() {
-  const list = cauHoiList.filter(c => c.baiHocId === baiDangChonId);
-  const tbody = document.getElementById('baiCauHoiTbody');
-  document.getElementById('baiCauHoiEmpty').style.display = list.length ? 'none' : 'block';
-  tbody.innerHTML = list.map(c => `
-    <tr>
-      <td>${formatCT(c.noiDung)}</td>
-      <td>${['A','B','C','D'][c.dapAnDung]}</td>
-      <td>${c.nguon === 'import' ? 'Import' : 'Nhập tay'}</td>
-      <td><button class="btn btn-outline" onclick="deleteCauHoi('${c.id}')">Xóa</button></td>
-    </tr>`).join('');
-}
-
-// Danh sách <option> để LỌC theo bài (dùng ở khung Tạo đề kiểm tra)
-function optionsBaiHocFilter() {
-  return '<option value="">— Tất cả —</option><option value="_khong">— Chưa phân loại —</option>' +
-    [6, 7, 8, 9].map(khoiOptionsGroup).join('');
-}
-function khoiOptionsGroup(k) {
-  const items = baiHocList.filter(b => String(b.khoi) === String(k));
-  if (!items.length) return '';
-  return `<optgroup label="Lớp ${k}">${items.map(b => `<option value="${b.id}">${escapeHtml(b.ten)}</option>`).join('')}</optgroup>`;
-}
-
-// ============================================================
-// NGÂN HÀNG CÂU HỎI (Chức năng 3 + phần nhập tay của Chức năng 2)
-// ============================================================
-async function loadCauHoi() {
-  const snap = await db.collection('cauHoi').orderBy('createdAt', 'desc').get();
-  cauHoiList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  if (baiDangChonId) renderCauHoiTrongBai();
-}
-
-function openCauHoiModal() {
-  if (!baiDangChonId) { alert('Hãy chọn 1 bài trước.'); return; }
-  showModal(`
-    <h3>Thêm câu hỏi — ${tenBaiHoc(baiDangChonId)}</h3>
-    <div class="field"><label>Nội dung câu hỏi</label><textarea id="mCauNoiDung" rows="2"></textarea></div>
-    <div class="field"><label>Đáp án A</label><input type="text" id="mDapA"></div>
-    <div class="field"><label>Đáp án B</label><input type="text" id="mDapB"></div>
-    <div class="field"><label>Đáp án C</label><input type="text" id="mDapC"></div>
-    <div class="field"><label>Đáp án D</label><input type="text" id="mDapD"></div>
-    <div class="field"><label>Đáp án đúng</label>
-      <select id="mDapDung"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
-    </div>
-    <div class="row" style="justify-content:flex-end;">
-      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
-      <button class="btn btn-primary" onclick="saveCauHoi()">Lưu</button>
-    </div>`);
-}
-async function saveCauHoi() {
-  const noiDung = document.getElementById('mCauNoiDung').value.trim();
-  const dapAn = ['mDapA','mDapB','mDapC','mDapD'].map(id => document.getElementById(id).value.trim());
-  const dapAnDung = parseInt(document.getElementById('mDapDung').value);
-  if (!noiDung || dapAn.some(d => !d)) { alert('Điền đầy đủ nội dung và 4 đáp án.'); return; }
-  await db.collection('cauHoi').add({ noiDung, dapAn, dapAnDung, baiHocId: baiDangChonId, nguon: 'nhap', createdAt: Date.now() });
-  closeModal();
-  await loadCauHoi();
-}
-async function deleteCauHoi(id) {
-  if (!confirm('Xóa câu hỏi này khỏi ngân hàng?')) return;
-  await db.collection('cauHoi').doc(id).delete();
-  await loadCauHoi();
-}
-
-// Nhập câu hỏi từ Excel/CSV, gắn thẳng vào bài đang chọn ở khung trên.
-// Chấp nhận CẢ 2 kiểu file:
-//  (1) Có dòng tiêu đề: NoiDung, A, B, C, D, DapAnDung
-//  (2) KHÔNG có dòng tiêu đề: mỗi dòng là 1 câu hỏi, đúng thứ tự
-//      cột: câu hỏi, đáp án A, B, C, D, chữ cái đáp án đúng.
-function boDauVN(str) {
-  return String(str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/đ/g, 'd').replace(/Đ/g, 'D');
-}
-// Đọc file CSV/Excel, KHÔNG import ngay — mở cửa sổ cho GV chọn câu muốn nhập
-// (chọn tay từng câu, hoặc bấm "Chọn ngẫu nhiên" để lấy N câu bất kỳ).
-let importPreviewData = [];
-function importCauHoi(event) {
-  if (!baiDangChonId) { alert('Hãy chọn 1 bài trước khi import.'); event.target.value = ''; return; }
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const wb = XLSX.read(e.target.result, { type: 'array' });
-      const sheet = wb.Sheets[wb.SheetNames[0]];
-      // Đọc thô theo mảng dòng/cột, không dựa vào tên cột
-      let rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '', blankrows: false });
-
-      // Nếu dòng đầu là dòng tiêu đề (chứa chữ "NoiDung"/"Câu hỏi"...) thì bỏ qua dòng đó
-      const dongDau = boDauVN(rows[0] && rows[0][0]).toLowerCase().replace(/\s+/g, '');
-      if (dongDau.includes('noidung') || dongDau.includes('cauhoi') || dongDau.includes('question')) {
-        rows = rows.slice(1);
-      }
-
-      const map = { A: 0, B: 1, C: 2, D: 3 };
-      const parsed = [];
-      let boQua = 0;
-      rows.forEach(r => {
-        const noiDung = String(r[0] || '').trim();
-        const A = String(r[1] || '').trim(), B = String(r[2] || '').trim();
-        const C = String(r[3] || '').trim(), D = String(r[4] || '').trim();
-        const dungRaw = String(r[5] || '').trim().toUpperCase();
-        if (!noiDung || !A || !B || !C || !D || !(dungRaw in map)) { boQua++; return; }
-        parsed.push({ noiDung, dapAn: [A, B, C, D], dapAnDung: map[dungRaw] });
-      });
-      event.target.value = '';
-      if (!parsed.length) {
-        document.getElementById('importResult').textContent = `Không đọc được câu hỏi hợp lệ nào (${boQua} dòng bị bỏ qua do thiếu dữ liệu).`;
-        return;
-      }
-      document.getElementById('importResult').textContent = `Đọc được ${parsed.length} câu hỏi hợp lệ từ file (${boQua} dòng bị bỏ qua) — chọn câu muốn nhập ở cửa sổ vừa mở.`;
-      moPreviewImport(parsed);
-    } catch (err) {
-      document.getElementById('importResult').textContent = 'Lỗi khi đọc file: ' + err.message;
-    }
-  };
-  reader.readAsArrayBuffer(file);
-}
-
-function moPreviewImport(parsed) {
-  importPreviewData = parsed;
-  const items = parsed.map((c, idx) =>
-    `<label><input type="checkbox" class="mImportCheck" value="${idx}" checked> ${formatCT(c.noiDung)}</label>`
-  ).join('');
-  showModal(`
-    <h3>Chọn câu hỏi muốn nhập (${parsed.length} câu đọc được)</h3>
-    <p class="muted">Sẽ xếp vào: <b>${tenBaiHoc(baiDangChonId).replace(/<[^>]+>/g, '')}</b></p>
-    <div class="row" style="margin-bottom:10px;">
-      <button class="btn btn-outline" onclick="chonTatCaImport(true)">Chọn tất cả</button>
-      <button class="btn btn-outline" onclick="chonTatCaImport(false)">Bỏ chọn tất cả</button>
-      <input type="number" id="mSoCauRandom" min="1" max="${parsed.length}" value="${Math.min(10, parsed.length)}" style="width:80px;">
-      <button class="btn btn-outline" onclick="chonNgauNhienImport()">🎲 Chọn ngẫu nhiên</button>
-    </div>
-    <div class="checkbox-list">${items}</div>
-    <div class="row" style="justify-content:flex-end; margin-top:14px;">
-      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
-      <button class="btn btn-primary" onclick="xacNhanImport()">Nhập câu đã chọn</button>
-    </div>`);
-}
-function chonTatCaImport(checked) {
-  document.querySelectorAll('.mImportCheck').forEach(cb => cb.checked = checked);
-}
-function chonNgauNhienImport() {
-  const n = Math.max(1, Math.min(importPreviewData.length, parseInt(document.getElementById('mSoCauRandom').value) || 1));
-  const idxAll = importPreviewData.map((_, i) => i);
-  for (let i = idxAll.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [idxAll[i], idxAll[j]] = [idxAll[j], idxAll[i]];
-  }
-  const chon = new Set(idxAll.slice(0, n));
-  document.querySelectorAll('.mImportCheck').forEach(cb => { cb.checked = chon.has(parseInt(cb.value)); });
-}
-async function xacNhanImport() {
-  const checks = [...document.querySelectorAll('.mImportCheck:checked')].map(cb => parseInt(cb.value));
-  if (!checks.length) { alert('Chưa chọn câu nào.'); return; }
-  const batch = db.batch();
-  checks.forEach(idx => {
-    const c = importPreviewData[idx];
-    const ref = db.collection('cauHoi').doc();
-    batch.set(ref, { ...c, baiHocId: baiDangChonId, nguon: 'import', createdAt: Date.now() });
-  });
-  await batch.commit();
-  closeModal();
-  document.getElementById('importResult').textContent = `Đã nhập ${checks.length}/${importPreviewData.length} câu hỏi đã chọn vào bài này.`;
-  await loadCauHoi();
-}
-
-// ============================================================
 // ĐỀ KIỂM TRA (Chức năng 2)
 // ============================================================
 async function loadDe() {
@@ -1101,79 +743,169 @@ function renderBadgeTrangThai(t) {
   return '<span class="badge badge-pending">Chưa mở</span>';
 }
 
-let deSelectedCauHoiIds = new Set();
+// Không còn ngân hàng câu hỏi — câu hỏi được nhập trực tiếp cho từng đề (nhập tay
+// hoặc dán từ Excel/CSV) ngay trong khung tạo đề, không phân loại theo bài học nữa.
+let deDraftCauHoi = [];       // câu hỏi đang soạn cho đề sắp tạo: [{noiDung, dapAn:[A,B,C,D], dapAnDung}]
+let importPreviewDataDe = []; // câu hỏi đọc được từ file Excel/CSV, chờ chọn để thêm vào đề
+
 function openDeModal() {
-  if (!cauHoiList.length) { alert('Hãy thêm câu hỏi vào ngân hàng trước (tab Ngân hàng câu hỏi).'); return; }
-  deSelectedCauHoiIds = new Set();
+  deDraftCauHoi = [];
   const lopOptions = lopList.map(l => `<label><input type="checkbox" class="mLopCheck" value="${l.id}" data-ten="${escapeHtml(l.ten)}"> ${escapeHtml(l.ten)}</label>`).join('');
   showModal(`
     <h3>Tạo đề kiểm tra</h3>
     <div class="field"><label>Tên đề</label><input type="text" id="mDeTen"></div>
     <div class="field"><label>Thời gian làm bài (phút)</label><input type="number" id="mDeThoiLuong" value="15" min="1"></div>
     <div class="field"><label>Áp dụng cho lớp</label><div class="checkbox-list">${lopOptions || '<p class="muted">Chưa có lớp nào.</p>'}</div></div>
+
     <div class="field">
-      <label>Lọc câu hỏi theo bài</label>
-      <div class="row">
-        <select id="deCauHoiFilter" onchange="renderDeCauHoiList()" style="flex:1; min-width:160px;">${optionsBaiHocFilter()}</select>
-        <input type="number" id="deSoCauRandom" min="1" value="5" style="width:70px;">
-        <button class="btn btn-outline" onclick="deChonNgauNhien()">🎲 Bốc ngẫu nhiên</button>
+      <label>Nhập câu hỏi từ Excel/CSV (tùy chọn)</label>
+      <p class="muted" style="font-size:.8rem; margin-bottom:6px;">Cột: <b>NoiDung, A, B, C, D, DapAnDung</b> (DapAnDung ghi A/B/C/D).</p>
+      <input type="file" id="mDeImportFile" accept=".xlsx,.xls,.csv" onchange="importCauHoiVaoDe(event)">
+      <div id="mDeImportPreviewArea" style="margin-top:8px;"></div>
+    </div>
+
+    <div class="field">
+      <label>Thêm câu hỏi thủ công</label>
+      <textarea id="mDeCauNoiDung" placeholder="Nội dung câu hỏi" rows="2" style="width:100%; margin-bottom:6px;"></textarea>
+      <div class="row" style="flex-wrap:wrap;">
+        <input type="text" id="mDeDapA" placeholder="Đáp án A" style="flex:1; min-width:100px;">
+        <input type="text" id="mDeDapB" placeholder="Đáp án B" style="flex:1; min-width:100px;">
+        <input type="text" id="mDeDapC" placeholder="Đáp án C" style="flex:1; min-width:100px;">
+        <input type="text" id="mDeDapD" placeholder="Đáp án D" style="flex:1; min-width:100px;">
+      </div>
+      <div class="row" style="margin-top:6px;">
+        <label class="muted" style="margin:0;">Đáp án đúng</label>
+        <select id="mDeDapDung" style="width:70px;"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+        <button class="btn btn-outline" onclick="themCauHoiVaoDe()">+ Thêm vào đề</button>
       </div>
     </div>
+
     <div class="field">
-      <label>Chọn câu hỏi (<span id="deSoCauDaChon">0</span> câu đã chọn / ${cauHoiList.length} câu trong ngân hàng)</label>
-      <div class="checkbox-list" id="deCauHoiListEl"></div>
+      <label>Câu hỏi trong đề (<span id="mDeSoCau">0</span> câu)</label>
+      <div class="checkbox-list" id="mDeCauHoiListEl"></div>
     </div>
+
     <div class="row" style="justify-content:flex-end;">
       <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
       <button class="btn btn-primary" onclick="saveDe()">Tạo đề</button>
     </div>`);
-  renderDeCauHoiList();
+  renderDeDraftCauHoiList();
 }
-function layDsCauHoiTheoBoLoc() {
-  const filterVal = document.getElementById('deCauHoiFilter').value;
-  if (filterVal === '_khong') return cauHoiList.filter(c => !c.baiHocId);
-  if (filterVal) return cauHoiList.filter(c => c.baiHocId === filterVal);
-  return cauHoiList;
+
+function renderDeDraftCauHoiList() {
+  document.getElementById('mDeSoCau').textContent = deDraftCauHoi.length;
+  document.getElementById('mDeCauHoiListEl').innerHTML = deDraftCauHoi.length
+    ? deDraftCauHoi.map((c, i) => `
+      <div class="row between" style="padding:4px 0;">
+        <div>${i + 1}. ${formatCT(c.noiDung)} <span class="muted">(Đáp án đúng: ${['A','B','C','D'][c.dapAnDung]})</span></div>
+        <button class="btn btn-outline" onclick="xoaCauHoiKhoiDe(${i})">✕</button>
+      </div>`).join('')
+    : '<p class="muted">Chưa có câu hỏi nào.</p>';
 }
-function renderDeCauHoiList() {
-  const list = layDsCauHoiTheoBoLoc();
-  document.getElementById('deCauHoiListEl').innerHTML = list.length ? list.map(c => `
-    <label><input type="checkbox" class="mCauCheck" value="${c.id}" ${deSelectedCauHoiIds.has(c.id) ? 'checked' : ''} onchange="toggleDeCauHoi('${c.id}', this.checked)"> ${formatCT(c.noiDung)}</label>`).join('')
-    : '<p class="muted">Không có câu hỏi nào khớp bộ lọc này.</p>';
-  document.getElementById('deSoCauDaChon').textContent = deSelectedCauHoiIds.size;
+function xoaCauHoiKhoiDe(idx) {
+  deDraftCauHoi.splice(idx, 1);
+  renderDeDraftCauHoiList();
 }
-function toggleDeCauHoi(id, checked) {
-  if (checked) deSelectedCauHoiIds.add(id); else deSelectedCauHoiIds.delete(id);
-  document.getElementById('deSoCauDaChon').textContent = deSelectedCauHoiIds.size;
+function themCauHoiVaoDe() {
+  const noiDung = document.getElementById('mDeCauNoiDung').value.trim();
+  const dapAn = ['mDeDapA', 'mDeDapB', 'mDeDapC', 'mDeDapD'].map(id => document.getElementById(id).value.trim());
+  const dapAnDung = parseInt(document.getElementById('mDeDapDung').value);
+  if (!noiDung || dapAn.some(d => !d)) { alert('Điền đầy đủ nội dung và 4 đáp án.'); return; }
+  deDraftCauHoi.push({ noiDung, dapAn, dapAnDung });
+  ['mDeCauNoiDung', 'mDeDapA', 'mDeDapB', 'mDeDapC', 'mDeDapD'].forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('mDeDapDung').value = '0';
+  renderDeDraftCauHoiList();
 }
-// Bốc ngẫu nhiên N câu trong đúng bài đang lọc, cộng dồn vào danh sách đã chọn
-// (lọc bài khác rồi bốc tiếp vẫn giữ nguyên các câu đã chọn trước đó).
-function deChonNgauNhien() {
-  const filterVal = document.getElementById('deCauHoiFilter').value;
-  if (!filterVal) { alert('Hãy chọn 1 bài cụ thể ở bộ lọc trước khi bốc ngẫu nhiên (không áp dụng khi đang để "Tất cả").'); return; }
-  const list = layDsCauHoiTheoBoLoc();
-  if (!list.length) { alert('Bài này chưa có câu hỏi nào.'); return; }
-  const n = Math.max(1, Math.min(list.length, parseInt(document.getElementById('deSoCauRandom').value) || 1));
-  const idxAll = list.map((_, i) => i);
+
+// Đọc file CSV/Excel — chấp nhận cả có/không dòng tiêu đề — rồi hiện danh sách cho GV
+// chọn câu muốn thêm vào đề (chọn tay từng câu, hoặc "Chọn ngẫu nhiên" N câu bất kỳ).
+function importCauHoiVaoDe(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      let rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '', blankrows: false });
+      const dongDau = boDauVN(rows[0] && rows[0][0]).toLowerCase().replace(/\s+/g, '');
+      if (dongDau.includes('noidung') || dongDau.includes('cauhoi') || dongDau.includes('question')) rows = rows.slice(1);
+      const map = { A: 0, B: 1, C: 2, D: 3 };
+      const parsed = [];
+      let boQua = 0;
+      rows.forEach(r => {
+        const noiDung = String(r[0] || '').trim();
+        const A = String(r[1] || '').trim(), B = String(r[2] || '').trim();
+        const C = String(r[3] || '').trim(), D = String(r[4] || '').trim();
+        const dungRaw = String(r[5] || '').trim().toUpperCase();
+        if (!noiDung || !A || !B || !C || !D || !(dungRaw in map)) { boQua++; return; }
+        parsed.push({ noiDung, dapAn: [A, B, C, D], dapAnDung: map[dungRaw] });
+      });
+      event.target.value = '';
+      if (!parsed.length) { alert(`Không đọc được câu hỏi hợp lệ nào (${boQua} dòng bị bỏ qua do thiếu dữ liệu).`); return; }
+      moPreviewImportDe(parsed, boQua);
+    } catch (err) {
+      alert('Lỗi khi đọc file: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+function moPreviewImportDe(parsed, boQua) {
+  importPreviewDataDe = parsed;
+  const items = parsed.map((c, idx) =>
+    `<label><input type="checkbox" class="mImportDeCheck" value="${idx}" checked> ${formatCT(c.noiDung)}</label>`
+  ).join('');
+  document.getElementById('mDeImportPreviewArea').innerHTML = `
+    <p class="muted">Đọc được ${parsed.length} câu${boQua ? ` (${boQua} dòng bị bỏ qua)` : ''} — chọn câu muốn thêm vào đề:</p>
+    <div class="row" style="margin-bottom:8px;">
+      <button class="btn btn-outline" onclick="chonTatCaImportDe(true)">Chọn tất cả</button>
+      <button class="btn btn-outline" onclick="chonTatCaImportDe(false)">Bỏ chọn tất cả</button>
+      <input type="number" id="mSoCauRandomDe" min="1" max="${parsed.length}" value="${Math.min(10, parsed.length)}" style="width:80px;">
+      <button class="btn btn-outline" onclick="chonNgauNhienImportDe()">🎲 Chọn ngẫu nhiên</button>
+    </div>
+    <div class="checkbox-list">${items}</div>
+    <div class="row" style="justify-content:flex-end; margin-top:8px;">
+      <button class="btn btn-primary" onclick="themCauHoiDaChonTuFileVaoDe()">Thêm câu đã chọn vào đề</button>
+    </div>`;
+}
+function chonTatCaImportDe(checked) {
+  document.querySelectorAll('.mImportDeCheck').forEach(cb => { cb.checked = checked; });
+}
+function chonNgauNhienImportDe() {
+  const n = Math.max(1, Math.min(importPreviewDataDe.length, parseInt(document.getElementById('mSoCauRandomDe').value) || 1));
+  const idxAll = importPreviewDataDe.map((_, i) => i);
   for (let i = idxAll.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [idxAll[i], idxAll[j]] = [idxAll[j], idxAll[i]];
   }
-  idxAll.slice(0, n).forEach(i => deSelectedCauHoiIds.add(list[i].id));
-  renderDeCauHoiList();
+  const chon = new Set(idxAll.slice(0, n));
+  document.querySelectorAll('.mImportDeCheck').forEach(cb => { cb.checked = chon.has(parseInt(cb.value)); });
 }
+function themCauHoiDaChonTuFileVaoDe() {
+  const checks = [...document.querySelectorAll('.mImportDeCheck:checked')].map(cb => parseInt(cb.value));
+  if (!checks.length) { alert('Chưa chọn câu nào.'); return; }
+  checks.forEach(idx => deDraftCauHoi.push(importPreviewDataDe[idx]));
+  document.getElementById('mDeImportPreviewArea').innerHTML = '';
+  renderDeDraftCauHoiList();
+}
+
+// Đọc CSV/Excel bỏ dấu tiếng Việt để nhận diện dòng tiêu đề dù có/không dấu.
+function boDauVN(str) {
+  return String(str || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+}
+
 async function saveDe() {
   const tieuDe = document.getElementById('mDeTen').value.trim();
   const thoiLuongPhut = parseInt(document.getElementById('mDeThoiLuong').value) || 15;
   const lopChecks = [...document.querySelectorAll('.mLopCheck:checked')];
-  const cauChecks = [...deSelectedCauHoiIds];
-  if (!tieuDe || !lopChecks.length || !cauChecks.length) { alert('Điền tên đề, chọn ít nhất 1 lớp và 1 câu hỏi.'); return; }
+  if (!tieuDe || !lopChecks.length || !deDraftCauHoi.length) { alert('Điền tên đề, chọn ít nhất 1 lớp và ít nhất 1 câu hỏi.'); return; }
   await db.collection('deKiemTra').add({
     tieuDe, thoiLuongPhut,
     lopIds: lopChecks.map(c => c.value),
     lopTenList: lopChecks.map(c => c.dataset.ten),
     namHocId: currentNamHocId,
-    cauHoiIds: cauChecks,
+    cauHoi: deDraftCauHoi,
     trangThai: 'chua_mo',
     createdAt: Date.now()
   });
@@ -1193,12 +925,19 @@ async function dongDe(deId) {
   await db.collection('deKiemTra').doc(deId).update({ trangThai: 'da_dong' });
   await loadDe();
 }
+// Số câu của 1 đề — đề mới lưu câu hỏi trực tiếp ở "cauHoi", đề cũ (tạo từ ngân hàng
+// câu hỏi trước đây) lưu id ở "cauHoiIds" — đọc cả 2 kiểu để không mất dữ liệu cũ.
+function soCauCuaDe(de) {
+  return (de.cauHoi || de.cauHoiIds || []).length;
+}
+
 async function xemKetQua(deId) {
   const de = deList.find(d => d.id === deId);
   const snap = await db.collection('deKiemTra').doc(deId).collection('baiLam').get();
   const bais = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const tongCau = soCauCuaDe(de);
   const rows = bais.length
-    ? bais.map(b => `<tr><td>${escapeHtml(b.hoTenHS || b.id)}</td><td>${b.diem ?? '—'}/${de.cauHoiIds.length}</td><td>${b.daNop ? 'Đã nộp' : 'Đang làm'}</td></tr>`).join('')
+    ? bais.map(b => `<tr><td>${escapeHtml(b.hoTenHS || b.id)}</td><td>${b.diem ?? '—'}/${tongCau}</td><td>${b.daNop ? 'Đã nộp' : 'Đang làm'}</td></tr>`).join('')
     : `<tr><td colspan="3" class="muted">Chưa có học sinh nào làm bài.</td></tr>`;
   showModal(`
     <h3>Kết quả — ${escapeHtml(de.tieuDe)}</h3>
@@ -1207,9 +946,14 @@ async function xemKetQua(deId) {
 }
 
 // ============================================================
-// BẢNG ĐIỂM HÀNG THÁNG & BÁO CÁO CHO PHỤ HUYNH
+// BẢNG ĐIỂM HÀNG THÁNG & BÁO CÁO CHO PHỤ HUYNH — mỗi tháng của mỗi lớp có thể có
+// NHIỀU bài kiểm tra riêng (vd "lần 1", "lần 2"), mỗi bài có điểm + nhận xét riêng
+// cho từng học sinh (nhập tay hoặc từ Excel). Chọn Lớp + Tháng → hiện danh sách các
+// bài kiểm tra tháng đó → bấm vào 1 bài để nhập/xem điểm của riêng bài đó.
 // ============================================================
-let bangDiemData = null;
+let dsBaiKiemTraThang = [];    // các bài KT của (lớp, tháng) đang xem
+let baiKiemTraDangXem = null;  // bài KT đang mở bảng điểm: { id, ten, thang, diem: {hsId: {...}} }
+let dsHsBangDiem = [];         // học sinh của lớp đang xem (để render bảng điểm)
 let bdDangChinhSua = false;
 
 function capNhatBdLopSelect() {
@@ -1225,84 +969,117 @@ document.addEventListener('DOMContentLoaded', () => {
   if (thangInput) thangInput.value = new Date().toISOString().slice(0, 7);
 });
 
-async function xemBangDiem() {
+async function xemDsBaiKiemTraThang() {
   const lopId = document.getElementById('bdLopSelect').value;
   const thang = document.getElementById('bdThangSelect').value; // "YYYY-MM"
-  if (!lopId || !thang) { alert('Chọn lớp và tháng.'); return; }
-  const [nam, thangSo] = thang.split('-').map(Number);
-  const batDauThang = new Date(nam, thangSo - 1, 1).getTime();
-  const ketThucThang = new Date(nam, thangSo, 1).getTime();
+  dongBangDiemThang();
+  const el = document.getElementById('bdDsBaiKiemTra');
+  if (!lopId || !thang) { el.innerHTML = '<p class="muted">Chọn lớp và tháng.</p>'; dsBaiKiemTraThang = []; return; }
+  const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('baiKiemTraThang').where('thang', '==', thang).get();
+  dsBaiKiemTraThang = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+    .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+  renderDsBaiKiemTraThang();
+}
+function renderDsBaiKiemTraThang() {
+  const el = document.getElementById('bdDsBaiKiemTra');
+  if (!dsBaiKiemTraThang.length) { el.innerHTML = '<p class="muted">Tháng này chưa có bài kiểm tra nào — bấm "+ Thêm bài kiểm tra".</p>'; return; }
+  el.innerHTML = dsBaiKiemTraThang.map(b => `
+    <div class="row between" style="padding:8px 0; border-bottom:1px solid var(--rule);">
+      <div>${escapeHtml(b.ten)}</div>
+      <div class="row">
+        <button class="btn btn-outline" onclick="moBangDiemThang('${b.id}')">Xem điểm</button>
+        <button class="btn btn-danger" onclick="xoaBaiKiemTraThang('${b.id}')">Xóa</button>
+      </div>
+    </div>`).join('');
+}
 
-  const snapDe = await db.collection('deKiemTra').where('lopIds', 'array-contains', lopId).get();
-  const deTrongThang = snapDe.docs.map(d => ({ id: d.id, ...d.data() }))
-    .filter(de => de.thoiGianMo && de.thoiGianMo >= batDauThang && de.thoiGianMo < ketThucThang)
-    .sort((a, b) => a.thoiGianMo - b.thoiGianMo);
+function moTaoBaiKiemTraThangModal() {
+  const lopId = document.getElementById('bdLopSelect').value;
+  const thang = document.getElementById('bdThangSelect').value;
+  if (!lopId || !thang) { alert('Chọn lớp và tháng trước.'); return; }
+  showModal(`
+    <h3>Thêm bài kiểm tra tháng ${thang}</h3>
+    <div class="field"><label>Tên bài kiểm tra (vd: Kiểm tra tháng ${thang.split('-')[1]} - lần 1)</label><input type="text" id="mBaiKtTen"></div>
+    <div class="row" style="justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
+      <button class="btn btn-primary" onclick="taoBaiKiemTraThang()">Tạo</button>
+    </div>`);
+}
+async function taoBaiKiemTraThang() {
+  const lopId = document.getElementById('bdLopSelect').value;
+  const thang = document.getElementById('bdThangSelect').value;
+  const ten = document.getElementById('mBaiKtTen').value.trim();
+  if (!ten) return;
+  const ref = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('baiKiemTraThang').add({ ten, thang, diem: {}, createdAt: Date.now() });
+  closeModal();
+  await xemDsBaiKiemTraThang();
+  await moBangDiemThang(ref.id);
+}
+async function xoaBaiKiemTraThang(baiId) {
+  if (!confirm('Xóa bài kiểm tra này? Toàn bộ điểm/nhận xét đã nhập cho bài này sẽ mất.')) return;
+  const lopId = document.getElementById('bdLopSelect').value;
+  await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('baiKiemTraThang').doc(baiId).delete();
+  if (baiKiemTraDangXem && baiKiemTraDangXem.id === baiId) dongBangDiemThang();
+  await xemDsBaiKiemTraThang();
+}
 
+async function moBangDiemThang(baiId) {
+  const lopId = document.getElementById('bdLopSelect').value;
+  const bai = dsBaiKiemTraThang.find(b => b.id === baiId);
+  if (!bai) return;
   const snapHs = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
     .collection('hocSinh').orderBy('hoTen').get();
-  const dsHs = snapHs.docs.map(d => ({ id: d.id, ...d.data() }));
-
-  const diemTheoDe = {};
-  for (const de of deTrongThang) {
-    const snapBai = await db.collection('deKiemTra').doc(de.id).collection('baiLam').get();
-    diemTheoDe[de.id] = {};
-    snapBai.docs.forEach(b => { diemTheoDe[de.id][b.id] = b.data(); });
-  }
-
-  const rows = [];
-  for (const hs of dsHs) {
-    const diems = deTrongThang.map(de => {
-      const bai = hs.uid ? diemTheoDe[de.id][hs.uid] : null;
-      if (!bai || !bai.daNop) return null;
-      return { diem: bai.diem, tong: de.cauHoiIds.length };
-    });
-    const hopLe = diems.filter(Boolean);
-    const tbPhanTram = hopLe.length ? (hopLe.reduce((s, d) => s + d.diem / d.tong, 0) / hopLe.length * 100) : null;
-    const ntDoc = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
-      .collection('hocSinh').doc(hs.id).collection('diemThang').doc(thang).get();
-    const nt = ntDoc.exists ? ntDoc.data() : {};
-    rows.push({ hs, diems, tbPhanTram, diemThuCong: nt.diemThuCong || '', nhanXet: nt.nhanXet || '' });
-  }
-
-  bangDiemData = { lopId, lop: lopList.find(l => l.id === lopId) || { ten: lopId }, thang, deTrongThang, rows };
+  dsHsBangDiem = snapHs.docs.map(d => ({ id: d.id, ...d.data() }));
+  baiKiemTraDangXem = bai;
   bdDangChinhSua = false;
+  document.getElementById('bdBangDiemWrap').style.display = 'block';
+  document.getElementById('bdBaiTenHienTai').textContent = bai.ten;
   capNhatGiaoDienKhoaBd();
   renderBangDiem();
 }
+function dongBangDiemThang() {
+  baiKiemTraDangXem = null;
+  bdDangChinhSua = false;
+  const wrap = document.getElementById('bdBangDiemWrap');
+  if (wrap) wrap.style.display = 'none';
+}
 
 function capNhatGiaoDienKhoaBd() {
-  const co = !!bangDiemData && bangDiemData.rows.length > 0;
-  document.getElementById('btnMoKhoaBd').style.display = (co && !bdDangChinhSua) ? 'inline-block' : 'none';
-  document.getElementById('btnKhoaBd').style.display = (co && bdDangChinhSua) ? 'inline-block' : 'none';
+  document.getElementById('btnMoKhoaBd').style.display = bdDangChinhSua ? 'none' : 'inline-block';
+  document.getElementById('btnKhoaBd').style.display = bdDangChinhSua ? 'inline-block' : 'none';
 }
 function moKhoaBd() { bdDangChinhSua = true; capNhatGiaoDienKhoaBd(); renderBangDiem(); }
 async function khoaVaLuuBd() {
   const rowsEl = [...document.querySelectorAll('#bdTable tbody tr')];
-  const batch = db.batch();
+  const diemMoi = {};
   rowsEl.forEach(tr => {
     const hsId = tr.dataset.hsid;
     const diemThuCong = tr.querySelector('.bd-diem').value.trim();
     const nhanXet = tr.querySelector('.bd-nhanxet').value.trim();
-    const ref = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(bangDiemData.lopId)
-      .collection('hocSinh').doc(hsId).collection('diemThang').doc(bangDiemData.thang);
-    if (!diemThuCong && !nhanXet) batch.delete(ref);
-    else batch.set(ref, { diemThuCong, nhanXet, capNhatLuc: Date.now() });
-    const row = bangDiemData.rows.find(r => r.hs.id === hsId);
-    if (row) { row.diemThuCong = diemThuCong; row.nhanXet = nhanXet; }
+    if (diemThuCong || nhanXet) diemMoi[hsId] = { diemThuCong, nhanXet };
   });
-  await batch.commit();
+  const lopId = document.getElementById('bdLopSelect').value;
+  await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('baiKiemTraThang').doc(baiKiemTraDangXem.id).update({ diem: diemMoi });
+  baiKiemTraDangXem.diem = diemMoi;
+  const idx = dsBaiKiemTraThang.findIndex(b => b.id === baiKiemTraDangXem.id);
+  if (idx >= 0) dsBaiKiemTraThang[idx].diem = diemMoi;
   bdDangChinhSua = false;
   capNhatGiaoDienKhoaBd();
   renderBangDiem();
 }
 
-// Nhập điểm/nhận xét từ file Excel do hệ thống chấm điểm ngoài (vd AI chấm) xuất ra.
-// Khớp học sinh theo đúng Họ tên trong lớp đang xem — cần bấm "Xem bảng điểm" trước.
+// Nhập điểm/nhận xét từ file Excel do hệ thống chấm điểm ngoài (vd AI chấm) xuất ra,
+// áp dụng cho bài kiểm tra đang mở bảng điểm. Khớp theo Họ tên trước, không khớp được
+// thì dò theo SBD = STT của học sinh trong hệ thống.
 function importDiemTuExcel(event) {
   const file = event.target.files[0];
   if (!file) return;
-  if (!bangDiemData || !bangDiemData.rows.length) {
-    alert('Hãy bấm "Xem bảng điểm" cho đúng lớp và tháng trước khi import.');
+  if (!baiKiemTraDangXem) {
+    alert('Hãy bấm "Xem điểm" cho 1 bài kiểm tra trước khi import.');
     event.target.value = '';
     return;
   }
@@ -1312,7 +1089,7 @@ function importDiemTuExcel(event) {
       const wb = XLSX.read(e.target.result, { type: 'array' });
       const sheet = wb.Sheets[wb.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-      const batch = db.batch();
+      const diemMoi = { ...(baiKiemTraDangXem.diem || {}) };
       let capNhat = 0;
       const khongKhop = [];
       rows.forEach(r => {
@@ -1321,22 +1098,20 @@ function importDiemTuExcel(event) {
         if (!hoTen && !sbd) return;
         const diem = String(r.Diem || r.diem || r['Điểm'] || r['Điểm KT'] || '').trim();
         const nhanXet = String(r.NhanXet || r.nhanxet || r['Nhận xét'] || '').trim();
-        // Khớp theo Họ tên trước; nếu không khớp (tên thiếu/sai) thì dò theo SBD = STT của học sinh trong hệ thống.
-        let match = hoTen ? bangDiemData.rows.find(row => (row.hs.hoTen || '').trim().toLowerCase() === hoTen.toLowerCase()) : null;
-        if (!match && sbd) match = bangDiemData.rows.find(row => String(row.hs.stt || '').trim() === sbd);
+        let match = hoTen ? dsHsBangDiem.find(hs => (hs.hoTen || '').trim().toLowerCase() === hoTen.toLowerCase()) : null;
+        if (!match && sbd) match = dsHsBangDiem.find(hs => String(hs.stt || '').trim() === sbd);
         if (!match) { khongKhop.push(hoTen || `SBD ${sbd}`); return; }
-        const payload = { capNhatLuc: Date.now() };
-        if (diem) payload.diemThuCong = diem;
-        if (nhanXet) payload.nhanXet = nhanXet;
-        if (Object.keys(payload).length === 1) return; // file có tên nhưng không có điểm/nhận xét
-        const ref = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(bangDiemData.lopId)
-          .collection('hocSinh').doc(match.hs.id).collection('diemThang').doc(bangDiemData.thang);
-        batch.set(ref, payload, { merge: true });
-        if (diem) match.diemThuCong = diem;
-        if (nhanXet) match.nhanXet = nhanXet;
+        if (!diem && !nhanXet) return;
+        const cu = diemMoi[match.id] || {};
+        diemMoi[match.id] = { diemThuCong: diem || cu.diemThuCong || '', nhanXet: nhanXet || cu.nhanXet || '' };
         capNhat++;
       });
-      await batch.commit();
+      const lopId = document.getElementById('bdLopSelect').value;
+      await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+        .collection('baiKiemTraThang').doc(baiKiemTraDangXem.id).update({ diem: diemMoi });
+      baiKiemTraDangXem.diem = diemMoi;
+      const idx = dsBaiKiemTraThang.findIndex(b => b.id === baiKiemTraDangXem.id);
+      if (idx >= 0) dsBaiKiemTraThang[idx].diem = diemMoi;
       renderBangDiem();
       event.target.value = '';
       alert(`Đã cập nhật điểm/nhận xét cho ${capNhat} học sinh.` +
@@ -1350,51 +1125,33 @@ function importDiemTuExcel(event) {
 }
 
 function renderBangDiem() {
-  const empty = document.getElementById('bdEmpty');
-  const table = document.getElementById('bdTable');
-  if (!bangDiemData || !bangDiemData.rows.length) {
-    table.querySelector('thead').innerHTML = '';
-    table.querySelector('tbody').innerHTML = '';
-    empty.style.display = 'block';
-    empty.textContent = bangDiemData
-      ? 'Lớp này chưa có học sinh nào.'
-      : 'Chọn lớp và tháng rồi bấm "Xem bảng điểm".';
-    capNhatGiaoDienKhoaBd();
-    return;
-  }
-  empty.style.display = 'none';
-  const { deTrongThang, rows } = bangDiemData;
-  table.querySelector('thead').innerHTML =
-    `<tr><th>Họ tên</th>${deTrongThang.map(de => `<th>${escapeHtml(de.tieuDe)}</th>`).join('')}<th>Trung bình</th><th style="min-width:110px;">Điểm KT (nhập tay)</th><th style="min-width:220px;">Nhận xét</th></tr>`;
-  table.querySelector('tbody').innerHTML = rows.map(r => `
-    <tr data-hsid="${r.hs.id}">
-      <td>${escapeHtml(r.hs.hoTen)}</td>
-      ${r.diems.map(d => `<td>${d ? `${d.diem}/${d.tong}` : '—'}</td>`).join('')}
-      <td>${r.tbPhanTram != null ? r.tbPhanTram.toFixed(0) + '%' : '—'}</td>
-      <td><input type="text" class="bd-input bd-diem" value="${escapeHtml(r.diemThuCong)}" placeholder="vd: 8.5" ${bdDangChinhSua ? '' : 'disabled'}></td>
-      <td><input type="text" class="bd-input bd-nhanxet" value="${escapeHtml(r.nhanXet)}" placeholder="Nhận xét..." ${bdDangChinhSua ? '' : 'disabled'}></td>
-    </tr>`).join('');
+  const tbody = document.querySelector('#bdTable tbody');
+  if (!baiKiemTraDangXem) { tbody.innerHTML = ''; return; }
+  const diemMap = baiKiemTraDangXem.diem || {};
+  tbody.innerHTML = dsHsBangDiem.length ? dsHsBangDiem.map(hs => {
+    const d = diemMap[hs.id] || {};
+    return `<tr data-hsid="${hs.id}">
+      <td>${escapeHtml(hs.hoTen)}</td>
+      <td><input type="text" class="bd-input bd-diem" value="${escapeHtml(d.diemThuCong || '')}" placeholder="vd: 8.5" ${bdDangChinhSua ? '' : 'disabled'}></td>
+      <td><input type="text" class="bd-input bd-nhanxet" value="${escapeHtml(d.nhanXet || '')}" placeholder="Nhận xét..." ${bdDangChinhSua ? '' : 'disabled'}></td>
+    </tr>`;
+  }).join('') : `<tr><td colspan="3" class="muted">Lớp này chưa có học sinh nào.</td></tr>`;
 }
 
 function xuatBaoCaoDiem() {
-  if (!bangDiemData || !bangDiemData.rows.length) {
-    alert('Chưa có dữ liệu — hãy bấm "Xem bảng điểm" trước.');
-    return;
-  }
-  const { lop, thang, deTrongThang, rows } = bangDiemData;
-  const header = ['Họ tên', 'SĐT phụ huynh', ...deTrongThang.map(de => de.tieuDe), 'Trung bình (%)', 'Điểm KT (nhập tay)', 'Nhận xét'];
-  const data = rows.map(r => [
-    r.hs.hoTen, r.hs.sdtPhuHuynh || '',
-    ...r.diems.map(d => d ? `${d.diem}/${d.tong}` : ''),
-    r.tbPhanTram != null ? r.tbPhanTram.toFixed(0) : '',
-    r.diemThuCong || '',
-    r.nhanXet || ''
-  ]);
+  if (!baiKiemTraDangXem) { alert('Hãy bấm "Xem điểm" cho 1 bài kiểm tra trước.'); return; }
+  const diemMap = baiKiemTraDangXem.diem || {};
+  const header = ['Họ tên', 'SĐT phụ huynh', 'Điểm', 'Nhận xét'];
+  const data = dsHsBangDiem.map(hs => {
+    const d = diemMap[hs.id] || {};
+    return [hs.hoTen, hs.sdtPhuHuynh || '', d.diemThuCong || '', d.nhanXet || ''];
+  });
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet([header, ...data]);
-  ws['!cols'] = [{ wch: 22 }, { wch: 16 }, ...deTrongThang.map(() => ({ wch: 16 })), { wch: 14 }, { wch: 14 }, { wch: 34 }];
-  XLSX.utils.book_append_sheet(wb, ws, sanitizeSheetName(`${lop.ten}_${thang}`, new Set()));
-  XLSX.writeFile(wb, `BaoCaoDiem_${lop.ten}_${thang}.xlsx`.replace(/\s+/g, '_'));
+  ws['!cols'] = [{ wch: 24 }, { wch: 16 }, { wch: 10 }, { wch: 40 }];
+  const lop = lopList.find(l => l.id === document.getElementById('bdLopSelect').value) || { ten: '' };
+  XLSX.utils.book_append_sheet(wb, ws, sanitizeSheetName(baiKiemTraDangXem.ten, new Set()));
+  XLSX.writeFile(wb, `${baiKiemTraDangXem.ten}_${lop.ten}.xlsx`.replace(/\s+/g, '_'));
 }
 
 // ============================================================
@@ -1437,11 +1194,13 @@ async function xemHocTapHocSinh() {
   if (!hsDoc.exists) return;
   const hs = { id: hsDoc.id, ...hsDoc.data() };
 
-  // Điểm & nhận xét theo tháng
-  const snapThang = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
-    .collection('hocSinh').doc(hsId).collection('diemThang').get();
-  const dsThang = snapThang.docs.map(d => ({ thang: d.id, ...d.data() }))
-    .sort((a, b) => b.thang.localeCompare(a.thang));
+  // Điểm & nhận xét của từng bài kiểm tra hàng tháng (có thể nhiều bài trong 1 tháng)
+  const snapBaiKt = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('baiKiemTraThang').get();
+  const dsBaiKt = snapBaiKt.docs.map(d => ({ id: d.id, ...d.data() }))
+    .filter(b => b.diem && b.diem[hsId])
+    .map(b => ({ thang: b.thang, ten: b.ten, createdAt: b.createdAt || 0, ...b.diem[hsId] }))
+    .sort((a, b) => b.thang.localeCompare(a.thang) || b.createdAt - a.createdAt);
 
   // Lịch sử bài kiểm tra online (chỉ tính đề đã từng mở)
   const snapDe = await db.collection('deKiemTra').where('lopIds', 'array-contains', lopId).get();
@@ -1454,12 +1213,13 @@ async function xemHocTapHocSinh() {
     lichSuDe.push({ de, bai: bai && bai.exists ? bai.data() : null });
   }
 
-  renderHtDiemThang(hs, dsThang);
+  renderHtDiemThang(dsBaiKt);
   renderHtLichSuDe(lichSuDe);
 }
 
-// Xem tổng quan học tập của CẢ LỚP cùng lúc — điểm TB các bài KT online (mọi thời gian)
-// và nhận xét của tháng gần nhất, cho từng học sinh.
+// Xem tổng quan học tập của CẢ LỚP cùng lúc — điểm TB các bài KT online (mọi thời gian,
+// dùng để "ôn tập" nên chỉ mang tính tham khảo) và nhận xét của bài kiểm tra gần nhất,
+// cho từng học sinh.
 async function xemHocTapCaLop(lopId) {
   const snapHs = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
     .collection('hocSinh').orderBy('hoTen').get();
@@ -1475,19 +1235,26 @@ async function xemHocTapCaLop(lopId) {
     snapBai.docs.forEach(b => { diemTheoDe[de.id][b.id] = b.data(); });
   }
 
+  // Tất cả bài kiểm tra hàng tháng của lớp này — đọc 1 lần, dùng chung cho mọi học sinh.
+  const snapBaiKt = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('baiKiemTraThang').get();
+  const dsBaiKtLop = snapBaiKt.docs.map(d => ({ id: d.id, ...d.data() }));
+
   const rows = [];
   for (const hs of dsHs) {
     let tongPhanTram = 0, soBaiDaLam = 0;
     deList.forEach(de => {
       const bai = hs.uid ? diemTheoDe[de.id][hs.uid] : null;
-      if (bai && bai.daNop) { tongPhanTram += bai.diem / de.cauHoiIds.length; soBaiDaLam++; }
+      const tongCau = soCauCuaDe(de);
+      if (bai && bai.daNop && tongCau) { tongPhanTram += bai.diem / tongCau; soBaiDaLam++; }
     });
     const diemTbDe = soBaiDaLam ? (tongPhanTram / soBaiDaLam * 100) : null;
 
-    const snapThang = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
-      .collection('hocSinh').doc(hs.id).collection('diemThang').get();
-    const dsThang = snapThang.docs.map(d => ({ thang: d.id, ...d.data() })).sort((a, b) => b.thang.localeCompare(a.thang));
-    const ganNhat = dsThang[0];
+    const baiKtCuaEm = dsBaiKtLop
+      .filter(b => b.diem && b.diem[hs.id])
+      .map(b => ({ thang: b.thang, ten: b.ten, createdAt: b.createdAt || 0, ...b.diem[hs.id] }))
+      .sort((a, b) => b.thang.localeCompare(a.thang) || b.createdAt - a.createdAt);
+    const ganNhat = baiKtCuaEm[0];
 
     rows.push({ hs, soBaiDaLam, tongDe: deList.length, diemTbDe, ganNhat });
   }
@@ -1504,22 +1271,22 @@ function renderHocTapCaLop(rows) {
       <td>${r.soBaiDaLam}/${r.tongDe}</td>
       <td>${r.diemTbDe != null ? r.diemTbDe.toFixed(0) + '%' : '—'}</td>
       <td>${r.ganNhat
-        ? `<b>Th.${r.ganNhat.thang.split('-')[1]}:</b> ${escapeHtml(r.ganNhat.nhanXet || '(không có nhận xét)')}${r.ganNhat.diemThuCong ? ` — điểm ${escapeHtml(r.ganNhat.diemThuCong)}` : ''}`
+        ? `<b>${escapeHtml(r.ganNhat.ten)}:</b> ${escapeHtml(r.ganNhat.nhanXet || '(không có nhận xét)')}${r.ganNhat.diemThuCong ? ` — điểm ${escapeHtml(r.ganNhat.diemThuCong)}` : ''}`
         : '—'}</td>
     </tr>`).join('');
 }
 
-
-function renderHtDiemThang(hs, dsThang) {
+function renderHtDiemThang(dsBaiKt) {
   document.getElementById('htDiemThangCard').style.display = 'block';
   const tbody = document.getElementById('htDiemThangTbody');
-  document.getElementById('htDiemThangEmpty').style.display = dsThang.length ? 'none' : 'block';
-  tbody.innerHTML = dsThang.map(t => {
-    const [nam, thangSo] = t.thang.split('-');
+  document.getElementById('htDiemThangEmpty').style.display = dsBaiKt.length ? 'none' : 'block';
+  tbody.innerHTML = dsBaiKt.map(b => {
+    const [nam, thangSo] = b.thang.split('-');
     return `<tr>
       <td>Tháng ${thangSo}/${nam}</td>
-      <td>${escapeHtml(t.diemThuCong || '—')}</td>
-      <td>${escapeHtml(t.nhanXet || '—')}</td>
+      <td>${escapeHtml(b.ten)}</td>
+      <td>${escapeHtml(b.diemThuCong || '—')}</td>
+      <td>${escapeHtml(b.nhanXet || '—')}</td>
     </tr>`;
   }).join('');
 }
@@ -1530,7 +1297,7 @@ function renderHtLichSuDe(lichSuDe) {
   document.getElementById('htLichSuDeEmpty').style.display = lichSuDe.length ? 'none' : 'block';
   tbody.innerHTML = lichSuDe.map(({ de, bai }) => {
     const ngayMo = de.thoiGianMo ? new Date(de.thoiGianMo).toLocaleDateString('vi-VN') : '—';
-    const diem = bai && bai.daNop ? `${bai.diem}/${de.cauHoiIds.length}` : '—';
+    const diem = bai && bai.daNop ? `${bai.diem}/${soCauCuaDe(de)}` : '—';
     const trangThai = bai && bai.daNop ? '<span class="badge badge-open">Đã nộp</span>' : '<span class="badge badge-closed">Chưa làm</span>';
     return `<tr>
       <td>${escapeHtml(de.tieuDe)}</td>
