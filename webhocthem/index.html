@@ -144,10 +144,11 @@
                 ⬆ Nhập điểm từ Excel
                 <input type="file" id="bdImportFile" accept=".xlsx,.xls,.csv" style="display:none" onchange="importDiemTuExcel(event)">
               </label>
+              <button class="btn btn-primary" onclick="copyLinkChiaSe()">🔗 Copy link cho phụ huynh</button>
               <button class="btn btn-outline" onclick="dongBangDiemThang()">✕ Đóng</button>
             </div>
           </div>
-          <p class="muted" id="bdHint" style="margin-top:8px;">Bấm "Nhập" để gõ tay, hoặc "⬆ Nhập điểm từ Excel" để tự điền theo file (cột: Họ tên, Điểm, Nhận xét).</p>
+          <p class="muted" id="bdHint" style="margin-top:8px;">Bấm "Nhập" để gõ tay, hoặc "⬆ Nhập điểm từ Excel" để tự điền theo file (cột: Họ tên, Điểm, Nhận xét). Sau khi "Khóa &amp; Lưu" (hoặc nhập từ Excel), bấm "🔗 Copy link cho phụ huynh" để lấy link gửi phụ huynh — phụ huynh mở link, nhập SĐT sẽ thấy điểm + nhận xét của con.</p>
           <div class="row" style="margin-bottom:6px;">
             <button class="btn btn-amber" id="btnMoKhoaBd" onclick="moKhoaBd()">✏️ Nhập</button>
             <button class="btn btn-primary" id="btnKhoaBd" style="display:none;" onclick="khoaVaLuuBd()">🔒 Khóa &amp; Lưu</button>
