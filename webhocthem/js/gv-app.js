@@ -1022,8 +1022,58 @@ async function xoaBaiKiemTraThang(baiId) {
   const lopId = document.getElementById('bdLopSelect').value;
   await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
     .collection('baiKiemTraThang').doc(baiId).delete();
+  // Xóa luôn bản sao công khai (nếu có) để không còn link chia sẻ dẫn tới bài đã xóa.
+  db.collection('congKhaiDiem').doc(baiId).delete().catch(() => {});
   if (baiKiemTraDangXem && baiKiemTraDangXem.id === baiId) dongBangDiemThang();
   await xemDsBaiKiemTraThang();
+}
+
+// Chỉ giữ lại chữ số của SĐT (dùng để so khớp, không phân biệt cách gõ có dấu cách/dấu gạch).
+function chuanHoaSdt(s) {
+  return String(s || '').replace(/[^0-9]/g, '');
+}
+
+// Ghi (đè) bản sao công khai của 1 bài kiểm tra sang collection congKhaiDiem — dùng để
+// tạo link xem điểm cho phụ huynh. Chỉ chứa họ tên + SĐT phụ huynh + điểm + nhận xét của
+// những em ĐÃ có điểm/nhận xét (bỏ qua em chưa nhập). Gọi lại mỗi khi điểm được lưu để
+// link luôn hiển thị dữ liệu mới nhất, không cần "tạo lại" link.
+async function dongBoCongKhaiDiem(baiId, diemMap) {
+  const lopId = document.getElementById('bdLopSelect').value;
+  const lop = lopList.find(l => l.id === lopId);
+  const hocSinh = Object.keys(diemMap || {})
+    .map(hsId => {
+      const hs = dsHsBangDiem.find(h => h.id === hsId);
+      if (!hs) return null;
+      const sdt = chuanHoaSdt(hs.sdtPhuHuynh);
+      if (!sdt) return null;
+      const d = diemMap[hsId] || {};
+      return { sdt, hoTen: hs.hoTen || '', diemThuCong: d.diemThuCong || '', nhanXet: d.nhanXet || '' };
+    })
+    .filter(Boolean);
+  try {
+    await db.collection('congKhaiDiem').doc(baiId).set({
+      tenBai: baiKiemTraDangXem ? baiKiemTraDangXem.ten : '',
+      tenLop: lop ? lop.ten : '',
+      thang: baiKiemTraDangXem ? baiKiemTraDangXem.thang : '',
+      hocSinh,
+      capNhatLuc: Date.now()
+    });
+  } catch (err) {
+    console.error('Không đồng bộ được link chia sẻ phụ huynh:', err);
+  }
+}
+
+function copyLinkChiaSe() {
+  if (!baiKiemTraDangXem) return;
+  const url = new URL('xemdiem.html', window.location.href);
+  url.searchParams.set('id', baiKiemTraDangXem.id);
+  const link = url.toString();
+  const xong = () => alert('Đã copy link chia sẻ:\n' + link + '\n\nGửi link này cho phụ huynh. Phụ huynh mở link, nhập SĐT của mình để xem điểm + nhận xét của con.');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(link).then(xong).catch(() => prompt('Copy link bên dưới:', link));
+  } else {
+    prompt('Copy link bên dưới:', link);
+  }
 }
 
 async function moBangDiemThang(baiId) {
@@ -1070,6 +1120,7 @@ async function khoaVaLuuBd() {
   bdDangChinhSua = false;
   capNhatGiaoDienKhoaBd();
   renderBangDiem();
+  dongBoCongKhaiDiem(baiKiemTraDangXem.id, diemMoi);
 }
 
 // Nhập điểm/nhận xét từ file Excel do hệ thống chấm điểm ngoài (vd AI chấm) xuất ra,
@@ -1113,6 +1164,7 @@ function importDiemTuExcel(event) {
       const idx = dsBaiKiemTraThang.findIndex(b => b.id === baiKiemTraDangXem.id);
       if (idx >= 0) dsBaiKiemTraThang[idx].diem = diemMoi;
       renderBangDiem();
+      dongBoCongKhaiDiem(baiKiemTraDangXem.id, diemMoi);
       event.target.value = '';
       alert(`Đã cập nhật điểm/nhận xét cho ${capNhat} học sinh.` +
         (khongKhop.length ? `\n\nKhông khớp được tên nào trong lớp (${khongKhop.length}): ${khongKhop.join(', ')}` : ''));
