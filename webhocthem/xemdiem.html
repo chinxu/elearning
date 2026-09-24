@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xem điểm kiểm tra</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="login-wrap">
+  <div class="login-card" style="width:380px; text-align:center;">
+    <h1 style="font-size:1.15rem;">Xem điểm kiểm tra</h1>
+    <p class="muted" id="baiInfo">Đang tải...</p>
+
+    <div id="timKiemBox">
+      <div class="field" style="text-align:left;">
+        <label>Số điện thoại phụ huynh</label>
+        <input type="tel" id="sdtInput" placeholder="vd: 0912345678" autocomplete="off">
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="timDiem()">Xem điểm</button>
+    </div>
+    <div class="error-msg" id="thongBao"></div>
+
+    <div id="ketQuaBox"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script>
+  // Trang công khai, không cần đăng nhập — phụ huynh nhập SĐT để xem điểm + nhận xét
+  // của con trong 1 bài kiểm tra cụ thể (dữ liệu lấy từ collection congKhaiDiem, được
+  // GV đồng bộ mỗi khi lưu điểm trong js/gv-app.js).
+  const params = new URLSearchParams(window.location.search);
+  const baiId = params.get('id');
+  let duLieuBai = null;
+
+  function chuanHoaSdt(s) {
+    return String(s || '').replace(/[^0-9]/g, '');
+  }
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  async function taiBai() {
+    const info = document.getElementById('baiInfo');
+    const box = document.getElementById('timKiemBox');
+    if (!baiId) {
+      info.textContent = 'Link không hợp lệ — thiếu mã bài kiểm tra.';
+      box.style.display = 'none';
+      return;
+    }
+    try {
+      const snap = await db.collection('congKhaiDiem').doc(baiId).get();
+      if (!snap.exists) {
+        info.textContent = 'Không tìm thấy bài kiểm tra này (có thể GV chưa lưu điểm, hoặc bài đã bị xóa).';
+        box.style.display = 'none';
+        return;
+      }
+      duLieuBai = snap.data();
+      let thangHienThi = '';
+      if (duLieuBai.thang) {
+        const [nam, thang] = duLieuBai.thang.split('-');
+        thangHienThi = `Tháng ${thang}/${nam}`;
+      }
+      info.textContent = [duLieuBai.tenBai || 'Bài kiểm tra', duLieuBai.tenLop ? 'Lớp ' + duLieuBai.tenLop : '', thangHienThi]
+        .filter(Boolean).join(' — ');
+    } catch (err) {
+      info.textContent = 'Lỗi khi tải dữ liệu: ' + err.message;
+      box.style.display = 'none';
+    }
+  }
+
+  function timDiem() {
+    const thongBao = document.getElementById('thongBao');
+    const ketQuaBox = document.getElementById('ketQuaBox');
+    thongBao.textContent = '';
+    ketQuaBox.innerHTML = '';
+    if (!duLieuBai) return;
+    const sdt = chuanHoaSdt(document.getElementById('sdtInput').value);
+    if (!sdt) { thongBao.textContent = 'Vui lòng nhập số điện thoại.'; return; }
+    const list = (duLieuBai.hocSinh || []).filter(hs => hs.sdt === sdt);
+    if (!list.length) {
+      thongBao.textContent = 'Không tìm thấy điểm ứng với số điện thoại này. Vui lòng kiểm tra lại, hoặc liên hệ giáo viên.';
+      return;
+    }
+    ketQuaBox.innerHTML = list.map(hs => `
+      <div style="border-top:1px solid var(--rule); padding-top:12px; margin-top:14px; text-align:left;">
+        <div style="font-weight:700; color:var(--ink);">${escapeHtml(hs.hoTen)}</div>
+        <div style="font-size:1.7rem; font-weight:800; color:var(--pine); margin:4px 0;">${escapeHtml(hs.diemThuCong || '—')}</div>
+        <div class="muted">${hs.nhanXet ? escapeHtml(hs.nhanXet) : 'Không có nhận xét.'}</div>
+      </div>`).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('sdtInput');
+    if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') timDiem(); });
+  });
+
+  taiBai();
+</script>
+</body>
+</html>
