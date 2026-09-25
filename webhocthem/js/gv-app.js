@@ -1058,13 +1058,23 @@ async function dongBoCongKhaiDiem(baiId, diemMap) {
       hocSinh,
       capNhatLuc: Date.now()
     });
+    return true;
   } catch (err) {
     console.error('Không đồng bộ được link chia sẻ phụ huynh:', err);
+    return false;
   }
 }
 
-function copyLinkChiaSe() {
+// Đồng bộ ngay tại thời điểm bấm nút (không chỉ dựa vào lần "Khóa & Lưu" gần nhất) —
+// nhờ vậy link chia sẻ hoạt động ngay cả với bài kiểm tra đã có điểm từ TRƯỚC khi tính
+// năng này tồn tại (chưa từng kích hoạt đồng bộ lần nào).
+async function copyLinkChiaSe() {
   if (!baiKiemTraDangXem) return;
+  const ok = await dongBoCongKhaiDiem(baiKiemTraDangXem.id, baiKiemTraDangXem.diem || {});
+  if (!ok) {
+    alert('Không tạo được link chia sẻ — có thể do chưa Publish lại firestore.rules trên Firebase Console, hoặc mất kết nối mạng. Kiểm tra rồi thử lại.');
+    return;
+  }
   const url = new URL('xemdiem.html', window.location.href);
   url.searchParams.set('id', baiKiemTraDangXem.id);
   const link = url.toString();
