@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cổng xem điểm — Phụ huynh</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="login-wrap" style="align-items:flex-start; padding:40px 16px;">
+  <div class="login-card" style="width:100%; max-width:640px; text-align:center;">
+    <h1 style="font-size:1.15rem;">Cổng xem điểm — Phụ huynh</h1>
+    <p class="muted">Nhập số điện thoại phụ huynh đã đăng ký với giáo viên để xem toàn bộ điểm kiểm tra của con (mọi tháng).</p>
+
+    <div class="field" style="text-align:left;">
+      <label>Số điện thoại phụ huynh</label>
+      <input type="tel" id="sdtInput" placeholder="vd: 0912345678" autocomplete="off">
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="timDiem()">Xem điểm</button>
+    <div class="error-msg" id="thongBao"></div>
+
+    <div id="ketQuaBox"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script>
+  // Trang công khai, không cần đăng nhập — dùng 1 link chung cho mọi phụ huynh. Phụ huynh
+  // nhập SĐT, tra thẳng văn bản bangDiemTheoSdt/{SĐT} (được GV đồng bộ trong js/gv-app.js
+  // mỗi khi lưu điểm bài kiểm tra hàng tháng) để xem TOÀN BỘ bài kiểm tra của con.
+  function chuanHoaSdt(s) {
+    return String(s || '').replace(/[^0-9]/g, '');
+  }
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  function formatThang(thang) {
+    if (!thang) return '';
+    const [nam, thg] = thang.split('-');
+    return `Tháng ${thg}/${nam}`;
+  }
+
+  async function timDiem() {
+    const thongBao = document.getElementById('thongBao');
+    const ketQuaBox = document.getElementById('ketQuaBox');
+    thongBao.textContent = '';
+    ketQuaBox.innerHTML = '';
+    const sdt = chuanHoaSdt(document.getElementById('sdtInput').value);
+    if (!sdt) { thongBao.textContent = 'Vui lòng nhập số điện thoại.'; return; }
+    try {
+      const snap = await db.collection('bangDiemTheoSdt').doc(sdt).get();
+      const hocSinh = snap.exists ? (snap.data().hocSinh || []) : [];
+      if (!hocSinh.length) {
+        thongBao.textContent = 'Không tìm thấy dữ liệu ứng với số điện thoại này. Vui lòng kiểm tra lại, hoặc liên hệ giáo viên.';
+        return;
+      }
+      ketQuaBox.innerHTML = hocSinh.map(hs => `
+        <div style="border-top:1px solid var(--rule); padding-top:14px; margin-top:16px; text-align:left;">
+          <div style="font-weight:700; color:var(--ink); font-size:1.05rem;">
+            ${escapeHtml(hs.hoTen)}
+            <span class="muted" style="font-weight:400;">— Lớp ${escapeHtml(hs.tenLop || '')}</span>
+          </div>
+          ${(hs.baiKiemTra || []).length ? `
+          <div style="overflow:auto; margin-top:8px;">
+            <table>
+              <thead><tr><th>Tháng</th><th>Bài kiểm tra</th><th style="min-width:70px;">Điểm</th><th>Nhận xét</th></tr></thead>
+              <tbody>
+                ${hs.baiKiemTra.map(b => `<tr>
+                  <td>${escapeHtml(formatThang(b.thang))}</td>
+                  <td>${escapeHtml(b.tenBai)}</td>
+                  <td>${escapeHtml(b.diemThuCong || '—')}</td>
+                  <td>${escapeHtml(b.nhanXet || '—')}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>` : `<p class="muted" style="margin-top:6px;">Chưa có điểm kiểm tra nào.</p>`}
+        </div>`).join('');
+    } catch (err) {
+      thongBao.textContent = 'Lỗi khi tải dữ liệu: ' + err.message;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('sdtInput');
+    if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') timDiem(); });
+  });
+</script>
+</body>
+</html>
