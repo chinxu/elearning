@@ -1086,6 +1086,66 @@ async function copyLinkChiaSe() {
   }
 }
 
+// ============================================================
+// CỔNG PHỤ HUYNH (xem TOÀN BỘ bài kiểm tra của con, 1 link chung) — khác với
+// congKhaiDiem (link riêng cho TỪNG bài): mỗi văn bản trong bangDiemTheoSdt gom mọi bài
+// kiểm tra hàng tháng (mọi tháng) của (các) học sinh có cùng SĐT phụ huynh, khóa văn bản
+// = SĐT đã chuẩn hóa. Đồng bộ lại toàn bộ danh sách bài của TỪNG học sinh trong lớp mỗi
+// khi có điểm được lưu, để không bị sót bài cũ khi merge.
+async function dongBoBangDiemTheoSdt(lopId, dsHs) {
+  const lop = lopList.find(l => l.id === lopId);
+  const tenLop = lop ? lop.ten : '';
+  const snapBai = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+    .collection('baiKiemTraThang').get();
+  const dsBai = snapBai.docs.map(d => ({ id: d.id, ...d.data() }));
+  for (const hs of dsHs) {
+    const sdt = chuanHoaSdt(hs.sdtPhuHuynh);
+    if (!sdt) continue;
+    const baiKiemTra = dsBai
+      .map(b => {
+        const d = (b.diem || {})[hs.id];
+        if (!d || (!d.diemThuCong && !d.nhanXet)) return null;
+        return { tenBai: b.ten, thang: b.thang, diemThuCong: d.diemThuCong || '', nhanXet: d.nhanXet || '', createdAt: b.createdAt || 0 };
+      })
+      .filter(Boolean)
+      .sort((a, b) => (a.thang || '').localeCompare(b.thang || '') || (a.createdAt || 0) - (b.createdAt || 0));
+    try {
+      const docRef = db.collection('bangDiemTheoSdt').doc(sdt);
+      const snap = await docRef.get();
+      const hienTai = snap.exists ? (snap.data().hocSinh || []) : [];
+      const khac = hienTai.filter(h => h.hsId !== hs.id);
+      const moi = [...khac, { hsId: hs.id, hoTen: hs.hoTen || '', tenLop, baiKiemTra }];
+      await docRef.set({ hocSinh: moi, capNhatLuc: Date.now() });
+    } catch (err) {
+      console.error('Không đồng bộ được cổng phụ huynh cho', hs.hoTen, err);
+    }
+  }
+}
+
+async function dongBoThuCongCongPhuHuynh() {
+  const lopId = document.getElementById('bdLopSelect').value;
+  if (!lopId) { alert('Chọn lớp trước.'); return; }
+  try {
+    const snapHs = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
+      .collection('hocSinh').get();
+    const dsHs = snapHs.docs.map(d => ({ id: d.id, ...d.data() }));
+    await dongBoBangDiemTheoSdt(lopId, dsHs);
+    alert('Đã đồng bộ xong điểm của cả lớp cho cổng phụ huynh.');
+  } catch (err) {
+    alert('Lỗi khi đồng bộ: ' + err.message);
+  }
+}
+
+function copyLinkCongPhuHuynh() {
+  const url = new URL('phuhuynh.html', window.location.href).toString();
+  const xong = () => alert('Đã copy link cổng phụ huynh:\n' + url + '\n\nGửi 1 lần cho tất cả phụ huynh (vd ghim trong group lớp) — ai cũng dùng chung 1 link này, chỉ cần nhập đúng SĐT của mình để xem điểm.');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(xong).catch(() => prompt('Copy link bên dưới:', url));
+  } else {
+    prompt('Copy link bên dưới:', url);
+  }
+}
+
 async function moBangDiemThang(baiId) {
   const lopId = document.getElementById('bdLopSelect').value;
   const bai = dsBaiKiemTraThang.find(b => b.id === baiId);
@@ -1131,6 +1191,7 @@ async function khoaVaLuuBd() {
   capNhatGiaoDienKhoaBd();
   renderBangDiem();
   dongBoCongKhaiDiem(baiKiemTraDangXem.id, diemMoi);
+  dongBoBangDiemTheoSdt(lopId, dsHsBangDiem);
 }
 
 // Nhập điểm/nhận xét từ file Excel do hệ thống chấm điểm ngoài (vd AI chấm) xuất ra,
@@ -1175,6 +1236,7 @@ function importDiemTuExcel(event) {
       if (idx >= 0) dsBaiKiemTraThang[idx].diem = diemMoi;
       renderBangDiem();
       dongBoCongKhaiDiem(baiKiemTraDangXem.id, diemMoi);
+      dongBoBangDiemTheoSdt(lopId, dsHsBangDiem);
       event.target.value = '';
       alert(`Đã cập nhật điểm/nhận xét cho ${capNhat} học sinh.` +
         (khongKhop.length ? `\n\nKhông khớp được tên nào trong lớp (${khongKhop.length}): ${khongKhop.join(', ')}` : ''));
