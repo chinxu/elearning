@@ -234,6 +234,21 @@ function boChuan(s) {
   return String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
+// Sắp xếp danh sách học sinh theo STT (số), thay vì để Firestore trả về theo tên (so
+// sánh theo mã Unicode, không đúng thứ tự chữ cái tiếng Việt) hoặc không theo thứ tự gì.
+// Học sinh chưa có STT (hoặc STT không phải số) bị đẩy xuống cuối, giữ nguyên thứ tự
+// tương đối với nhau.
+function sapXepTheoStt(list) {
+  return list
+    .map((hs, i) => ({ hs, i, stt: parseInt(hs.stt, 10) }))
+    .sort((a, b) => {
+      const aNum = isNaN(a.stt) ? Infinity : a.stt;
+      const bNum = isNaN(b.stt) ? Infinity : b.stt;
+      return aNum !== bNum ? aNum - bNum : a.i - b.i;
+    })
+    .map(x => x.hs);
+}
+
 async function loadHocSinh() {
   const empty = document.getElementById('hsEmpty');
   const lop = lopList.find(l => l.id === currentLopId);
@@ -242,8 +257,8 @@ async function loadHocSinh() {
   capNhatGiaoDienKhoa();
   if (!currentLopId) { document.getElementById('hsTbody').innerHTML = ''; empty.style.display = 'block'; return; }
   const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(currentLopId)
-    .collection('hocSinh').orderBy('hoTen').get();
-  hsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    .collection('hocSinh').get();
+  hsList = sapXepTheoStt(snap.docs.map(d => ({ id: d.id, ...d.data() })));
   renderHsTableGrid();
 }
 
@@ -600,8 +615,8 @@ async function xuatExcelToanBo() {
   const dsTheoLop = [];
   for (const lop of lopList) {
     const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lop.id)
-      .collection('hocSinh').orderBy('hoTen').get();
-    const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      .collection('hocSinh').get();
+    const list = sapXepTheoStt(snap.docs.map(d => ({ id: d.id, ...d.data() })));
     dsTheoLop.push({ lop, list });
     list.forEach(hs => tatCa.push({ ...hs, tenLop: lop.ten }));
   }
@@ -1151,8 +1166,8 @@ async function moBangDiemThang(baiId) {
   const bai = dsBaiKiemTraThang.find(b => b.id === baiId);
   if (!bai) return;
   const snapHs = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
-    .collection('hocSinh').orderBy('hoTen').get();
-  dsHsBangDiem = snapHs.docs.map(d => ({ id: d.id, ...d.data() }));
+    .collection('hocSinh').get();
+  dsHsBangDiem = sapXepTheoStt(snapHs.docs.map(d => ({ id: d.id, ...d.data() })));
   baiKiemTraDangXem = bai;
   bdDangChinhSua = false;
   document.getElementById('bdBangDiemWrap').style.display = 'block';
@@ -1294,8 +1309,9 @@ async function capNhatHtHsSelect() {
   const sel = document.getElementById('htHsSelect');
   if (!sel || !lopId || !currentNamHocId) { if (sel) sel.innerHTML = ''; return; }
   const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
-    .collection('hocSinh').orderBy('hoTen').get();
-  const hsOptions = snap.docs.map(d => `<option value="${d.id}">${escapeHtml(d.data().hoTen)}</option>`).join('');
+    .collection('hocSinh').get();
+  const dsHsSx = sapXepTheoStt(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  const hsOptions = dsHsSx.map(hs => `<option value="${hs.id}">${escapeHtml(hs.hoTen)}</option>`).join('');
   sel.innerHTML = `<option value="">— Tất cả học sinh (xem chung cả lớp) —</option>` + hsOptions;
 }
 
@@ -1346,8 +1362,8 @@ async function xemHocTapHocSinh() {
 // cho từng học sinh.
 async function xemHocTapCaLop(lopId) {
   const snapHs = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
-    .collection('hocSinh').orderBy('hoTen').get();
-  const dsHs = snapHs.docs.map(d => ({ id: d.id, ...d.data() }));
+    .collection('hocSinh').get();
+  const dsHs = sapXepTheoStt(snapHs.docs.map(d => ({ id: d.id, ...d.data() })));
 
   const snapDe = await db.collection('deKiemTra').where('lopIds', 'array-contains', lopId).get();
   const deList = snapDe.docs.map(d => ({ id: d.id, ...d.data() })).filter(de => de.thoiGianMo);
