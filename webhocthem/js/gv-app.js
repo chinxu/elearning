@@ -979,43 +979,54 @@ function capNhatBdLopSelect() {
   if (lopList.some(l => l.id === giaTriCu)) sel.value = giaTriCu;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function boLocThang() {
   const thangInput = document.getElementById('bdThangSelect');
-  if (thangInput) thangInput.value = new Date().toISOString().slice(0, 7);
-});
+  if (thangInput) thangInput.value = '';
+  xemDsBaiKiemTraThang();
+}
 
+// Mặc định hiện TẤT CẢ bài kiểm tra của lớp (mọi tháng), mới nhất ở trên. Chỉ lọc theo
+// 1 tháng cụ thể khi GV chủ động chọn ở ô "Tháng" (không bắt buộc).
 async function xemDsBaiKiemTraThang() {
   const lopId = document.getElementById('bdLopSelect').value;
-  const thang = document.getElementById('bdThangSelect').value; // "YYYY-MM"
+  const thang = document.getElementById('bdThangSelect').value; // "" = xem tất cả tháng
   dongBangDiemThang();
   const el = document.getElementById('bdDsBaiKiemTra');
-  if (!lopId || !thang) { el.innerHTML = '<p class="muted">Chọn lớp và tháng.</p>'; dsBaiKiemTraThang = []; return; }
-  const snap = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
-    .collection('baiKiemTraThang').where('thang', '==', thang).get();
+  if (!lopId) { el.innerHTML = '<p class="muted">Chọn lớp.</p>'; dsBaiKiemTraThang = []; return; }
+  let q = db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId).collection('baiKiemTraThang');
+  if (thang) q = q.where('thang', '==', thang);
+  const snap = await q.get();
   dsBaiKiemTraThang = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-    .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+    .sort((a, b) => (b.thang || '').localeCompare(a.thang || '') || (b.createdAt || 0) - (a.createdAt || 0));
   renderDsBaiKiemTraThang();
 }
 function renderDsBaiKiemTraThang() {
   const el = document.getElementById('bdDsBaiKiemTra');
-  if (!dsBaiKiemTraThang.length) { el.innerHTML = '<p class="muted">Tháng này chưa có bài kiểm tra nào — bấm "+ Thêm bài kiểm tra".</p>'; return; }
-  el.innerHTML = dsBaiKiemTraThang.map(b => `
+  if (!dsBaiKiemTraThang.length) { el.innerHTML = '<p class="muted">Chưa có bài kiểm tra nào — bấm "+ Thêm bài kiểm tra".</p>'; return; }
+  el.innerHTML = dsBaiKiemTraThang.map(b => {
+    const [nam, thg] = (b.thang || '').split('-');
+    const thangHienThi = thg ? `Tháng ${thg}/${nam}` : '';
+    return `
     <div class="row between" style="padding:8px 0; border-bottom:1px solid var(--rule);">
-      <div>${escapeHtml(b.ten)}</div>
+      <div>${escapeHtml(b.ten)}${thangHienThi ? ` <span class="muted">— ${thangHienThi}</span>` : ''}</div>
       <div class="row">
         <button class="btn btn-outline" onclick="moBangDiemThang('${b.id}')">Xem điểm</button>
         <button class="btn btn-danger" onclick="xoaBaiKiemTraThang('${b.id}')">Xóa</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function moTaoBaiKiemTraThangModal() {
   const lopId = document.getElementById('bdLopSelect').value;
-  const thang = document.getElementById('bdThangSelect').value;
-  if (!lopId || !thang) { alert('Chọn lớp và tháng trước.'); return; }
+  if (!lopId) { alert('Chọn lớp trước.'); return; }
+  // Mặc định lấy tháng đang lọc (nếu có), không thì lấy tháng hiện tại — nhưng luôn cho
+  // sửa lại trong modal, vì ô lọc ở ngoài có thể đang để trống (xem tất cả).
+  const thangMacDinh = document.getElementById('bdThangSelect').value || new Date().toISOString().slice(0, 7);
   showModal(`
-    <h3>Thêm bài kiểm tra tháng ${thang}</h3>
-    <div class="field"><label>Tên bài kiểm tra (vd: Kiểm tra tháng ${thang.split('-')[1]} - lần 1)</label><input type="text" id="mBaiKtTen"></div>
+    <h3>Thêm bài kiểm tra</h3>
+    <div class="field"><label>Tháng</label><input type="month" id="mBaiKtThang" value="${thangMacDinh}"></div>
+    <div class="field"><label>Tên bài kiểm tra (vd: Kiểm tra tháng ${thangMacDinh.split('-')[1]} - lần 1)</label><input type="text" id="mBaiKtTen"></div>
     <div class="row" style="justify-content:flex-end;">
       <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
       <button class="btn btn-primary" onclick="taoBaiKiemTraThang()">Tạo</button>
@@ -1023,8 +1034,9 @@ function moTaoBaiKiemTraThangModal() {
 }
 async function taoBaiKiemTraThang() {
   const lopId = document.getElementById('bdLopSelect').value;
-  const thang = document.getElementById('bdThangSelect').value;
+  const thang = document.getElementById('mBaiKtThang').value;
   const ten = document.getElementById('mBaiKtTen').value.trim();
+  if (!thang) { alert('Chọn tháng.'); return; }
   if (!ten) return;
   const ref = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
     .collection('baiKiemTraThang').add({ ten, thang, diem: {}, createdAt: Date.now() });
