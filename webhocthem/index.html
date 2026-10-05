@@ -121,15 +121,18 @@
 
       <div class="card">
         <h3>Bảng điểm hàng tháng &amp; báo cáo cho phụ huynh</h3>
-        <p class="muted">Mỗi tháng của mỗi lớp có thể có nhiều bài kiểm tra riêng (vd "lần 1", "lần 2") — mỗi bài có điểm + nhận xét riêng cho từng em.</p>
+        <p class="muted">Chọn lớp để xem <b>tất cả bài kiểm tra</b> (mới nhất ở trên). Có thể có nhiều bài riêng trong cùng 1 tháng (vd "lần 1", "lần 2") — mỗi bài có điểm + nhận xét riêng cho từng em. Chọn thêm "Tháng" khi cần lọc lại cho gọn.</p>
         <div class="row">
           <div class="field" style="min-width:180px;">
             <label>Lớp</label>
             <select id="bdLopSelect" onchange="xemDsBaiKiemTraThang()"></select>
           </div>
           <div class="field" style="min-width:160px;">
-            <label>Tháng</label>
-            <input type="month" id="bdThangSelect" onchange="xemDsBaiKiemTraThang()">
+            <label>Tháng (lọc, không bắt buộc)</label>
+            <div class="row" style="gap:4px; flex-wrap:nowrap;">
+              <input type="month" id="bdThangSelect" onchange="xemDsBaiKiemTraThang()">
+              <button class="btn btn-outline" type="button" onclick="boLocThang()" title="Bỏ lọc, xem lại tất cả">✕</button>
+            </div>
           </div>
           <button class="btn btn-primary" onclick="moTaoBaiKiemTraThangModal()">+ Thêm bài kiểm tra</button>
         </div>
@@ -138,7 +141,7 @@
           <button class="btn btn-outline" onclick="dongBoThuCongCongPhuHuynh()">🔄 Đồng bộ điểm lớp này cho cổng phụ huynh</button>
         </div>
         <p class="muted" style="margin-top:6px;">Cổng phụ huynh dùng <b>1 link chung</b> cho tất cả phụ huynh — mở link, nhập SĐT sẽ thấy <b>toàn bộ</b> các bài kiểm tra (mọi tháng, mọi lớp) của con mình. Điểm lưu mới sẽ tự cập nhật vào cổng; bấm "🔄 Đồng bộ" nếu là điểm đã nhập cho lớp này từ trước khi có cổng này.</p>
-        <div id="bdDsBaiKiemTra" style="margin-top:10px;"><p class="muted">Chọn lớp và tháng.</p></div>
+        <div id="bdDsBaiKiemTra" style="margin-top:10px;"><p class="muted">Chọn lớp.</p></div>
 
         <div id="bdBangDiemWrap" style="display:none; margin-top:16px; border-top:1px solid var(--rule); padding-top:14px;">
           <div class="row between">
