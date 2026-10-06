@@ -326,6 +326,7 @@ async function xoaDaChonHs() {
   }
   await batch.commit();
   await loadHocSinh();
+  donCongPhuHuynhCu(dsChon.map(h => ({ id: h.id, sdt: '' })));
   alert(`Đã xóa ${dsChon.length} học sinh.`);
 }
 
@@ -427,6 +428,8 @@ async function khoaVaLuu() {
   dangChinhSuaHs = false;
   capNhatGiaoDienKhoa();
   await loadHocSinh();
+  // SĐT phụ huynh có thể vừa đổi → cập nhật cổng phụ huynh (gỡ SĐT cũ, ghi SĐT mới)
+  dongBoBangDiemTheoSdt(currentLopId, hsList);
 }
 
 async function deleteHs(id) {
@@ -436,6 +439,7 @@ async function deleteHs(id) {
   await xoaHsVaDuLieuLienQuan(batch, hs);
   await batch.commit();
   await loadHocSinh();
+  donCongPhuHuynhCu([{ id: hs.id, sdt: '' }]);
 }
 
 // Cập nhật danh sách bằng file Excel/CSV (trong LỚP ĐANG CHỌN) — khớp học sinh theo Họ tên,
@@ -467,6 +471,7 @@ function capNhatHsTuExcel(event) {
       alert(`Đã cập nhật ${capNhat} học sinh, thêm mới ${themMoi} học sinh.`);
       event.target.value = '';
       await loadHocSinh();
+      dongBoBangDiemTheoSdt(currentLopId, hsList);
     } catch (err) {
       alert('Lỗi khi đọc file: ' + err.message);
     }
@@ -1119,12 +1124,33 @@ async function copyLinkChiaSe() {
 // kiểm tra hàng tháng (mọi tháng) của (các) học sinh có cùng SĐT phụ huynh, khóa văn bản
 // = SĐT đã chuẩn hóa. Đồng bộ lại toàn bộ danh sách bài của TỪNG học sinh trong lớp mỗi
 // khi có điểm được lưu, để không bị sót bài cũ khi merge.
+// Gỡ học sinh khỏi mọi văn bản cổng phụ huynh có khóa KHÁC SĐT hiện tại của em (dsHs =
+// [{id, sdt}], sdt rỗng = em không còn SĐT / đã bị xóa → gỡ khỏi tất cả). Dùng khi đổi
+// SĐT phụ huynh để điểm không còn hiện ở SĐT cũ. Văn bản nào hết học sinh thì xóa luôn.
+async function donCongPhuHuynhCu(dsHs) {
+  if (!dsHs.length) return;
+  const sdtHienTai = new Map(dsHs.map(h => [h.id, h.sdt]));
+  try {
+    const snap = await db.collection('bangDiemTheoSdt').get();
+    for (const d of snap.docs) {
+      const hocSinh = d.data().hocSinh || [];
+      const conLai = hocSinh.filter(h => !(sdtHienTai.has(h.hsId) && sdtHienTai.get(h.hsId) !== d.id));
+      if (conLai.length === hocSinh.length) continue;
+      if (conLai.length) await d.ref.set({ hocSinh: conLai, capNhatLuc: Date.now() });
+      else await d.ref.delete();
+    }
+  } catch (err) {
+    console.error('Không dọn được SĐT cũ trên cổng phụ huynh:', err);
+  }
+}
+
 async function dongBoBangDiemTheoSdt(lopId, dsHs) {
   const lop = lopList.find(l => l.id === lopId);
   const tenLop = lop ? lop.ten : '';
   const snapBai = await db.collection('namHoc').doc(currentNamHocId).collection('lop').doc(lopId)
     .collection('baiKiemTraThang').get();
   const dsBai = snapBai.docs.map(d => ({ id: d.id, ...d.data() }));
+  await donCongPhuHuynhCu(dsHs.map(hs => ({ id: hs.id, sdt: chuanHoaSdt(hs.sdtPhuHuynh) })));
   for (const hs of dsHs) {
     const sdt = chuanHoaSdt(hs.sdtPhuHuynh);
     if (!sdt) continue;
