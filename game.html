@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sân chơi thi đua</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --grass:#2f7d3b; --grass2:#276a32; --dirt:#c9965a; --dirt2:#b98549;
+  --ink:#23180e; --paper:#fff8ea; --gold:#f5b921; --red:#d8432f;
+  --plus:#3fae4a; --minus:#ef8a1f; --reset:#7b3fb3;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  font-family:"Baloo 2","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);
+  background:repeating-linear-gradient(90deg,var(--grass) 0 80px,var(--grass2) 80px 160px);
+  min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer;border:none;color:var(--ink)}
+.hidden{display:none!important}
+.btn{
+  background:var(--paper);color:var(--ink);font-weight:700;font-size:1rem;
+  padding:.45rem .9rem;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.3);
+}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.btn.gold{background:var(--gold)}
+.btn.red{background:var(--red);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ---------- Sảnh ---------- */
+#hub,#setup{max-width:980px;margin:0 auto;padding:24px 16px 40px}
+h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3rem);margin:.2em 0 .1em;text-align:center}
+.sub{color:#e9ffe6;text-align:center;margin:0 0 22px;font-size:1.1rem}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.game{
+  background:var(--paper);border-radius:20px;padding:18px;text-align:center;
+  box-shadow:0 6px 0 rgba(0,0,0,.3);display:flex;flex-direction:column;gap:6px;align-items:center
+}
+.game .ico{font-size:3.4rem;line-height:1}
+.game h2{margin:0;font-size:1.4rem}
+.game p{margin:0 0 8px;font-size:.98rem;color:#5b4a36;flex:1}
+.game.soon{opacity:.75}
+.tag{background:#e6dcc6;border-radius:99px;padding:.2rem .8rem;font-weight:700;font-size:.9rem}
+
+/* ---------- Cài đặt ---------- */
+.card{background:var(--paper);border-radius:20px;padding:18px;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.row label{font-weight:700;min-width:150px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{background:#e9dec7;border-radius:10px;padding:.4rem .9rem;font-weight:700;font-size:1rem}
+.seg button.on{background:var(--gold);box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{width:40px;height:40px;border-radius:50%;background:var(--gold);font-size:1.4rem;font-weight:800}
+.stepper span{font-size:1.5rem;font-weight:800;min-width:2ch;text-align:center}
+.names{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:16px}
+.names div{display:flex;align-items:center;gap:6px}
+.names i{width:18px;height:18px;border-radius:50%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.names input{flex:1;min-width:0;font:inherit;font-weight:700;color:var(--ink);padding:.35rem .6rem;border-radius:10px;border:2px solid #d9cbb0;background:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.98rem;align-items:center}
+.legend b{display:inline-grid;place-items:center;min-width:30px;height:24px;border-radius:6px;color:#fff;font-size:.85rem;margin-right:4px;padding:0 4px}
+
+/* ---------- Đường đua ---------- */
+#race{padding:10px 16px 16px;--n:6;--lane-h:clamp(40px,calc((100vh - 170px)/var(--n)),84px)}
+.top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.top h2{color:#fff;margin:0 auto 0 0;font-size:clamp(1.2rem,2.6vw,1.9rem);text-shadow:0 2px 0 rgba(0,0,0,.35)}
+.top .legend{color:#fff;font-size:.92rem;width:100%}
+#board{overflow-x:auto;border-radius:16px;background:rgba(0,0,0,.18);padding:6px}
+.lane,.nums{display:grid;grid-template-columns:clamp(128px,15vw,210px) 1fr;gap:6px;align-items:stretch}
+.lane{margin-bottom:4px;height:var(--lane-h)}
+.who{
+  position:sticky;left:0;z-index:3;display:flex;align-items:center;gap:6px;
+  background:var(--c);color:#fff;border-radius:12px;padding:0 6px 0 10px;
+  box-shadow:0 3px 0 rgba(0,0,0,.3);min-width:0
+}
+.who .nm{font-weight:800;font-size:clamp(.9rem,1.5vw,1.25rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.who .ps{font-size:.8rem;font-weight:700;opacity:.95;white-space:nowrap}
+.who .roll{
+  flex:none;width:calc(var(--lane-h) - 10px);height:calc(var(--lane-h) - 10px);max-width:58px;max-height:58px;
+  border-radius:12px;background:#fff;font-size:clamp(1.1rem,2.2vw,1.8rem);box-shadow:0 3px 0 rgba(0,0,0,.35);padding:0
+}
+.who .roll:active{transform:translateY(2px)}
+.who .roll:disabled{opacity:.5;cursor:not-allowed}
+.track{position:relative;display:grid;grid-template-columns:repeat(var(--cols),minmax(22px,1fr));gap:2px}
+.cell{
+  background:var(--dirt);border-radius:5px;display:grid;place-items:center;
+  font-weight:800;font-size:clamp(.6rem,1vw,.95rem);color:#fff
+}
+.cell:nth-child(even){background:var(--dirt2)}
+.cell.start{background:#fff;color:var(--ink)}
+.cell.plus{background:var(--plus)}
+.cell.minus{background:var(--minus)}
+.cell.reset{background:var(--reset)}
+.cell.finish{background:conic-gradient(#111 25%,#fff 0 50%,#111 0 75%,#fff 0) 0 0/14px 14px}
+.horse{
+  position:absolute;top:50%;left:0;z-index:2;pointer-events:none;
+  font-size:calc(var(--lane-h) * .72);line-height:1;
+  transform:translate(-50%,-55%) scaleX(-1);transition:left .2s linear;
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,.45));
+}
+.horse.run{animation:hop .2s infinite}
+@keyframes hop{50%{transform:translate(-50%,-75%) scaleX(-1)}}
+.nums{margin-bottom:3px}
+.nums .track{height:18px}
+.nums .track span{color:#fff;font-size:.72rem;font-weight:700;text-align:center}
+
+/* ---------- Xúc xắc + thông báo ---------- */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:20;padding:16px}
+.dicebox{text-align:center;color:#fff}
+.dicebox h3{font-size:clamp(1.6rem,5vw,3rem);margin:0 0 14px;text-shadow:0 3px 0 rgba(0,0,0,.4)}
+.dicebox p{font-size:clamp(1.2rem,3.5vw,2.2rem);margin:14px 0 0;font-weight:700;min-height:1.4em}
+.dice{
+  width:min(42vw,220px);aspect-ratio:1;margin:0 auto;background:#fff;border-radius:18%;
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:12%;gap:6%;box-shadow:0 10px 0 rgba(0,0,0,.4)
+}
+.dice.shake{animation:shake .12s infinite}
+@keyframes shake{25%{transform:rotate(-9deg) scale(1.04)}75%{transform:rotate(9deg) scale(.97)}}
+.dice i{border-radius:50%}
+.dice i.on{background:var(--red)}
+#toast{
+  position:fixed;left:50%;top:14%;transform:translateX(-50%);z-index:30;
+  background:var(--paper);border-radius:18px;padding:.6rem 1.4rem;font-weight:800;
+  font-size:clamp(1.2rem,3.4vw,2.2rem);box-shadow:0 6px 0 rgba(0,0,0,.35);text-align:center;max-width:92vw
+}
+.modal{background:var(--paper);border-radius:22px;padding:22px;max-width:520px;width:100%;box-shadow:0 8px 0 rgba(0,0,0,.4);max-height:90vh;overflow:auto}
+.modal h3{margin:0 0 10px;font-size:1.6rem;text-align:center}
+.modal p{font-size:1.1rem;text-align:center;margin:0 0 16px}
+.modal .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.rank{list-style:none;margin:0 0 16px;padding:0}
+.rank li{display:flex;align-items:center;gap:10px;padding:.4rem .7rem;border-radius:12px;font-weight:700;font-size:1.15rem}
+.rank li:nth-child(odd){background:#f0e5cd}
+.rank li i{width:16px;height:16px;border-radius:50%;flex:none}
+.rank li span:last-child{margin-left:auto;font-size:.95rem;color:#5b4a36}
+.rank .md{width:2em;text-align:center;font-size:1.3rem}
+
+/* ---------- Đánh quái vật ---------- */
+#boss{padding:10px 16px 16px}
+.arena{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:760px){.arena{grid-template-columns:minmax(0,1fr)}}
+.lair{background:radial-gradient(circle at 50% 35%,#5b3a8c,#2a1846 70%);border-radius:20px;padding:16px;text-align:center;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.3);position:relative;overflow:hidden}
+.lair .bname{font-size:clamp(1.3rem,3vw,2.2rem);font-weight:800;margin:0;text-shadow:0 2px 0 rgba(0,0,0,.4)}
+.mon{font-size:clamp(6rem,30vh,15rem);line-height:1.15;display:inline-block;filter:drop-shadow(0 10px 6px rgba(0,0,0,.5));animation:float 2.4s ease-in-out infinite}
+.mon.hit{animation:hit .45s}
+.mon.atk{animation:atk .5s}
+.mon.dead{animation:none;opacity:.75}
+.mon img{height:1.15em;width:auto;max-width:100%;display:block;margin:0 auto}
+.lair.shield{box-shadow:0 6px 0 rgba(0,0,0,.3),inset 0 0 0 6px #6fe3ff,inset 0 0 60px #6fe3ff}
+.lair.shield .mon{filter:drop-shadow(0 0 18px #6fe3ff)}
+@keyframes float{50%{transform:translateY(-10px)}}
+@keyframes hit{20%{transform:translateX(-18px) rotate(-8deg);filter:brightness(2.4)}60%{transform:translateX(14px) rotate(6deg)}}
+@keyframes atk{50%{transform:scale(1.35)}}
+.hpbar{height:30px;background:rgba(0,0,0,.45);border-radius:99px;overflow:hidden;border:3px solid #fff}
+.hpbar i{display:block;height:100%;background:var(--plus);transition:width .5s,background .5s;border-radius:99px}
+.hptxt{font-weight:800;font-size:clamp(1.1rem,2.2vw,1.6rem);margin-top:4px;font-variant-numeric:tabular-nums}
+.pop{position:absolute;left:50%;top:40%;transform:translateX(-50%);font-size:clamp(2.5rem,8vw,5rem);font-weight:800;color:var(--gold);text-shadow:0 4px 0 rgba(0,0,0,.5);animation:pop 1s forwards;pointer-events:none}
+@keyframes pop{to{top:8%;opacity:0}}
+.squad{display:grid;gap:8px}
+.squad.two{grid-template-columns:repeat(auto-fit,minmax(min(400px,100%),1fr))}
+@media(min-width:761px){.arena.many{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr)}}
+.hero{display:flex;align-items:center;gap:10px;background:var(--c);color:#fff;border-radius:14px;padding:8px 8px 8px 12px;box-shadow:0 4px 0 rgba(0,0,0,.3);min-width:0;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.hero .rk{flex:none;width:1.9em;height:1.9em;border-radius:50%;background:rgba(0,0,0,.28);display:grid;place-items:center;font-weight:800;font-size:clamp(1rem,1.7vw,1.4rem)}
+.hero .info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.hero .nm{font-weight:800;font-size:clamp(1.25rem,2.2vw,1.9rem);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero .dm{font-weight:800;font-size:clamp(1.15rem,2vw,1.7rem);line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hero .dm small{font-size:.6em;font-weight:700}
+.hero .roll{flex:none;width:clamp(48px,5vw,62px);height:clamp(48px,5vw,62px);border-radius:14px;background:#fff;font-size:clamp(1.5rem,2.6vw,2rem);box-shadow:0 3px 0 rgba(0,0,0,.35);padding:0}
+.hero .roll.bad{background:#2a1846}
+.hero .roll:active{transform:translateY(2px)}
+.awards{display:grid;gap:8px;margin-bottom:14px}
+.awards div{background:var(--gold);border-radius:12px;padding:.5rem .8rem;font-weight:800;font-size:1.15rem;text-align:center}
+.awards small{display:block;font-size:.85rem;font-weight:700;opacity:.8}
+.hero .roll:disabled{opacity:.5;cursor:not-allowed}
+
+/* ---------- Tìm kho báu ---------- */
+#treasure{padding:10px 16px 16px}
+.tarena{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:900px){.tarena{grid-template-columns:minmax(0,1fr)}}
+/* biển */
+.mapbox{position:relative;overflow:hidden;border-radius:18px;padding:clamp(26px,4.2vw,58px) clamp(22px,3.6vw,50px) 12px;box-shadow:0 6px 0 rgba(0,0,0,.3);
+  background:
+    radial-gradient(ellipse 14px 4px at 50% 50%,rgba(255,255,255,.35) 0 60%,transparent 62%) 0 0/90px 46px,
+    radial-gradient(ellipse 10px 3px at 50% 50%,rgba(255,255,255,.22) 0 60%,transparent 62%) 45px 23px/90px 46px,
+    linear-gradient(160deg,#3cc0ea,#1b84c6 60%,#176fb0);
+  animation:sea 9s linear infinite}
+@keyframes sea{to{background-position:90px 0,135px 23px,0 0}}
+@media(prefers-reduced-motion:reduce){.mapbox{animation:none}}
+/* đảo: viền bọt sóng → bãi cát → rừng */
+.island{position:relative;padding:clamp(14px,2.4vw,34px);background:radial-gradient(ellipse at 50% 45%,#7fcf63,#55ad4b 75%,#4a9c44);
+  border-radius:17% 21% 15% 23% / 24% 16% 26% 18%;
+  box-shadow:0 0 0 clamp(8px,1.2vw,16px) #f1dc9c,0 0 0 clamp(13px,1.9vw,25px) rgba(255,255,255,.55),0 0 0 clamp(20px,2.9vw,38px) rgba(255,255,255,.16)}
+.deco{position:absolute;z-index:2;pointer-events:none;line-height:1;font-size:clamp(1.6rem,4.2vw,3.6rem);filter:drop-shadow(0 3px 2px rgba(0,0,0,.35))}
+.deco.sm{font-size:clamp(1.2rem,2.8vw,2.4rem)}
+.bob{animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(3deg)}}
+@media(prefers-reduced-motion:reduce){.bob{animation:none}}
+.map{position:relative;z-index:1;display:grid;grid-template-columns:repeat(var(--tc),minmax(0,1fr));gap:clamp(4px,.6vw,8px)}
+/* ô chưa đào: ụ cát; ô đã đào: hố đất */
+.tile{position:relative;aspect-ratio:1;border-radius:32%;background:radial-gradient(circle at 35% 30%,#f7e3a6,#e3c178 70%);color:#6b4420;font-weight:800;font-size:clamp(.9rem,2.1vw,1.9rem);box-shadow:0 3px 0 #b8934e,0 5px 4px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;line-height:1;min-width:0}
+.tile:not(.open):hover{filter:brightness(1.08)}
+.tile:not(.open):active{transform:translateY(2px)}
+.tile.open{cursor:default;background:radial-gradient(circle at 50% 40%,#8a5d34,#6b4420);box-shadow:inset 0 4px 6px rgba(0,0,0,.45)}
+.tile.open .e{font-size:clamp(1.1rem,2.7vw,2.5rem)}
+.tile.open .p{font-size:clamp(.55rem,1.05vw,1rem);color:#fff;margin-top:2px}
+.tile.open.bomb{background:radial-gradient(circle at 50% 40%,#4a3030,#231515)}
+.tile.open.treasure{background:radial-gradient(circle at 50% 40%,#ffe27a,#f5b921);box-shadow:inset 0 0 0 3px #fff,0 0 14px #ffe27a}
+.tile.open.treasure .p{color:var(--ink)}
+.tile .by{position:absolute;top:6%;right:6%;width:22%;max-width:16px;aspect-ratio:1;border-radius:50%;border:2px solid #fff}
+.left{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;font-weight:800;font-size:clamp(.95rem,1.6vw,1.3rem);margin:clamp(20px,3vw,40px) auto 0;color:var(--ink);background:var(--paper);border-radius:12px;padding:.3rem .9rem;width:fit-content;max-width:100%;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+.thint{background:var(--paper);border-radius:12px;padding:.4rem .8rem;font-weight:800;font-size:clamp(1rem,1.8vw,1.4rem);text-align:center;margin-bottom:8px;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+.squad.t{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+.hero.pick{cursor:pointer;border:4px solid transparent}
+.hero.pick.on{border-color:#fff;box-shadow:0 0 0 4px var(--gold),0 4px 0 rgba(0,0,0,.3)}
+.revemo{font-size:clamp(7rem,30vh,14rem);line-height:1.15;animation:atk .5s}
+
+/* ---------- Cờ tỷ phú ---------- */
+#mono{padding:10px 16px 16px}
+.marena{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:1000px){.marena{grid-template-columns:minmax(0,1fr)}}
+.mscroll{overflow-x:auto;border-radius:18px;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.mboard{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:4px;background:#1f5f2c;padding:6px;min-width:640px;aspect-ratio:8/5.4}
+.mcell{background:var(--paper);border-radius:8px;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;text-align:center;color:var(--ink)}
+.mcell .band{flex:none;height:24%;display:grid;place-items:center;font-weight:800;font-size:clamp(.6rem,.95vw,.95rem);background:#d9cbb0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mcell.owned .band{background:var(--o);color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.45)}
+.mcell.owned{box-shadow:inset 0 0 0 3px var(--o)}
+.mcell .cn{font-weight:800;font-size:clamp(.62rem,1.05vw,1.05rem);line-height:1.05;padding:3px 2px 0}
+.mcell .ci{font-size:clamp(1rem,2vw,1.9rem);line-height:1.15;padding-top:2px}
+.mcell .tok{margin-top:auto;display:flex;flex-wrap:wrap;gap:2px;justify-content:center;padding:2px}
+.mtok{flex:none;width:clamp(15px,1.7vw,24px);aspect-ratio:1;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.5);display:grid;place-items:center;color:#fff;font-weight:800;font-size:clamp(.5rem,.8vw,.8rem);line-height:1}
+.mtok.me{outline:3px solid var(--gold);transform:scale(1.2)}
+.mcell.corner{background:#ffe9a8}
+.mcell.chance{background:#e7d9ff}
+.mcell.tax{background:#e3e3e3}
+.mcenter{grid-area:2/2/6/8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:#fff;padding:8px;min-width:0}
+.mcenter .big{font-size:clamp(1.6rem,4vw,3.4rem);font-weight:800;letter-spacing:.04em;text-shadow:0 3px 0 rgba(0,0,0,.35)}
+.mcenter .log{background:var(--paper);color:var(--ink);border-radius:14px;padding:.5rem 1rem;font-weight:800;font-size:clamp(.95rem,1.8vw,1.5rem);max-width:100%;box-shadow:0 3px 0 rgba(0,0,0,.3);text-wrap:balance}
+.squad.m{grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.squad.m .hero{padding:5px 6px 5px 10px}
+.squad.m .nm{font-size:clamp(1.1rem,1.7vw,1.5rem)}
+.squad.m .dm{font-size:clamp(1rem,1.5vw,1.3rem)}
+.squad.m .rk{border:2px solid #fff}
+</style>
+</head>
+<body>
+
+<!-- ===== SẢNH TRÒ CHƠI ===== -->
+<section id="hub">
+  <h1>🏆 Sân chơi thi đua</h1>
+  <p class="sub">Trả lời đúng bên web câu hỏi → nhóm được một lượt chơi ở đây</p>
+  <div class="games">
+    <div class="game">
+      <div class="ico">🏇</div><h2>Đua ngựa</h2>
+      <p>Thả xúc xắc, ngựa tiến lên. Coi chừng ô phạt!</p>
+      <button class="btn gold" id="goRace">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">👾</div><h2>Đánh quái vật</h2>
+      <p>Cả lớp cùng hạ quái vật. Nhóm gây nhiều sát thương nhất thắng.</p>
+      <button class="btn gold" id="goBoss">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">🗺️</div><h2>Tìm kho báu</h2>
+      <p>Bốc ô trên bản đồ: đồng, bạc, vàng, kho báu, hoặc thuốc nổ.</p>
+      <button class="btn gold" id="goTreasure">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">🎩</div><h2>Cờ tỷ phú</h2>
+      <p>Đi vòng quanh đất nước, mua đất, xây nhà, thu tiền thuê.</p>
+      <button class="btn gold" id="goMono">Chơi</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CÀI ĐẶT ĐUA NGỰA ===== -->
+<section id="setup" class="hidden">
+  <h1 id="setupTitle">🏇 Đua ngựa</h1>
+  <p class="sub">Cài đặt ván chơi</p>
+  <div class="card">
+    <div class="row"><label>Số nhóm</label>
+      <div class="stepper"><button id="nMinus">−</button><span id="nVal">6</span><button id="nPlus">+</button></div>
+    </div>
+    <div class="names" id="names"></div>
+    <div id="optRace">
+    <div class="row"><label>Độ dài đường đua</label>
+      <div class="seg" id="segLen"><button data-v="20">20 ô</button><button data-v="30" class="on">30 ô</button><button data-v="40">40 ô</button></div>
+    </div>
+    <div class="row"><label>Ô thưởng / phạt</label>
+      <div class="seg" id="segDen"><button data-v="1">Ít</button><button data-v="2" class="on">Vừa</button><button data-v="3">Nhiều</button></div>
+    </div>
+    <div class="legend" style="margin-bottom:18px">
+      <span><b style="background:var(--plus)">+1</b>tiến thêm 1 ô</span>
+      <span><b style="background:var(--minus)">−1</b>lùi 1 ô</span>
+      <span><b style="background:var(--reset)">↩</b>về vạch xuất phát</span>
+    </div>
+    </div>
+    <div id="optBoss" class="hidden">
+      <div class="row"><label>Độ dài trận</label>
+        <div class="seg" id="segTurns"><button data-v="4">4 lượt</button><button data-v="6" class="on">6 lượt</button><button data-v="8">8 lượt</button></div>
+      </div>
+      <div class="legend" style="margin-bottom:18px"><span>Số lượt đánh trung bình của mỗi nhóm; máu quái vật tự tính theo số nhóm.</span></div>
+    </div>
+    <div id="optTreasure" class="hidden">
+      <div class="row"><label>Số ô trên bản đồ</label>
+        <div class="seg" id="segSize"><button data-v="24">24 ô</button><button data-v="35" class="on">35 ô</button><button data-v="48">48 ô</button></div>
+      </div>
+      <div class="legend" style="margin-bottom:18px">
+        <span>🥉 Đồng +10</span><span>🥈 Bạc +20</span><span>🥇 Vàng +40</span><span>💰 Kho báu +100</span><span>🧨 Thuốc nổ −20</span>
+      </div>
+    </div>
+    <div id="optMono" class="hidden">
+      <div class="row"><label>Kết thúc ván</label>
+        <div class="seg" id="segTarget"><button data-v="0" class="on">Thầy tự kết thúc</button><button data-v="700">Đạt 700 tài sản</button><button data-v="800">Đạt 800 tài sản</button></div>
+      </div>
+      <div class="legend" style="margin-bottom:18px">
+        <span>Mỗi nhóm bắt đầu với 500 tiền.</span><span>Qua 🚩 Xuất phát: nhận 100.</span><span>Xếp hạng theo tổng tài sản (tiền + đất + nhà).</span>
+      </div>
+    </div>
+    <div class="row" style="margin:0;justify-content:space-between">
+      <button class="btn" id="backHub">← Sảnh</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn hidden" id="resume">Chơi tiếp ván cũ</button>
+        <button class="btn gold" id="start">Bắt đầu đua 🏁</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ĐƯỜNG ĐUA ===== -->
+<section id="race" class="hidden">
+  <div class="top">
+    <h2>🏇 Đua ngựa</h2>
+    <button class="btn" id="undo" title="Hoàn tác lượt vừa rồi">↶ Hoàn tác</button>
+    <button class="btn" id="sound">🔊</button>
+    <button class="btn" id="full">⛶</button>
+    <button class="btn gold" id="showRank">Xếp hạng</button>
+    <button class="btn red" id="newGame">Ván mới</button>
+    <div class="legend">
+      <span>Nhóm trả lời đúng → bấm 🎲 của nhóm đó.</span>
+      <span><b style="background:var(--plus)">+1</b>tiến 1</span>
+      <span><b style="background:var(--minus)">−1</b>lùi 1</span>
+      <span><b style="background:var(--reset)">↩</b>về xuất phát</span>
+    </div>
+  </div>
+  <div id="board"></div>
+</section>
+
+<!-- ===== ĐÁNH QUÁI VẬT ===== -->
+<section id="boss" class="hidden">
+  <div class="top">
+    <h2>⚔️ Đánh quái vật</h2>
+    <button class="btn" id="bUndo" title="Hoàn tác lượt vừa rồi">↶ Hoàn tác</button>
+    <button class="btn" id="bSound">🔊</button>
+    <button class="btn" id="bFull">⛶</button>
+    <button class="btn gold" id="bRank">Xếp hạng</button>
+    <button class="btn red" id="bNew">Ván mới</button>
+    <div class="legend">
+      <span>Nhóm trả lời đúng → bấm ⚔️ của nhóm đó.</span>
+      <span>🎲 Xúc xắc × 10 = sát thương</span>
+      <span>🎯 Ra 6: chí mạng 100</span>
+      <span>Trả lời sai → bấm 🔥: quái vật tấn công, −20 điểm</span>
+      <span>🛡️ Rồng có thể bật khiên thần: đòn đó chỉ còn một nửa sát thương</span>
+      <span>🏆 2 giải: sát thương cao nhất và hạ gục quái vật</span>
+    </div>
+  </div>
+  <div class="arena">
+    <div class="lair" id="lair">
+      <p class="bname" id="bName"></p>
+      <div class="mon" id="mon"></div>
+      <div class="hpbar"><i id="hpFill"></i></div>
+      <div class="hptxt" id="hpTxt"></div>
+    </div>
+    <div class="squad" id="squad"></div>
+  </div>
+</section>
+
+<!-- ===== TÌM KHO BÁU ===== -->
+<section id="treasure" class="hidden">
+  <div class="top">
+    <h2>🗺️ Tìm kho báu</h2>
+    <button class="btn" id="tUndo" title="Hoàn tác lượt vừa rồi">↶ Hoàn tác</button>
+    <button class="btn" id="tSound">🔊</button>
+    <button class="btn" id="tFull">⛶</button>
+    <button class="btn gold" id="tRank">Xếp hạng</button>
+    <button class="btn red" id="tNew">Ván mới</button>
+    <div class="legend">
+      <span>Nhóm trả lời đúng → bấm tên nhóm, rồi bấm ô nhóm chọn.</span>
+      <span>🥉 Đồng +10</span><span>🥈 Bạc +20</span><span>🥇 Vàng +40</span><span>💰 Kho báu +100</span><span>🧨 Thuốc nổ −20</span>
+    </div>
+  </div>
+  <div class="tarena">
+    <div class="mapbox">
+      <span class="deco bob" style="top:1%;right:3%" aria-hidden="true">⛵</span>
+      <span class="deco sm bob" style="bottom:12%;left:1%;animation-delay:-1.4s" aria-hidden="true">🦈</span>
+      <span class="deco sm bob" style="top:2%;left:30%;animation-delay:-.7s" aria-hidden="true">🐬</span>
+      <span class="deco sm" style="bottom:11%;right:1%" aria-hidden="true">🐙</span>
+      <div class="island">
+        <span class="deco" style="top:-7%;left:-3%" aria-hidden="true">🌴</span>
+        <span class="deco" style="bottom:-5%;right:-3%" aria-hidden="true">🌴</span>
+        <span class="deco sm" style="top:-5%;right:6%" aria-hidden="true">🏴‍☠️</span>
+        <span class="deco sm" style="bottom:-4%;left:5%" aria-hidden="true">🦀</span>
+        <div class="map" id="tMap"></div>
+      </div>
+      <div class="left" id="tLeft"></div>
+    </div>
+    <div>
+      <div class="thint" id="tHint"></div>
+      <div class="squad t" id="tSquad"></div>
+    </div>
+  </div>
+</section>
+
+<div class="overlay hidden" id="revOv">
+  <div class="dicebox">
+    <h3 id="revWho"></h3>
+    <div class="revemo" id="revEmo"></div>
+    <p id="revMsg"></p>
+  </div>
+</div>
+
+<!-- ===== CỜ TỶ PHÚ ===== -->
+<section id="mono" class="hidden">
+  <div class="top">
+    <h2>🎩 Cờ tỷ phú</h2>
+    <button class="btn" id="mUndo" title="Hoàn tác lượt vừa rồi">↶ Hoàn tác</button>
+    <button class="btn" id="mSound">🔊</button>
+    <button class="btn" id="mFull">⛶</button>
+    <button class="btn gold" id="mRankBtn">Xếp hạng</button>
+    <button class="btn red" id="mNew">Ván mới</button>
+    <div class="legend">
+      <span>Nhóm trả lời đúng → bấm 🎲 của nhóm đó.</span>
+      <span>🚩 Qua Xuất phát: +100</span>
+      <span>Đất trống: được mua</span>
+      <span>Đất nhóm khác: trả tiền thuê</span>
+      <span>Đất của mình: được xây nhà 🏠</span>
+    </div>
+  </div>
+  <div class="marena">
+    <div class="mscroll"><div class="mboard" id="mBoard"></div></div>
+    <div class="squad m" id="mSquad"></div>
+  </div>
+</section>
+
+<!-- Xúc xắc -->
+<div class="overlay hidden" id="diceOv">
+  <div class="dicebox">
+    <h3 id="diceWho"></h3>
+    <div class="dice" id="dice"></div>
+    <p id="diceMsg"></p>
+  </div>
+</div>
+<div id="toast" class="hidden"></div>
+
+<!-- Hộp thoại -->
+<div class="overlay hidden" id="modalOv"><div class="modal" id="modal"></div></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const COLORS = ['#e23d3d','#2d7be0','#f08a1c','#8a3fc9','#12a19a','#d6338f','#5a6ee0','#b5651d','#3a3a3a','#c4a000','#1f9d55','#e0559a'];
+const PIPS = {1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+const KEY = 'sanchoi_duangua_v1';
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+let cfg = {n:6, len:30, den:2, names:[]};
+let st = null;        // trạng thái ván đua
+let history = [];     // để hoàn tác
+let busy = false;
+let soundOn = true;
+
+/* ---------- Lưu / đọc ---------- */
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; } }
+function clearSave(){ try{ localStorage.removeItem(KEY); }catch(e){} }
+
+/* ---------- Âm thanh ---------- */
+let actx = null;
+function beep(f=520, d=.07, type='square'){
+  if(!soundOn) return;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.value = f; g.gain.value = .06;
+    o.connect(g); g.connect(actx.destination);
+    o.start(); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + d);
+    o.stop(actx.currentTime + d);
+  }catch(e){}
+}
+
+/* ---------- Chuyển màn ---------- */
+function show(id){ ['hub','setup','race','boss','treasure','mono'].forEach(s => $(s).classList.toggle('hidden', s !== id)); }
+
+/* ---------- Cài đặt ---------- */
+function renderNames(){
+  $('nVal').textContent = cfg.n;
+  const box = $('names');
+  const old = [...box.querySelectorAll('input')].map(i => i.value);
+  box.innerHTML = '';
+  for(let i=0;i<cfg.n;i++){
+    const d = document.createElement('div');
+    const dot = document.createElement('i'); dot.style.background = COLORS[i];
+    const inp = document.createElement('input');
+    inp.maxLength = 18; inp.value = old[i] || cfg.names[i] || ('Nhóm ' + (i+1));
+    d.append(dot, inp); box.append(d);
+  }
+}
+function segInit(id, key){
+  $(id).addEventListener('click', e => {
+    const b = e.target.closest('button'); if(!b) return;
+    cfg[key] = +b.dataset.v;
+    [...$(id).children].forEach(x => x.classList.toggle('on', x === b));
+  });
+}
+function makeSpecials(len, den){
+  // ô 0 = xuất phát, ô len = đích; ô đặc biệt nằm từ 2 đến len-1, không ô nào nằm cạnh nhau
+  const rate = {1:.08, 2:.13, 3:.18}[den];
+  const want = {reset: Math.max(1, Math.round(len*rate*.35)), plus: Math.round(len*rate), minus: Math.round(len*rate)};
+  const pool = []; for(let i=2;i<len;i++) pool.push(i);
+  for(let i=pool.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [pool[i],pool[j]] = [pool[j],pool[i]]; }
+  const sp = {};
+  for(const type of ['reset','plus','minus']){
+    let n = 0;
+    for(const i of pool){
+      if(n >= want[type]) break;
+      if(sp[i] || sp[i-1] || sp[i+1]) continue;
+      if(type === 'reset' && i < 6) continue;
+      sp[i] = type; n++;
+    }
+  }
+  return sp;
+}
+// Mỗi ván phải có ít nhất 1 nhóm dính ô "về xuất phát": nếu chưa nhóm nào dính,
+// xúc xắc có thể được định sẵn để rơi đúng ô đó (chắc chắn khi đó là ô ↩ cuối cùng của làn).
+function forcedRoll(g){
+  if(st.resetHit) return 0;
+  const rs = Object.keys(g.specials).map(Number).filter(c => g.specials[c] === 'reset' && c > g.pos).sort((x,y) => x-y);
+  const reach = rs.filter(c => c - g.pos <= 6);
+  if(!reach.length) return 0;
+  const last = rs[rs.length-1];
+  if(reach.includes(last)) return last - g.pos;
+  if(Math.random() < .3) return reach[Math.floor(Math.random()*reach.length)] - g.pos;
+  return 0;
+}
+function startGame(){
+  const names = [...$('names').querySelectorAll('input')].map((i,k) => i.value.trim() || ('Nhóm ' + (k+1)));
+  cfg.names = names;
+  st = {
+    len: cfg.len,
+    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], pos:0, rank:0, rolls:0, specials: makeSpecials(cfg.len, cfg.den)})),
+    finished: 0,
+    resetHit: false
+  };
+  history = [];
+  save(); buildBoard(); show('race');
+}
+
+/* ---------- Vẽ đường đua ---------- */
+function buildBoard(){
+  const board = $('board'); board.innerHTML = '';
+  const cols = st.len + 1;
+  $('race').style.setProperty('--n', st.groups.length);
+  board.style.setProperty('--cols', cols);
+
+  const nums = document.createElement('div'); nums.className = 'nums';
+  const blank = document.createElement('div');
+  const nt = document.createElement('div'); nt.className = 'track';
+  for(let c=0;c<cols;c++){
+    const s = document.createElement('span');
+    s.textContent = (c === 0) ? '' : (c === st.len ? '🏁' : (c % 5 === 0 ? c : ''));
+    nt.append(s);
+  }
+  nums.append(blank, nt); board.append(nums);
+
+  st.groups.forEach((g, i) => {
+    const lane = document.createElement('div'); lane.className = 'lane';
+    const who = document.createElement('div'); who.className = 'who'; who.style.setProperty('--c', g.color);
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = g.name;
+    const ps = document.createElement('span'); ps.className = 'ps'; ps.id = 'ps' + i;
+    const btn = document.createElement('button'); btn.className = 'roll'; btn.id = 'roll' + i; btn.textContent = '🎲';
+    btn.title = 'Thả xúc xắc cho ' + g.name;
+    btn.addEventListener('click', () => roll(i));
+    who.append(nm, ps, btn);
+
+    const track = document.createElement('div'); track.className = 'track';
+    for(let c=0;c<cols;c++){
+      const cell = document.createElement('div'); cell.className = 'cell';
+      const t = g.specials[c];
+      if(c === 0){ cell.classList.add('start'); }
+      else if(c === st.len){ cell.classList.add('finish'); }
+      else if(t){ cell.classList.add(t); cell.textContent = t === 'plus' ? '+1' : t === 'minus' ? '−1' : '↩'; }
+      track.append(cell);
+    }
+    const horse = document.createElement('div'); horse.className = 'horse'; horse.id = 'horse' + i; horse.textContent = '🏇';
+    track.append(horse);
+    lane.append(who, track); board.append(lane);
+  });
+  refresh();
+}
+function refresh(){
+  const cols = st.len + 1;
+  st.groups.forEach((g, i) => {
+    $('horse' + i).style.left = ((g.pos + .5) * 100 / cols) + '%';
+    $('ps' + i).textContent = g.rank ? medal(g.rank) : (g.pos + '/' + st.len);
+    $('roll' + i).disabled = busy || !!g.rank;
+  });
+  $('undo').disabled = busy || history.length === 0;
+}
+function medal(r){ return r === 1 ? '🥇' : r === 2 ? '🥈' : r === 3 ? '🥉' : ('Hạng ' + r); }
+
+/* ---------- Xúc xắc ---------- */
+function drawDice(v){
+  const d = $('dice'); d.innerHTML = '';
+  for(let k=0;k<9;k++){ const p = document.createElement('i'); if(PIPS[v].includes(k)) p.className = 'on'; d.append(p); }
+}
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.remove('hidden'); }
+function hideToast(){ $('toast').classList.add('hidden'); }
+
+async function roll(i){
+  const g = st.groups[i];
+  if(busy || g.rank) return;
+  busy = true;
+  history.push(JSON.stringify(st)); if(history.length > 40) history.shift();
+  refresh();
+
+  // 1. Thả xúc xắc
+  $('diceWho').textContent = g.name;
+  $('diceMsg').textContent = '';
+  $('diceOv').classList.remove('hidden'); $('dice').classList.add('shake');
+  const forced = forcedRoll(g);
+  let v = 1;
+  for(let k=0;k<12;k++){ v = 1 + Math.floor(Math.random()*6); drawDice(v); beep(300 + k*30, .04); await sleep(85); }
+  if(forced){ v = forced; drawDice(v); }
+  $('dice').classList.remove('shake');
+  $('diceMsg').textContent = 'Tiến ' + v + ' ô!';
+  beep(880, .18, 'triangle');
+  await sleep(1100);
+  $('diceOv').classList.add('hidden');
+
+  // 2. Ngựa chạy từng ô
+  g.rolls++;
+  const horse = $('horse' + i); horse.classList.add('run');
+  for(let s=0; s<v && g.pos < st.len; s++){
+    g.pos++; refresh(); beep(420, .04); await sleep(230);
+  }
+  horse.classList.remove('run');
+
+  // 3. Ô thưởng / phạt (chỉ tính 1 lần, không cộng dồn)
+  const t = (g.pos < st.len) ? g.specials[g.pos] : null;
+  if(t){
+    await sleep(250);
+    if(t === 'plus'){ toast('🍀 ' + g.name + ': ô thưởng, tiến thêm 1 ô!'); beep(700,.15,'triangle'); }
+    if(t === 'minus'){ toast('🪨 ' + g.name + ': ô phạt, lùi 1 ô!'); beep(200,.2,'sawtooth'); }
+    if(t === 'reset'){ toast('🌀 ' + g.name + ': về lại vạch xuất phát!'); beep(140,.35,'sawtooth'); }
+    await sleep(1300);
+    g.pos = t === 'plus' ? g.pos + 1 : t === 'minus' ? g.pos - 1 : 0;
+    if(t === 'reset') st.resetHit = true;
+    refresh();
+    await sleep(t === 'reset' ? 700 : 350);
+    hideToast();
+  }
+
+  // 4. Về đích
+  if(g.pos >= st.len){
+    g.pos = st.len; st.finished++; g.rank = st.finished;
+    refresh();
+    toast('🏁 ' + g.name + ' về đích — ' + medal(g.rank) + '!');
+    [660,880,1040].forEach((f,k) => setTimeout(() => beep(f,.18,'triangle'), k*150));
+    await sleep(1800); hideToast();
+  }
+
+  busy = false; save(); refresh();
+  if(st.finished === st.groups.length) showRank(true);
+}
+
+/* ---------- Hộp thoại ---------- */
+function openModal(build){ const m = $('modal'); m.innerHTML = ''; build(m); $('modalOv').classList.remove('hidden'); }
+function closeModal(){ $('modalOv').classList.add('hidden'); }
+function mk(tag, cls, txt){ const e = document.createElement(tag); if(cls) e.className = cls; if(txt != null) e.textContent = txt; return e; }
+
+function askConfirm(title, msg, yesText, onYes){
+  openModal(m => {
+    m.append(mk('h3', '', title), mk('p', '', msg));
+    const a = mk('div', 'acts');
+    const no = mk('button', 'btn', 'Không'); no.onclick = closeModal;
+    const yes = mk('button', 'btn red', yesText); yes.onclick = () => { closeModal(); onYes(); };
+    a.append(no, yes); m.append(a);
+  });
+}
+function showRank(done){
+  const order = st.groups.map((g,i) => ({...g, i})).sort((a,b) => {
+    if(a.rank && b.rank) return a.rank - b.rank;
+    if(a.rank) return -1; if(b.rank) return 1;
+    return b.pos - a.pos || a.i - b.i;
+  });
+  openModal(m => {
+    m.append(mk('h3', '', done ? '🏆 Kết quả chung cuộc' : '📊 Xếp hạng hiện tại'));
+    const ul = mk('ul', 'rank');
+    order.forEach((g, k) => {
+      const li = mk('li');
+      const md = mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.');
+      const dot = mk('i'); dot.style.background = g.color;
+      li.append(md, dot, mk('span', '', g.name), mk('span', '', g.rank ? 'Về đích' : ('Ô ' + g.pos + '/' + st.len)));
+      ul.append(li);
+    });
+    m.append(ul);
+    const a = mk('div', 'acts');
+    const ok = mk('button', 'btn gold', 'Đóng'); ok.onclick = closeModal;
+    a.append(ok); m.append(a);
+  });
+}
+
+/* ---------- Sự kiện ---------- */
+$('goRace').onclick = () => openSetup('race');
+$('goBoss').onclick = () => openSetup('boss');
+$('goTreasure').onclick = () => openSetup('treasure');
+$('goMono').onclick = () => openSetup('mono');
+$('backHub').onclick = () => show('hub');
+$('nMinus').onclick = () => { if(cfg.n > 2){ cfg.n--; renderNames(); } };
+$('nPlus').onclick = () => { if(cfg.n < 12){ cfg.n++; renderNames(); } };
+segInit('segLen', 'len'); segInit('segDen', 'den');
+$('start').onclick = () => cur === 'race' ? startGame() : cur === 'boss' ? bossStart() : cur === 'treasure' ? tStart() : mStart();
+$('resume').onclick = () => {
+  if(cur === 'mono'){ const m = mLoad(); if(!m) return; ms = m; ms.turn = null; mHist = []; mBuild(); show('mono'); return; }
+  if(cur === 'treasure'){ const t = tLoad(); if(!t) return; ts = t; ts.active = null; tHist = []; tBuild(); show('treasure'); return; }
+  if(cur === 'boss'){ const b = bLoad(); if(!b) return; bs = b; bHist = []; bossBuild(); show('boss'); return; }
+  const s = load(); if(!s) return; st = s; st.groups.forEach(g => { if(!g.specials) g.specials = st.specials || {}; }); history = []; buildBoard(); show('race'); };
+
+$('undo').onclick = () => {
+  if(busy || !history.length) return;
+  st = JSON.parse(history.pop()); save(); refresh();
+};
+$('sound').onclick = $('bSound').onclick = () => { soundOn = !soundOn; $('sound').textContent = $('bSound').textContent = soundOn ? '🔊' : '🔇'; };
+$('full').onclick = $('bFull').onclick = () => {
+  try{ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }catch(e){}
+};
+$('showRank').onclick = () => showRank(st.finished === st.groups.length);
+$('newGame').onclick = () => {
+  if(busy) return;
+  askConfirm('Bắt đầu ván mới?', 'Ván đua hiện tại sẽ bị xóa.', 'Ván mới', () => {
+    clearSave(); cfg.names = st.groups.map(g => g.name); cfg.n = st.groups.length;
+    $('resume').classList.add('hidden'); renderNames(); show('setup');
+  });
+};
+$('modalOv').addEventListener('click', e => { if(e.target === $('modalOv') && !modalLock) closeModal(); });
+
+
+/* =====================================================
+   ĐÁNH QUÁI VẬT
+   ===================================================== */
+const BKEY = 'sanchoi_quaivat_v1';
+const BOSSES = {dragon:['🐉','Rồng lửa'], ogre:['👹','Quỷ núi'], alien:['👾','Quái vật vũ trụ'], trex:['🦖','Khủng long bạo chúa']};
+let cur = 'race';                         // trò đang cài đặt
+let bcfg = {boss:'dragon', turns:6};
+let bs = null, bHist = [];
+let trollShow = false;                   // rồng đang tấn công nhóm trả lời sai (mặt troll)
+let shieldShow = false;                  // đang hiện khiên thần (mặt troll)
+const TROLL = 'data:image/png;base64,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';
+
+function bSave(){ try{ localStorage.setItem(BKEY, JSON.stringify(bs)); }catch(e){} }
+function bLoad(){ try{ return JSON.parse(localStorage.getItem(BKEY)); }catch(e){ return null; } }
+function bClear(){ try{ localStorage.removeItem(BKEY); }catch(e){} }
+
+let modalLock = false;                   // hộp thoại đang chờ chọn Mua / Không mua
+function openSetup(game){
+  cur = game;
+  $('setupTitle').textContent = {race:'🏇 Đua ngựa', boss:'⚔️ Đánh quái vật', treasure:'🗺️ Tìm kho báu', mono:'🎩 Cờ tỷ phú'}[game];
+  ['Race','Boss','Treasure','Mono'].forEach(n => $('opt' + n).classList.toggle('hidden', n.toLowerCase() !== game));
+  $('start').textContent = {race:'Bắt đầu đua 🏁', boss:'Vào trận ⚔️', treasure:'Đi tìm kho báu 🗺️', mono:'Bắt đầu chơi 🎩'}[game];
+  const s = {race:load, boss:bLoad, treasure:tLoad, mono:mLoad}[game]();
+  $('resume').classList.toggle('hidden', !(s && s.groups && s.groups.length));
+  renderNames(); show('setup');
+}
+function bSeg(id, key, num){
+  $(id).addEventListener('click', e => {
+    const b = e.target.closest('button'); if(!b) return;
+    bcfg[key] = num ? +b.dataset.v : b.dataset.v;
+    [...$(id).children].forEach(x => x.classList.toggle('on', x === b));
+  });
+}
+bSeg('segTurns', 'turns', true);
+
+function bossStart(){
+  const names = [...$('names').querySelectorAll('input')].map((i,k) => i.value.trim() || ('Nhóm ' + (k+1)));
+  cfg.names = names;
+  const hp = Math.round(names.length * bcfg.turns * 36 / 50) * 50;   // trung bình ~36 sát thương mỗi lượt (đã tính khiên)
+  bs = {
+    boss: bcfg.boss, max: hp, hp: hp, shielded: false, over: false,
+    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], dmg:0, turns:0}))
+  };
+  bHist = []; bSave(); bossBuild(); show('boss');
+}
+function bossBuild(){
+  const sq = $('squad'); sq.innerHTML = '';
+  sq.classList.toggle('two', bs.groups.length > 6);
+  sq.parentElement.classList.toggle('many', bs.groups.length > 6);
+  bs.groups.forEach((g, i) => {
+    const row = mk('div', 'hero'); row.id = 'brow' + i; row.style.setProperty('--c', g.color);
+    const rk = mk('span', 'rk'); rk.id = 'brk' + i;
+    const dm = mk('span', 'dm'); dm.id = 'bdm' + i;
+    const btn = mk('button', 'roll', '⚔️'); btn.id = 'batk' + i; btn.title = g.name + ' tấn công';
+    btn.addEventListener('click', () => bossAttack(i));
+    const bad = mk('button', 'roll bad', '🔥'); bad.id = 'bbad' + i; bad.title = g.name + ' trả lời sai: quái vật tấn công';
+    bad.addEventListener('click', () => bossPunish(i));
+    const info = mk('div', 'info'); info.append(mk('span', 'nm', g.name), dm);
+    row.append(rk, info, bad, btn); sq.append(row);
+  });
+  bossRefresh();
+}
+function bossRefresh(){
+  const B = BOSSES[bs.boss];
+  $('bName').textContent = B[1];
+  const troll = (shieldShow || trollShow) && bs.hp > 0;
+  $('lair').classList.toggle('shield', shieldShow && bs.hp > 0);
+  if(troll){
+    if(!$('mon').querySelector('img')){ const im = new Image(); im.src = TROLL; im.alt = 'Rồng bật khiên'; $('mon').textContent = ''; $('mon').append(im); }
+  }else{
+    $('mon').textContent = bs.hp <= 0 ? '💀' : B[0];
+  }
+  $('mon').classList.toggle('dead', bs.hp <= 0);
+  const pct = bs.hp * 100 / bs.max;
+  $('hpFill').style.width = pct + '%';
+  $('hpFill').style.background = pct > 50 ? 'var(--plus)' : pct > 25 ? 'var(--gold)' : 'var(--red)';
+  $('hpTxt').textContent = '❤️ ' + bs.hp + ' / ' + bs.max;
+  const top = Math.max(...bs.groups.map(g => g.dmg));
+  // xếp các nhóm theo điểm đang có (cao nhất lên đầu)
+  const ord = bs.groups.map((g, i) => i).sort((a, b) => bs.groups[b].dmg - bs.groups[a].dmg || a - b);
+  ord.forEach((i, k) => { $('brow' + i).style.order = k; $('brk' + i).textContent = k + 1; });
+  bs.groups.forEach((g, i) => {
+    const dm = $('bdm' + i); dm.textContent = g.dmg;
+    dm.append(mk('small', '', ' điểm'), (top > 0 && g.dmg === top ? ' 👑' : '') + (bs.killer === i ? ' 🗡️' : ''));
+    $('batk' + i).disabled = $('bbad' + i).disabled = busy || bs.over;
+  });
+  $('bUndo').disabled = busy || bHist.length === 0;
+}
+function monAnim(cls, ms){
+  const m = $('mon'); m.classList.remove('hit', 'atk'); void m.offsetWidth; m.classList.add(cls);
+  setTimeout(() => m.classList.remove(cls), ms);
+}
+function popDamage(txt){
+  const p = mk('div', 'pop', txt); $('lair').append(p); setTimeout(() => p.remove(), 1000);
+}
+
+async function bossAttack(i){
+  const g = bs.groups[i];
+  if(busy || bs.over) return;
+  busy = true;
+  bHist.push(JSON.stringify(bs)); if(bHist.length > 40) bHist.shift();
+  bossRefresh();
+  const B = BOSSES[bs.boss];
+
+  // 1. Thả xúc xắc
+  $('diceWho').textContent = g.name;
+  $('diceMsg').textContent = '';
+  $('diceOv').classList.remove('hidden'); $('dice').classList.add('shake');
+  let v = 1;
+  for(let k=0;k<12;k++){ v = 1 + Math.floor(Math.random()*6); drawDice(v); beep(300 + k*30, .04); await sleep(85); }
+  $('dice').classList.remove('shake');
+  const dmg = v === 6 ? 100 : v * 10;
+  $('diceMsg').textContent = v === 6 ? '🎯 Chí mạng! 100 sát thương' : dmg + ' sát thương';
+  beep(v === 6 ? 1040 : 880, .18, 'triangle');
+  await sleep(1100);
+  $('diceOv').classList.add('hidden');
+
+  // 2. Khiên thần: 25% mỗi đòn; mỗi trận chắc chắn có ít nhất 1 lần (khi rồng còn dưới nửa máu)
+  let real = dmg;
+  if((!bs.shielded && bs.hp <= bs.max / 2) || Math.random() < .25){
+    bs.shielded = true; real = Math.round(dmg / 2);
+    shieldShow = true; bossRefresh();
+    beep(520, .12, 'triangle'); setTimeout(() => beep(390, .25, 'triangle'), 130);
+    toast('🛡️ ' + B[1] + ' bật khiên thần! Sát thương chỉ còn một nửa: ' + real);
+    await sleep(2000); hideToast();
+  }
+
+  // 3. Trúng đòn
+  const dealt = Math.min(real, bs.hp);
+  bs.hp -= dealt; g.dmg += dealt; g.turns++;
+  monAnim('hit', 450); popDamage('−' + dealt); beep(160, .2, 'sawtooth');
+  bossRefresh();
+  await sleep(1000);
+  shieldShow = false; bossRefresh();
+
+  if(bs.hp <= 0){
+    // 4. Hạ gục
+    bs.killer = i; bs.over = true; bossRefresh();
+    toast('🗡️ ' + g.name + ' hạ gục ' + B[1] + '!');
+    [660,880,1040].forEach((f,k) => setTimeout(() => beep(f,.18,'triangle'), k*150));
+    await sleep(2200); hideToast();
+  }
+
+  busy = false; bSave(); bossRefresh();
+  if(bs.over) bossRank(true);
+}
+
+// Nhóm trả lời sai: quái vật tấn công, trừ 20 điểm
+async function bossPunish(i){
+  const g = bs.groups[i];
+  if(busy || bs.over) return;
+  busy = true;
+  bHist.push(JSON.stringify(bs)); if(bHist.length > 40) bHist.shift();
+  const B = BOSSES[bs.boss];
+  const lost = Math.min(20, g.dmg); g.dmg -= lost;
+  trollShow = true; bossRefresh();
+  monAnim('atk', 500); beep(120, .35, 'sawtooth');
+  toast('🔥 ' + B[1] + ' tấn công ' + g.name + '! Mất ' + lost + ' điểm');
+  bossRefresh();
+  await sleep(1800); hideToast();
+  trollShow = false;
+  busy = false; bSave(); bossRefresh();
+}
+
+function bossRank(done){
+  const order = bs.groups.map((g,i) => ({...g, i})).sort((a,b) => b.dmg - a.dmg || a.i - b.i);
+  openModal(m => {
+    m.append(mk('h3', '', done ? '🏆 Quái vật đã bị hạ!' : '📊 Xếp hạng hiện tại'));
+    if(done){
+      const top = order[0].dmg;
+      const best = order.filter(g => g.dmg === top).map(g => g.name).join(', ');
+      const aw = mk('div', 'awards');
+      const a1 = mk('div'); a1.append(mk('small', '', '👑 Giải sát thương cao nhất'), document.createTextNode(best + ' (' + top + ' điểm)'));
+      aw.append(a1);
+      if(bs.killer != null){
+        const a2 = mk('div'); a2.append(mk('small', '', '🗡️ Giải hạ gục quái vật'), document.createTextNode(bs.groups[bs.killer].name));
+        aw.append(a2);
+      }
+      m.append(aw);
+    }
+    const ul = mk('ul', 'rank');
+    order.forEach((g, k) => {
+      const li = mk('li');
+      const dot = mk('i'); dot.style.background = g.color;
+      li.append(mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.'), dot, mk('span', '', g.name), mk('span', '', g.dmg + ' điểm'));
+      ul.append(li);
+    });
+    m.append(ul);
+    const a = mk('div', 'acts');
+    const ok = mk('button', 'btn gold', 'Đóng'); ok.onclick = closeModal;
+    a.append(ok); m.append(a);
+  });
+}
+
+$('bUndo').onclick = () => {
+  if(busy || !bHist.length) return;
+  bs = JSON.parse(bHist.pop()); bSave(); bossRefresh();
+};
+$('bRank').onclick = () => bossRank(bs.over);
+$('bNew').onclick = () => {
+  if(busy) return;
+  askConfirm('Bắt đầu trận mới?', 'Trận đánh hiện tại sẽ bị xóa.', 'Trận mới', () => {
+    bClear(); cfg.names = bs.groups.map(g => g.name); cfg.n = bs.groups.length; openSetup('boss');
+  });
+};
+
+
+/* =====================================================
+   TÌM KHO BÁU
+   ===================================================== */
+const TKEY = 'sanchoi_khobau_v1';
+const LOOT = {bronze:['🥉','Đồng',10], silver:['🥈','Bạc',20], gold:['🥇','Vàng',40], treasure:['💰','Kho báu',100], bomb:['🧨','Thuốc nổ',-20]};
+// số ô → [số cột, số ô mỗi loại]; phần còn lại là đồng
+const TSIZE = {24:[6,{treasure:1,bomb:4,gold:4,silver:6}], 35:[7,{treasure:2,bomb:6,gold:6,silver:9}], 48:[8,{treasure:3,bomb:8,gold:8,silver:12}]};
+let tcfg = {size:35}, ts = null, tHist = [];
+
+function tSave(){ try{ localStorage.setItem(TKEY, JSON.stringify(ts)); }catch(e){} }
+function tLoad(){ try{ return JSON.parse(localStorage.getItem(TKEY)); }catch(e){ return null; } }
+function tClear(){ try{ localStorage.removeItem(TKEY); }catch(e){} }
+
+$('segSize').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  tcfg.size = +b.dataset.v;
+  [...$('segSize').children].forEach(x => x.classList.toggle('on', x === b));
+});
+
+function tStart(){
+  const names = [...$('names').querySelectorAll('input')].map((i,k) => i.value.trim() || ('Nhóm ' + (k+1)));
+  cfg.names = names;
+  const [cols, cnt] = TSIZE[tcfg.size];
+  const types = [];
+  for(const t in cnt) for(let k=0;k<cnt[t];k++) types.push(t);
+  while(types.length < tcfg.size) types.push('bronze');
+  for(let i=types.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [types[i],types[j]] = [types[j],types[i]]; }
+  ts = {
+    cols, active: null, over: false,
+    tiles: types.map(t => ({t, open:false, by:null})),
+    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], pts:0}))
+  };
+  tHist = []; tSave(); tBuild(); show('treasure');
+}
+function tBuild(){
+  $('tSound').textContent = soundOn ? '🔊' : '🔇';
+  const map = $('tMap'); map.innerHTML = ''; map.style.setProperty('--tc', ts.cols);
+  ts.tiles.forEach((t, k) => {
+    const b = mk('button', 'tile'); b.id = 'tt' + k;
+    b.addEventListener('click', () => tOpen(k));
+    map.append(b);
+  });
+  const sq = $('tSquad'); sq.innerHTML = '';
+  ts.groups.forEach((g, i) => {
+    const row = mk('div', 'hero pick'); row.id = 'trow' + i; row.style.setProperty('--c', g.color);
+    row.tabIndex = 0; row.setAttribute('role', 'button');
+    const rk = mk('span', 'rk'); rk.id = 'trk' + i;
+    const dm = mk('span', 'dm'); dm.id = 'tdm' + i;
+    const info = mk('div', 'info'); info.append(mk('span', 'nm', g.name), dm);
+    row.append(rk, info);
+    row.addEventListener('click', () => tPick(i));
+    row.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); tPick(i); } });
+    sq.append(row);
+  });
+  tRefresh();
+}
+function tRefresh(){
+  const left = {};
+  ts.tiles.forEach((t, k) => {
+    const b = $('tt' + k);
+    b.className = 'tile' + (t.open ? ' open ' + t.t : '');
+    b.textContent = '';
+    if(t.open){
+      const L = LOOT[t.t];
+      b.append(mk('span', 'e', L[0]), mk('span', 'p', (L[2] > 0 ? '+' : '−') + Math.abs(L[2])));
+      if(t.by != null && ts.groups[t.by]){ const d = mk('i', 'by'); d.style.background = ts.groups[t.by].color; b.append(d); }
+    }else{
+      b.textContent = k + 1;
+      left[t.t] = (left[t.t] || 0) + 1;
+    }
+  });
+  const lf = $('tLeft'); lf.textContent = '';
+  lf.append(mk('span', '', 'Còn lại:'));
+  ['treasure','gold','silver','bronze','bomb'].forEach(t => lf.append(mk('span', '', LOOT[t][0] + ' ' + (left[t] || 0))));
+  const top = Math.max(...ts.groups.map(g => g.pts));
+  const ord = ts.groups.map((g, i) => i).sort((a, b) => ts.groups[b].pts - ts.groups[a].pts || a - b);
+  ord.forEach((i, k) => { $('trow' + i).style.order = k; $('trk' + i).textContent = k + 1; });
+  ts.groups.forEach((g, i) => {
+    const dm = $('tdm' + i); dm.textContent = g.pts;
+    dm.append(mk('small', '', ' điểm'), top > 0 && g.pts === top ? ' 👑' : '');
+    $('trow' + i).classList.toggle('on', ts.active === i);
+  });
+  $('tHint').textContent = ts.over ? 'Bản đồ đã mở hết!' : ts.active != null ? '⛏️ ' + ts.groups[ts.active].name + ' chọn một ô trên bản đồ' : '👉 Bấm tên nhóm trả lời đúng';
+  $('tUndo').disabled = busy || tHist.length === 0;
+}
+function tPick(i){
+  if(busy || ts.over) return;
+  ts.active = ts.active === i ? null : i;
+  beep(600, .05); tRefresh();
+}
+async function tOpen(k){
+  const t = ts.tiles[k];
+  if(busy || ts.over || t.open) return;
+  if(ts.active == null){
+    busy = true; toast('👉 Bấm tên nhóm trước, rồi mới bấm ô'); await sleep(1400); hideToast(); busy = false; return;
+  }
+  busy = true;
+  tHist.push(JSON.stringify(ts)); if(tHist.length > 60) tHist.shift();
+  const i = ts.active, g = ts.groups[i], L = LOOT[t.t];
+
+  // hồi hộp một chút rồi mới lộ kết quả
+  $('revWho').textContent = g.name + ' mở ô ' + (k + 1);
+  $('revEmo').textContent = '❓'; $('revMsg').textContent = '';
+  $('revOv').classList.remove('hidden');
+  for(let n=0;n<6;n++){ beep(300 + n*40, .05); await sleep(130); }
+  $('revEmo').textContent = L[0];
+  $('revEmo').style.animation = 'none'; void $('revEmo').offsetWidth; $('revEmo').style.animation = '';
+  const before = g.pts;
+  g.pts = Math.max(0, g.pts + L[2]);
+  if(t.t === 'bomb'){
+    $('revMsg').textContent = '💥 Trúng thuốc nổ! Mất ' + (before - g.pts) + ' điểm';
+    beep(110, .5, 'sawtooth');
+  }else{
+    $('revMsg').textContent = L[1] + '! +' + L[2] + ' điểm';
+    if(t.t === 'treasure') [660,880,1040,1320].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
+    else beep(t.t === 'gold' ? 1040 : 880, .18, 'triangle');
+  }
+  t.open = true; t.by = i; ts.active = null;
+  if(ts.tiles.every(x => x.open)) ts.over = true;
+  tRefresh();
+  await sleep(t.t === 'treasure' ? 2400 : 1800);
+  $('revOv').classList.add('hidden');
+
+  busy = false; tSave(); tRefresh();
+  if(ts.over) treasureRank(true);
+}
+function treasureRank(done){
+  const order = ts.groups.map((g,i) => ({...g, i})).sort((a,b) => b.pts - a.pts || a.i - b.i);
+  openModal(m => {
+    m.append(mk('h3', '', done ? '🏆 Kết quả săn kho báu' : '📊 Xếp hạng hiện tại'));
+    const ul = mk('ul', 'rank');
+    order.forEach((g, k) => {
+      const li = mk('li');
+      const dot = mk('i'); dot.style.background = g.color;
+      li.append(mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.'), dot, mk('span', '', g.name), mk('span', '', g.pts + ' điểm'));
+      ul.append(li);
+    });
+    m.append(ul);
+    const a = mk('div', 'acts');
+    const ok = mk('button', 'btn gold', 'Đóng'); ok.onclick = closeModal;
+    a.append(ok); m.append(a);
+  });
+}
+$('tUndo').onclick = () => {
+  if(busy || !tHist.length) return;
+  ts = JSON.parse(tHist.pop()); tSave(); tRefresh();
+};
+$('tSound').onclick = () => { $('sound').click(); $('tSound').textContent = soundOn ? '🔊' : '🔇'; };
+$('tFull').onclick = () => $('full').click();
+$('tRank').onclick = () => treasureRank(ts.over);
+$('tNew').onclick = () => {
+  if(busy) return;
+  askConfirm('Bắt đầu ván mới?', 'Bản đồ hiện tại sẽ bị xóa.', 'Ván mới', () => {
+    tClear(); cfg.names = ts.groups.map(g => g.name); cfg.n = ts.groups.length; openSetup('treasure');
+  });
+};
+
+
+/* =====================================================
+   CỜ TỶ PHÚ
+   ===================================================== */
+const MKEY = 'sanchoi_typhu_v1';
+const START_CASH = 500, SALARY = 100;
+const LAND = (n, p) => ({k:'land', n, p});
+const CHANCE = {k:'chance', n:'Cơ hội', e:'❓'};
+// 24 ô đi theo chiều kim đồng hồ, bắt đầu từ góc trên bên trái; 4 góc là ô 0, 7, 12, 19
+const MB = [
+  {k:'go', n:'Xuất phát', e:'🚩'}, LAND('Hà Giang',60), LAND('Sa Pa',60), CHANCE, LAND('Hạ Long',80), LAND('Hà Nội',100), {k:'tax', n:'Thuế 50', e:'💸', v:50}, {k:'gift', n:'Lì xì +50', e:'🧧', v:50},
+  LAND('Ninh Bình',100), CHANCE, LAND('Huế',120), LAND('Đà Nẵng',140),
+  {k:'rest', n:'Nghỉ mát', e:'🏖️'}, LAND('Hội An',140), LAND('Nha Trang',160), CHANCE, LAND('Đà Lạt',160), {k:'tax', n:'Thuế 100', e:'💸', v:100}, LAND('TP.HCM',180), {k:'storm', n:'Bão', e:'🌪️'},
+  LAND('Cần Thơ',180), CHANCE, LAND('Phú Quốc',200), LAND('Côn Đảo',220)
+];
+const CARDS = [
+  {e:'🎁', t:'Được thưởng học sinh giỏi: nhận 50', cash:50},
+  {e:'🎉', t:'Trúng thưởng hội chợ: nhận 100', cash:100},
+  {e:'🪟', t:'Đá bóng làm vỡ kính: đền 50', cash:-50},
+  {e:'🍦', t:'Đãi cả nhóm ăn kem: mất 30', cash:-30},
+  {e:'🚀', t:'Tiến thêm 3 ô', move:3},
+  {e:'🔙', t:'Lùi lại 2 ô', move:-2},
+  {e:'🚩', t:'Về Xuất phát và nhận ' + SALARY, home:true},
+  {e:'🎂', t:'Sinh nhật: mỗi nhóm khác tặng bạn 20', each:20},
+  {e:'💝', t:'Chia quà: bạn tặng mỗi nhóm khác 10', each:-10}
+];
+const mRentBase = c => Math.round(c.p * .4 / 10) * 10;      // tiền thuê khi chưa có nhà
+const mHouse = c => c.p / 2;                                // giá xây 1 nhà
+let mcfg = {target:0}, ms = null, mHist = [];
+
+function mSave(){ try{ localStorage.setItem(MKEY, JSON.stringify(ms)); }catch(e){} }
+function mLoad(){ try{ return JSON.parse(localStorage.getItem(MKEY)); }catch(e){ return null; } }
+function mClear(){ try{ localStorage.removeItem(MKEY); }catch(e){} }
+
+$('segTarget').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  mcfg.target = +b.dataset.v;
+  [...$('segTarget').children].forEach(x => x.classList.toggle('on', x === b));
+});
+
+function mLands(i){ return Object.keys(ms.own).filter(k => ms.own[k].g === i).map(Number); }
+function mAssets(i){
+  return ms.groups[i].cash + mLands(i).reduce((sum, k) => sum + MB[k].p + ms.own[k].lvl * mHouse(MB[k]), 0);
+}
+function mStart(){
+  const names = [...$('names').querySelectorAll('input')].map((i,k) => i.value.trim() || ('Nhóm ' + (k+1)));
+  cfg.names = names;
+  ms = {
+    target: mcfg.target, over: false, turn: null, log: '', own: {},
+    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], cash:START_CASH, pos:0}))
+  };
+  mHist = []; mSave(); mBuild(); show('mono');
+}
+function mPlace(k){   // vị trí ô k trên lưới 8 × 6
+  if(k <= 7) return [1, k + 1];
+  if(k <= 11) return [k - 6, 8];
+  if(k <= 19) return [6, 20 - k];
+  return [25 - k, 1];
+}
+function mBuild(){
+  $('mSound').textContent = soundOn ? '🔊' : '🔇';
+  const bd = $('mBoard'); bd.innerHTML = '';
+  MB.forEach((c, k) => {
+    const el = mk('div', 'mcell ' + (c.k === 'land' ? 'land' : c.k === 'chance' ? 'chance' : c.k === 'tax' ? 'tax' : 'corner'));
+    el.id = 'mc' + k;
+    const [r, col] = mPlace(k); el.style.gridRow = r; el.style.gridColumn = col;
+    if(c.k === 'land'){ const band = mk('div', 'band'); band.id = 'mb' + k; el.append(band, mk('div', 'cn', c.n)); }
+    else el.append(mk('div', 'ci', c.e), mk('div', 'cn', c.n));
+    const tok = mk('div', 'tok'); tok.id = 'mt' + k; el.append(tok);
+    bd.append(el);
+  });
+  const ctr = mk('div', 'mcenter');
+  const log = mk('div', 'log'); log.id = 'mLog';
+  ctr.append(mk('div', 'big', '🎩 CỜ TỶ PHÚ'), log); bd.append(ctr);
+
+  const sq = $('mSquad'); sq.innerHTML = '';
+  ms.groups.forEach((g, i) => {
+    const row = mk('div', 'hero'); row.id = 'mrow' + i; row.style.setProperty('--c', g.color);
+    const dm = mk('span', 'dm'); dm.id = 'mdm' + i;
+    const info = mk('div', 'info'); info.append(mk('span', 'nm', g.name), dm);
+    const btn = mk('button', 'roll', '🎲'); btn.id = 'mroll' + i; btn.title = 'Thả xúc xắc cho ' + g.name;
+    btn.addEventListener('click', () => mRoll(i));
+    row.append(mk('span', 'rk', i + 1), info, btn); sq.append(row);
+  });
+  mRefresh();
+}
+function mRefresh(){
+  MB.forEach((c, k) => {
+    const el = $('mc' + k), o = ms.own[k];
+    if(c.k === 'land'){
+      el.classList.toggle('owned', !!o);
+      if(o){ el.style.setProperty('--o', ms.groups[o.g].color); $('mb' + k).textContent = '🏠'.repeat(o.lvl) + ' thuê ' + mRentBase(c) * (1 + o.lvl); }
+      else $('mb' + k).textContent = 'Giá ' + c.p;
+    }
+    const tok = $('mt' + k); tok.textContent = '';
+    ms.groups.forEach((g, i) => {
+      if(g.pos !== k) return;
+      const t = mk('span', 'mtok' + (ms.turn === i ? ' me' : ''), i + 1); t.style.background = g.color; tok.append(t);
+    });
+  });
+  $('mLog').textContent = ms.log || 'Nhóm trả lời đúng → bấm 🎲 của nhóm đó';
+  const ord = ms.groups.map((g, i) => i).sort((a, b) => mAssets(b) - mAssets(a) || a - b);
+  ord.forEach((i, k) => { $('mrow' + i).style.order = k; });
+  ms.groups.forEach((g, i) => {
+    const dm = $('mdm' + i); dm.textContent = '💰 ' + g.cash;
+    dm.append(mk('small', '', ' · 🏡 ' + mLands(i).length + ' đất' + (ord[0] === i && mAssets(i) > START_CASH ? ' 👑' : '')));
+    $('mroll' + i).disabled = busy || ms.over;
+  });
+  $('mUndo').disabled = busy || mHist.length === 0;
+}
+async function mSay(msg, wait){
+  ms.log = msg; mRefresh(); toast(msg); await sleep(wait || 1900); hideToast();
+}
+function mAsk(title, msg, yes, no){
+  return new Promise(res => {
+    const done = v => { modalLock = false; closeModal(); res(v); };
+    modalLock = true;
+    openModal(m => {
+      m.append(mk('h3', '', title), mk('p', '', msg));
+      const a = mk('div', 'acts');
+      const bn = mk('button', 'btn', no); bn.onclick = () => done(false);
+      const by = mk('button', 'btn gold', yes); by.onclick = () => done(true);
+      a.append(bn, by); m.append(a);
+    });
+  });
+}
+
+async function mRoll(i){
+  const g = ms.groups[i];
+  if(busy || ms.over) return;
+  busy = true;
+  mHist.push(JSON.stringify(ms)); if(mHist.length > 40) mHist.shift();
+  ms.turn = i; mRefresh();
+
+  // 1. Thả xúc xắc
+  $('diceWho').textContent = g.name;
+  $('diceMsg').textContent = '';
+  $('diceOv').classList.remove('hidden'); $('dice').classList.add('shake');
+  let v = 1;
+  for(let k=0;k<12;k++){ v = 1 + Math.floor(Math.random()*6); drawDice(v); beep(300 + k*30, .04); await sleep(85); }
+  $('dice').classList.remove('shake');
+  $('diceMsg').textContent = 'Đi ' + v + ' ô!';
+  beep(880, .18, 'triangle');
+  await sleep(1000);
+  $('diceOv').classList.add('hidden');
+
+  // 2. Đi từng ô
+  let passed = false;
+  for(let s=0;s<v;s++){
+    g.pos = (g.pos + 1) % MB.length; if(g.pos === 0) passed = true;
+    mRefresh(); beep(420, .04); await sleep(260);
+  }
+  if(passed && g.pos !== 0){ g.cash += SALARY; await mSay('🚩 ' + g.name + ' đi qua Xuất phát: nhận ' + SALARY, 1500); }
+
+  // 3. Xử lý ô vừa đến
+  await mResolve(i, 0);
+
+  ms.turn = null;
+  if(ms.target && mAssets(i) >= ms.target){
+    ms.over = true;
+    await mSay('🏆 ' + g.name + ' đạt ' + mAssets(i) + ' tài sản và trở thành tỷ phú!', 2400);
+  }
+  busy = false; mSave(); mRefresh();
+  if(ms.over) mRank(true);
+}
+
+async function mResolve(i, depth){
+  const g = ms.groups[i], k = g.pos, c = MB[k];
+  if(c.k === 'go'){ g.cash += SALARY; await mSay('🚩 ' + g.name + ' về Xuất phát: nhận ' + SALARY); }
+  else if(c.k === 'gift'){ g.cash += c.v; beep(880, .18, 'triangle'); await mSay('🧧 ' + g.name + ' nhận lì xì ' + c.v); }
+  else if(c.k === 'rest'){ await mSay('🏖️ ' + g.name + ' nghỉ mát, không có gì xảy ra', 1500); }
+  else if(c.k === 'tax'){ const pay = Math.min(g.cash, c.v); g.cash -= pay; beep(200, .2, 'sawtooth'); await mSay('💸 ' + g.name + ' đóng thuế ' + pay); }
+  else if(c.k === 'storm'){ g.pos = 0; beep(140, .35, 'sawtooth'); await mSay('🌪️ ' + g.name + ' gặp bão, bị thổi về Xuất phát (không nhận lương)'); }
+  else if(c.k === 'chance'){
+    if(depth >= 2){ await mSay(g.name + ' dừng ở ô Cơ hội', 1300); return; }
+    const card = CARDS[Math.floor(Math.random() * CARDS.length)];
+    $('revWho').textContent = g.name + ' rút thẻ Cơ hội';
+    $('revEmo').textContent = '🎴'; $('revMsg').textContent = '';
+    $('revOv').classList.remove('hidden');
+    for(let n=0;n<5;n++){ beep(300 + n*40, .05); await sleep(130); }
+    $('revEmo').textContent = card.e; $('revMsg').textContent = card.t;
+    beep(card.cash < 0 || card.each < 0 || card.move < 0 ? 200 : 880, .2, 'triangle');
+    await sleep(2400);
+    $('revOv').classList.add('hidden');
+    ms.log = g.name + ' rút Cơ hội: ' + card.t;
+    if(card.cash) g.cash = Math.max(0, g.cash + card.cash);
+    if(card.each) ms.groups.forEach((o, j) => {
+      if(j === i) return;
+      if(card.each > 0){ const pay = Math.min(o.cash, card.each); o.cash -= pay; g.cash += pay; }
+      else { const pay = Math.min(g.cash, -card.each); g.cash -= pay; o.cash += pay; }
+    });
+    if(card.home){ g.pos = 0; g.cash += SALARY; }
+    mRefresh();
+    if(card.move){
+      const to = (g.pos + card.move + MB.length) % MB.length;
+      const wrapped = card.move > 0 && to < g.pos;
+      g.pos = to; mRefresh(); await sleep(500);
+      if(wrapped && to !== 0){ g.cash += SALARY; await mSay('🚩 ' + g.name + ' đi qua Xuất phát: nhận ' + SALARY, 1500); }
+      await mResolve(i, depth + 1);
+    }
+  }
+  else if(c.k === 'land'){
+    const o = ms.own[k];
+    if(!o){
+      if(g.cash < c.p){ await mSay(g.name + ' đến ' + c.n + ' nhưng không đủ tiền mua (giá ' + c.p + ')'); return; }
+      const buy = await mAsk(g.name + ' đến ' + c.n, 'Mua đất này với giá ' + c.p + '? Nhóm đang có ' + g.cash + '. Nhóm khác đi vào sẽ trả ' + mRentBase(c) + ' tiền thuê.', 'Mua', 'Không mua');
+      if(buy){ g.cash -= c.p; ms.own[k] = {g:i, lvl:0}; beep(880, .18, 'triangle'); await mSay('🏡 ' + g.name + ' mua ' + c.n + ' giá ' + c.p, 1500); }
+      else { ms.log = g.name + ' không mua ' + c.n; }
+    }else if(o.g === i){
+      const cost = mHouse(c);
+      if(o.lvl >= 2){ await mSay('🏠 ' + g.name + ' ghé thăm ' + c.n + ' của mình (đã đủ 2 nhà)', 1500); return; }
+      if(g.cash < cost){ await mSay(g.name + ' về ' + c.n + ' của mình nhưng không đủ tiền xây nhà (giá ' + cost + ')'); return; }
+      const build = await mAsk(g.name + ' về ' + c.n + ' của mình', 'Xây thêm 1 nhà với giá ' + cost + '? Tiền thuê tăng từ ' + mRentBase(c) * (1 + o.lvl) + ' lên ' + mRentBase(c) * (2 + o.lvl) + '. Nhóm đang có ' + g.cash + '.', 'Xây nhà', 'Không xây');
+      if(build){ g.cash -= cost; o.lvl++; beep(1040, .18, 'triangle'); await mSay('🏠 ' + g.name + ' xây nhà ở ' + c.n, 1500); }
+      else { ms.log = g.name + ' không xây nhà ở ' + c.n; }
+    }else{
+      const owner = ms.groups[o.g], rent = mRentBase(c) * (1 + o.lvl), pay = Math.min(g.cash, rent);
+      g.cash -= pay; owner.cash += pay; beep(200, .2, 'sawtooth');
+      await mSay('💸 ' + g.name + ' trả ' + pay + ' tiền thuê ' + c.n + ' cho ' + owner.name, 2200);
+    }
+  }
+}
+
+function mRank(done){
+  const order = ms.groups.map((g,i) => ({...g, i, a:mAssets(i)})).sort((x,y) => y.a - x.a || x.i - y.i);
+  openModal(m => {
+    m.append(mk('h3', '', done ? '🏆 Tỷ phú của lớp' : '📊 Xếp hạng tài sản'));
+    const ul = mk('ul', 'rank');
+    order.forEach((g, k) => {
+      const li = mk('li');
+      const dot = mk('i'); dot.style.background = g.color;
+      li.append(mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.'), dot, mk('span', '', g.name), mk('span', '', g.a + ' (tiền ' + g.cash + ' + đất ' + (g.a - g.cash) + ')'));
+      ul.append(li);
+    });
+    m.append(ul);
+    const a = mk('div', 'acts');
+    const ok = mk('button', 'btn gold', 'Đóng'); ok.onclick = closeModal;
+    a.append(ok); m.append(a);
+  });
+}
+$('mUndo').onclick = () => {
+  if(busy || !mHist.length) return;
+  ms = JSON.parse(mHist.pop()); mSave(); mRefresh();
+};
+$('mSound').onclick = () => { $('sound').click(); $('mSound').textContent = soundOn ? '🔊' : '🔇'; };
+$('mFull').onclick = () => $('full').click();
+$('mRankBtn').onclick = () => mRank(ms.over);
+$('mNew').onclick = () => {
+  if(busy) return;
+  askConfirm('Bắt đầu ván mới?', 'Ván cờ hiện tại sẽ bị xóa.', 'Ván mới', () => {
+    mClear(); cfg.names = ms.groups.map(g => g.name); cfg.n = ms.groups.length; openSetup('mono');
+  });
+};
+
+drawDice(1);
+</script>
+</body>
+</html>
