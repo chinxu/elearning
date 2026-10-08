@@ -224,14 +224,20 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
 .mcell .band{flex:none;height:24%;display:grid;place-items:center;font-weight:800;font-size:clamp(.6rem,.95vw,.95rem);background:#d9cbb0;white-space:nowrap;font-variant-numeric:tabular-nums}
 .mcell.owned .band{background:var(--o);color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.45)}
 .mcell.owned{box-shadow:inset 0 0 0 3px var(--o)}
-.mcell .cn{font-weight:800;font-size:clamp(.62rem,1.05vw,1.05rem);line-height:1.05;padding:3px 2px 0}
-.mcell .ci{font-size:clamp(1rem,2vw,1.9rem);line-height:1.15;padding-top:2px}
-.mcell .tok{margin-top:auto;display:flex;flex-wrap:wrap;gap:2px;justify-content:center;padding:2px}
+.mcell .cn{font-weight:800;font-size:clamp(.62rem,1.05vw,1.05rem);line-height:1.05;padding:1px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcell.corner .cn{white-space:normal}
+.mcell .ci{font-size:clamp(1rem,1.8vw,1.7rem);line-height:1.1;padding-top:1px}
+.mcell{position:relative}
+.mcell .tok{position:absolute;left:0;right:0;bottom:2px;display:flex;flex-wrap:wrap-reverse;gap:2px;justify-content:center;padding:0 2px}
 .mtok{flex:none;width:clamp(15px,1.7vw,24px);aspect-ratio:1;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.5);display:grid;place-items:center;color:#fff;font-weight:800;font-size:clamp(.5rem,.8vw,.8rem);line-height:1}
 .mtok.me{outline:3px solid var(--gold);transform:scale(1.2)}
 .mcell.corner{background:#ffe9a8}
-.mcell.chance{background:#e7d9ff}
-.mcell.tax{background:#e3e3e3}
+.mcell.good .band{background:var(--plus);color:#fff}
+.mcell.bad .band{background:var(--red);color:#fff}
+.mcell.bad{background:#ffe1dc}
+.mcell.jack{background:#fff1a8}
+.mcell.jack .band{background:var(--gold);color:var(--ink)}
+.mtok.done{outline:3px solid var(--gold)}
 .mcenter{grid-area:2/2/6/8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:#fff;padding:8px;min-width:0}
 .mcenter .big{font-size:clamp(1.6rem,4vw,3.4rem);font-weight:800;letter-spacing:.04em;text-shadow:0 3px 0 rgba(0,0,0,.35)}
 .mcenter .log{background:var(--paper);color:var(--ink);border-radius:14px;padding:.5rem 1rem;font-weight:800;font-size:clamp(.95rem,1.8vw,1.5rem);max-width:100%;box-shadow:0 3px 0 rgba(0,0,0,.3);text-wrap:balance}
@@ -266,7 +272,7 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
     </div>
     <div class="game">
       <div class="ico">🎩</div><h2>Cờ tỷ phú</h2>
-      <p>Đi vòng quanh đất nước, mua đất, xây nhà, thu tiền thuê.</p>
+      <p>Thả xúc xắc đi một vòng về đích: trúng số, trúng nhà, coi chừng bị lừa!</p>
       <button class="btn gold" id="goMono">Chơi</button>
     </div>
   </div>
@@ -309,11 +315,11 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
       </div>
     </div>
     <div id="optMono" class="hidden">
-      <div class="row"><label>Kết thúc ván</label>
-        <div class="seg" id="segTarget"><button data-v="0" class="on">Thầy tự kết thúc</button><button data-v="700">Đạt 700 tài sản</button><button data-v="800">Đạt 800 tài sản</button></div>
-      </div>
       <div class="legend" style="margin-bottom:18px">
-        <span>Mỗi nhóm bắt đầu với 500 tiền.</span><span>Qua 🚩 Xuất phát: nhận 100.</span><span>Xếp hạng theo tổng tài sản (tiền + đất + nhà).</span>
+        <span>Mỗi nhóm bắt đầu với 50 điểm, đi một vòng 24 ô để về đích.</span>
+        <span>🎰 Trúng số +50</span><span>🏠 Nhà cấp 4 +5</span><span>🏡 Nhà phố +10</span><span>🏢 Chung cư +15</span><span>🏰 Biệt thự +20</span><span>🧧 Lì xì +10</span>
+        <span>📱 Tin nhắn lừa đảo −5</span><span>🎵 Bị hack TikTok −10</span><span>🛒 Shop online lừa −10</span><span>🎮 Nạp game quá tay −15</span>
+        <span>🏁 Về đích: thứ nhất +20, thứ hai +15, thứ ba +10, thứ tư +5.</span>
       </div>
     </div>
     <div class="row" style="margin:0;justify-content:space-between">
@@ -429,10 +435,9 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
     <button class="btn red" id="mNew">Ván mới</button>
     <div class="legend">
       <span>Nhóm trả lời đúng → bấm 🎲 của nhóm đó.</span>
-      <span>🚩 Qua Xuất phát: +100</span>
-      <span>Đất trống: được mua</span>
-      <span>Đất nhóm khác: trả tiền thuê</span>
-      <span>Đất của mình: được xây nhà 🏠</span>
+      <span>Đi hết một vòng là về đích.</span>
+      <span>🏁 Về đích: thứ nhất +20, thứ hai +15, thứ ba +10, thứ tư +5</span>
+      <span>Xếp hạng theo điểm.</span>
     </div>
   </div>
   <div class="marena">
@@ -1109,58 +1114,43 @@ $('tNew').onclick = () => {
 
 
 /* =====================================================
-   CỜ TỶ PHÚ
+   CỜ TỶ PHÚ (bản đơn giản): đi một vòng 24 ô về đích, dọc đường được cộng / trừ điểm
    ===================================================== */
-const MKEY = 'sanchoi_typhu_v1';
-const START_CASH = 500, SALARY = 100;
-const LAND = (n, p) => ({k:'land', n, p});
-const CHANCE = {k:'chance', n:'Cơ hội', e:'❓'};
-// 24 ô đi theo chiều kim đồng hồ, bắt đầu từ góc trên bên trái; 4 góc là ô 0, 7, 12, 19
-const MB = [
-  {k:'go', n:'Xuất phát', e:'🚩'}, LAND('Hà Giang',60), LAND('Sa Pa',60), CHANCE, LAND('Hạ Long',80), LAND('Hà Nội',100), {k:'tax', n:'Thuế 50', e:'💸', v:50}, {k:'gift', n:'Lì xì +50', e:'🧧', v:50},
-  LAND('Ninh Bình',100), CHANCE, LAND('Huế',120), LAND('Đà Nẵng',140),
-  {k:'rest', n:'Nghỉ mát', e:'🏖️'}, LAND('Hội An',140), LAND('Nha Trang',160), CHANCE, LAND('Đà Lạt',160), {k:'tax', n:'Thuế 100', e:'💸', v:100}, LAND('TP.HCM',180), {k:'storm', n:'Bão', e:'🌪️'},
-  LAND('Cần Thơ',180), CHANCE, LAND('Phú Quốc',200), LAND('Côn Đảo',220)
-];
-const CARDS = [
-  {e:'🎁', t:'Được thưởng học sinh giỏi: nhận 50', cash:50},
-  {e:'🎉', t:'Trúng thưởng hội chợ: nhận 100', cash:100},
-  {e:'🪟', t:'Đá bóng làm vỡ kính: đền 50', cash:-50},
-  {e:'🍦', t:'Đãi cả nhóm ăn kem: mất 30', cash:-30},
-  {e:'🚀', t:'Tiến thêm 3 ô', move:3},
-  {e:'🔙', t:'Lùi lại 2 ô', move:-2},
-  {e:'🚩', t:'Về Xuất phát và nhận ' + SALARY, home:true},
-  {e:'🎂', t:'Sinh nhật: mỗi nhóm khác tặng bạn 20', each:20},
-  {e:'💝', t:'Chia quà: bạn tặng mỗi nhóm khác 10', each:-10}
-];
-const mRentBase = c => Math.round(c.p * .4 / 10) * 10;      // tiền thuê khi chưa có nhà
-const mHouse = c => c.p / 2;                                // giá xây 1 nhà
-let mcfg = {target:0}, ms = null, mHist = [];
+const MKEY = 'sanchoi_typhu_v2';
+const M_START = 50, M_LEN = 24, M_FINISH = [20, 15, 10, 5];   // thưởng về đích theo thứ tự
+// loại ô: [biểu tượng, tên, điểm, số ô trên bàn]
+const MT = {
+  lotto: ['🎰','Trúng số', 50, 1],
+  h4:    ['🏰','Biệt thự', 20, 2],
+  h3:    ['🏢','Chung cư', 15, 2],
+  h2:    ['🏡','Nhà phố', 10, 3],
+  h1:    ['🏠','Nhà cấp 4', 5, 3],
+  lixi:  ['🧧','Lì xì', 10, 2],
+  sms:   ['📱','Tin nhắn lừa đảo', -5, 3, 'SMS lừa'],
+  tiktok:['🎵','Bị hack TikTok', -10, 2, 'Bị hack'],
+  shop:  ['🛒','Shop online lừa', -10, 1, 'Shop lừa'],
+  game:  ['🎮','Nạp game quá tay', -15, 1, 'Nạp game'],
+  road:  ['🛣️','Đường trống', 0, 3, 'Trống']
+};
+let ms = null, mHist = [];
 
 function mSave(){ try{ localStorage.setItem(MKEY, JSON.stringify(ms)); }catch(e){} }
 function mLoad(){ try{ return JSON.parse(localStorage.getItem(MKEY)); }catch(e){ return null; } }
 function mClear(){ try{ localStorage.removeItem(MKEY); }catch(e){} }
 
-$('segTarget').addEventListener('click', e => {
-  const b = e.target.closest('button'); if(!b) return;
-  mcfg.target = +b.dataset.v;
-  [...$('segTarget').children].forEach(x => x.classList.toggle('on', x === b));
-});
-
-function mLands(i){ return Object.keys(ms.own).filter(k => ms.own[k].g === i).map(Number); }
-function mAssets(i){
-  return ms.groups[i].cash + mLands(i).reduce((sum, k) => sum + MB[k].p + ms.own[k].lvl * mHouse(MB[k]), 0);
-}
 function mStart(){
   const names = [...$('names').querySelectorAll('input')].map((i,k) => i.value.trim() || ('Nhóm ' + (k+1)));
   cfg.names = names;
+  const cells = [];
+  for(const t in MT) for(let k=0;k<MT[t][3];k++) cells.push(t);          // 23 ô, xếp ngẫu nhiên mỗi ván
+  for(let i=cells.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [cells[i],cells[j]] = [cells[j],cells[i]]; }
   ms = {
-    target: mcfg.target, over: false, turn: null, log: '', own: {},
-    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], cash:START_CASH, pos:0}))
+    cells: ['start', ...cells], finished: 0, over: false, turn: null, log: '',
+    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], pts:M_START, steps:0, rank:0}))
   };
   mHist = []; mSave(); mBuild(); show('mono');
 }
-function mPlace(k){   // vị trí ô k trên lưới 8 × 6
+function mPlace(k){   // vị trí ô k trên lưới 8 × 6, đi theo chiều kim đồng hồ từ góc trên bên trái
   if(k <= 7) return [1, k + 1];
   if(k <= 11) return [k - 6, 8];
   if(k <= 19) return [6, 20 - k];
@@ -1169,12 +1159,15 @@ function mPlace(k){   // vị trí ô k trên lưới 8 × 6
 function mBuild(){
   $('mSound').textContent = soundOn ? '🔊' : '🔇';
   const bd = $('mBoard'); bd.innerHTML = '';
-  MB.forEach((c, k) => {
-    const el = mk('div', 'mcell ' + (c.k === 'land' ? 'land' : c.k === 'chance' ? 'chance' : c.k === 'tax' ? 'tax' : 'corner'));
-    el.id = 'mc' + k;
+  ms.cells.forEach((t, k) => {
+    const el = mk('div', 'mcell'); el.id = 'mc' + k;
     const [r, col] = mPlace(k); el.style.gridRow = r; el.style.gridColumn = col;
-    if(c.k === 'land'){ const band = mk('div', 'band'); band.id = 'mb' + k; el.append(band, mk('div', 'cn', c.n)); }
-    else el.append(mk('div', 'ci', c.e), mk('div', 'cn', c.n));
+    if(t === 'start'){ el.classList.add('corner'); el.append(mk('div', 'ci', '🏁'), mk('div', 'cn', 'Xuất phát · Đích')); }
+    else{
+      const T = MT[t];
+      el.classList.add(t === 'lotto' ? 'jack' : T[2] > 0 ? 'good' : T[2] < 0 ? 'bad' : 'plain');
+      el.append(mk('div', 'band', T[2] > 0 ? '+' + T[2] : T[2] < 0 ? '−' + (-T[2]) : '·'), mk('div', 'ci', T[0]), mk('div', 'cn', T[4] || T[1]));
+    }
     const tok = mk('div', 'tok'); tok.id = 'mt' + k; el.append(tok);
     bd.append(el);
   });
@@ -1194,49 +1187,32 @@ function mBuild(){
   mRefresh();
 }
 function mRefresh(){
-  MB.forEach((c, k) => {
-    const el = $('mc' + k), o = ms.own[k];
-    if(c.k === 'land'){
-      el.classList.toggle('owned', !!o);
-      if(o){ el.style.setProperty('--o', ms.groups[o.g].color); $('mb' + k).textContent = '🏠'.repeat(o.lvl) + ' thuê ' + mRentBase(c) * (1 + o.lvl); }
-      else $('mb' + k).textContent = 'Giá ' + c.p;
-    }
+  ms.cells.forEach((t, k) => {
     const tok = $('mt' + k); tok.textContent = '';
     ms.groups.forEach((g, i) => {
-      if(g.pos !== k) return;
-      const t = mk('span', 'mtok' + (ms.turn === i ? ' me' : ''), i + 1); t.style.background = g.color; tok.append(t);
+      if(g.steps % M_LEN !== k) return;
+      const el = mk('span', 'mtok' + (ms.turn === i ? ' me' : '') + (g.rank ? ' done' : ''), i + 1);
+      el.style.background = g.color; tok.append(el);
     });
   });
   $('mLog').textContent = ms.log || 'Nhóm trả lời đúng → bấm 🎲 của nhóm đó';
-  const ord = ms.groups.map((g, i) => i).sort((a, b) => mAssets(b) - mAssets(a) || a - b);
+  const top = Math.max(...ms.groups.map(g => g.pts));
+  const ord = ms.groups.map((g, i) => i).sort((a, b) => ms.groups[b].pts - ms.groups[a].pts || a - b);
   ord.forEach((i, k) => { $('mrow' + i).style.order = k; });
   ms.groups.forEach((g, i) => {
-    const dm = $('mdm' + i); dm.textContent = '💰 ' + g.cash;
-    dm.append(mk('small', '', ' · 🏡 ' + mLands(i).length + ' đất' + (ord[0] === i && mAssets(i) > START_CASH ? ' 👑' : '')));
-    $('mroll' + i).disabled = busy || ms.over;
+    const dm = $('mdm' + i); dm.textContent = '💰 ' + g.pts;
+    dm.append(mk('small', '', (g.rank ? ' · 🏁 về đích thứ ' + g.rank : ' · ô ' + g.steps + '/' + M_LEN) + (g.pts === top && ms.groups.some(o => o.pts < top) ? ' 👑' : '')));
+    $('mroll' + i).disabled = busy || ms.over || !!g.rank;
   });
   $('mUndo').disabled = busy || mHist.length === 0;
 }
 async function mSay(msg, wait){
-  ms.log = msg; mRefresh(); toast(msg); await sleep(wait || 1900); hideToast();
-}
-function mAsk(title, msg, yes, no){
-  return new Promise(res => {
-    const done = v => { modalLock = false; closeModal(); res(v); };
-    modalLock = true;
-    openModal(m => {
-      m.append(mk('h3', '', title), mk('p', '', msg));
-      const a = mk('div', 'acts');
-      const bn = mk('button', 'btn', no); bn.onclick = () => done(false);
-      const by = mk('button', 'btn gold', yes); by.onclick = () => done(true);
-      a.append(bn, by); m.append(a);
-    });
-  });
+  ms.log = msg; mRefresh(); toast(msg); await sleep(wait || 2000); hideToast();
 }
 
 async function mRoll(i){
   const g = ms.groups[i];
-  if(busy || ms.over) return;
+  if(busy || ms.over || g.rank) return;
   busy = true;
   mHist.push(JSON.stringify(ms)); if(mHist.length > 40) mHist.shift();
   ms.turn = i; mRefresh();
@@ -1253,92 +1229,47 @@ async function mRoll(i){
   await sleep(1000);
   $('diceOv').classList.add('hidden');
 
-  // 2. Đi từng ô
-  let passed = false;
-  for(let s=0;s<v;s++){
-    g.pos = (g.pos + 1) % MB.length; if(g.pos === 0) passed = true;
-    mRefresh(); beep(420, .04); await sleep(260);
+  // 2. Đi từng ô, tới đích thì dừng
+  for(let s=0; s<v && g.steps < M_LEN; s++){
+    g.steps++; mRefresh(); beep(420, .04); await sleep(260);
   }
-  if(passed && g.pos !== 0){ g.cash += SALARY; await mSay('🚩 ' + g.name + ' đi qua Xuất phát: nhận ' + SALARY, 1500); }
 
-  // 3. Xử lý ô vừa đến
-  await mResolve(i, 0);
-
-  ms.turn = null;
-  if(ms.target && mAssets(i) >= ms.target){
-    ms.over = true;
-    await mSay('🏆 ' + g.name + ' đạt ' + mAssets(i) + ' tài sản và trở thành tỷ phú!', 2400);
+  // 3. Về đích hoặc nhận kết quả của ô vừa đến
+  if(g.steps >= M_LEN){
+    ms.finished++; g.rank = ms.finished;
+    const bonus = M_FINISH[g.rank - 1] || 0; g.pts += bonus;
+    [660,880,1040].forEach((f,k) => setTimeout(() => beep(f,.18,'triangle'), k*150));
+    await mSay('🏁 ' + g.name + ' về đích thứ ' + g.rank + (bonus ? ': +' + bonus + ' điểm' : ''), 2300);
+    if(ms.finished === ms.groups.length) ms.over = true;
+  }else{
+    const T = MT[ms.cells[g.steps]];
+    if(T[2] > 0){
+      g.pts += T[2];
+      if(T[2] >= 50) [660,880,1040,1320].forEach((f,k) => setTimeout(() => beep(f,.18,'triangle'), k*140)); else beep(880, .18, 'triangle');
+      await mSay(T[0] + ' ' + g.name + (T[1] === 'Lì xì' ? ' nhận lì xì' : ' trúng ' + T[1].toLowerCase()) + ': +' + T[2] + ' điểm', T[2] >= 50 ? 2600 : 2000);
+    }else if(T[2] < 0){
+      const lost = Math.min(g.pts, -T[2]); g.pts -= lost;
+      beep(160, .3, 'sawtooth');
+      await mSay(T[0] + ' ' + g.name + ' — ' + T[1].toLowerCase() + ': −' + lost + ' điểm');
+    }else{
+      await mSay(T[0] + ' ' + g.name + ' đi qua đường trống, không có gì xảy ra', 1400);
+    }
   }
-  busy = false; mSave(); mRefresh();
+
+  ms.turn = null; busy = false; mSave(); mRefresh();
   if(ms.over) mRank(true);
 }
 
-async function mResolve(i, depth){
-  const g = ms.groups[i], k = g.pos, c = MB[k];
-  if(c.k === 'go'){ g.cash += SALARY; await mSay('🚩 ' + g.name + ' về Xuất phát: nhận ' + SALARY); }
-  else if(c.k === 'gift'){ g.cash += c.v; beep(880, .18, 'triangle'); await mSay('🧧 ' + g.name + ' nhận lì xì ' + c.v); }
-  else if(c.k === 'rest'){ await mSay('🏖️ ' + g.name + ' nghỉ mát, không có gì xảy ra', 1500); }
-  else if(c.k === 'tax'){ const pay = Math.min(g.cash, c.v); g.cash -= pay; beep(200, .2, 'sawtooth'); await mSay('💸 ' + g.name + ' đóng thuế ' + pay); }
-  else if(c.k === 'storm'){ g.pos = 0; beep(140, .35, 'sawtooth'); await mSay('🌪️ ' + g.name + ' gặp bão, bị thổi về Xuất phát (không nhận lương)'); }
-  else if(c.k === 'chance'){
-    if(depth >= 2){ await mSay(g.name + ' dừng ở ô Cơ hội', 1300); return; }
-    const card = CARDS[Math.floor(Math.random() * CARDS.length)];
-    $('revWho').textContent = g.name + ' rút thẻ Cơ hội';
-    $('revEmo').textContent = '🎴'; $('revMsg').textContent = '';
-    $('revOv').classList.remove('hidden');
-    for(let n=0;n<5;n++){ beep(300 + n*40, .05); await sleep(130); }
-    $('revEmo').textContent = card.e; $('revMsg').textContent = card.t;
-    beep(card.cash < 0 || card.each < 0 || card.move < 0 ? 200 : 880, .2, 'triangle');
-    await sleep(2400);
-    $('revOv').classList.add('hidden');
-    ms.log = g.name + ' rút Cơ hội: ' + card.t;
-    if(card.cash) g.cash = Math.max(0, g.cash + card.cash);
-    if(card.each) ms.groups.forEach((o, j) => {
-      if(j === i) return;
-      if(card.each > 0){ const pay = Math.min(o.cash, card.each); o.cash -= pay; g.cash += pay; }
-      else { const pay = Math.min(g.cash, -card.each); g.cash -= pay; o.cash += pay; }
-    });
-    if(card.home){ g.pos = 0; g.cash += SALARY; }
-    mRefresh();
-    if(card.move){
-      const to = (g.pos + card.move + MB.length) % MB.length;
-      const wrapped = card.move > 0 && to < g.pos;
-      g.pos = to; mRefresh(); await sleep(500);
-      if(wrapped && to !== 0){ g.cash += SALARY; await mSay('🚩 ' + g.name + ' đi qua Xuất phát: nhận ' + SALARY, 1500); }
-      await mResolve(i, depth + 1);
-    }
-  }
-  else if(c.k === 'land'){
-    const o = ms.own[k];
-    if(!o){
-      if(g.cash < c.p){ await mSay(g.name + ' đến ' + c.n + ' nhưng không đủ tiền mua (giá ' + c.p + ')'); return; }
-      const buy = await mAsk(g.name + ' đến ' + c.n, 'Mua đất này với giá ' + c.p + '? Nhóm đang có ' + g.cash + '. Nhóm khác đi vào sẽ trả ' + mRentBase(c) + ' tiền thuê.', 'Mua', 'Không mua');
-      if(buy){ g.cash -= c.p; ms.own[k] = {g:i, lvl:0}; beep(880, .18, 'triangle'); await mSay('🏡 ' + g.name + ' mua ' + c.n + ' giá ' + c.p, 1500); }
-      else { ms.log = g.name + ' không mua ' + c.n; }
-    }else if(o.g === i){
-      const cost = mHouse(c);
-      if(o.lvl >= 2){ await mSay('🏠 ' + g.name + ' ghé thăm ' + c.n + ' của mình (đã đủ 2 nhà)', 1500); return; }
-      if(g.cash < cost){ await mSay(g.name + ' về ' + c.n + ' của mình nhưng không đủ tiền xây nhà (giá ' + cost + ')'); return; }
-      const build = await mAsk(g.name + ' về ' + c.n + ' của mình', 'Xây thêm 1 nhà với giá ' + cost + '? Tiền thuê tăng từ ' + mRentBase(c) * (1 + o.lvl) + ' lên ' + mRentBase(c) * (2 + o.lvl) + '. Nhóm đang có ' + g.cash + '.', 'Xây nhà', 'Không xây');
-      if(build){ g.cash -= cost; o.lvl++; beep(1040, .18, 'triangle'); await mSay('🏠 ' + g.name + ' xây nhà ở ' + c.n, 1500); }
-      else { ms.log = g.name + ' không xây nhà ở ' + c.n; }
-    }else{
-      const owner = ms.groups[o.g], rent = mRentBase(c) * (1 + o.lvl), pay = Math.min(g.cash, rent);
-      g.cash -= pay; owner.cash += pay; beep(200, .2, 'sawtooth');
-      await mSay('💸 ' + g.name + ' trả ' + pay + ' tiền thuê ' + c.n + ' cho ' + owner.name, 2200);
-    }
-  }
-}
-
 function mRank(done){
-  const order = ms.groups.map((g,i) => ({...g, i, a:mAssets(i)})).sort((x,y) => y.a - x.a || x.i - y.i);
+  const order = ms.groups.map((g,i) => ({...g, i})).sort((x,y) => y.pts - x.pts || x.i - y.i);
   openModal(m => {
-    m.append(mk('h3', '', done ? '🏆 Tỷ phú của lớp' : '📊 Xếp hạng tài sản'));
+    m.append(mk('h3', '', done ? '🏆 Tỷ phú của lớp' : '📊 Xếp hạng hiện tại'));
     const ul = mk('ul', 'rank');
     order.forEach((g, k) => {
       const li = mk('li');
       const dot = mk('i'); dot.style.background = g.color;
-      li.append(mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.'), dot, mk('span', '', g.name), mk('span', '', g.a + ' (tiền ' + g.cash + ' + đất ' + (g.a - g.cash) + ')'));
+      li.append(mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.'), dot, mk('span', '', g.name),
+                mk('span', '', g.pts + ' điểm' + (g.rank ? ' · về đích thứ ' + g.rank : ' · ô ' + g.steps + '/' + M_LEN)));
       ul.append(li);
     });
     m.append(ul);
