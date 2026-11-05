@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Việc của Sơn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F2EEE3;
+    --ink: #17140F;
+    --ink-soft: #6E6A5D;
+    --line: #D9D3C2;
+    --pill: #17140F;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  [hidden]{display:none !important;}
+  body{
+    font-family:'Be Vietnam Pro', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  #board{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 32px 120px;
+    position:relative;
+  }
+  #board.drag-active::before{
+    content:"Thả để ghim dự án";
+    position:fixed;
+    inset:0;
+    background:rgba(242,238,227,0.94);
+    color:var(--ink);
+    font-size:24px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    pointer-events:none;
+    border:2px dashed var(--ink);
+    margin:16px;
+  }
+  #topbar{
+    max-width:1040px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:26px 32px;
+    border-bottom:1px solid var(--line);
+  }
+  #brand{
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.02em;
+  }
+  #auth-status{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  #auth-status .email{opacity:0.85; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  #auth-status button{
+    background:transparent;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    padding:7px 16px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  #auth-status button:hover{background:var(--ink); color:var(--bg);}
+
+  #tabs{
+    display:flex;
+    gap:10px;
+    padding:32px 0 0;
+  }
+  .tab-btn{
+    background:transparent;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    padding:9px 18px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .tab-btn.active{
+    background:var(--ink);
+    color:var(--bg);
+  }
+  .tab-btn:not(.active):hover{background:rgba(23,20,15,0.06);}
+
+  header{
+    padding:24px 0 44px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:40px;
+  }
+  h1{
+    font-size:56px;
+    font-weight:800;
+    color:var(--ink);
+    margin:0 0 14px;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+  header p{
+    font-size:15px;
+    color:var(--ink-soft);
+    margin:0;
+    max-width:480px;
+    line-height:1.6;
+  }
+  .section-label{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    margin:0;
+    text-transform:uppercase;
+  }
+  #cards-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(210px, 1fr));
+    gap:16px;
+  }
+  .card{
+    position:relative;
+    background:transparent;
+    border:2px solid var(--ink);
+    border-radius:16px;
+    padding:28px 24px 28px 30px;
+    cursor:pointer;
+    transition:transform .12s ease, background-color .15s ease;
+    user-select:none;
+    min-height:128px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:6px;
+    background:var(--accent, var(--ink));
+  }
+  .card:hover{
+    transform:translateY(-2px);
+    background:var(--ink);
+  }
+  .card:hover .name, .card:hover .domain, .card:hover .index{
+    color:var(--bg);
+  }
+  .card .index{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .card .name{
+    font-weight:700;
+    font-size:16px;
+    line-height:1.3;
+    color:var(--ink);
+    margin:0 0 4px;
+    word-break:break-word;
+    transition:color .15s ease;
+  }
+  .card .domain{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin:0;
+    word-break:break-word;
+    transition:color .15s ease;
+  }
+  .card .actions{
+    position:absolute;
+    top:10px;
+    right:10px;
+    display:flex;
+    gap:4px;
+    opacity:0;
+    transition:opacity .12s;
+  }
+  .card:hover .actions{opacity:1;}
+  .card .actions button{
+    width:24px;
+    height:24px;
+    border:2px solid var(--ink);
+    border-radius:50%;
+    background:var(--bg);
+    color:var(--ink);
+    font-size:12px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    line-height:1;
+    transition:background-color .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .card .actions button:hover{background:var(--ink); color:var(--bg);}
+  .card:hover .actions button{border-color:var(--bg); color:var(--bg); background:transparent;}
+  .card:hover .actions button:hover{background:var(--bg); color:var(--ink);}
+
+  #empty-state, #notes-empty{
+    color:var(--ink-soft);
+    font-size:14px;
+    max-width:420px;
+    padding:32px 0;
+    line-height:1.6;
+    border:1px dashed var(--line);
+    border-radius:10px;
+    text-align:center;
+    margin-top:8px;
+  }
+
+  #add-btn{
+    position:fixed;
+    right:32px;
+    bottom:32px;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    border:none;
+    background:var(--pill);
+    color:var(--bg);
+    font-size:26px;
+    font-weight:300;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:40;
+    box-shadow:0 6px 16px rgba(23,20,15,0.25);
+  }
+  #add-btn:hover{opacity:0.85;}
+
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(23,20,15,0.35);
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    z-index:60;
+    padding:20px;
+    overflow-y:auto;
+  }
+  .modal-card{
+    background:var(--bg);
+    width:100%;
+    max-width:380px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:28px 26px 24px;
+    margin:auto;
+  }
+  .modal-card h2{
+    font-size:18px;
+    font-weight:800;
+    margin:0 0 18px;
+    color:var(--ink);
+  }
+  .modal-card label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .modal-card input, .modal-card textarea{
+    width:100%;
+    padding:10px 13px;
+    font-size:16px;
+    font-family:inherit;
+    border:1px solid var(--line);
+    border-radius:8px;
+    margin-bottom:16px;
+    background:#fff;
+    color:var(--ink);
+    resize:vertical;
+  }
+  .modal-card input:focus, .modal-card textarea:focus{outline:1px solid var(--ink); outline-offset:0;}
+  .preset-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin:-8px 0 16px;
+  }
+  .preset-tags .tag-pill.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--bg);
+  }
+  .form-error{
+    font-size:12px;
+    color:#B3261E;
+    margin:-10px 0 14px;
+    display:none;
+  }
+  .form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:4px;
+  }
+  .form-actions button{
+    padding:9px 18px;
+    font-size:13px;
+    font-family:inherit;
+    font-weight:600;
+    border-radius:999px;
+    border:1px solid var(--ink);
+    cursor:pointer;
+    background:transparent;
+    color:var(--ink);
+  }
+  .form-actions button[type="submit"]{
+    background:var(--ink);
+    color:var(--bg);
+  }
+  .form-actions button[type="submit"]:hover{opacity:0.85;}
+  .form-actions button[type="button"]:hover{background:rgba(23,20,15,0.06);}
+
+  #loading, #notes-loading{
+    color:var(--ink-soft);
+    font-size:14px;
+    padding:20px 0;
+  }
+
+  /* ---- Notes tab ---- */
+  #week-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+    margin-bottom:20px;
+  }
+  #week-nav button{
+    background:transparent;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+    white-space:nowrap;
+  }
+  #week-nav button:hover{background:var(--ink); color:var(--bg);}
+  #week-label{
+    font-size:16px;
+    font-weight:700;
+    color:var(--ink);
+    text-align:center;
+  }
+  #tag-filter{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:24px;
+  }
+  .tag-pill{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    padding:5px 13px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .tag-pill:hover{border-color:var(--ink); color:var(--ink);}
+  .tag-pill.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--bg);
+  }
+  #notes-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .note-item{
+    position:relative;
+    border:2px solid var(--ink);
+    border-radius:14px;
+    padding:18px 20px;
+  }
+  .note-item .note-week{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+    text-transform:uppercase;
+  }
+  .note-item .note-content{
+    font-size:14px;
+    color:var(--ink);
+    margin:0 0 10px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .note-item .note-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .note-item .note-tags span{
+    background:rgba(23,20,15,0.06);
+    color:var(--ink-soft);
+    font-size:11px;
+    font-weight:600;
+    padding:4px 10px;
+    border-radius:999px;
+  }
+  .note-item .actions{
+    position:absolute;
+    top:12px;
+    right:12px;
+    display:flex;
+    gap:4px;
+    opacity:0;
+    transition:opacity .12s;
+  }
+  .note-item:hover .actions{opacity:1;}
+  .note-item .actions button{
+    width:24px;
+    height:24px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:var(--bg);
+    color:var(--ink-soft);
+    font-size:12px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    line-height:1;
+  }
+  .note-item .actions button:hover{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+
+  @media (max-width:600px){
+    #board{padding:0 20px 100px;}
+    #topbar{padding:20px;}
+    h1{font-size:38px;}
+    header{padding:24px 0 32px;}
+    #week-nav{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="brand">VIỆC CỦA SƠN</div>
+  <div id="auth-status">
+    <span id="auth-text">Chỉ xem</span>
+    <button id="login-btn">Đăng nhập</button>
+    <button id="logout-btn" hidden>Đăng xuất</button>
+  </div>
+</div>
+
+<div id="board">
+  <div id="tabs">
+    <button class="tab-btn active" data-tab="links">Dự án</button>
+    <button class="tab-btn" data-tab="notes">Ghi chú công việc</button>
+  </div>
+
+  <section id="links-section">
+    <header>
+      <p class="section-label">DỰ ÁN HOẠT ĐỘNG</p>
+    </header>
+    <div id="loading">Đang tải…</div>
+    <div id="cards-container" hidden></div>
+    <div id="empty-state" hidden>Chưa có dự án nào. Đăng nhập rồi kéo một đường link vào đây, hoặc bấm dấu cộng để thêm dự án đầu tiên.</div>
+  </section>
+
+  <section id="notes-section" hidden>
+    <header>
+      <p class="section-label">GHI CHÚ CÔNG VIỆC</p>
+    </header>
+    <div id="week-nav">
+      <button id="week-prev">← Tuần trước</button>
+      <span id="week-label"></span>
+      <button id="week-next">Tuần sau →</button>
+    </div>
+    <div id="tag-filter"></div>
+    <div id="notes-loading">Đang tải…</div>
+    <div id="notes-list" hidden></div>
+    <div id="notes-empty" hidden>Chưa có ghi chú nào trong tuần này.</div>
+  </section>
+</div>
+
+<button id="add-btn" aria-label="Thêm" hidden>+</button>
+
+<div class="modal-overlay" id="login-overlay" hidden>
+  <form class="modal-card" id="login-form">
+    <h2>Đăng nhập</h2>
+    <label for="login-email">Email</label>
+    <input id="login-email" type="email" autocomplete="username">
+    <label for="login-password">Mật khẩu</label>
+    <input id="login-password" type="password" autocomplete="current-password">
+    <div class="form-error" id="login-error">Sai email hoặc mật khẩu.</div>
+    <div class="form-actions">
+      <button type="button" id="login-cancel">Hủy</button>
+      <button type="submit">Đăng nhập</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal-overlay" id="link-overlay" hidden>
+  <form class="modal-card" id="link-form">
+    <h2 id="link-form-title">Ghim dự án mới</h2>
+    <label for="input-name">Tên dự án</label>
+    <input id="input-name" type="text" placeholder="Ví dụ: Sổ chủ nhiệm" autocomplete="off">
+    <label for="input-url">Đường dẫn</label>
+    <input id="input-url" type="text" placeholder="https://...">
+    <div class="form-error" id="link-error">Vui lòng nhập tên và một đường dẫn hợp lệ.</div>
+    <div class="form-actions">
+      <button type="button" id="link-cancel">Hủy</button>
+      <button type="submit" id="link-submit">Ghim</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal-overlay" id="note-overlay" hidden>
+  <form class="modal-card" id="note-form">
+    <h2 id="note-form-title">Thêm ghi chú</h2>
+    <label for="note-content">Nội dung</label>
+    <textarea id="note-content" rows="4" placeholder="Việc cần làm trong tuần..."></textarea>
+    <label for="note-tags">Tag (cách nhau bằng dấu phẩy)</label>
+    <input id="note-tags" type="text" placeholder="Ví dụ: họp, lớp 6a1, giấy tờ">
+    <div class="preset-tags">
+      <button type="button" class="tag-pill preset-tag" data-tag="viectruong">#viectruong</button>
+      <button type="button" class="tag-pill preset-tag" data-tag="viecnha">#viecnha</button>
+      <button type="button" class="tag-pill preset-tag" data-tag="vieclop">#vieclop</button>
+    </div>
+    <div class="form-error" id="note-error">Vui lòng nhập nội dung ghi chú.</div>
+    <div class="form-actions">
+      <button type="button" id="note-cancel">Hủy</button>
+      <button type="submit" id="note-submit">Lưu</button>
+    </div>
+  </form>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc,
+  writeBatch, serverTimestamp, query, orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDUxWBS7c4btMjm9fRQLjORl9bZT9RL5lM",
+  authDomain: "webtonghop-38365.firebaseapp.com",
+  projectId: "webtonghop-38365",
+  storageBucket: "webtonghop-38365.firebasestorage.app",
+  messagingSenderId: "804876251387",
+  appId: "1:804876251387:web:f76245c813ce962dd8805e"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const linksCol = collection(db, "du_an_links");
+const notesCol = collection(db, "ghi_chu_cong_viec");
+
+let links = [];
+let notes = [];
+let isAdmin = false;
+let editingId = null;
+let editingNoteId = null;
+let activeMainTab = 'links';
+let viewMode = 'week'; // 'week' | 'tag'
+let activeTag = null;
+let currentMonday = mondayOf(new Date());
+
+const boardEl = document.getElementById('board');
+const containerEl = document.getElementById('cards-container');
+const emptyStateEl = document.getElementById('empty-state');
+const loadingEl = document.getElementById('loading');
+const addBtn = document.getElementById('add-btn');
+
+const linksSection = document.getElementById('links-section');
+const notesSection = document.getElementById('notes-section');
+const tabButtons = document.querySelectorAll('.tab-btn');
+
+const authText = document.getElementById('auth-text');
+const loginBtn = document.getElementById('login-btn');
+const logoutBtn = document.getElementById('logout-btn');
+
+const loginOverlay = document.getElementById('login-overlay');
+const loginForm = document.getElementById('login-form');
+const loginEmail = document.getElementById('login-email');
+const loginPassword = document.getElementById('login-password');
+const loginError = document.getElementById('login-error');
+const loginCancel = document.getElementById('login-cancel');
+
+const linkOverlay = document.getElementById('link-overlay');
+const linkForm = document.getElementById('link-form');
+const linkFormTitle = document.getElementById('link-form-title');
+const nameInput = document.getElementById('input-name');
+const urlInput = document.getElementById('input-url');
+const linkError = document.getElementById('link-error');
+const linkCancel = document.getElementById('link-cancel');
+const linkSubmit = document.getElementById('link-submit');
+
+const weekPrevBtn = document.getElementById('week-prev');
+const weekNextBtn = document.getElementById('week-next');
+const weekLabelEl = document.getElementById('week-label');
+const tagFilterEl = document.getElementById('tag-filter');
+const notesLoadingEl = document.getElementById('notes-loading');
+const notesListEl = document.getElementById('notes-list');
+const notesEmptyEl = document.getElementById('notes-empty');
+
+const noteOverlay = document.getElementById('note-overlay');
+const noteForm = document.getElementById('note-form');
+const noteFormTitle = document.getElementById('note-form-title');
+const noteContentInput = document.getElementById('note-content');
+const noteTagsInput = document.getElementById('note-tags');
+const noteError = document.getElementById('note-error');
+const noteCancel = document.getElementById('note-cancel');
+const presetTagButtons = document.querySelectorAll('.preset-tag');
+
+function normalizeUrl(raw){
+  let u = (raw || '').trim();
+  if(!u) return null;
+  if(!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  try{ return new URL(u).href; }
+  catch(e){ return null; }
+}
+
+function domainOf(url){
+  try{ return new URL(url).hostname.replace(/^www\./,''); }
+  catch(e){ return url; }
+}
+
+// ---- Week helpers ----
+function mondayOf(date){
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  d.setHours(0,0,0,0);
+  return d;
+}
+function toKey(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+function formatDM(d){
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+function weekLabelFor(monday){
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  return `Tuần ${formatDM(monday)} - ${formatDM(sunday)}/${sunday.getFullYear()}`;
+}
+
+// ---- Tabs ----
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeMainTab = btn.dataset.tab;
+    tabButtons.forEach(b => b.classList.toggle('active', b === btn));
+    linksSection.hidden = activeMainTab !== 'links';
+    notesSection.hidden = activeMainTab !== 'notes';
+    addBtn.hidden = !isAdmin;
+  });
+});
+
+// ---- Auth ----
+onAuthStateChanged(auth, (user) => {
+  isAdmin = !!user;
+  loginBtn.hidden = isAdmin;
+  logoutBtn.hidden = !isAdmin;
+  addBtn.hidden = !isAdmin;
+  authText.textContent = isAdmin ? user.email : 'Chỉ xem';
+  render();
+  renderNotes();
+});
+
+loginBtn.addEventListener('click', () => {
+  loginError.style.display = 'none';
+  loginForm.reset();
+  loginOverlay.hidden = false;
+  loginEmail.focus();
+});
+loginCancel.addEventListener('click', () => loginOverlay.hidden = true);
+loginOverlay.addEventListener('click', (e) => { if(e.target === loginOverlay) loginOverlay.hidden = true; });
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try{
+    await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPassword.value);
+    loginOverlay.hidden = true;
+  }catch(err){
+    loginError.textContent = 'Sai email hoặc mật khẩu.';
+    loginError.style.display = 'block';
+  }
+});
+
+logoutBtn.addEventListener('click', () => signOut(auth));
+
+addBtn.addEventListener('click', () => {
+  if(activeMainTab === 'links') openLinkForm(null);
+  else openNoteForm(null);
+});
+
+// ---- Links: data / render ----
+const linksQuery = query(linksCol, orderBy('order', 'asc'));
+onSnapshot(linksQuery, (snapshot) => {
+  links = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  loadingEl.hidden = true;
+  render();
+}, (err) => {
+  loadingEl.textContent = 'Không tải được dữ liệu (kiểm tra lại quyền truy cập Firestore).';
+  console.error(err);
+});
+
+function render(){
+  containerEl.innerHTML = '';
+  if(links.length === 0){
+    containerEl.hidden = true;
+    emptyStateEl.hidden = false;
+    return;
+  }
+  emptyStateEl.hidden = true;
+  containerEl.hidden = false;
+
+  const palette = ['#B5533C', '#6B7A4F', '#33475B', '#C99A3E'];
+
+  links.forEach((link, idx) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.draggable = isAdmin;
+    card.dataset.id = link.id;
+    card.style.setProperty('--accent', palette[idx % palette.length]);
+
+    const domain = domainOf(link.url);
+    const indexLabel = String(idx + 1).padStart(2, '0');
+
+    card.innerHTML = `
+      ${isAdmin ? `<div class="actions">
+        <button type="button" class="edit-btn" aria-label="Sửa dự án">&#9998;</button>
+        <button type="button" class="del-btn" aria-label="Xóa dự án">&times;</button>
+      </div>` : ''}
+      <p class="index"></p>
+      <p class="name"></p>
+      <p class="domain"></p>
+    `;
+    card.querySelector('.index').textContent = indexLabel;
+    card.querySelector('.name').textContent = link.name;
+    card.querySelector('.domain').textContent = domain;
+
+    card.addEventListener('click', (e) => {
+      if(e.target.closest('.actions')) return;
+      window.open(link.url, '_blank', 'noopener');
+    });
+
+    if(isAdmin){
+      card.querySelector('.del-btn').addEventListener('click', async (e) => {
+        e.stopPropagation();
+        try{ await deleteDoc(doc(db, 'du_an_links', link.id)); }
+        catch(err){ console.error(err); }
+      });
+      card.querySelector('.edit-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLinkForm(link);
+      });
+      card.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('application/x-card-id', link.id);
+        e.dataTransfer.effectAllowed = 'move';
+      });
+    }
+
+    containerEl.appendChild(card);
+  });
+}
+
+function openLinkForm(link){
+  editingId = link ? link.id : null;
+  linkFormTitle.textContent = link ? 'Sửa dự án' : 'Ghim dự án mới';
+  linkSubmit.textContent = link ? 'Lưu' : 'Ghim';
+  nameInput.value = link ? link.name : '';
+  urlInput.value = link ? link.url : '';
+  linkError.style.display = 'none';
+  linkOverlay.hidden = false;
+  nameInput.focus();
+}
+function closeLinkForm(){
+  linkOverlay.hidden = true;
+  linkForm.reset();
+  editingId = null;
+}
+
+linkCancel.addEventListener('click', closeLinkForm);
+linkOverlay.addEventListener('click', (e) => { if(e.target === linkOverlay) closeLinkForm(); });
+
+linkForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if(!isAdmin) return;
+  const name = nameInput.value.trim();
+  const url = normalizeUrl(urlInput.value);
+  if(!name || !url){
+    linkError.style.display = 'block';
+    return;
+  }
+  try{
+    if(editingId){
+      await updateDoc(doc(db, 'du_an_links', editingId), { name, url });
+    }else{
+      const maxOrder = links.reduce((m, l) => Math.max(m, l.order || 0), 0);
+      await addDoc(linksCol, { name, url, order: maxOrder + 1, createdAt: serverTimestamp() });
+    }
+    closeLinkForm();
+  }catch(err){
+    console.error(err);
+    linkError.textContent = 'Không lưu được, thử lại nhé.';
+    linkError.style.display = 'block';
+  }
+});
+
+function extractUrlFromDrop(dt){
+  const uriList = dt.getData('text/uri-list');
+  const plain = dt.getData('text/plain');
+  return normalizeUrl(uriList || plain);
+}
+
+boardEl.addEventListener('dragover', (e) => {
+  if(!isAdmin || activeMainTab !== 'links') return;
+  e.preventDefault();
+  if(!e.dataTransfer.types.includes('application/x-card-id')){
+    boardEl.classList.add('drag-active');
+  }
+});
+boardEl.addEventListener('dragleave', (e) => {
+  if(e.target === boardEl) boardEl.classList.remove('drag-active');
+});
+boardEl.addEventListener('drop', async (e) => {
+  if(!isAdmin || activeMainTab !== 'links') return;
+  e.preventDefault();
+  boardEl.classList.remove('drag-active');
+
+  const cardId = e.dataTransfer.getData('application/x-card-id');
+  if(cardId) return;
+
+  const url = extractUrlFromDrop(e.dataTransfer);
+  if(!url) return;
+  const domain = domainOf(url);
+  openLinkForm({ id: null, name: domain, url });
+});
+
+containerEl.addEventListener('dragover', (e) => { if(isAdmin) e.preventDefault(); });
+containerEl.addEventListener('drop', async (e) => {
+  if(!isAdmin) return;
+  const cardId = e.dataTransfer.getData('application/x-card-id');
+  if(!cardId) return;
+  e.preventDefault();
+
+  const targetCard = e.target.closest('.card');
+  const current = [...links];
+  const fromIdx = current.findIndex(l => l.id === cardId);
+  if(fromIdx === -1) return;
+  const [moved] = current.splice(fromIdx, 1);
+  if(targetCard && targetCard.dataset.id !== cardId){
+    const toIdx = current.findIndex(l => l.id === targetCard.dataset.id);
+    current.splice(toIdx, 0, moved);
+  }else{
+    current.push(moved);
+  }
+
+  try{
+    const batch = writeBatch(db);
+    current.forEach((l, idx) => {
+      batch.update(doc(db, 'du_an_links', l.id), { order: idx });
+    });
+    await batch.commit();
+  }catch(err){
+    console.error(err);
+  }
+});
+
+// ---- Notes: data / render ----
+const notesQuery = query(notesCol, orderBy('createdAt', 'asc'));
+onSnapshot(notesQuery, (snapshot) => {
+  notes = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  notesLoadingEl.hidden = true;
+  renderTagFilter();
+  renderNotes();
+}, (err) => {
+  notesLoadingEl.textContent = 'Không tải được ghi chú (kiểm tra lại quyền truy cập Firestore).';
+  console.error(err);
+});
+
+function allTags(){
+  const set = new Set();
+  notes.forEach(n => (n.tags || []).forEach(t => set.add(t)));
+  return [...set].sort((a, b) => a.localeCompare(b, 'vi'));
+}
+
+function renderTagFilter(){
+  tagFilterEl.innerHTML = '';
+  const tags = allTags();
+  if(tags.length === 0) return;
+
+  if(viewMode === 'tag'){
+    const clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'tag-pill active';
+    clearBtn.textContent = `✕ ${activeTag}`;
+    clearBtn.addEventListener('click', () => {
+      viewMode = 'week';
+      activeTag = null;
+      renderTagFilter();
+      renderNotes();
+    });
+    tagFilterEl.appendChild(clearBtn);
+  }
+
+  tags.forEach(tag => {
+    if(viewMode === 'tag' && tag === activeTag) return;
+    const pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = 'tag-pill';
+    pill.textContent = tag;
+    pill.addEventListener('click', () => {
+      viewMode = 'tag';
+      activeTag = tag;
+      renderTagFilter();
+      renderNotes();
+    });
+    tagFilterEl.appendChild(pill);
+  });
+}
+
+function getVisibleNotes(){
+  const millisOf = (ts) => (ts && typeof ts.toMillis === 'function') ? ts.toMillis() : 0;
+  if(viewMode === 'tag' && activeTag){
+    return notes
+      .filter(n => (n.tags || []).includes(activeTag))
+      .slice()
+      .sort((a, b) => (b.weekStart || '').localeCompare(a.weekStart || '') || (millisOf(b.createdAt) - millisOf(a.createdAt)));
+  }
+  const key = toKey(currentMonday);
+  return notes
+    .filter(n => n.weekStart === key)
+    .slice()
+    .sort((a, b) => millisOf(b.createdAt) - millisOf(a.createdAt));
+}
+
+function renderNotes(){
+  weekLabelEl.textContent = weekLabelFor(currentMonday);
+  document.getElementById('week-nav').style.opacity = viewMode === 'tag' ? '0.4' : '1';
+  document.getElementById('week-nav').style.pointerEvents = viewMode === 'tag' ? 'none' : 'auto';
+
+  const visible = getVisibleNotes();
+  notesListEl.innerHTML = '';
+
+  if(visible.length === 0){
+    notesListEl.hidden = true;
+    notesEmptyEl.hidden = false;
+    notesEmptyEl.textContent = viewMode === 'tag'
+      ? `Chưa có ghi chú nào gắn tag "${activeTag}".`
+      : 'Chưa có ghi chú nào trong tuần này.';
+    return;
+  }
+  notesEmptyEl.hidden = true;
+  notesListEl.hidden = false;
+
+  visible.forEach(note => {
+    const item = document.createElement('div');
+    item.className = 'note-item';
+
+    let weekLine = '';
+    if(viewMode === 'tag' && note.weekStart){
+      const [y, m, d] = note.weekStart.split('-').map(Number);
+      weekLine = `<p class="note-week">${weekLabelFor(new Date(y, m - 1, d))}</p>`;
+    }
+
+    const tagsHtml = (note.tags || []).map(t => `<span></span>`).join('');
+
+    item.innerHTML = `
+      ${isAdmin ? `<div class="actions">
+        <button type="button" class="edit-btn" aria-label="Sửa ghi chú">&#9998;</button>
+        <button type="button" class="del-btn" aria-label="Xóa ghi chú">&times;</button>
+      </div>` : ''}
+      ${weekLine}
+      <p class="note-content"></p>
+      <div class="note-tags">${tagsHtml}</div>
+    `;
+    item.querySelector('.note-content').textContent = note.content;
+    const tagSpans = item.querySelectorAll('.note-tags span');
+    (note.tags || []).forEach((t, i) => { tagSpans[i].textContent = t; });
+
+    if(isAdmin){
+      item.querySelector('.del-btn').addEventListener('click', async () => {
+        try{ await deleteDoc(doc(db, 'ghi_chu_cong_viec', note.id)); }
+        catch(err){ console.error(err); }
+      });
+      item.querySelector('.edit-btn').addEventListener('click', () => openNoteForm(note));
+    }
+
+    notesListEl.appendChild(item);
+  });
+}
+
+weekPrevBtn.addEventListener('click', () => {
+  currentMonday.setDate(currentMonday.getDate() - 7);
+  currentMonday = new Date(currentMonday);
+  renderNotes();
+});
+weekNextBtn.addEventListener('click', () => {
+  currentMonday.setDate(currentMonday.getDate() + 7);
+  currentMonday = new Date(currentMonday);
+  renderNotes();
+});
+
+function openNoteForm(note){
+  editingNoteId = note ? note.id : null;
+  noteFormTitle.textContent = note ? 'Sửa ghi chú' : 'Thêm ghi chú';
+  noteContentInput.value = note ? note.content : '';
+  noteTagsInput.value = note && note.tags ? note.tags.join(', ') : '';
+  noteError.style.display = 'none';
+  noteOverlay.hidden = false;
+  syncPresetButtons();
+  noteContentInput.focus();
+}
+function closeNoteForm(){
+  noteOverlay.hidden = true;
+  noteForm.reset();
+  editingNoteId = null;
+  syncPresetButtons();
+}
+
+function getTagsFromInput(){
+  return noteTagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
+}
+function setTagsToInput(tags){
+  noteTagsInput.value = tags.join(', ');
+}
+function syncPresetButtons(){
+  const current = getTagsFromInput().map(t => t.toLowerCase());
+  presetTagButtons.forEach(btn => {
+    btn.classList.toggle('active', current.includes(btn.dataset.tag.toLowerCase()));
+  });
+}
+presetTagButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tag = btn.dataset.tag;
+    const tags = getTagsFromInput();
+    const idx = tags.findIndex(t => t.toLowerCase() === tag.toLowerCase());
+    if(idx > -1) tags.splice(idx, 1); else tags.push(tag);
+    setTagsToInput(tags);
+    syncPresetButtons();
+  });
+});
+noteTagsInput.addEventListener('input', syncPresetButtons);
+
+noteCancel.addEventListener('click', closeNoteForm);
+noteOverlay.addEventListener('click', (e) => { if(e.target === noteOverlay) closeNoteForm(); });
+
+noteForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if(!isAdmin) return;
+  const content = noteContentInput.value.trim();
+  const tags = noteTagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
+  const uniqueTags = [...new Set(tags)];
+  if(!content){
+    noteError.style.display = 'block';
+    return;
+  }
+  try{
+    if(editingNoteId){
+      await updateDoc(doc(db, 'ghi_chu_cong_viec', editingNoteId), { content, tags: uniqueTags });
+    }else{
+      await addDoc(notesCol, {
+        content,
+        tags: uniqueTags,
+        weekStart: toKey(currentMonday),
+        createdAt: serverTimestamp()
+      });
+    }
+    closeNoteForm();
+  }catch(err){
+    console.error(err);
+    noteError.textContent = 'Không lưu được, thử lại nhé.';
+    noteError.style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
