@@ -93,7 +93,7 @@ button{font-family:inherit;cursor:pointer}
 }
 .brand-name{
   font-family:var(--display);font-weight:700;
-  font-size:30px;line-height:1;text-transform:uppercase;letter-spacing:.01em;
+  font-size:30px;line-height:1.15;text-transform:uppercase;letter-spacing:.01em;
 }
 .brand-name small{display:block;font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.12em;margin-top:5px;color:var(--muted)}
 .nav-menu{display:flex;align-items:center;gap:6px;margin-left:auto}
@@ -146,7 +146,7 @@ main{min-height:60vh}
 .main-title{display:flex;align-items:center;gap:18px;margin-bottom:28px;flex-wrap:wrap}
 .title-heading{
   font-family:var(--display);font-weight:700;
-  font-size:clamp(44px,7vw,76px);line-height:.95;
+  font-size:clamp(44px,7vw,76px);line-height:1.22;
   text-transform:uppercase;margin:0;
 }
 .title-squiggle{width:70px;height:28px;flex:none}
@@ -183,7 +183,7 @@ main{min-height:60vh}
 }
 .hero-title{
   font-family:var(--display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(64px,10vw,132px);line-height:.88;margin:0;letter-spacing:-.005em;
+  font-size:clamp(60px,9.5vw,124px);line-height:1.25;margin:0;letter-spacing:-.005em;
 }
 .hero-text{font-size:19px;max-width:460px;margin:0;position:relative;z-index:1}
 .hero-stats{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
@@ -222,7 +222,7 @@ main{min-height:60vh}
 }
 .project-card:hover{background:var(--yellow);transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--black)}
 .project-num{font-family:var(--display);font-weight:700;font-size:44px;line-height:1;margin:0 0 14px}
-.project-name{font-family:var(--display);font-weight:600;font-size:26px;line-height:1.1;text-transform:uppercase;margin:0 0 6px;padding-right:20px}
+.project-name{font-family:var(--display);font-weight:600;font-size:26px;line-height:1.25;text-transform:uppercase;margin:0 0 6px;padding-right:20px}
 .project-desc{font-size:15px;color:#333;margin:0 0 8px}
 .project-domain{font-size:13px;color:var(--muted);margin-top:auto;padding-right:60px;word-break:break-all}
 .project-card .arrow{position:absolute;right:16px;bottom:16px}
@@ -273,7 +273,7 @@ a:hover .arrow,.project-card:hover .arrow{background:var(--white);transform:rota
   width:100%;aspect-ratio:16/10;border-radius:10px;border:2px solid var(--black);
   display:flex;align-items:flex-end;padding:16px;overflow:hidden;position:relative;
   font-family:var(--display);font-weight:700;text-transform:uppercase;
-  font-size:30px;line-height:1;
+  font-size:30px;line-height:1.15;
 }
 .cover-fallback.v0{background:var(--yellow)}
 .cover-fallback.v1{background:var(--black);color:var(--yellow)}
@@ -294,7 +294,7 @@ a:hover .arrow,.project-card:hover .arrow{background:var(--white);transform:rota
 .squig{position:absolute;left:14px;bottom:-9px;width:120px;height:18px;z-index:2}
 .blog-title{
   font-family:var(--display);font-weight:600;
-  font-size:30px;line-height:1.08;text-transform:uppercase;
+  font-size:30px;line-height:1.25;text-transform:uppercase;
   margin:30px 0 22px;
 }
 .blog-title a{text-decoration:none}
@@ -339,7 +339,7 @@ a:hover .arrow,.project-card:hover .arrow{background:var(--white);transform:rota
 .post-head .cover,.post-head .cover-fallback{aspect-ratio:4/3}
 .post-title{
   font-family:var(--display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(38px,5.5vw,64px);line-height:1;margin:18px 0 14px;
+  font-size:clamp(38px,5.5vw,64px);line-height:1.25;margin:18px 0 14px;
 }
 .post-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .post-tags a{background:var(--black);color:var(--yellow);border-radius:50px;padding:3px 12px;font-size:14px;text-decoration:none}
@@ -385,11 +385,11 @@ a:hover .arrow,.project-card:hover .arrow{background:var(--white);transform:rota
   position:relative;overflow:hidden;transition:transform .2s;
 }
 .book-fallback::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--yellow);opacity:.6}
-.book-fallback .bf-title{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:28px;line-height:1}
+.book-fallback .bf-title{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:28px;line-height:1.25}
 .book-fallback .bf-author{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#fff}
 .story-cover-wrap:hover .book-fallback{transform:rotate(-2deg) translateY(-3px)}
 .story-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
-.story-title{font-family:var(--display);font-weight:600;font-size:26px;line-height:1.08;text-transform:uppercase;margin:0 0 10px}
+.story-title{font-family:var(--display);font-weight:600;font-size:26px;line-height:1.25;text-transform:uppercase;margin:0 0 10px}
 .story-title a{text-decoration:none}
 .story-desc{font-size:14px;color:#333;margin:0 0 14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .status-chip{display:inline-block;border:2px solid var(--black);border-radius:50px;font-size:12px;font-weight:700;padding:1px 9px;text-transform:uppercase;letter-spacing:.04em}
@@ -404,7 +404,7 @@ a:hover .arrow,.project-card:hover .arrow{background:var(--white);transform:rota
 }
 .story-hero .book,.story-hero .book-fallback{max-width:260px}
 .story-hero .bf-title{font-size:36px}
-.story-info h1{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(40px,6vw,72px);line-height:.95;margin:4px 0 16px}
+.story-info h1{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(40px,6vw,72px);line-height:1.25;margin:4px 0 16px}
 .story-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
 .story-meta span.meta{font-family:var(--display);font-size:17px;text-transform:uppercase}
 .story-intro{font-size:17px;white-space:pre-line;margin:0 0 22px;max-width:640px}
@@ -437,7 +437,7 @@ a:hover .arrow,.project-card:hover .arrow{background:var(--white);transform:rota
   padding:44px 52px;box-shadow:8px 8px 0 var(--black);
 }
 .paper .story-name{font-family:var(--display);text-transform:uppercase;font-size:18px;letter-spacing:.06em;text-decoration:none;background:var(--yellow);padding:2px 10px;border-radius:50px;border:2px solid var(--black)}
-.paper h1{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(32px,5vw,50px);line-height:1.02;margin:20px 0 6px}
+.paper h1{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(32px,5vw,50px);line-height:1.25;margin:20px 0 6px}
 .paper .ch-meta{font-size:14px;color:var(--muted);margin-bottom:26px;padding-bottom:20px;border-bottom:2px solid var(--black)}
 .reading{font-family:var(--read);font-size:var(--read-size,19px);line-height:1.9;color:#1b1b1b}
 .reading p{margin:0 0 1.1em}
@@ -459,10 +459,10 @@ a:hover .arrow,.project-card:hover .arrow{background:var(--white);transform:rota
   padding:28px;display:flex;gap:22px;align-items:center;
 }
 .about-box img{width:120px;height:120px;border-radius:50%;border:2px solid var(--black);object-fit:cover;object-position:50% 18%;background:var(--pink);flex:none}
-.about-box h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:34px;line-height:1;margin:0 0 8px}
+.about-box h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:34px;line-height:1.25;margin:0 0 8px}
 .about-box p{margin:0;font-size:15px}
 .tags-footer{background:var(--yellow);border:2px solid var(--black);border-radius:var(--r);padding:28px}
-.tags-footer h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:34px;line-height:1;margin:0 0 16px}
+.tags-footer h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:34px;line-height:1.25;margin:0 0 16px}
 .tags-footer-inner{display:flex;flex-wrap:wrap;gap:10px}
 .tags-footer .tag-pill{background:var(--black);color:var(--yellow);border-color:var(--yellow)}
 .tags-footer .tag-pill:hover{background:var(--yellow);color:var(--black);border-color:var(--black)}
