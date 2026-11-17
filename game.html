@@ -264,6 +264,12 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
 .vcard.open.wolf{background:radial-gradient(circle,#c4332a,#5c0f0b);color:#fff}
 .vcard.open.safe{background:#93a6ba;color:#10223a}
 .vcard .by{position:absolute;top:6%;right:6%;width:20%;max-width:16px;aspect-ratio:1;border-radius:50%;border:2px solid #fff}
+.vcard .vd{position:absolute;left:3px;right:3px;bottom:3px;display:flex;flex-wrap:wrap-reverse;gap:2px;justify-content:center}
+.vcard .vd i{width:clamp(14px,1.6vw,22px);aspect-ratio:1;border-radius:50%;border:2px solid #fff;color:#fff;font-style:normal;font-size:clamp(.5rem,.75vw,.75rem);display:grid;place-items:center;box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.vcard.voted{box-shadow:0 0 0 3px var(--gold),0 4px 0 #9c8656,0 6px 6px rgba(0,0,0,.4)}
+.vcard .rd{position:absolute;top:5%;left:6%;font-size:clamp(.5rem,.8vw,.8rem);opacity:.85}
+.wend{width:100%;font-size:clamp(1.1rem,2vw,1.5rem);padding:.6rem;margin-bottom:8px}
+.hero .st{font-size:clamp(.8rem,1.2vw,1rem);font-weight:700;opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -294,7 +300,7 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
     </div>
     <div class="game">
       <div class="ico">🐺</div><h2>Ma sói</h2>
-      <p>Ma sói trà trộn trong làng. Trả lời đúng để được bỏ phiếu tìm sói.</p>
+      <p>Ma sói trà trộn trong làng. Mỗi lượt các nhóm bỏ phiếu loại một người.</p>
       <button class="btn gold" id="goWolf">Chơi</button>
     </div>
   </div>
@@ -349,7 +355,9 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
         <div class="seg" id="segVillage"><button data-v="12">12 người · 3 sói</button><button data-v="20" class="on">20 người · 5 sói</button><button data-v="30">30 người · 7 sói</button></div>
       </div>
       <div class="legend" style="margin-bottom:18px">
-        <span>🐺 Bỏ phiếu trúng ma sói +20</span><span>😇 Bỏ phiếu nhầm dân làng +10</span><span>Nhóm không trả lời đúng thì không được bỏ phiếu.</span>
+        <span>Mỗi nhóm bắt đầu với 50 điểm. Chơi theo từng lượt.</span>
+        <span>Nhóm trả lời đúng được bỏ phiếu; trả lời sai, không bỏ phiếu: −10.</span>
+        <span>Người nhiều phiếu nhất bị loại: là ma sói thì nhóm bỏ phiếu cho người đó +20, là dân làng thì −5.</span>
       </div>
     </div>
     <div class="row" style="margin:0;justify-content:space-between">
@@ -486,9 +494,9 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
     <button class="btn gold" id="wRank">Xếp hạng</button>
     <button class="btn red" id="wNew">Ván mới</button>
     <div class="legend">
-      <span>Nhóm trả lời đúng → bấm tên nhóm, rồi bấm người nhóm muốn bỏ phiếu.</span>
-      <span>🐺 Trúng ma sói +20</span><span>😇 Nhầm dân làng +10</span>
-      <span>🐾 Dân làng bị nhầm sẽ cho biết có mấy ma sói đứng sát bên mình</span>
+      <span>Nhóm trả lời đúng → bấm tên nhóm, rồi bấm người nhóm bỏ phiếu. Xong cả lớp thì bấm "Chốt lượt".</span>
+      <span>Không bỏ phiếu −10</span><span>🐺 Loại trúng sói +20</span><span>😇 Loại nhầm dân làng −5</span>
+      <span>🐾 Dân làng bị loại cho biết có mấy sói đứng sát bên</span>
     </div>
   </div>
   <div class="tarena">
@@ -501,6 +509,7 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
     </div>
     <div>
       <div class="thint" id="wHint"></div>
+      <button class="btn gold wend" id="wEnd">✅ Chốt lượt bỏ phiếu</button>
       <div class="squad t" id="wSquad"></div>
     </div>
   </div>
@@ -1355,11 +1364,16 @@ $('mNew').onclick = () => {
 };
 
 /* =====================================================
-   MA SÓI
+   MA SÓI (theo lượt bỏ phiếu)
+   Mỗi lượt: nhóm trả lời đúng được bỏ phiếu cho 1 người; chốt lượt thì
+   - nhóm không bỏ phiếu: −10
+   - người nhiều phiếu nhất bị loại (hòa phiếu thì bốc thăm trong số người hòa)
+   - là ma sói: các nhóm bỏ phiếu cho người đó +20; là dân làng: các nhóm đó −5
+   - phiếu cho người khác: không lộ thân phận, không cộng trừ
    ===================================================== */
-const WKEY = 'sanchoi_masoi_v1';
+const WKEY = 'sanchoi_masoi_v2';
 const WSIZE = {12:[4,3], 20:[5,5], 30:[6,7]};      // số dân → [số cột, số ma sói]
-const W_HIT = 20, W_MISS = 10;
+const W_START = 50, W_HIT = 20, W_MISS = -5, W_SKIP = -10;
 const VNAMES = ['Bác Ba','Cô Tư','Chú Năm','Dì Sáu','Ông Bảy','Bà Tám','Anh Chín','Chị Mười','Tí','Tèo','Mận','Đào','Cúc','Lan','Tâm','Phúc','Lộc','Thọ','Na','Bông','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất'];
 const VFACES = ['👨','👩','👴','👵','🧒','👧','👦','🧔','👱','🧑','👲','🧓','🤠','🤓','👳','🧕','👸','🤴','👷','💂'];
 let wcfg = {size:20}, ws = null, wHist = [];
@@ -1382,9 +1396,9 @@ function wStart(){
   const isWolf = shuffled([...Array(n)].map((_, k) => k < wolves));
   const vn = shuffled(VNAMES).slice(0, n), vf = shuffled([...VFACES, ...VFACES]);
   ws = {
-    cols, active: null, over: false,
-    people: isWolf.map((w, k) => ({wolf:w, open:false, by:null, name:vn[k], face:vf[k]})),
-    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], pts:0, hits:0}))
+    cols, active: null, over: false, round: 1, votes: {},
+    people: isWolf.map((w, k) => ({wolf:w, open:false, round:0, name:vn[k], face:vf[k]})),
+    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], pts:W_START, hits:0}))
   };
   wHist = []; wSave(); wBuild(); show('wolf');
 }
@@ -1412,7 +1426,8 @@ function wBuild(){
     row.tabIndex = 0; row.setAttribute('role', 'button');
     const rk = mk('span', 'rk'); rk.id = 'wrk' + i;
     const dm = mk('span', 'dm'); dm.id = 'wdm' + i;
-    const info = mk('div', 'info'); info.append(mk('span', 'nm', g.name), dm);
+    const stt = mk('span', 'st'); stt.id = 'wst' + i;
+    const info = mk('div', 'info'); info.append(mk('span', 'nm', g.name), dm, stt);
     row.append(rk, info);
     row.addEventListener('click', () => wPick(i));
     row.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); wPick(i); } });
@@ -1424,14 +1439,20 @@ function wRefresh(){
   let hidden = 0;
   ws.people.forEach((p, k) => {
     const b = $('wp' + k);
-    b.className = 'vcard' + (p.open ? ' open ' + (p.wolf ? 'wolf' : 'safe') : '');
+    const voters = Object.keys(ws.votes).map(Number).filter(i => ws.votes[i] === k);
+    b.className = 'vcard' + (p.open ? ' open ' + (p.wolf ? 'wolf' : 'safe') : '') + (voters.length ? ' voted' : '');
     b.textContent = '';
     if(p.open){
-      b.append(mk('span', 'f', p.wolf ? '🐺' : '😇'), mk('span', 'n', p.wolf ? 'Ma sói!' : 'Kề bên: ' + wNear(k) + ' 🐺'));
-      if(p.by != null && ws.groups[p.by]){ const d = mk('i', 'by'); d.style.background = ws.groups[p.by].color; b.append(d); }
+      b.append(mk('span', 'f', p.wolf ? '🐺' : '😇'), mk('span', 'n', p.wolf ? p.name + ': Ma sói!' : 'Kề bên: ' + wNear(k) + ' 🐺'));
+      b.append(mk('span', 'rd', 'Lượt ' + p.round));
     }else{
       b.append(mk('span', 'f', p.face), mk('span', 'n', p.name));
       if(p.wolf) hidden++;
+      if(voters.length){
+        const vd = mk('span', 'vd');
+        voters.forEach(i => { const d = mk('i', '', i + 1); d.style.background = ws.groups[i].color; vd.append(d); });
+        b.append(vd);
+      }
     }
   });
   const lf = $('wLeft'); lf.textContent = '';
@@ -1441,10 +1462,16 @@ function wRefresh(){
   ord.forEach((i, k) => { $('wrow' + i).style.order = k; $('wrk' + i).textContent = k + 1; });
   ws.groups.forEach((g, i) => {
     const dm = $('wdm' + i); dm.textContent = g.pts;
-    dm.append(mk('small', '', ' điểm · 🐺 ' + g.hits), top > 0 && g.pts === top ? ' 👑' : '');
+    dm.append(mk('small', '', ' điểm · 🐺 ' + g.hits), g.pts === top && ws.groups.some(o => o.pts < top) ? ' 👑' : '');
+    const v = ws.votes[i];
+    $('wst' + i).textContent = v != null ? '🗳️ Bỏ phiếu: ' + ws.people[v].name : '⏳ Chưa bỏ phiếu';
     $('wrow' + i).classList.toggle('on', ws.active === i);
   });
-  $('wHint').textContent = ws.over ? 'Đã tìm ra hết ma sói!' : ws.active != null ? '🗳️ ' + ws.groups[ws.active].name + ' bỏ phiếu cho ai?' : '👉 Bấm tên nhóm trả lời đúng';
+  const nv = Object.keys(ws.votes).length;
+  $('wHint').textContent = ws.over ? 'Đã tìm ra hết ma sói!'
+    : ws.active != null ? '🗳️ Lượt ' + ws.round + ': ' + ws.groups[ws.active].name + ' bỏ phiếu cho ai?'
+    : '🌙 Lượt ' + ws.round + ' · đã bỏ phiếu ' + nv + '/' + ws.groups.length + ' nhóm';
+  $('wEnd').disabled = busy || ws.over;
   $('wUndo').disabled = busy || wHist.length === 0;
 }
 function wPick(i){
@@ -1458,31 +1485,69 @@ async function wVote(k){
   if(ws.active == null){
     busy = true; toast('👉 Bấm tên nhóm trước, rồi mới bỏ phiếu'); await sleep(1400); hideToast(); busy = false; return;
   }
-  busy = true;
-  wHist.push(JSON.stringify(ws)); if(wHist.length > 60) wHist.shift();
-  const i = ws.active, g = ws.groups[i];
+  wHist.push(JSON.stringify(ws)); if(wHist.length > 80) wHist.shift();
+  const i = ws.active;
+  if(ws.votes[i] === k) delete ws.votes[i];      // bấm lại đúng người đó: rút phiếu
+  else ws.votes[i] = k;
+  ws.active = null; beep(760, .06, 'triangle');
+  wSave(); wRefresh();
+}
 
-  $('revWho').textContent = g.name + ' bỏ phiếu cho ' + p.name;
-  $('revEmo').textContent = p.face; $('revMsg').textContent = 'Là người hay là sói…?';
-  $('revOv').classList.remove('hidden');
-  for(let n=0;n<8;n++){ beep(260 + (n % 2) * 60, .06); await sleep(170); }
-  $('revEmo').style.animation = 'none'; void $('revEmo').offsetWidth; $('revEmo').style.animation = '';
-  if(p.wolf){
-    g.pts += W_HIT; g.hits++;
-    $('revEmo').textContent = '🐺'; $('revMsg').textContent = 'Đúng là ma sói! +' + W_HIT + ' điểm';
-    [660,880,1040,1320].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
-  }else{
-    g.pts += W_MISS;
-    const near = wNear(k);
-    $('revEmo').textContent = '😇';
-    $('revMsg').textContent = 'Nhầm rồi, ' + p.name + ' là dân làng! +' + W_MISS + ' điểm · 🐾 ' + (near ? 'Có ' + near + ' ma sói đứng sát bên' : 'Không có ma sói nào sát bên');
-    beep(180, .4, 'sawtooth');
+async function wEndRound(){
+  if(busy || ws.over) return;
+  busy = true;
+  wHist.push(JSON.stringify(ws)); if(wHist.length > 80) wHist.shift();
+  ws.active = null; wRefresh();
+  const round = ws.round;
+
+  // 1. Nhóm không bỏ phiếu: −10
+  const skip = ws.groups.map((g, i) => i).filter(i => ws.votes[i] == null);
+  if(skip.length){
+    skip.forEach(i => { const g = ws.groups[i]; g.pts = Math.max(0, g.pts + W_SKIP); });
+    beep(160, .3, 'sawtooth'); wRefresh();
+    toast('❌ Không bỏ phiếu ' + W_SKIP + ' điểm: ' + skip.map(i => ws.groups[i].name).join(', '));
+    await sleep(2600); hideToast();
   }
-  p.open = true; p.by = i; ws.active = null;
-  if(ws.people.every(x => !x.wolf || x.open)) ws.over = true;
-  wRefresh();
-  await sleep(p.wolf ? 2300 : 3000);
-  $('revOv').classList.add('hidden');
+
+  // 2. Đếm phiếu
+  const count = {};
+  Object.values(ws.votes).forEach(k => count[k] = (count[k] || 0) + 1);
+  const ks = Object.keys(count).map(Number);
+  if(!ks.length){
+    toast('🌙 Lượt ' + round + ': không nhóm nào bỏ phiếu, không ai bị loại');
+    await sleep(2200); hideToast();
+  }else{
+    const max = Math.max(...ks.map(k => count[k]));
+    const tied = ks.filter(k => count[k] === max);
+    const k = tied[Math.floor(Math.random() * tied.length)];
+    const p = ws.people[k];
+    const voters = Object.keys(ws.votes).map(Number).filter(i => ws.votes[i] === k);
+
+    $('revWho').textContent = 'Lượt ' + round + ': ' + p.name + ' bị loại với ' + max + ' phiếu' + (tied.length > 1 ? ' (hòa phiếu, bốc thăm)' : '');
+    $('revEmo').textContent = p.face; $('revMsg').textContent = 'Là người hay là sói…?';
+    $('revOv').classList.remove('hidden');
+    for(let n=0;n<10;n++){ beep(260 + (n % 2) * 60, .06); await sleep(180); }
+    $('revEmo').style.animation = 'none'; void $('revEmo').offsetWidth; $('revEmo').style.animation = '';
+    const who = voters.map(i => ws.groups[i].name).join(', ');
+    if(p.wolf){
+      voters.forEach(i => { ws.groups[i].pts += W_HIT; ws.groups[i].hits++; });
+      $('revEmo').textContent = '🐺'; $('revMsg').textContent = 'Đúng là ma sói! +' + W_HIT + ' điểm cho ' + who;
+      [660,880,1040,1320].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
+    }else{
+      voters.forEach(i => { const g = ws.groups[i]; g.pts = Math.max(0, g.pts + W_MISS); });
+      const near = wNear(k);
+      $('revEmo').textContent = '😇';
+      $('revMsg').textContent = 'Oan quá, ' + p.name + ' là dân làng! ' + W_MISS + ' điểm cho ' + who + ' · 🐾 ' + (near ? 'Có ' + near + ' ma sói đứng sát bên' : 'Không có ma sói nào sát bên');
+      beep(180, .4, 'sawtooth');
+    }
+    p.open = true; p.round = round;
+    if(ws.people.every(x => !x.wolf || x.open)) ws.over = true;
+    ws.votes = {}; ws.round++;
+    wRefresh();
+    await sleep(3400);
+    $('revOv').classList.add('hidden');
+  }
+  if(!ks.length){ ws.votes = {}; ws.round++; }
 
   busy = false; wSave(); wRefresh();
   if(ws.over) wolfRank(true);
@@ -1504,6 +1569,7 @@ function wolfRank(done){
     a.append(ok); m.append(a);
   });
 }
+$('wEnd').onclick = wEndRound;
 $('wUndo').onclick = () => {
   if(busy || !wHist.length) return;
   ws = JSON.parse(wHist.pop()); wSave(); wRefresh();
