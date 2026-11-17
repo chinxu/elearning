@@ -363,7 +363,7 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
       <div class="legend" style="margin-bottom:18px">
         <span>Mỗi nhóm bắt đầu với 50 điểm. Chơi theo từng lượt.</span>
         <span>Nhóm trả lời đúng được bỏ phiếu; trả lời sai, không bỏ phiếu: −10.</span>
-        <span>Người nhiều phiếu nhất bị loại: là ma sói thì nhóm bỏ phiếu cho người đó +20, là dân làng thì −5.</span>
+        <span>Người nhiều phiếu nhất bị loại (hòa phiếu thì loại tất cả): là ma sói thì nhóm bỏ phiếu cho người đó +20, là dân làng thì −5.</span>
       </div>
     </div>
     <div class="row" style="margin:0;justify-content:space-between">
@@ -1373,7 +1373,7 @@ $('mNew').onclick = () => {
    MA SÓI (theo lượt bỏ phiếu)
    Mỗi lượt: nhóm trả lời đúng được bỏ phiếu cho 1 người; chốt lượt thì
    - nhóm không bỏ phiếu: −10
-   - người nhiều phiếu nhất bị loại (hòa phiếu thì bốc thăm trong số người hòa)
+   - người nhiều phiếu nhất bị loại (hòa phiếu cao nhất thì loại tất cả những người hòa)
    - là ma sói: các nhóm bỏ phiếu cho người đó +20; là dân làng: các nhóm đó −5
    - phiếu cho người khác: không lộ thân phận, không cộng trừ
    ===================================================== */
@@ -1532,34 +1532,42 @@ async function wEndRound(){
     await sleep(2200); hideToast();
   }else{
     const max = Math.max(...ks.map(k => count[k]));
-    const tied = ks.filter(k => count[k] === max);
-    const k = tied[Math.floor(Math.random() * tied.length)];
-    const p = ws.people[k];
-    const voters = Object.keys(ws.votes).map(Number).filter(i => ws.votes[i] === k);
-
-    $('revWho').textContent = 'Lượt ' + round + ': ' + p.name + ' bị loại với ' + max + ' phiếu' + (tied.length > 1 ? ' (hòa phiếu, bốc thăm)' : '');
-    $('revEmo').textContent = ''; $('revEmo').append(wImg(wAva(p), 'av', p.name)); $('revMsg').textContent = 'Là người hay là sói…?';
-    $('revOv').classList.remove('hidden');
-    for(let n=0;n<10;n++){ beep(260 + (n % 2) * 60, .06); await sleep(180); }
-    $('revEmo').style.animation = 'none'; void $('revEmo').offsetWidth; $('revEmo').style.animation = '';
-    const who = voters.map(i => ws.groups[i].name).join(', ');
-    if(p.wolf){
-      voters.forEach(i => { ws.groups[i].pts += W_HIT; ws.groups[i].hits++; });
-      $('revEmo').textContent = ''; $('revEmo').append(wImg(WOLF_IMG, '', 'Ma sói')); $('revMsg').textContent = 'Đúng là ma sói! +' + W_HIT + ' điểm cho ' + who;
-      [660,880,1040,1320].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
-    }else{
-      voters.forEach(i => { const g = ws.groups[i]; g.pts = Math.max(0, g.pts + W_MISS); });
-      const near = wNear(k);
-      $('revEmo').textContent = ''; $('revEmo').append(wImg(wAva(p), 'av', p.name), mk('div', '', '😇'));
-      $('revMsg').textContent = 'Oan quá, ' + p.name + ' là dân làng! ' + W_MISS + ' điểm cho ' + who + ' · 🐾 ' + (near ? 'Có ' + near + ' ma sói đứng sát bên' : 'Không có ma sói nào sát bên');
-      beep(180, .4, 'sawtooth');
+    const tied = ks.filter(k => count[k] === max);          // hòa phiếu cao nhất: loại tất cả những người này
+    const allVotes = {...ws.votes};
+    if(tied.length > 1){
+      toast('⚖️ Hòa phiếu! ' + tied.length + ' người cùng ' + max + ' phiếu đều bị loại');
+      beep(330, .25, 'triangle'); await sleep(2400); hideToast();
     }
-    p.open = true; p.round = round;
+    for(let t = 0; t < tied.length; t++){
+      const k = tied[t], p = ws.people[k];
+      const voters = Object.keys(allVotes).map(Number).filter(i => allVotes[i] === k);
+
+      $('revWho').textContent = 'Lượt ' + round + ': ' + p.name + ' bị loại với ' + max + ' phiếu' + (tied.length > 1 ? ' (' + (t + 1) + '/' + tied.length + ')' : '');
+      $('revEmo').textContent = ''; $('revEmo').append(wImg(wAva(p), 'av', p.name)); $('revMsg').textContent = 'Là người hay là sói…?';
+      $('revOv').classList.remove('hidden');
+      for(let n=0;n<10;n++){ beep(260 + (n % 2) * 60, .06); await sleep(180); }
+      $('revEmo').style.animation = 'none'; void $('revEmo').offsetWidth; $('revEmo').style.animation = '';
+      const who = voters.map(i => ws.groups[i].name).join(', ');
+      if(p.wolf){
+        voters.forEach(i => { ws.groups[i].pts += W_HIT; ws.groups[i].hits++; });
+        $('revEmo').textContent = ''; $('revEmo').append(wImg(WOLF_IMG, '', 'Ma sói')); $('revMsg').textContent = 'Đúng là ma sói! +' + W_HIT + ' điểm cho ' + who;
+        [660,880,1040,1320].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
+      }else{
+        voters.forEach(i => { const g = ws.groups[i]; g.pts = Math.max(0, g.pts + W_MISS); });
+        const near = wNear(k);
+        $('revEmo').textContent = ''; $('revEmo').append(wImg(wAva(p), 'av', p.name), mk('div', '', '😇'));
+        $('revMsg').textContent = 'Oan quá, ' + p.name + ' là dân làng! ' + W_MISS + ' điểm cho ' + who + ' · 🐾 ' + (near ? 'Có ' + near + ' ma sói đứng sát bên' : 'Không có ma sói nào sát bên');
+        beep(180, .4, 'sawtooth');
+      }
+      p.open = true; p.round = round;
+      wRefresh();
+      await sleep(3400);
+      $('revOv').classList.add('hidden');
+      if(t < tied.length - 1) await sleep(400);
+    }
     if(ws.people.every(x => !x.wolf || x.open)) ws.over = true;
     ws.votes = {}; ws.round++;
     wRefresh();
-    await sleep(3400);
-    $('revOv').classList.add('hidden');
   }
   if(!ks.length){ ws.votes = {}; ws.round++; }
 
