@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sân chơi thi đua</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --grass:#2f7d3b; --grass2:#276a32; --dirt:#c9965a; --dirt2:#b98549;
@@ -246,10 +245,28 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
 .squad.m .nm{font-size:clamp(1.1rem,1.7vw,1.5rem)}
 .squad.m .dm{font-size:clamp(1rem,1.5vw,1.3rem)}
 .squad.m .rk{border:2px solid #fff}
+
+/* ---------- Ma sói ---------- */
+#wolf{padding:10px 16px 16px}
+.village{position:relative;overflow:hidden;border-radius:18px;padding:clamp(38px,5.2vw,70px) clamp(12px,2vw,26px) 12px;box-shadow:0 6px 0 rgba(0,0,0,.3);
+  background:
+    radial-gradient(circle at 88% 9%,rgba(255,244,190,.4) 0 5%,transparent 18%),
+    radial-gradient(1.5px 1.5px at 20% 12%,#fff 50%,transparent 52%) 0 0/120px 90px,
+    radial-gradient(1px 1px at 70% 60%,#fff 50%,transparent 52%) 0 0/90px 70px,
+    linear-gradient(#131a3a,#27305e 70%,#2d3b2e)}
+.vgrid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(var(--vc),minmax(0,1fr));gap:clamp(5px,.7vw,10px)}
+.vcard{position:relative;aspect-ratio:1/.76;border-radius:14px;background:#f3e6c8;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:2px;box-shadow:0 4px 0 #9c8656,0 6px 6px rgba(0,0,0,.4);font-weight:800;min-width:0;line-height:1.05}
+.vcard .f{font-size:clamp(1.3rem,2.9vw,2.7rem);line-height:1.1}
+.vcard .n{font-size:clamp(.62rem,1.15vw,1.1rem);white-space:nowrap}
+.vcard:not(.open):hover{filter:brightness(1.08)}
+.vcard:not(.open):active{transform:translateY(2px)}
+.vcard.open{cursor:default;box-shadow:inset 0 0 0 3px rgba(255,255,255,.45)}
+.vcard.open.wolf{background:radial-gradient(circle,#c4332a,#5c0f0b);color:#fff}
+.vcard.open.safe{background:#93a6ba;color:#10223a}
+.vcard .by{position:absolute;top:6%;right:6%;width:20%;max-width:16px;aspect-ratio:1;border-radius:50%;border:2px solid #fff}
 </style>
 </head>
 <body>
-
 <!-- ===== SẢNH TRÒ CHƠI ===== -->
 <section id="hub">
   <h1>🏆 Sân chơi thi đua</h1>
@@ -274,6 +291,11 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
       <div class="ico">🎩</div><h2>Cờ tỷ phú</h2>
       <p>Thả xúc xắc đi một vòng về đích: trúng số, trúng nhà, coi chừng bị lừa!</p>
       <button class="btn gold" id="goMono">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">🐺</div><h2>Ma sói</h2>
+      <p>Ma sói trà trộn trong làng. Trả lời đúng để được bỏ phiếu tìm sói.</p>
+      <button class="btn gold" id="goWolf">Chơi</button>
     </div>
   </div>
 </section>
@@ -320,6 +342,14 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
         <span>🎰 Trúng số +50</span><span>🏠 Nhà cấp 4 +5</span><span>🏡 Nhà phố +10</span><span>🏢 Chung cư +15</span><span>🏰 Biệt thự +20</span><span>🧧 Lì xì +10</span>
         <span>📱 Tin nhắn lừa đảo −5</span><span>🎵 Bị hack TikTok −10</span><span>🛒 Shop online lừa −10</span><span>🎮 Nạp game quá tay −15</span>
         <span>🏁 Về đích: thứ nhất +20, thứ hai +15, thứ ba +10, thứ tư +5.</span>
+      </div>
+    </div>
+    <div id="optWolf" class="hidden">
+      <div class="row"><label>Số dân làng</label>
+        <div class="seg" id="segVillage"><button data-v="12">12 người · 3 sói</button><button data-v="20" class="on">20 người · 5 sói</button><button data-v="30">30 người · 7 sói</button></div>
+      </div>
+      <div class="legend" style="margin-bottom:18px">
+        <span>🐺 Bỏ phiếu trúng ma sói +20</span><span>😇 Bỏ phiếu nhầm dân làng +10</span><span>Nhóm không trả lời đúng thì không được bỏ phiếu.</span>
       </div>
     </div>
     <div class="row" style="margin:0;justify-content:space-between">
@@ -446,6 +476,36 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
   </div>
 </section>
 
+<!-- ===== MA SÓI ===== -->
+<section id="wolf" class="hidden">
+  <div class="top">
+    <h2>🐺 Ma sói</h2>
+    <button class="btn" id="wUndo" title="Hoàn tác lượt vừa rồi">↶ Hoàn tác</button>
+    <button class="btn" id="wSound">🔊</button>
+    <button class="btn" id="wFull">⛶</button>
+    <button class="btn gold" id="wRank">Xếp hạng</button>
+    <button class="btn red" id="wNew">Ván mới</button>
+    <div class="legend">
+      <span>Nhóm trả lời đúng → bấm tên nhóm, rồi bấm người nhóm muốn bỏ phiếu.</span>
+      <span>🐺 Trúng ma sói +20</span><span>😇 Nhầm dân làng +10</span>
+      <span>🐾 Dân làng bị nhầm sẽ cho biết có mấy ma sói đứng sát bên mình</span>
+    </div>
+  </div>
+  <div class="tarena">
+    <div class="village">
+      <span class="deco" style="top:1%;right:3%" aria-hidden="true">🌕</span>
+      <span class="deco sm bob" style="top:2%;left:4%" aria-hidden="true">🦇</span>
+      <span class="deco sm" style="top:2%;left:42%" aria-hidden="true">🏚️</span>
+      <div class="vgrid" id="wGrid"></div>
+      <div class="left" id="wLeft" style="margin-top:14px"></div>
+    </div>
+    <div>
+      <div class="thint" id="wHint"></div>
+      <div class="squad t" id="wSquad"></div>
+    </div>
+  </div>
+</section>
+
 <!-- Xúc xắc -->
 <div class="overlay hidden" id="diceOv">
   <div class="dicebox">
@@ -492,7 +552,7 @@ function beep(f=520, d=.07, type='square'){
 }
 
 /* ---------- Chuyển màn ---------- */
-function show(id){ ['hub','setup','race','boss','treasure','mono'].forEach(s => $(s).classList.toggle('hidden', s !== id)); }
+function show(id){ ['hub','setup','race','boss','treasure','mono','wolf'].forEach(s => $(s).classList.toggle('hidden', s !== id)); }
 
 /* ---------- Cài đặt ---------- */
 function renderNames(){
@@ -718,12 +778,14 @@ $('goRace').onclick = () => openSetup('race');
 $('goBoss').onclick = () => openSetup('boss');
 $('goTreasure').onclick = () => openSetup('treasure');
 $('goMono').onclick = () => openSetup('mono');
+$('goWolf').onclick = () => openSetup('wolf');
 $('backHub').onclick = () => show('hub');
 $('nMinus').onclick = () => { if(cfg.n > 2){ cfg.n--; renderNames(); } };
 $('nPlus').onclick = () => { if(cfg.n < 12){ cfg.n++; renderNames(); } };
 segInit('segLen', 'len'); segInit('segDen', 'den');
-$('start').onclick = () => cur === 'race' ? startGame() : cur === 'boss' ? bossStart() : cur === 'treasure' ? tStart() : mStart();
+$('start').onclick = () => cur === 'race' ? startGame() : cur === 'boss' ? bossStart() : cur === 'treasure' ? tStart() : cur === 'mono' ? mStart() : wStart();
 $('resume').onclick = () => {
+  if(cur === 'wolf'){ const w = wLoad(); if(!w) return; ws = w; ws.active = null; wHist = []; wBuild(); show('wolf'); return; }
   if(cur === 'mono'){ const m = mLoad(); if(!m) return; ms = m; ms.turn = null; mHist = []; mBuild(); show('mono'); return; }
   if(cur === 'treasure'){ const t = tLoad(); if(!t) return; ts = t; ts.active = null; tHist = []; tBuild(); show('treasure'); return; }
   if(cur === 'boss'){ const b = bLoad(); if(!b) return; bs = b; bHist = []; bossBuild(); show('boss'); return; }
@@ -767,10 +829,10 @@ function bClear(){ try{ localStorage.removeItem(BKEY); }catch(e){} }
 let modalLock = false;                   // hộp thoại đang chờ chọn Mua / Không mua
 function openSetup(game){
   cur = game;
-  $('setupTitle').textContent = {race:'🏇 Đua ngựa', boss:'⚔️ Đánh quái vật', treasure:'🗺️ Tìm kho báu', mono:'🎩 Cờ tỷ phú'}[game];
-  ['Race','Boss','Treasure','Mono'].forEach(n => $('opt' + n).classList.toggle('hidden', n.toLowerCase() !== game));
-  $('start').textContent = {race:'Bắt đầu đua 🏁', boss:'Vào trận ⚔️', treasure:'Đi tìm kho báu 🗺️', mono:'Bắt đầu chơi 🎩'}[game];
-  const s = {race:load, boss:bLoad, treasure:tLoad, mono:mLoad}[game]();
+  $('setupTitle').textContent = {race:'🏇 Đua ngựa', boss:'⚔️ Đánh quái vật', treasure:'🗺️ Tìm kho báu', mono:'🎩 Cờ tỷ phú', wolf:'🐺 Ma sói'}[game];
+  ['Race','Boss','Treasure','Mono','Wolf'].forEach(n => $('opt' + n).classList.toggle('hidden', n.toLowerCase() !== game));
+  $('start').textContent = {race:'Bắt đầu đua 🏁', boss:'Vào trận ⚔️', treasure:'Đi tìm kho báu 🗺️', mono:'Bắt đầu chơi 🎩', wolf:'Vào làng 🐺'}[game];
+  const s = {race:load, boss:bLoad, treasure:tLoad, mono:mLoad, wolf:wLoad}[game]();
   $('resume').classList.toggle('hidden', !(s && s.groups && s.groups.length));
   renderNames(); show('setup');
 }
@@ -1289,6 +1351,170 @@ $('mNew').onclick = () => {
   if(busy) return;
   askConfirm('Bắt đầu ván mới?', 'Ván cờ hiện tại sẽ bị xóa.', 'Ván mới', () => {
     mClear(); cfg.names = ms.groups.map(g => g.name); cfg.n = ms.groups.length; openSetup('mono');
+  });
+};
+
+/* =====================================================
+   MA SÓI
+   ===================================================== */
+const WKEY = 'sanchoi_masoi_v1';
+const WSIZE = {12:[4,3], 20:[5,5], 30:[6,7]};      // số dân → [số cột, số ma sói]
+const W_HIT = 20, W_MISS = 10;
+const VNAMES = ['Bác Ba','Cô Tư','Chú Năm','Dì Sáu','Ông Bảy','Bà Tám','Anh Chín','Chị Mười','Tí','Tèo','Mận','Đào','Cúc','Lan','Tâm','Phúc','Lộc','Thọ','Na','Bông','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất'];
+const VFACES = ['👨','👩','👴','👵','🧒','👧','👦','🧔','👱','🧑','👲','🧓','🤠','🤓','👳','🧕','👸','🤴','👷','💂'];
+let wcfg = {size:20}, ws = null, wHist = [];
+
+function wSave(){ try{ localStorage.setItem(WKEY, JSON.stringify(ws)); }catch(e){} }
+function wLoad(){ try{ return JSON.parse(localStorage.getItem(WKEY)); }catch(e){ return null; } }
+function wClear(){ try{ localStorage.removeItem(WKEY); }catch(e){} }
+function shuffled(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+
+$('segVillage').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  wcfg.size = +b.dataset.v;
+  [...$('segVillage').children].forEach(x => x.classList.toggle('on', x === b));
+});
+
+function wStart(){
+  const names = [...$('names').querySelectorAll('input')].map((i,k) => i.value.trim() || ('Nhóm ' + (k+1)));
+  cfg.names = names;
+  const [cols, wolves] = WSIZE[wcfg.size], n = wcfg.size;
+  const isWolf = shuffled([...Array(n)].map((_, k) => k < wolves));
+  const vn = shuffled(VNAMES).slice(0, n), vf = shuffled([...VFACES, ...VFACES]);
+  ws = {
+    cols, active: null, over: false,
+    people: isWolf.map((w, k) => ({wolf:w, open:false, by:null, name:vn[k], face:vf[k]})),
+    groups: names.map((nm,i) => ({name:nm, color:COLORS[i], pts:0, hits:0}))
+  };
+  wHist = []; wSave(); wBuild(); show('wolf');
+}
+function wNear(k){   // số ma sói đứng sát bên (8 ô xung quanh)
+  const c = ws.cols, r0 = Math.floor(k / c), c0 = k % c; let n = 0;
+  for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++){
+    if(!dr && !dc) continue;
+    const r = r0 + dr, cc = c0 + dc, j = r * c + cc;
+    if(r < 0 || cc < 0 || cc >= c || j >= ws.people.length) continue;
+    if(ws.people[j].wolf) n++;
+  }
+  return n;
+}
+function wBuild(){
+  $('wSound').textContent = soundOn ? '🔊' : '🔇';
+  const grid = $('wGrid'); grid.innerHTML = ''; grid.style.setProperty('--vc', ws.cols);
+  ws.people.forEach((p, k) => {
+    const b = mk('button', 'vcard'); b.id = 'wp' + k;
+    b.addEventListener('click', () => wVote(k));
+    grid.append(b);
+  });
+  const sq = $('wSquad'); sq.innerHTML = '';
+  ws.groups.forEach((g, i) => {
+    const row = mk('div', 'hero pick'); row.id = 'wrow' + i; row.style.setProperty('--c', g.color);
+    row.tabIndex = 0; row.setAttribute('role', 'button');
+    const rk = mk('span', 'rk'); rk.id = 'wrk' + i;
+    const dm = mk('span', 'dm'); dm.id = 'wdm' + i;
+    const info = mk('div', 'info'); info.append(mk('span', 'nm', g.name), dm);
+    row.append(rk, info);
+    row.addEventListener('click', () => wPick(i));
+    row.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); wPick(i); } });
+    sq.append(row);
+  });
+  wRefresh();
+}
+function wRefresh(){
+  let hidden = 0;
+  ws.people.forEach((p, k) => {
+    const b = $('wp' + k);
+    b.className = 'vcard' + (p.open ? ' open ' + (p.wolf ? 'wolf' : 'safe') : '');
+    b.textContent = '';
+    if(p.open){
+      b.append(mk('span', 'f', p.wolf ? '🐺' : '😇'), mk('span', 'n', p.wolf ? 'Ma sói!' : 'Kề bên: ' + wNear(k) + ' 🐺'));
+      if(p.by != null && ws.groups[p.by]){ const d = mk('i', 'by'); d.style.background = ws.groups[p.by].color; b.append(d); }
+    }else{
+      b.append(mk('span', 'f', p.face), mk('span', 'n', p.name));
+      if(p.wolf) hidden++;
+    }
+  });
+  const lf = $('wLeft'); lf.textContent = '';
+  lf.append(mk('span', '', hidden ? '🐺 Còn ' + hidden + ' ma sói đang ẩn nấp trong làng' : '🎉 Làng đã sạch bóng ma sói!'));
+  const top = Math.max(...ws.groups.map(g => g.pts));
+  const ord = ws.groups.map((g, i) => i).sort((a, b) => ws.groups[b].pts - ws.groups[a].pts || a - b);
+  ord.forEach((i, k) => { $('wrow' + i).style.order = k; $('wrk' + i).textContent = k + 1; });
+  ws.groups.forEach((g, i) => {
+    const dm = $('wdm' + i); dm.textContent = g.pts;
+    dm.append(mk('small', '', ' điểm · 🐺 ' + g.hits), top > 0 && g.pts === top ? ' 👑' : '');
+    $('wrow' + i).classList.toggle('on', ws.active === i);
+  });
+  $('wHint').textContent = ws.over ? 'Đã tìm ra hết ma sói!' : ws.active != null ? '🗳️ ' + ws.groups[ws.active].name + ' bỏ phiếu cho ai?' : '👉 Bấm tên nhóm trả lời đúng';
+  $('wUndo').disabled = busy || wHist.length === 0;
+}
+function wPick(i){
+  if(busy || ws.over) return;
+  ws.active = ws.active === i ? null : i;
+  beep(600, .05); wRefresh();
+}
+async function wVote(k){
+  const p = ws.people[k];
+  if(busy || ws.over || p.open) return;
+  if(ws.active == null){
+    busy = true; toast('👉 Bấm tên nhóm trước, rồi mới bỏ phiếu'); await sleep(1400); hideToast(); busy = false; return;
+  }
+  busy = true;
+  wHist.push(JSON.stringify(ws)); if(wHist.length > 60) wHist.shift();
+  const i = ws.active, g = ws.groups[i];
+
+  $('revWho').textContent = g.name + ' bỏ phiếu cho ' + p.name;
+  $('revEmo').textContent = p.face; $('revMsg').textContent = 'Là người hay là sói…?';
+  $('revOv').classList.remove('hidden');
+  for(let n=0;n<8;n++){ beep(260 + (n % 2) * 60, .06); await sleep(170); }
+  $('revEmo').style.animation = 'none'; void $('revEmo').offsetWidth; $('revEmo').style.animation = '';
+  if(p.wolf){
+    g.pts += W_HIT; g.hits++;
+    $('revEmo').textContent = '🐺'; $('revMsg').textContent = 'Đúng là ma sói! +' + W_HIT + ' điểm';
+    [660,880,1040,1320].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
+  }else{
+    g.pts += W_MISS;
+    const near = wNear(k);
+    $('revEmo').textContent = '😇';
+    $('revMsg').textContent = 'Nhầm rồi, ' + p.name + ' là dân làng! +' + W_MISS + ' điểm · 🐾 ' + (near ? 'Có ' + near + ' ma sói đứng sát bên' : 'Không có ma sói nào sát bên');
+    beep(180, .4, 'sawtooth');
+  }
+  p.open = true; p.by = i; ws.active = null;
+  if(ws.people.every(x => !x.wolf || x.open)) ws.over = true;
+  wRefresh();
+  await sleep(p.wolf ? 2300 : 3000);
+  $('revOv').classList.add('hidden');
+
+  busy = false; wSave(); wRefresh();
+  if(ws.over) wolfRank(true);
+}
+function wolfRank(done){
+  const order = ws.groups.map((g,i) => ({...g, i})).sort((a,b) => b.pts - a.pts || a.i - b.i);
+  openModal(m => {
+    m.append(mk('h3', '', done ? '🏆 Làng đã diệt hết ma sói!' : '📊 Xếp hạng hiện tại'));
+    const ul = mk('ul', 'rank');
+    order.forEach((g, k) => {
+      const li = mk('li');
+      const dot = mk('i'); dot.style.background = g.color;
+      li.append(mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.'), dot, mk('span', '', g.name), mk('span', '', g.pts + ' điểm · diệt ' + g.hits + ' sói'));
+      ul.append(li);
+    });
+    m.append(ul);
+    const a = mk('div', 'acts');
+    const ok = mk('button', 'btn gold', 'Đóng'); ok.onclick = closeModal;
+    a.append(ok); m.append(a);
+  });
+}
+$('wUndo').onclick = () => {
+  if(busy || !wHist.length) return;
+  ws = JSON.parse(wHist.pop()); wSave(); wRefresh();
+};
+$('wSound').onclick = () => { $('sound').click(); $('wSound').textContent = soundOn ? '🔊' : '🔇'; };
+$('wFull').onclick = () => $('full').click();
+$('wRank').onclick = () => wolfRank(ws.over);
+$('wNew').onclick = () => {
+  if(busy) return;
+  askConfirm('Bắt đầu ván mới?', 'Ngôi làng hiện tại sẽ bị xóa.', 'Ván mới', () => {
+    wClear(); cfg.names = ws.groups.map(g => g.name); cfg.n = ws.groups.length; openSetup('wolf');
   });
 };
 
