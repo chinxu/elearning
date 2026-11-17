@@ -1458,8 +1458,7 @@ function wRefresh(){
   const lf = $('wLeft'); lf.textContent = '';
   lf.append(mk('span', '', hidden ? '🐺 Còn ' + hidden + ' ma sói đang ẩn nấp trong làng' : '🎉 Làng đã sạch bóng ma sói!'));
   const top = Math.max(...ws.groups.map(g => g.pts));
-  const ord = ws.groups.map((g, i) => i).sort((a, b) => ws.groups[b].pts - ws.groups[a].pts || a - b);
-  ord.forEach((i, k) => { $('wrow' + i).style.order = k; $('wrk' + i).textContent = k + 1; });
+  ws.groups.forEach((g, i) => { $('wrk' + i).textContent = i + 1; });   // giữ nguyên thứ tự nhóm 1, 2, 3…
   ws.groups.forEach((g, i) => {
     const dm = $('wdm' + i); dm.textContent = g.pts;
     dm.append(mk('small', '', ' điểm · 🐺 ' + g.hits), g.pts === top && ws.groups.some(o => o.pts < top) ? ' 👑' : '');
