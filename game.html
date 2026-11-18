@@ -31,6 +31,8 @@ button{font-family:inherit;cursor:pointer;border:none;color:var(--ink)}
 
 /* ---------- Sảnh ---------- */
 #hub,#setup{max-width:980px;margin:0 auto;padding:24px 16px 40px}
+#hub{max-width:1260px}
+@media(min-width:1100px){.games{grid-template-columns:repeat(5,minmax(0,1fr))}}
 h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3rem);margin:.2em 0 .1em;text-align:center}
 .sub{color:#e9ffe6;text-align:center;margin:0 0 22px;font-size:1.1rem}
 .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
@@ -276,6 +278,73 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
 .vcard .rd{position:absolute;top:5%;left:6%;font-size:clamp(.5rem,.8vw,.8rem);opacity:.85}
 .wend{width:100%;font-size:clamp(1.1rem,2vw,1.5rem);padding:.6rem;margin-bottom:8px}
 .hero .st{font-size:clamp(.8rem,1.2vw,1rem);font-weight:700;opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- 5 trò mới ---------- */
+.ngsec{padding:10px 16px 16px}
+.ngsec .squad.t{grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));gap:6px}
+.ngsec .hero{padding:5px 6px 5px 10px;gap:8px}
+.ngsec .hero .nm{font-size:clamp(1.1rem,1.7vw,1.5rem)}
+.ngsec .hero .dm{font-size:clamp(1rem,1.5vw,1.3rem)}
+.ngsec .hero .roll{width:clamp(44px,4.4vw,54px);height:clamp(44px,4.4vw,54px);font-size:clamp(1.3rem,2.2vw,1.7rem)}
+.ngboard{position:relative;overflow:hidden;border-radius:18px;padding:clamp(14px,2.4vw,28px);box-shadow:0 6px 0 rgba(0,0,0,.3);min-width:0}
+/* Săn thú */
+.poke-bd{background:radial-gradient(ellipse at 50% 80%,#8fd36f,#4f9b45 60%,#2f6e34);min-height:clamp(320px,62vh,560px);display:grid;place-items:center}
+.pk-wild{position:relative;z-index:1;background:rgba(255,248,234,.94);border-radius:24px;padding:16px 24px;text-align:center;box-shadow:0 6px 0 rgba(0,0,0,.25);max-width:100%}
+.pk-tier{display:inline-block;border-radius:99px;padding:.2rem .9rem;font-weight:800;background:#d9cbb0}
+.pk-tier[data-t="2"]{background:#6fb7ff;color:#08254a}
+.pk-tier[data-t="3"]{background:linear-gradient(90deg,#ffd84d,#ff8ad8,#8fd3ff);color:var(--ink)}
+.pk-e{font-size:clamp(5rem,22vh,11rem);line-height:1.15;animation:float 2.4s ease-in-out infinite;filter:drop-shadow(0 8px 6px rgba(0,0,0,.35))}
+.pk-n{font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:800}
+.pk-i{font-size:clamp(1rem,1.8vw,1.35rem);font-weight:700;color:#5b4a36}
+.pk-try{font-size:clamp(1rem,1.8vw,1.35rem);margin-top:4px}
+/* Vườn rau */
+.pvz-bd{background:linear-gradient(#6fb64f,#4c923c);display:grid;gap:6px}
+.pz-lane{display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:stretch}
+.pz-tag{width:clamp(30px,3vw,40px);border-radius:10px;background:var(--c);color:#fff;font-weight:800;display:grid;place-items:center;font-size:1.2rem;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+.pz-track{position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;height:clamp(44px,calc((100vh - 260px)/8),72px)}
+.pz-cell{background:#8a6a3f;border-radius:6px}
+.pz-cell:nth-child(odd){background:#7b5c35}
+.pz-cell:first-child{background:#5d9b47}
+.pz-lane.danger .pz-cell{box-shadow:inset 0 0 0 2px #ff6b5a}
+.pz-plant,.pz-z{position:absolute;top:50%;line-height:1;pointer-events:none}
+.pz-plant{left:6.25%;transform:translate(-50%,-50%);font-size:clamp(1.6rem,3.2vw,2.8rem)}
+.pz-z{transform:translate(-50%,-50%);transition:left .5s ease;display:flex;flex-direction:column;align-items:center}
+.pz-ze{font-size:clamp(1.6rem,3.2vw,2.8rem);filter:drop-shadow(0 3px 2px rgba(0,0,0,.4))}
+.pz-hp{min-width:44px;height:14px;border-radius:99px;background:linear-gradient(90deg,#e8443a var(--p),rgba(0,0,0,.45) 0);color:#fff;font-size:.7rem;font-weight:800;line-height:14px;text-align:center;border:1px solid #fff}
+.pz-pea{position:absolute;top:50%;left:6.25%;transform:translate(-50%,-50%);font-size:1.4rem;animation:pea .5s linear forwards}
+@keyframes pea{to{left:var(--to)}}
+/* Dò mìn */
+.mine-bd{background:linear-gradient(#5a6b3c,#3d4a29)}
+.mn-grid{display:grid;grid-template-columns:repeat(var(--w),minmax(0,1fr));gap:4px;max-width:calc((100vh - 230px) * var(--w) / 6.5);margin:0 auto}
+.mn-c{aspect-ratio:1;border-radius:8px;background:radial-gradient(circle at 35% 30%,#b7cf7d,#8aa956);box-shadow:0 3px 0 #5b7233;font-weight:800;font-size:clamp(.9rem,2.2vw,1.9rem);padding:0;min-width:0;position:relative}
+.mn-c:not(.open):not(.flag):hover{filter:brightness(1.1)}
+.mn-c.open{background:#e9dcc0;box-shadow:inset 0 2px 4px rgba(0,0,0,.25);cursor:default}
+.mn-c.flag,.mn-c.boom{background:var(--g,#d8432f);box-shadow:inset 0 0 0 3px #fff;cursor:default}
+.mn-c.boom{background:#2a1a1a}
+.mn-c.n1{color:#1f5fd1}.mn-c.n2{color:#1f8a3a}.mn-c.n3{color:#d8432f}.mn-c.n4{color:#5b2a9e}.mn-c.n5,.mn-c.n6,.mn-c.n7,.mn-c.n8{color:#8a1d12}
+.mn-left,.sh-left{margin:14px auto 0}
+.mn-mode{margin-bottom:8px}
+.mn-mode button{flex:1;font-size:clamp(1rem,1.8vw,1.35rem)}
+/* Bắn phi thuyền */
+.ship-bd{background:radial-gradient(1.5px 1.5px at 20% 12%,#fff 50%,transparent 52%) 0 0/110px 80px,radial-gradient(1px 1px at 70% 60%,#fff 50%,transparent 52%) 0 0/80px 60px,linear-gradient(#0b1030,#1d1a4a)}
+.sh-grid{display:grid;grid-template-columns:auto repeat(8,minmax(0,1fr));gap:4px;max-width:calc((100vh - 250px) * 1.3);margin:0 auto}
+.sh-h{color:#cfd8ff;font-weight:800;display:grid;place-items:center;font-size:clamp(.9rem,1.6vw,1.3rem);min-width:1.4em}
+.sh-c{aspect-ratio:1;border-radius:8px;background:rgba(120,140,255,.18);border:1px solid rgba(160,180,255,.35);color:#fff;font-size:clamp(1rem,2.4vw,2rem);padding:0;min-width:0}
+.sh-c:not(.hit):not(.miss):not(.sunk):hover{background:rgba(160,180,255,.4)}
+.sh-c.miss{background:transparent;border-color:transparent;color:var(--g);font-size:clamp(1.4rem,3vw,2.6rem);cursor:default}
+.sh-c.hit{background:#c4332a;box-shadow:inset 0 0 0 3px var(--g);cursor:default}
+.sh-c.sunk{background:#6c3fc9;box-shadow:inset 0 0 0 3px var(--g,#fff);cursor:default}
+/* Thám tử */
+.case-bd{background:linear-gradient(#3a2c22,#24190f)}
+.cs-story{color:#ffe9b0;font-weight:800;font-size:clamp(1.05rem,2vw,1.6rem);text-align:center;margin-bottom:10px;text-wrap:balance}
+.cs-grid .vcard{aspect-ratio:auto;padding:8px 4px 6px}
+.cs-at{display:flex;gap:4px;font-size:clamp(.9rem,1.6vw,1.4rem)}
+.cs-at i{font-style:normal}
+.vcard.cleared{filter:grayscale(1);opacity:.55;cursor:default}
+.vcard.culprit{background:radial-gradient(circle,#ff8a7a,#c4332a);color:#fff}
+.cs-tag{position:absolute;top:6px;left:6px;background:var(--ink);color:#fff;border-radius:6px;font-size:.75rem;padding:1px 6px}
+.cs-clues{margin-top:10px;background:var(--paper);border-radius:12px;padding:8px 12px;display:flex;flex-direction:column;gap:2px;font-weight:700;font-size:clamp(.95rem,1.6vw,1.25rem)}
+.cs-none{color:#7a6a55}
 </style>
 </head>
 <body>
@@ -308,6 +377,31 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
       <div class="ico"><img src="" id="wolfIco" alt="" style="height:3.4rem;width:auto"></div><h2>Ma sói</h2>
       <p>Ma sói trà trộn trong làng. Mỗi lượt các nhóm bỏ phiếu loại một người.</p>
       <button class="btn gold" id="goWolf">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">🐾</div><h2>Săn thú thần kỳ</h2>
+      <p>Ném bóng bắt thú hoang: thường, hiếm, huyền thoại. Gom đủ bộ 4 hệ!</p>
+      <button class="btn gold" onclick="openSetup('poke')">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">🌻</div><h2>Vườn rau đại chiến</h2>
+      <p>Mỗi nhóm giữ một luống rau. Bắn hạ xác sống trước khi chúng tràn vào vườn!</p>
+      <button class="btn gold" onclick="openSetup('pvz')">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">💣</div><h2>Dò mìn</h2>
+      <p>Mở ô an toàn, cắm cờ đúng chỗ có mìn. Đạp trúng mìn là mất điểm!</p>
+      <button class="btn gold" onclick="openSetup('mine')">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">🚀</div><h2>Bắn phi thuyền</h2>
+      <p>Gọi tọa độ để bắn hạ hạm đội phi thuyền ẩn trong vũ trụ.</p>
+      <button class="btn gold" onclick="openSetup('ship')">Chơi</button>
+    </div>
+    <div class="game">
+      <div class="ico">🕵️</div><h2>Thám tử phá án</h2>
+      <p>Thu thập manh mối, suy luận và buộc tội đúng thủ phạm.</p>
+      <button class="btn gold" onclick="openSetup('case')">Chơi</button>
     </div>
   </div>
 </section>
@@ -366,6 +460,16 @@ h1{color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35);font-size:clamp(1.8rem,5vw,3re
         <span>Người nhiều phiếu nhất bị loại (hòa phiếu thì loại tất cả): là ma sói thì nhóm bỏ phiếu cho người đó +20, là dân làng thì −5.</span>
       </div>
     </div>
+    <div id="optPoke" class="hidden"><div class="legend" style="margin-bottom:18px"><span>Mỗi câu trả lời đúng = 1 lần ném bóng.</span><span>Thường +10 · Hiếm +25 · Huyền thoại +60.</span><span>Đủ bộ 4 hệ 🔥💧🌿⚡: +30.</span></div></div>
+    <div id="optPvz" class="hidden"><div class="legend" style="margin-bottom:18px"><span>Mỗi nhóm giữ một luống rau, xác sống đi từ phải sang.</span><span>Trả lời đúng: bắn 🌱. Hết mỗi câu: xác sống tiến 1 ô.</span><span>Xác sống tới vườn: −15.</span></div></div>
+    <div id="optMine" class="hidden">
+      <div class="row"><label>Bãi mìn</label>
+        <div class="seg ngseg" data-g="mine" data-k="size"><button data-v="s">7×5 · 7 mìn</button><button data-v="m" class="on">8×6 · 10 mìn</button><button data-v="l">10×7 · 15 mìn</button></div>
+      </div>
+      <div class="legend" style="margin-bottom:18px"><span>Mở ô an toàn +5 · Cắm cờ đúng mìn +15 · Cắm cờ sai −5 · Đạp mìn −15.</span></div>
+    </div>
+    <div id="optShip" class="hidden"><div class="legend" style="margin-bottom:18px"><span>Bàn 8×6 có 5 phi thuyền ẩn.</span><span>Trúng +10 · Hạ gục thêm +20 · Trượt 0.</span></div></div>
+    <div id="optCase" class="hidden"><div class="legend" style="margin-bottom:18px"><span>9 nghi phạm, 1 thủ phạm.</span><span>Manh mối +5 · Buộc tội đúng +40 · Buộc tội sai −10.</span><span>Phá xong vụ này thì sang vụ tiếp theo.</span></div></div>
     <div class="row" style="margin:0;justify-content:space-between">
       <button class="btn" id="backHub">← Sảnh</button>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -567,7 +671,7 @@ function beep(f=520, d=.07, type='square'){
 }
 
 /* ---------- Chuyển màn ---------- */
-function show(id){ ['hub','setup','race','boss','treasure','mono','wolf'].forEach(s => $(s).classList.toggle('hidden', s !== id)); }
+function show(id){ document.querySelectorAll('body > section').forEach(s => s.classList.toggle('hidden', s.id !== id)); window.scrollTo(0, 0); }
 
 /* ---------- Cài đặt ---------- */
 function renderNames(){
@@ -798,8 +902,9 @@ $('backHub').onclick = () => show('hub');
 $('nMinus').onclick = () => { if(cfg.n > 2){ cfg.n--; renderNames(); } };
 $('nPlus').onclick = () => { if(cfg.n < 12){ cfg.n++; renderNames(); } };
 segInit('segLen', 'len'); segInit('segDen', 'den');
-$('start').onclick = () => cur === 'race' ? startGame() : cur === 'boss' ? bossStart() : cur === 'treasure' ? tStart() : cur === 'mono' ? mStart() : wStart();
+$('start').onclick = () => (window.NG && NG[cur]) ? NG[cur].start() : cur === 'race' ? startGame() : cur === 'boss' ? bossStart() : cur === 'treasure' ? tStart() : cur === 'mono' ? mStart() : wStart();
 $('resume').onclick = () => {
+  if(window.NG && NG[cur]){ NG[cur].resume(); return; }
   if(cur === 'wolf'){ const w = wLoad(); if(!w) return; ws = w; ws.active = null; wHist = []; wBuild(); show('wolf'); return; }
   if(cur === 'mono'){ const m = mLoad(); if(!m) return; ms = m; ms.turn = null; mHist = []; mBuild(); show('mono'); return; }
   if(cur === 'treasure'){ const t = tLoad(); if(!t) return; ts = t; ts.active = null; tHist = []; tBuild(); show('treasure'); return; }
@@ -844,10 +949,11 @@ function bClear(){ try{ localStorage.removeItem(BKEY); }catch(e){} }
 let modalLock = false;                   // hộp thoại đang chờ chọn Mua / Không mua
 function openSetup(game){
   cur = game;
-  $('setupTitle').textContent = {race:'🏇 Đua ngựa', boss:'⚔️ Đánh quái vật', treasure:'🗺️ Tìm kho báu', mono:'🎩 Cờ tỷ phú', wolf:'🐺 Ma sói'}[game];
-  ['Race','Boss','Treasure','Mono','Wolf'].forEach(n => $('opt' + n).classList.toggle('hidden', n.toLowerCase() !== game));
-  $('start').textContent = {race:'Bắt đầu đua 🏁', boss:'Vào trận ⚔️', treasure:'Đi tìm kho báu 🗺️', mono:'Bắt đầu chơi 🎩', wolf:'Vào làng 🐺'}[game];
-  const s = {race:load, boss:bLoad, treasure:tLoad, mono:mLoad, wolf:wLoad}[game]();
+  const N = window.NG && NG[game];
+  $('setupTitle').textContent = N ? N.def.title : {race:'🏇 Đua ngựa', boss:'⚔️ Đánh quái vật', treasure:'🗺️ Tìm kho báu', mono:'🎩 Cờ tỷ phú', wolf:'🐺 Ma sói'}[game];
+  document.querySelectorAll('#setup [id^="opt"]').forEach(el => el.classList.toggle('hidden', el.id.toLowerCase() !== 'opt' + game));
+  $('start').textContent = N ? N.def.startText : {race:'Bắt đầu đua 🏁', boss:'Vào trận ⚔️', treasure:'Đi tìm kho báu 🗺️', mono:'Bắt đầu chơi 🎩', wolf:'Vào làng 🐺'}[game];
+  const s = N ? N.load() : {race:load, boss:bLoad, treasure:tLoad, mono:mLoad, wolf:wLoad}[game]();
   $('resume').classList.toggle('hidden', !(s && s.groups && s.groups.length));
   renderNames(); show('setup');
 }
@@ -1608,6 +1714,548 @@ $('wNew').onclick = () => {
 };
 
 drawDice(1);
+</script>
+<script>
+/* =====================================================================
+   5 TRÒ MỚI: Săn thú thần kỳ · Vườn rau đại chiến · Dò mìn · Bắn phi thuyền · Thám tử phá án
+   Khung chung: mỗi trò có trạng thái riêng (lưu localStorage), hoàn tác, xếp hạng,
+   danh sách nhóm giữ nguyên thứ tự 1, 2, 3…
+   ===================================================================== */
+window.NG = {};
+const rnd = n => Math.floor(Math.random() * n);
+const pick = a => a[rnd(a.length)];
+
+function ngGroupNames(){ return [...$('names').querySelectorAll('input')].map((i,k) => i.value.trim() || ('Nhóm ' + (k+1))); }
+async function ngDice(name, note){
+  $('diceWho').textContent = name; $('diceMsg').textContent = '';
+  $('diceOv').classList.remove('hidden'); $('dice').classList.add('shake');
+  let v = 1;
+  for(let k=0;k<12;k++){ v = 1 + rnd(6); drawDice(v); beep(300 + k*30, .04); await sleep(85); }
+  $('dice').classList.remove('shake');
+  $('diceMsg').textContent = note ? note(v) : 'Ra ' + v + '!';
+  beep(880, .18, 'triangle'); await sleep(1100);
+  $('diceOv').classList.add('hidden');
+  return v;
+}
+async function ngReveal(who, before, after, msg, wait, good){
+  $('revWho').textContent = who; $('revMsg').textContent = '';
+  const E = $('revEmo'); E.textContent = before;
+  $('revOv').classList.remove('hidden');
+  for(let n=0;n<6;n++){ beep(300 + n*40, .05); await sleep(130); }
+  E.textContent = ''; typeof after === 'string' ? E.textContent = after : E.append(after);
+  E.style.animation = 'none'; void E.offsetWidth; E.style.animation = '';
+  $('revMsg').textContent = msg;
+  if(good === true) [660,880,1040].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
+  else if(good === false) beep(150, .4, 'sawtooth');
+  await sleep(wait || 2200);
+  $('revOv').classList.add('hidden');
+}
+async function ngToast(msg, wait){ toast(msg); await sleep(wait || 1800); hideToast(); }
+function addPts(g, d){ g.pts = Math.max(0, g.pts + d); }
+
+function makeGame(def){
+  const G = {def, st:null, hist:[], opts:{...def.opts}};
+  NG[def.key] = G;
+  // ---- giao diện khung ----
+  const sec = document.createElement('section'); sec.id = def.key; sec.className = 'hidden ngsec';
+  sec.innerHTML = '<div class="top"><h2>' + def.title + '</h2>'
+    + '<button class="btn" data-a="undo" title="Hoàn tác lượt vừa rồi">↶ Hoàn tác</button><button class="btn" data-a="sound">🔊</button><button class="btn" data-a="full">⛶</button>'
+    + '<button class="btn gold" data-a="rank">Xếp hạng</button><button class="btn red" data-a="new">Ván mới</button>'
+    + '<div class="legend">' + def.legend.map(x => '<span>' + x + '</span>').join('') + '</div></div>'
+    + '<div class="tarena"><div class="ngboard ' + def.key + '-bd" data-r="board"></div>'
+    + '<div><div class="thint" data-r="hint"></div><div data-r="tools"></div><div class="squad t" data-r="squad"></div></div></div>';
+  $('diceOv').before(sec);
+  G.sec = sec; G.r = n => sec.querySelector('[data-r="' + n + '"]');
+  const A = n => sec.querySelector('[data-a="' + n + '"]');
+  A('undo').onclick = () => { if(busy || !G.hist.length) return; G.st = JSON.parse(G.hist.pop()); G.save(); G.refresh(); };
+  A('sound').onclick = () => { $('sound').click(); A('sound').textContent = soundOn ? '🔊' : '🔇'; };
+  A('full').onclick = () => $('full').click();
+  A('rank').onclick = () => G.rank(G.st.over);
+  A('new').onclick = () => { if(busy) return; askConfirm('Bắt đầu ván mới?', 'Ván hiện tại sẽ bị xóa.', 'Ván mới', () => {
+    try{ localStorage.removeItem(def.skey); }catch(e){} cfg.names = G.st.groups.map(g => g.name); cfg.n = G.st.groups.length; openSetup(def.key); }); };
+  // ---- lưu / đọc ----
+  G.save = () => { try{ localStorage.setItem(def.skey, JSON.stringify(G.st)); }catch(e){} };
+  G.load = () => { try{ return JSON.parse(localStorage.getItem(def.skey)); }catch(e){ return null; } };
+  G.push = () => { G.hist.push(JSON.stringify(G.st)); if(G.hist.length > 80) G.hist.shift(); };
+  G.start = () => {
+    const names = ngGroupNames(); cfg.names = names;
+    const groups = names.map((nm,i) => ({name:nm, color:COLORS[i], pts:def.startPts || 0}));
+    G.st = def.init(groups, G.opts); G.st.groups = groups; G.st.active = null; G.st.over = false;
+    G.hist = []; G.save(); G.build(); show(def.key);
+  };
+  G.resume = () => { const s = G.load(); if(!s) return; G.st = s; G.st.active = null; G.hist = []; G.build(); show(def.key); };
+  // ---- nhóm ----
+  G.build = () => {
+    A('sound').textContent = soundOn ? '🔊' : '🔇';
+    def.build(G);
+    const sq = G.r('squad'); sq.innerHTML = '';
+    G.st.groups.forEach((g, i) => {
+      const row = mk('div', 'hero' + (def.pick ? ' pick' : '')); row.style.setProperty('--c', g.color); row.dataset.i = i;
+      const dm = mk('span', 'dm'), stt = mk('span', 'st');
+      const info = mk('div', 'info'); info.append(mk('span', 'nm', g.name), dm, stt);
+      row.append(mk('span', 'rk', i + 1), info);
+      (def.btns || []).forEach(b => {
+        const bt = mk('button', 'roll ' + (b.cls || ''), b.ico); bt.title = b.title + ' · ' + g.name;
+        bt.addEventListener('click', e => { e.stopPropagation(); b.act(G, i); }); row.append(bt);
+      });
+      if(def.pick){
+        row.tabIndex = 0; row.setAttribute('role', 'button');
+        row.addEventListener('click', () => G.pickGroup(i));
+        row.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); G.pickGroup(i); } });
+      }
+      sq.append(row);
+    });
+    G.refresh();
+  };
+  G.pickGroup = i => { if(busy || G.st.over) return; G.st.active = G.st.active === i ? null : i; if(def.onPick) def.onPick(G); beep(600, .05); G.refresh(); };
+  G.needGroup = async () => { busy = true; await ngToast('👉 Bấm tên nhóm trả lời đúng trước', 1400); busy = false; };
+  G.refresh = () => {
+    def.refresh(G);
+    const top = Math.max(...G.st.groups.map(g => g.pts));
+    [...G.r('squad').children].forEach(row => {
+      const i = +row.dataset.i, g = G.st.groups[i];
+      const dm = row.querySelector('.dm'); dm.textContent = g.pts;
+      dm.append(mk('small', '', ' điểm'), g.pts === top && G.st.groups.some(o => o.pts < top) ? ' 👑' : '');
+      row.querySelector('.st').textContent = def.status ? def.status(G, g, i) : '';
+      row.classList.toggle('on', G.st.active === i);
+      row.querySelectorAll('button').forEach(b => b.disabled = busy || G.st.over);
+    });
+    A('undo').disabled = busy || G.hist.length === 0;
+  };
+  G.finish = async () => { busy = false; G.save(); G.refresh(); if(G.st.over) G.rank(true); };
+  G.rank = done => {
+    const order = G.st.groups.map((g,i) => ({...g, i})).sort((a,b) => b.pts - a.pts || a.i - b.i);
+    openModal(m => {
+      m.append(mk('h3', '', done ? '🏆 Kết quả chung cuộc' : '📊 Xếp hạng hiện tại'));
+      const ul = mk('ul', 'rank');
+      order.forEach((g, k) => {
+        const li = mk('li'); const dot = mk('i'); dot.style.background = g.color;
+        li.append(mk('span', 'md', k === 0 ? '🥇' : k === 1 ? '🥈' : k === 2 ? '🥉' : (k+1) + '.'), dot, mk('span', '', g.name),
+          mk('span', '', g.pts + ' điểm' + (def.rankNote ? ' · ' + def.rankNote(G, G.st.groups[g.i]) : '')));
+        ul.append(li);
+      });
+      m.append(ul);
+      const a = mk('div', 'acts'); const ok = mk('button', 'btn gold', 'Đóng'); ok.onclick = closeModal; a.append(ok); m.append(a);
+    });
+  };
+  // ---- tùy chọn trong màn cài đặt ----
+  document.querySelectorAll('#setup .ngseg[data-g="' + def.key + '"]').forEach(seg => seg.addEventListener('click', e => {
+    const b = e.target.closest('button'); if(!b) return;
+    G.opts[seg.dataset.k] = b.dataset.v;
+    [...seg.children].forEach(x => x.classList.toggle('on', x === b));
+  }));
+  return G;
+}
+
+/* ---------------------------------------------------------------------
+   1) SĂN THÚ THẦN KỲ: nhóm trả lời đúng được ném bóng bắt thú hoang
+   --------------------------------------------------------------------- */
+const PK = [ // [hình, tên, hệ, bậc]
+  ['🐭','Chuột Tia Lửa','⚡',1],['🐸','Ếch Lá Non','🌿',1],['🐟','Cá Bong Bóng','💧',1],['🦎','Thằn Lằn Than','🔥',1],
+  ['🐤','Gà Con Sấm','⚡',1],['🐌','Ốc Rêu','🌿',1],['🦀','Cua Suối','💧',1],['🐞','Bọ Hồng Lửa','🔥',1],
+  ['🦊','Cáo Lửa','🔥',2],['🐢','Rùa Sóng Thần','💧',2],['🦉','Cú Sét','⚡',2],['🦌','Nai Rừng Xanh','🌿',2],['🐬','Cá Heo Băng','💧',2],['🦔','Nhím Gai Lửa','🔥',2],
+  ['🐉','Rồng Hỏa Thần','🔥',3],['🐳','Kình Ngư Đại Dương','💧',3],['🦅','Đại Bàng Sấm Sét','⚡',3],['🦄','Kỳ Lân Rừng Thiêng','🌿',3]
+];
+const PK_T = {1:{n:'Thường', pts:10, rate:.8, w:60}, 2:{n:'Hiếm', pts:25, rate:.5, w:30}, 3:{n:'Huyền thoại', pts:60, rate:.25, w:10}};
+const PK_EL = ['🔥','💧','🌿','⚡'], PK_SET = 30, PK_FLEE = 3;
+function pkSpawn(){
+  const r = rnd(100), tier = r < 60 ? 1 : r < 90 ? 2 : 3;
+  const pool = PK.map((p, i) => i).filter(i => PK[i][3] === tier);
+  return {i: pick(pool), tries: 0};
+}
+function pkSets(g){ return Math.min(...PK_EL.map(e => g.bag.filter(i => PK[i][2] === e).length)); }
+makeGame({
+  key:'poke', skey:'sanchoi_santhu_v1', title:'🐾 Săn thú thần kỳ', startText:'Vào rừng săn thú 🐾',
+  legend:['Nhóm trả lời đúng → bấm ⚾ của nhóm để ném bóng.','Thường +10 (dễ bắt)','Hiếm +25','Huyền thoại +60 (khó bắt)','Ném trượt ' + PK_FLEE + ' lần thì thú bỏ chạy','Đủ bộ 4 hệ 🔥💧🌿⚡: +' + PK_SET],
+  init: () => ({wild: pkSpawn()}),
+  btns: [{ico:'⚾', title:'Ném bóng', act: async (G, i) => {
+    if(busy || G.st.over) return;
+    busy = true; G.push(); G.refresh();
+    const g = G.st.groups[i], w = G.st.wild, P = PK[w.i], T = PK_T[P[3]];
+    const ok = Math.random() < T.rate;
+    $('revWho').textContent = g.name + ' ném bóng vào ' + P[1] + '!'; $('revMsg').textContent = '';
+    const E = $('revEmo'); E.textContent = '🔴'; $('revOv').classList.remove('hidden');
+    for(let n=0;n<3;n++){ E.style.animation = 'none'; void E.offsetWidth; E.style.animation = ''; beep(400 - n*60, .12); $('revMsg').textContent = '… ' + '•'.repeat(n+1); await sleep(650); }
+    if(ok){
+      E.textContent = P[0]; addPts(g, T.pts); g.bag.push(w.i);
+      $('revMsg').textContent = 'Bắt được ' + P[1] + '! +' + T.pts + ' điểm';
+      [660,880,1040,1320].forEach((f,n) => setTimeout(() => beep(f,.18,'triangle'), n*140));
+      await sleep(2000); $('revOv').classList.add('hidden');
+      const sets = pkSets(g);
+      if(sets > g.sets){ g.sets = sets; addPts(g, PK_SET); G.refresh(); await ngToast('🌈 ' + g.name + ' có đủ bộ 4 hệ! +' + PK_SET + ' điểm', 2200); }
+      G.st.wild = pkSpawn(); G.refresh();
+      await ngToast('🌿 Một con thú mới xuất hiện: ' + PK[G.st.wild.i][1] + '!', 1600);
+    }else{
+      w.tries++;
+      E.textContent = '💨'; $('revMsg').textContent = P[1] + ' thoát khỏi bóng!'; beep(180, .3, 'sawtooth');
+      await sleep(1700); $('revOv').classList.add('hidden');
+      if(w.tries >= PK_FLEE){
+        await ngToast('🏃 ' + P[1] + ' đã bỏ chạy vào rừng sâu…', 1800);
+        G.st.wild = pkSpawn(); G.refresh();
+        await ngToast('🌿 Một con thú mới xuất hiện: ' + PK[G.st.wild.i][1] + '!', 1600);
+      }
+    }
+    G.finish();
+  }}],
+  build: G => {
+    G.st.groups.forEach(g => { g.bag = g.bag || []; g.sets = g.sets || 0; });
+    G.r('board').innerHTML = '<span class="deco bob" style="top:3%;left:4%" aria-hidden="true">🌳</span><span class="deco" style="top:4%;right:4%" aria-hidden="true">🌲</span>'
+      + '<span class="deco sm" style="bottom:5%;left:6%" aria-hidden="true">🍄</span><span class="deco sm bob" style="bottom:6%;right:7%" aria-hidden="true">🌼</span>'
+      + '<div class="pk-wild"><div class="pk-tier"></div><div class="pk-e"></div><div class="pk-n"></div><div class="pk-i"></div><div class="pk-try"></div></div>';
+  },
+  refresh: G => {
+    const w = G.st.wild, P = PK[w.i], T = PK_T[P[3]], b = G.r('board');
+    b.querySelector('.pk-tier').textContent = '★'.repeat(P[3]) + ' ' + T.n;
+    b.querySelector('.pk-tier').dataset.t = P[3];
+    b.querySelector('.pk-e').textContent = P[0];
+    b.querySelector('.pk-n').textContent = P[1];
+    b.querySelector('.pk-i').textContent = 'Hệ ' + P[2] + ' · +' + T.pts + ' điểm · dễ bắt ' + Math.round(T.rate * 100) + '%';
+    b.querySelector('.pk-try').textContent = 'Ném trượt: ' + '❌'.repeat(w.tries) + '⚪'.repeat(PK_FLEE - w.tries);
+    G.r('hint').textContent = '🌿 Một ' + P[1] + ' hoang dã xuất hiện!';
+  },
+  status: (G, g) => g.bag.length ? '🎒 ' + g.bag.slice(-8).map(i => PK[i][0]).join('') + (g.bag.length > 8 ? ' +' + (g.bag.length - 8) : '') : '🎒 Chưa bắt được con nào',
+  rankNote: (G, g) => 'bắt ' + g.bag.length + ' con'
+});
+
+/* ---------------------------------------------------------------------
+   2) VƯỜN RAU ĐẠI CHIẾN: mỗi nhóm giữ một luống rau, xác sống tiến dần
+   --------------------------------------------------------------------- */
+const PZ_COLS = 8, PZ_HOUSE = -15;
+const PZ_Z = ['🧟','🧟‍♀️','🧛','🧌','👹'];
+const pzHp = lvl => 3 + 3 * lvl, pzPts = lvl => 10 + 5 * (lvl - 1);
+function pzNew(lvl){ return {lvl, hp: pzHp(lvl), pos: PZ_COLS - 1}; }
+makeGame({
+  key:'pvz', skey:'sanchoi_vuonrau_v1', title:'🌻 Vườn rau đại chiến', startText:'Bảo vệ vườn rau 🌻',
+  legend:['Nhóm trả lời đúng → bấm 🌱 để bắn xác sống trong luống của mình.','Xúc xắc = sát thương, ra 6: 🌶️ ớt cay 10 sát thương','Hạ xác sống: +10, cấp càng cao càng nhiều điểm','Hết mỗi câu hỏi bấm "Xác sống tiến": tới vườn thì ' + PZ_HOUSE],
+  init: groups => { groups.forEach(g => { g.z = pzNew(1); g.kills = 0; g.bites = 0; }); return {round: 1}; },
+  btns: [{ico:'🌱', title:'Bắn', act: async (G, i) => {
+    if(busy || G.st.over) return;
+    busy = true; G.push(); G.refresh();
+    const g = G.st.groups[i];
+    const v = await ngDice(g.name + ' bắn đậu!', v => v === 6 ? '🌶️ Ớt cay! 10 sát thương' : v + ' sát thương');
+    const dmg = v === 6 ? 10 : v;
+    const lane = G.r('board').querySelector('[data-l="' + i + '"]');
+    const pea = mk('span', 'pz-pea', v === 6 ? '🔥' : '🟢'); lane.querySelector('.pz-track').append(pea);
+    pea.style.setProperty('--to', ((g.z.pos + .5) * 100 / PZ_COLS) + '%');
+    await sleep(550); pea.remove();
+    g.z.hp -= dmg; beep(160, .2, 'sawtooth'); G.refresh(); await sleep(500);
+    if(g.z.hp <= 0){
+      const p = pzPts(g.z.lvl); addPts(g, p); g.kills++;
+      G.refresh();
+      await ngToast('💥 ' + g.name + ' hạ xác sống cấp ' + g.z.lvl + '! +' + p + ' điểm', 1900);
+      g.z = pzNew(g.z.lvl + 1); G.refresh();
+      await ngToast('⚠️ Xác sống cấp ' + g.z.lvl + ' xuất hiện ở luống ' + g.name, 1500);
+    }
+    G.finish();
+  }}],
+  build: G => {
+    const b = G.r('board'); b.innerHTML = '';
+    G.st.groups.forEach((g, i) => {
+      const lane = mk('div', 'pz-lane'); lane.dataset.l = i; lane.style.setProperty('--c', g.color);
+      const tr = mk('div', 'pz-track');
+      for(let c=0;c<PZ_COLS;c++) tr.append(mk('span', 'pz-cell'));
+      tr.append(mk('span', 'pz-plant', '🌻'));
+      const z = mk('span', 'pz-z'); z.append(mk('span', 'pz-ze'), mk('span', 'pz-hp'));
+      tr.append(z);
+      lane.append(mk('span', 'pz-tag', i + 1), tr); b.append(lane);
+    });
+    const tools = G.r('tools'); tools.innerHTML = '';
+    const go = mk('button', 'btn gold wend', '🌙 Hết câu hỏi: xác sống tiến 1 ô');
+    go.onclick = () => pzAdvance(G); tools.append(go); G.goBtn = go;
+  },
+  refresh: G => {
+    G.st.groups.forEach((g, i) => {
+      const lane = G.r('board').querySelector('[data-l="' + i + '"]'), z = lane.querySelector('.pz-z');
+      z.style.left = ((g.z.pos + .5) * 100 / PZ_COLS) + '%';
+      z.querySelector('.pz-ze').textContent = PZ_Z[Math.min(g.z.lvl, PZ_Z.length) - 1];
+      const hp = Math.max(0, g.z.hp), mx = pzHp(g.z.lvl);
+      const bar = z.querySelector('.pz-hp'); bar.style.setProperty('--p', (hp * 100 / mx) + '%'); bar.textContent = hp;
+      lane.classList.toggle('danger', g.z.pos <= 2);
+    });
+    G.r('hint').textContent = '🌻 Câu hỏi ' + G.st.round + ' · xác sống gần nhất cách vườn ' + Math.min(...G.st.groups.map(g => g.z.pos)) + ' ô';
+    if(G.goBtn) G.goBtn.disabled = busy;
+  },
+  status: (G, g) => '🧟 Cấp ' + g.z.lvl + ' · ❤️ ' + Math.max(0, g.z.hp) + ' · cách vườn ' + g.z.pos + ' ô · hạ ' + g.kills,
+  rankNote: (G, g) => 'hạ ' + g.kills + ' xác sống'
+});
+async function pzAdvance(G){
+  if(busy) return;
+  busy = true; G.push(); G.refresh();
+  G.st.groups.forEach(g => g.z.pos--); beep(110, .3, 'sawtooth'); G.refresh(); await sleep(600);
+  for(const g of G.st.groups){
+    if(g.z.pos <= 0){
+      const before = g.pts; addPts(g, PZ_HOUSE); g.bites++;
+      G.refresh();
+      await ngToast('😱 Xác sống tràn vào vườn của ' + g.name + '! ' + (g.pts - before) + ' điểm', 2000);
+      g.z = pzNew(g.z.lvl); G.refresh();
+    }
+  }
+  G.st.round++;
+  busy = false; G.save(); G.refresh();
+}
+
+/* ---------------------------------------------------------------------
+   3) DÒ MÌN: chọn ô để mở hoặc cắm cờ
+   --------------------------------------------------------------------- */
+const MN_SIZE = {s:[7,5,7], m:[8,6,10], l:[10,7,15]};   // [cột, hàng, số mìn]
+const MN_OPEN = 5, MN_BOOM = -15, MN_FLAG = 15, MN_BADFLAG = -5;
+function mnAround(st, k){
+  const r = Math.floor(k / st.w), c = k % st.w, out = [];
+  for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++){
+    if(!dr && !dc) continue;
+    const rr = r + dr, cc = c + dc;
+    if(rr >= 0 && rr < st.h && cc >= 0 && cc < st.w) out.push(rr * st.w + cc);
+  }
+  return out;
+}
+function mnNumbers(st){ st.cells.forEach((x, k) => x.n = mnAround(st, k).filter(j => st.cells[j].m).length); }
+makeGame({
+  key:'mine', skey:'sanchoi_domin_v1', title:'💣 Dò mìn', startText:'Vào bãi mìn 💣', pick:true, opts:{size:'m'},
+  legend:['Nhóm trả lời đúng → bấm tên nhóm, chọn ⛏️ Mở ô hoặc 🚩 Cắm cờ, rồi bấm ô.','Mở ô an toàn +' + MN_OPEN + ' (mở lan thêm ô: +1 mỗi ô)','Đạp mìn ' + MN_BOOM,'Cắm cờ trúng mìn +' + MN_FLAG,'Cắm cờ sai ' + MN_BADFLAG,'Số trên ô = số mìn ở 8 ô xung quanh'],
+  init: (groups, o) => {
+    const [w, h, m] = MN_SIZE[o.size];
+    const st = {w, h, mines: m, first: true, mode: 'open', cells: [...Array(w*h)].map(() => ({m:false, open:false, flag:false, by:null, boom:false}))};
+    let n = 0; while(n < m){ const k = rnd(w*h); if(!st.cells[k].m){ st.cells[k].m = true; n++; } }
+    mnNumbers(st);
+    groups.forEach(g => { g.opened = 0; g.flags = 0; g.booms = 0; });
+    return st;
+  },
+  onPick: G => { G.st.mode = 'open'; },
+  build: G => {
+    const st = G.st, b = G.r('board'); b.innerHTML = '';
+    const grid = mk('div', 'mn-grid'); grid.style.setProperty('--w', st.w);
+    st.cells.forEach((x, k) => { const c = mk('button', 'mn-c'); c.dataset.k = k; c.addEventListener('click', () => mnClick(G, k)); grid.append(c); });
+    b.append(grid, mk('div', 'left mn-left'));
+    const tools = G.r('tools'); tools.innerHTML = '';
+    const row = mk('div', 'seg mn-mode');
+    [['open','⛏️ Mở ô'],['flag','🚩 Cắm cờ']].forEach(([v, t]) => { const bt = mk('button', '', t); bt.dataset.v = v; bt.onclick = () => { if(busy) return; G.st.mode = v; G.refresh(); }; row.append(bt); });
+    tools.append(row);
+  },
+  refresh: G => {
+    const st = G.st, b = G.r('board');
+    b.querySelectorAll('.mn-c').forEach(c => {
+      const x = st.cells[+c.dataset.k]; c.className = 'mn-c'; c.textContent = ''; c.style.removeProperty('--g');
+      if(x.flag){ c.classList.add('flag'); c.textContent = '🚩'; }
+      else if(x.boom){ c.classList.add('boom'); c.textContent = '💥'; }
+      else if(x.open){ c.classList.add('open'); if(x.m) c.textContent = '💣'; else if(x.n){ c.textContent = x.n; c.classList.add('n' + x.n); } }
+      if(x.by != null && (x.flag || x.boom)) c.style.setProperty('--g', st.groups[x.by].color);
+    });
+    const left = st.cells.filter(x => !x.m && !x.open).length, mines = st.cells.filter(x => x.m && !x.flag && !x.boom).length;
+    b.querySelector('.mn-left').textContent = '⛏️ Còn ' + left + ' ô an toàn · 💣 Còn ' + mines + ' quả mìn chưa tìm ra';
+    G.sec.querySelectorAll('.mn-mode button').forEach(bt => bt.classList.toggle('on', bt.dataset.v === st.mode));
+    G.r('hint').textContent = st.over ? 'Đã dò xong bãi mìn!' : st.active != null
+      ? (st.mode === 'flag' ? '🚩 ' : '⛏️ ') + st.groups[st.active].name + (st.mode === 'flag' ? ' cắm cờ vào ô nào?' : ' mở ô nào?')
+      : '👉 Bấm tên nhóm trả lời đúng';
+  },
+  status: (G, g) => '⛏️ mở ' + g.opened + ' ô · 🚩 ' + g.flags + ' mìn · 💥 ' + g.booms,
+  rankNote: (G, g) => 'cắm cờ trúng ' + g.flags + ' mìn'
+});
+function mnFlood(st, k){
+  const q = [k], seen = new Set([k]); let n = 0;
+  while(q.length){
+    const j = q.shift(), x = st.cells[j];
+    if(x.open || x.flag || x.m) continue;
+    x.open = true; n++;
+    if(x.n === 0) mnAround(st, j).forEach(t => { if(!seen.has(t)){ seen.add(t); q.push(t); } });
+  }
+  return n;
+}
+async function mnClick(G, k){
+  const st = G.st, x = st.cells[k];
+  if(busy || st.over || x.open || x.flag || x.boom) return;
+  if(st.active == null) return G.needGroup();
+  busy = true; G.push();
+  const i = st.active, g = st.groups[i], mode = st.mode;
+  if(st.first && mode === 'open' && x.m){            // ô mở đầu tiên không bao giờ là mìn
+    x.m = false; const free = st.cells.findIndex((y, j) => !y.m && j !== k); st.cells[free].m = true; mnNumbers(st);
+  }
+  st.first = false; st.active = null; st.mode = 'open'; G.refresh();
+  const label = String.fromCharCode(65 + k % st.w) + (Math.floor(k / st.w) + 1);
+  if(mode === 'flag'){
+    if(x.m){ x.flag = true; x.by = i; g.flags++; addPts(g, MN_FLAG); await ngReveal(g.name + ' cắm cờ ô ' + label, '🚩', '💣', 'Chính xác, có mìn! +' + MN_FLAG + ' điểm', 2000, true); }
+    else { mnFlood(st, k); addPts(g, MN_BADFLAG); await ngReveal(g.name + ' cắm cờ ô ' + label, '🚩', '😅', 'Không có mìn! ' + MN_BADFLAG + ' điểm', 2000, false); }
+  }else{
+    if(x.m){ x.boom = true; x.open = true; x.by = i; g.booms++; addPts(g, MN_BOOM); await ngReveal(g.name + ' mở ô ' + label, '⛏️', '💥', 'BÙM! Đạp trúng mìn ' + MN_BOOM + ' điểm', 2200, false); }
+    else {
+      const n = mnFlood(st, k), p = MN_OPEN + Math.min(n - 1, 10); g.opened += n; addPts(g, p);
+      beep(880, .15, 'triangle');
+      await ngToast('⛏️ ' + g.name + ' mở ô ' + label + (n > 1 ? ', lan ra ' + n + ' ô' : '') + ': +' + p + ' điểm', 1700);
+    }
+  }
+  if(st.cells.every(y => y.m || y.open)){ st.over = true; st.cells.forEach(y => { if(y.m && !y.flag) y.open = true; }); }
+  G.finish();
+}
+
+/* ---------------------------------------------------------------------
+   4) BẮN PHI THUYỀN: hạm đội phi thuyền ẩn trong vũ trụ, gọi tọa độ để bắn
+   --------------------------------------------------------------------- */
+const SH_W = 8, SH_H = 6, SH_HIT = 10, SH_SINK = 20;
+const SH_FLEET = [['Phi thuyền mẹ',4],['Tuần dương hạm',3],['Tuần dương hạm',3],['Trinh sát',2],['Trinh sát',2]];
+function shPlace(){
+  const ships = [], used = new Set();
+  for(const [name, len] of SH_FLEET){
+    for(let t=0;t<500;t++){
+      const hor = Math.random() < .5, c0 = rnd(hor ? SH_W - len + 1 : SH_W), r0 = rnd(hor ? SH_H : SH_H - len + 1);
+      const cells = [...Array(len)].map((_, j) => (r0 + (hor ? 0 : j)) * SH_W + c0 + (hor ? j : 0));
+      // không chồng và không chạm cạnh phi thuyền khác
+      if(cells.some(k => [k, k-1, k+1, k-SH_W, k+SH_W].some(n => used.has(n) && (Math.abs((n % SH_W) - (k % SH_W)) <= 1)))) continue;
+      cells.forEach(k => used.add(k)); ships.push({name, cells, sunk:false}); break;
+    }
+  }
+  return ships;
+}
+makeGame({
+  key:'ship', skey:'sanchoi_phithuyen_v1', title:'🚀 Bắn phi thuyền', startText:'Lên tàu chiến đấu 🚀', pick:true,
+  legend:['Nhóm trả lời đúng → bấm tên nhóm, rồi gọi tọa độ (ví dụ C4) và bấm ô đó.','Bắn trúng +' + SH_HIT,'Hạ gục phi thuyền: thêm +' + SH_SINK,'Bắn trượt: 0 điểm','Hạm đội: 1 phi thuyền mẹ (4 ô), 2 tuần dương (3 ô), 2 trinh sát (2 ô), nằm ngang hoặc dọc, không chạm nhau'],
+  init: groups => { groups.forEach(g => { g.hits = 0; g.sinks = 0; }); return {ships: shPlace(), shots: {}}; },
+  build: G => {
+    const b = G.r('board'); b.innerHTML = '';
+    const grid = mk('div', 'sh-grid');
+    grid.append(mk('span', 'sh-h', ''));
+    for(let c=0;c<SH_W;c++) grid.append(mk('span', 'sh-h', String.fromCharCode(65 + c)));
+    for(let r=0;r<SH_H;r++){
+      grid.append(mk('span', 'sh-h', r + 1));
+      for(let c=0;c<SH_W;c++){ const k = r * SH_W + c, bt = mk('button', 'sh-c'); bt.dataset.k = k; bt.addEventListener('click', () => shFire(G, k)); grid.append(bt); }
+    }
+    b.append(grid, mk('div', 'left sh-left'));
+  },
+  refresh: G => {
+    const st = G.st, b = G.r('board');
+    b.querySelectorAll('.sh-c').forEach(c => {
+      const k = +c.dataset.k, s = st.shots[k], ship = st.ships.find(x => x.cells.includes(k));
+      c.className = 'sh-c'; c.textContent = ''; c.style.removeProperty('--g');
+      if(s != null){
+        c.style.setProperty('--g', st.groups[s.g].color);
+        if(s.hit){ c.classList.add(ship.sunk ? 'sunk' : 'hit'); c.textContent = ship.sunk ? '🛸' : '💥'; }
+        else { c.classList.add('miss'); c.textContent = '•'; }
+      }else if(st.over && ship){ c.classList.add('sunk'); c.textContent = '🛸'; }
+    });
+    b.querySelector('.sh-left').textContent = '🛸 Còn ' + st.ships.filter(x => !x.sunk).length + '/' + st.ships.length + ' phi thuyền: '
+      + st.ships.filter(x => !x.sunk).map(x => x.cells.length + ' ô').join(', ');
+    G.r('hint').textContent = st.over ? 'Đã hạ toàn bộ hạm đội!' : st.active != null ? '🎯 ' + st.groups[st.active].name + ' bắn vào tọa độ nào?' : '👉 Bấm tên nhóm trả lời đúng';
+  },
+  status: (G, g) => '🎯 trúng ' + g.hits + ' · 🛸 hạ ' + g.sinks,
+  rankNote: (G, g) => 'hạ ' + g.sinks + ' phi thuyền'
+});
+async function shFire(G, k){
+  const st = G.st;
+  if(busy || st.over || st.shots[k] != null) return;
+  if(st.active == null) return G.needGroup();
+  busy = true; G.push();
+  const i = st.active, g = st.groups[i], label = String.fromCharCode(65 + k % SH_W) + (Math.floor(k / SH_W) + 1);
+  const ship = st.ships.find(x => x.cells.includes(k));
+  st.shots[k] = {g: i, hit: !!ship}; st.active = null;
+  if(ship){
+    g.hits++; addPts(g, SH_HIT);
+    const sunk = ship.cells.every(c => st.shots[c] != null);
+    if(sunk){ ship.sunk = true; g.sinks++; addPts(g, SH_SINK); }
+    G.refresh();
+    await ngReveal(g.name + ' bắn ' + label + '!', '🚀', sunk ? '🛸' : '💥', sunk ? 'Hạ gục ' + ship.name + '! +' + (SH_HIT + SH_SINK) + ' điểm' : 'Trúng rồi! +' + SH_HIT + ' điểm', 2100, true);
+  }else{
+    G.refresh();
+    await ngReveal(g.name + ' bắn ' + label + '!', '🚀', '🌌', 'Trượt! Chỉ có khoảng không vũ trụ', 1600, false);
+  }
+  if(st.ships.every(x => x.sunk)) st.over = true;
+  G.finish();
+}
+
+/* ---------------------------------------------------------------------
+   5) THÁM TỬ PHÁ ÁN: xin manh mối hoặc buộc tội nghi phạm
+   --------------------------------------------------------------------- */
+const CS_ATTR = [
+  [['🔴','mặc áo đỏ'],['🔵','mặc áo xanh'],['🟡','mặc áo vàng']],
+  [['🎒','đeo balo'],['☂️','cầm ô'],['📱','cầm điện thoại']],
+  [['📚','ở thư viện'],['⚽','ở sân trường'],['🍜','ở căng tin']]
+];
+const CS_STORY = ['Ai đã lấy trộm chiếc bánh sinh nhật của lớp?','Ai đã làm vỡ lọ hoa trên bàn giáo viên?','Ai đã giấu quả bóng của đội bóng lớp?',
+  'Ai đã vẽ bậy lên bảng tin của trường?','Ai đã ăn hết hộp kẹo trong tủ lớp?','Ai đã lấy mất chìa khóa phòng thí nghiệm?','Ai đã thả con ếch ra khỏi bể nuôi?','Ai đã đổi chỗ toàn bộ bàn ghế lớp học?'];
+const CS_CLUE = 5, CS_RIGHT = 40, CS_WRONG = -10;
+function csCase(no){
+  const combos = []; for(let a=0;a<3;a++) for(let b=0;b<3;b++) for(let c=0;c<3;c++) combos.push([a,b,c]);
+  const fN = shuffled(VN_F), mN = shuffled(VN_M), fA = shuffled([...WAVA_F.keys()]), mA = shuffled([...WAVA_M.keys()]);
+  const people = shuffled(combos).slice(0, 9).map((at, k) => k % 2 ? {g:'f', name:fN[k], av:fA[k], at} : {g:'m', name:mN[k], av:mA[k], at});
+  people.forEach(p => { p.cleared = false; });
+  return {no, story: pick(CS_STORY), people: shuffled(people), culprit: rnd(9), clues: [], solved: false};
+}
+function csNextClue(c){
+  const cul = c.people[c.culprit].at;
+  const alive = c.people.map((p, k) => k).filter(k => !c.people[k].cleared && c.clues.every(cl => csFits(c.people[k].at, cl)));
+  const opts = [];
+  for(let a=0;a<3;a++) for(let v=0;v<3;v++){
+    const cl = {a, v, pos: cul[a] === v};
+    if(c.clues.some(x => x.a === a && x.v === v)) continue;
+    const cut = alive.filter(k => !csFits(c.people[k].at, cl)).length;
+    if(cut > 0) opts.push({cl, cut});
+  }
+  if(!opts.length) return null;
+  const small = opts.filter(o => o.cut <= 3);
+  return pick(small.length ? small : opts).cl;
+}
+function csFits(at, cl){ return cl.pos ? at[cl.a] === cl.v : at[cl.a] !== cl.v; }
+function csClueText(cl){ const [e, t] = CS_ATTR[cl.a][cl.v]; return e + ' Thủ phạm ' + (cl.pos ? '' : 'KHÔNG ') + t; }
+makeGame({
+  key:'case', skey:'sanchoi_thamtu_v1', title:'🕵️ Thám tử phá án', startText:'Nhận vụ án 🕵️',
+  legend:['Nhóm trả lời đúng chọn: 🔎 xin manh mối (+' + CS_CLUE + ') hoặc 👉 buộc tội rồi bấm một nghi phạm.','Buộc tội đúng +' + CS_RIGHT + ' và mở vụ án mới','Buộc tội sai ' + CS_WRONG + ', nghi phạm đó được minh oan','Manh mối hiện cho cả lớp cùng suy luận'],
+  init: groups => { groups.forEach(g => { g.clues = 0; g.solved = 0; }); return {c: csCase(1)}; },
+  btns: [
+    {ico:'🔎', title:'Xin manh mối', act: async (G, i) => {
+      if(busy || G.st.over) return;
+      const c = G.st.c, cl = csNextClue(c);
+      if(!cl){ busy = true; await ngToast('🔎 Hết manh mối mới rồi, hãy buộc tội đi!', 1800); busy = false; return; }
+      busy = true; G.push(); G.st.active = null;
+      const g = G.st.groups[i]; c.clues.push(cl); g.clues++; addPts(g, CS_CLUE);
+      G.refresh();
+      await ngReveal(g.name + ' tìm được manh mối', '🔎', CS_ATTR[cl.a][cl.v][0], csClueText(cl).slice(2) + ' · +' + CS_CLUE + ' điểm', 2400, true);
+      G.finish();
+    }},
+    {ico:'👉', title:'Buộc tội', cls:'bad', act: (G, i) => { if(busy || G.st.over) return; G.st.active = G.st.active === i ? null : i; beep(600, .05); G.refresh(); }}
+  ],
+  build: G => {
+    const b = G.r('board'); b.innerHTML = '';
+    b.append(mk('div', 'cs-story'));
+    const grid = mk('div', 'vgrid cs-grid'); grid.style.setProperty('--vc', 3);
+    for(let k=0;k<9;k++){ const bt = mk('button', 'vcard cs-card'); bt.dataset.k = k; bt.addEventListener('click', () => csAccuse(G, k)); grid.append(bt); }
+    b.append(grid, mk('div', 'cs-clues'));
+  },
+  refresh: G => {
+    const c = G.st.c, b = G.r('board');
+    b.querySelector('.cs-story').textContent = '📁 Vụ án số ' + c.no + ': ' + c.story;
+    b.querySelectorAll('.cs-card').forEach(bt => {
+      const k = +bt.dataset.k, p = c.people[k];
+      bt.className = 'vcard cs-card' + (p.cleared ? ' cleared' : '') + (c.solved && k === c.culprit ? ' culprit' : '');
+      bt.textContent = '';
+      bt.append(wImg(wAva(p), 'av', p.name), mk('span', 'n', p.name));
+      const ch = mk('span', 'cs-at'); p.at.forEach((v, a) => ch.append(mk('i', '', CS_ATTR[a][v][0]))); bt.append(ch);
+      if(p.cleared) bt.append(mk('span', 'cs-tag', 'Vô tội'));
+      if(c.solved && k === c.culprit) bt.append(mk('span', 'cs-tag', 'Thủ phạm!'));
+    });
+    const cl = b.querySelector('.cs-clues'); cl.textContent = '';
+    cl.append(mk('b', '', '🗂️ Manh mối'));
+    if(!c.clues.length) cl.append(mk('span', 'cs-none', 'Chưa có manh mối nào. Trả lời đúng để xin manh mối!'));
+    c.clues.forEach((x, n) => cl.append(mk('span', 'cs-clue', (n + 1) + '. ' + csClueText(x))));
+    G.r('hint').textContent = G.st.active != null ? '👉 ' + G.st.groups[G.st.active].name + ' buộc tội ai?' : '🕵️ Trả lời đúng: 🔎 xin manh mối hoặc 👉 buộc tội';
+  },
+  status: (G, g) => '🔎 ' + g.clues + ' manh mối · ⚖️ phá ' + g.solved + ' vụ',
+  rankNote: (G, g) => 'phá ' + g.solved + ' vụ'
+});
+async function csAccuse(G, k){
+  const st = G.st, c = st.c, p = c.people[k];
+  if(busy || st.over || p.cleared || c.solved) return;
+  if(st.active == null){ busy = true; await ngToast('👉 Bấm nút 👉 của nhóm trả lời đúng trước', 1500); busy = false; return; }
+  busy = true; G.push();
+  const i = st.active, g = st.groups[i]; st.active = null; G.refresh();
+  if(k === c.culprit){
+    c.solved = true; g.solved++; addPts(g, CS_RIGHT); G.refresh();
+    const im = wImg(wAva(p), 'av', p.name);
+    await ngReveal(g.name + ' buộc tội ' + p.name, '⚖️', im, 'Chính xác! ' + p.name + ' là thủ phạm. +' + CS_RIGHT + ' điểm', 2800, true);
+    await ngToast('📁 Vụ án mới đã đến!', 1500);
+    st.c = csCase(c.no + 1); G.refresh();
+  }else{
+    p.cleared = true; addPts(g, CS_WRONG); G.refresh();
+    await ngReveal(g.name + ' buộc tội ' + p.name, '⚖️', '🙅', 'Sai rồi! ' + p.name + ' vô tội. ' + CS_WRONG + ' điểm', 2300, false);
+  }
+  G.finish();
+}
 </script>
 </body>
 </html>
